@@ -78,7 +78,6 @@
 		2E4EE21D20EFD5BA003431B3 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		2E4EE22120EFD5BA003431B3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
-		2E4EE22220EFD5BA003431B3 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		2E4EE22420EFD5BA003431B3 /* RecordDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDataSource.swift; sourceTree = "<group>"; };
 		2E4EE22520EFD5BA003431B3 /* RecordFileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordFileType.swift; sourceTree = "<group>"; };
 		2E4EE22720EFD5BA003431B3 /* FileRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileRecorder.swift; sourceTree = "<group>"; };
@@ -196,7 +195,6 @@
 			children = (
 				2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */,
 				2E4EE22120EFD5BA003431B3 /* Path.swift */,
-				2E4EE22220EFD5BA003431B3 /* HTTPClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -412,15 +410,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-VisionSDK-checkManifestLockResult.txt",
 			);
