@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E22DA0730FCF7049BAB5781 /* Pods_VisionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12E918AEFCBED4513C5480A7 /* Pods_VisionSDK.framework */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E4EE21720EFD378003431B3 /* VisionSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* VisionSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -67,6 +68,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12E918AEFCBED4513C5480A7 /* Pods_VisionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VisionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1766E5D9CB91F156A560CE2F /* Pods-VisionSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisionSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VisionSDK/Pods-VisionSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* VisionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VisionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +124,8 @@
 		2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManeuverLocation.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
+		69240D429F16C3A61BD534F8 /* Pods-VisionSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisionSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-VisionSDK/Pods-VisionSDK.release.xcconfig"; sourceTree = "<group>"; };
+		747BAC12C976D42A608A8682 /* Pods-VisionSDK.adhocrelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisionSDK.adhocrelease.xcconfig"; path = "Pods/Target Support Files/Pods-VisionSDK/Pods-VisionSDK.adhocrelease.xcconfig"; sourceTree = "<group>"; };
 		9D72A90A515B6C4D75C77F36 /* ARDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDataProvider.swift; sourceTree = "<group>"; };
 		B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxMobileEvents.framework; path = ../Carthage/Build/iOS/MapboxMobileEvents.framework; sourceTree = "<group>"; };
 		B53B75BA21144B9A001D65AC /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
@@ -137,6 +142,7 @@
 				B5AEB46C211996E800AF198E /* Zip.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
 				2E4EE29120F0579F003431B3 /* VisionCore.framework in Frameworks */,
+				1E22DA0730FCF7049BAB5781 /* Pods_VisionSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +156,7 @@
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
 				2E4EE28D20F05730003431B3 /* Frameworks */,
+				E38D68D8428CB193D6BE8E42 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,6 +300,7 @@
 				B5AEB46B211996E800AF198E /* Zip.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
 				2E4EE29020F0579F003431B3 /* VisionCore.framework */,
+				12E918AEFCBED4513C5480A7 /* Pods_VisionSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -313,6 +321,16 @@
 			path = AR;
 			sourceTree = "<group>";
 		};
+		E38D68D8428CB193D6BE8E42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1766E5D9CB91F156A560CE2F /* Pods-VisionSDK.debug.xcconfig */,
+				69240D429F16C3A61BD534F8 /* Pods-VisionSDK.release.xcconfig */,
+				747BAC12C976D42A608A8682 /* Pods-VisionSDK.adhocrelease.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -331,6 +349,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E4EE21A20EFD378003431B3 /* Build configuration list for PBXNativeTarget "VisionSDK" */;
 			buildPhases = (
+				21B0001C0844DEC2CDBC4FB3 /* [CP] Check Pods Manifest.lock */,
 				2E4EE20D20EFD378003431B3 /* Sources */,
 				2E4EE20E20EFD378003431B3 /* Frameworks */,
 				2E4EE20F20EFD378003431B3 /* Headers */,
@@ -386,6 +405,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		21B0001C0844DEC2CDBC4FB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VisionSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2E4EE20D20EFD378003431B3 /* Sources */ = {
@@ -515,6 +559,7 @@
 		};
 		2E197727211DD3C700311B95 /* AdhocRelease */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 747BAC12C976D42A608A8682 /* Pods-VisionSDK.adhocrelease.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -677,6 +722,7 @@
 		};
 		2E4EE21B20EFD378003431B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1766E5D9CB91F156A560CE2F /* Pods-VisionSDK.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -705,6 +751,7 @@
 		};
 		2E4EE21C20EFD378003431B3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69240D429F16C3A61BD534F8 /* Pods-VisionSDK.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
