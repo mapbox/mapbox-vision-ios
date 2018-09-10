@@ -1,5 +1,9 @@
+VisionSDK
+
 Copyright © 2018 Mapbox, Inc.
-See Mapbox Inc. VisionSDK Evaluation Agreement
+See Mapbox Inc. Vision SDK Evaluation Agreement
+
+---
 
 Zip
 
