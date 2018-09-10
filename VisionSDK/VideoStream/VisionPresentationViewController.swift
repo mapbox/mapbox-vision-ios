@@ -365,11 +365,11 @@ extension VisionViewController: VideoStreamPresentable {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    public func present(debugOverlay: UIImage?) {
+    func present(debugOverlay: UIImage?) {
         debugView.image = debugOverlay
     }
     
-    public func present(segMask: SegmentationMask?) {
+    func present(segMask: SegmentationMask?) {
         guard let segMask = segMask else {
             segmentationView.isHidden = true
             return

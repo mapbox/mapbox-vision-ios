@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-source "/Users/pristavko/.cocoapods/repos/pod-specs"
+source ’https://github.com/mapbox/pod-specs.git'
 
 platform :ios, '11.2'
 

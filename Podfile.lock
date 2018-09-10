@@ -1,7 +1,7 @@
 PODS:
   - MapboxMobileEvents (0.5.0)
   - OpenCV (2.4.13.6)
-  - VisionCore (0.0.1):
+  - VisionCore (0.0.1-alpha-1):
     - OpenCV (~> 2.4.13.6)
   - Zip (1.1.0)
 
@@ -11,19 +11,19 @@ DEPENDENCIES:
   - Zip (~> 1.1.0)
 
 SPEC REPOS:
-  "/Users/pristavko/.cocoapods/repos/pod-specs":
-    - VisionCore
   https://github.com/cocoapods/specs.git:
     - MapboxMobileEvents
     - OpenCV
     - Zip
+  https://github.com/mapbox/pod-specs.git:
+    - VisionCore
 
 SPEC CHECKSUMS:
   MapboxMobileEvents: e4aa629e4e2e3c250b5dadc15b63d67b91469a79
   OpenCV: cd36a3467c21572d658c2640488fe0d5a93ca192
-  VisionCore: 4faa4826ad7b452a7a1ab57d5c0b6b42a9cecee4
+  VisionCore: 075535c1d2aca092fdcf5d5a0b177ca682c608ff
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
 
-PODFILE CHECKSUM: 903248ad1aea4380887d14b726d589d7771f7ed2
+PODFILE CHECKSUM: 833de29c1c7ec7f8626f045943b786f0756ae027
 
 COCOAPODS: 1.5.3
