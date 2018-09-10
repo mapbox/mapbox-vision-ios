@@ -1,0 +1,19 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/maksim/dev/VisionSDK/Pods/VisionCore/VisionCore.framework/Headers/CVACoreConfig.h",
+      "line": null,
+      "symbol": "CoreConfig",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/maksim/dev/VisionSDK/VisionSDK/Services/Reachability/Reachability.swift",
+      "line": null,
+      "symbol": "Reachability",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/maksim/dev/VisionSDK"
+}

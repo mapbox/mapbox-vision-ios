@@ -9,18 +9,55 @@
 import Foundation
 import UIKit
 
+/**
+ Enumeration which determines whether SDK should adapt its performance to environmental changes (acceleration/deceleration, standing time) or stay fixed.
+*/
 public enum ModelPerformanceMode {
-    case fixed, dynamic
+    /**
+        Fixed.
+    */
+    case fixed
+    /**
+        Dynamic. It depends on speed. Variable from ModelPerformanceRate.low (0 km/h) to VisionManager's performance property (90 km/h).
+    */
+    case dynamic
 }
 
+/**
+ Enumeration which determines performance rate of the specific model. These are high-level settings that translates into adjustment of FPS for ML model inference.
+*/
 public enum ModelPerformanceRate {
-    case low, medium, high
+    /**
+        Low.
+    */
+    case low
+    /**
+        Medium.
+    */
+    case medium
+    /**
+        High.
+    */
+    case high
 }
 
+/**
+ Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
+*/
 public struct ModelPerformance {
+    
+    /**
+        Performance Mode.
+    */
     public let mode: ModelPerformanceMode
+    /**
+        Performance Rate
+    */
     public let rate: ModelPerformanceRate
 
+    /**
+        Initializer.
+    */
     public init(mode: ModelPerformanceMode, rate: ModelPerformanceRate) {
         self.mode = mode
         self.rate = rate

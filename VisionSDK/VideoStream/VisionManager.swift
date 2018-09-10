@@ -157,7 +157,7 @@ public final class VisionManager {
     }
     
     @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
-    public var isFPSTableEnabled: Bool = false {
+    var isFPSTableEnabled: Bool = false {
         didSet {
             if !isFPSTableEnabled {
                 presenter?.present(fps: nil)
@@ -255,6 +255,10 @@ public final class VisionManager {
     
     // MARK: Performance control
     
+    /**
+        Used for configuration of segmentation-related tasks performance.
+    */
+    
     public var segmentationPerformance: ModelPerformance = ModelPerformance(mode: .dynamic, rate: .high) {
         didSet {
             switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: segmentationPerformance) {
@@ -265,6 +269,10 @@ public final class VisionManager {
             }
         }
     }
+    
+    /**
+        Used for configuration of detection-related tasks performance.
+    */
     
     public var detectionPerformance: ModelPerformance = ModelPerformance(mode: .dynamic, rate: .high) {
         didSet {
@@ -566,11 +574,15 @@ public final class VisionManager {
 }
 
 extension VisionManager: ARDataProvider {
-
+    /**
+        Device parameters
+    */
     public func getCameraParams() -> ARCameraParameters {
         return dependencies.core.getARCameraParams()
     }
-    
+    /**
+        AR Qubic spline of route
+    */
     public func getARRouteData() -> ARRouteData {
         return dependencies.core.getARRouteData()
     }
