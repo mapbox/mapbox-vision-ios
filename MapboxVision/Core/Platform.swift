@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 import CoreMotion
 
 final class Platform: CVAPlatformInterface {

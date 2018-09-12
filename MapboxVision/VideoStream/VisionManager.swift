@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import VisionCore
+import MapboxVisionCore
 
 /**
     The interface that user’s custom object should conform to in order to receive events from SDK.

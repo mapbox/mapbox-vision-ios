@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 protocol VisionDependency {
     var recordSynchronizer: RecordSynchronizer { get }

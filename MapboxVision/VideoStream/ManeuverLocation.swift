@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 /**
     Location of route maneuver

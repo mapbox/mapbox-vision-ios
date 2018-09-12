@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 import MetalKit
 import AVKit
-import VisionCore
+import MapboxVisionCore
 
 protocol VideoStreamPresentable: VisionPresentationControllable {
     func present(sampleBuffer: CMSampleBuffer)

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 extension CoreConfig {
     static var empty: CoreConfig {

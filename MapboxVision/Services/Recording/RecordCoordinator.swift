@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 import UIKit
-import VisionCore
+import MapboxVisionCore
 
 protocol RecordCoordinatorDelegate: class {
     func recordingStarted(path: String)

@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 /**
     Interface for AR relative data provider. It used for commutication between MapboxVision and VisionAR frameworks.

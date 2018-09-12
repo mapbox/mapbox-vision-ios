@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 protocol MarketService {
     typealias UpdateHandler = (Market) -> Void

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import VisionCore
+import MapboxVisionCore
 
 private let milliSecToMicroSec: Float = 1_000
 private let secToMicroSec: Float = 1_000_000
