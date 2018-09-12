@@ -1,6 +1,6 @@
 //
 //  EventsManager.swift
-//  VisionSDK
+//  MapboxVision
 //
 //  Created by Maksim on 8/3/18.
 //  Copyright © 2018 Mapbox. All rights reserved.
@@ -36,8 +36,8 @@ final class EventsManager {
     init() {
         manager.initialize(
             withAccessToken: accessToken,
-            userAgentBase: "VisionSDK",
-            hostSDKVersion: String(VisionSDKVersionNumber)
+            userAgentBase: "MapboxVision",
+            hostSDKVersion: String(MapboxVisionVersionNumber)
         )
         manager.sendTurnstileEvent()
         manager.isMetricsEnabled = true

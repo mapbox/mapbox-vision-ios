@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
-		2E4EE21720EFD378003431B3 /* VisionSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* VisionSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */; };
 		2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23E20EFD651003431B3 /* VisionManager.swift */; };
 		2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */; };
@@ -37,7 +37,7 @@
 		2E4EE28620F05665003431B3 /* AlertPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */; };
 		2E4EE28720F05665003431B3 /* MarketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23320EFD5BA003431B3 /* MarketService.swift */; };
 		2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23420EFD5BA003431B3 /* DataProvider.swift */; };
-		2E4EE29120F0579F003431B3 /* VisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE29020F0579F003431B3 /* VisionCore.framework */; };
+		2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */; };
 		2E4EE29420F05844003431B3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29220F05843003431B3 /* URL.swift */; };
 		2E4EE2A020F058B9003431B3 /* UserDefaults+DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */; };
 		2E4EE2A120F058B9003431B3 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */; };
@@ -69,8 +69,8 @@
 /* Begin PBXFileReference section */
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
-		2E4EE21220EFD378003431B3 /* VisionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VisionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E4EE21520EFD378003431B3 /* VisionSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VisionSDK.h; sourceTree = "<group>"; };
+		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4EE21520EFD378003431B3 /* MapboxVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVision.h; sourceTree = "<group>"; };
 		2E4EE21620EFD378003431B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E4EE21D20EFD5BA003431B3 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		2E4EE24320EFD651003431B3 /* blend.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = blend.metal; sourceTree = "<group>"; };
 		2E4EE24420EFD651003431B3 /* DetectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsView.swift; sourceTree = "<group>"; };
 		2E4EE25420F05370003431B3 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
-		2E4EE29020F0579F003431B3 /* VisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = VisionCore.framework; path = Carthage/Build/iOS/VisionCore.framework; sourceTree = SOURCE_ROOT; };
+		2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = SOURCE_ROOT; };
 		2E4EE29220F05843003431B3 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+DefaultValue.swift"; sourceTree = "<group>"; };
 		2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 			files = (
 				B5AEB46C211996E800AF198E /* Zip.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
-				2E4EE29120F0579F003431B3 /* VisionCore.framework in Frameworks */,
+				2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +145,7 @@
 		2E4EE20820EFD378003431B3 = {
 			isa = PBXGroup;
 			children = (
-				2E4EE21420EFD378003431B3 /* VisionSDK */,
+				2E4EE21420EFD378003431B3 /* MapboxVision */,
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
 				2E4EE28D20F05730003431B3 /* Frameworks */,
@@ -155,12 +155,12 @@
 		2E4EE21320EFD378003431B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE21220EFD378003431B3 /* VisionSDK.framework */,
+				2E4EE21220EFD378003431B3 /* MapboxVision.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2E4EE21420EFD378003431B3 /* VisionSDK */ = {
+		2E4EE21420EFD378003431B3 /* MapboxVision */ = {
 			isa = PBXGroup;
 			children = (
 				2E4EE24520EFD651003431B3 /* VideoStream */,
@@ -168,11 +168,11 @@
 				2E4EE23A20EFD5BB003431B3 /* Core */,
 				2E4EE23520EFD5BA003431B3 /* Services */,
 				2E4EE26F20F055B8003431B3 /* Helpers */,
-				2E4EE21520EFD378003431B3 /* VisionSDK.h */,
+				2E4EE21520EFD378003431B3 /* MapboxVision.h */,
 				2E4EE21620EFD378003431B3 /* Info.plist */,
 				2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */,
 			);
-			path = VisionSDK;
+			path = MapboxVision;
 			sourceTree = "<group>";
 		};
 		2E4EE21E20EFD5BA003431B3 /* Reachability */ = {
@@ -290,7 +290,7 @@
 			children = (
 				B5AEB46B211996E800AF198E /* Zip.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
-				2E4EE29020F0579F003431B3 /* VisionCore.framework */,
+				2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -318,16 +318,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E4EE21720EFD378003431B3 /* VisionSDK.h in Headers */,
+				2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2E4EE21120EFD378003431B3 /* VisionSDK */ = {
+		2E4EE21120EFD378003431B3 /* MapboxVision */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E4EE21A20EFD378003431B3 /* Build configuration list for PBXNativeTarget "VisionSDK" */;
+			buildConfigurationList = 2E4EE21A20EFD378003431B3 /* Build configuration list for PBXNativeTarget "MapboxVision" */;
 			buildPhases = (
 				2E4EE20D20EFD378003431B3 /* Sources */,
 				2E4EE20E20EFD378003431B3 /* Frameworks */,
@@ -338,9 +338,9 @@
 			);
 			dependencies = (
 			);
-			name = VisionSDK;
-			productName = VisionSDK;
-			productReference = 2E4EE21220EFD378003431B3 /* VisionSDK.framework */;
+			name = MapboxVision;
+			productName = MapboxVision;
+			productReference = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -357,7 +357,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2E4EE20C20EFD378003431B3 /* Build configuration list for PBXProject "VisionSDK" */;
+			buildConfigurationList = 2E4EE20C20EFD378003431B3 /* Build configuration list for PBXProject "MapboxVision" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -369,7 +369,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2E4EE21120EFD378003431B3 /* VisionSDK */,
+				2E4EE21120EFD378003431B3 /* MapboxVision */,
 			);
 		};
 /* End PBXProject section */
@@ -521,7 +521,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
-				INFOPLIST_FILE = VisionSDK/Info.plist;
+				INFOPLIST_FILE = MapboxVision/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -529,7 +529,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.VisionSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
@@ -681,7 +681,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VisionSDK/Info.plist;
+				INFOPLIST_FILE = MapboxVision/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -689,7 +689,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.VisionSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
@@ -709,7 +709,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
-				INFOPLIST_FILE = VisionSDK/Info.plist;
+				INFOPLIST_FILE = MapboxVision/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -717,7 +717,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.VisionSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
@@ -729,7 +729,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2E4EE20C20EFD378003431B3 /* Build configuration list for PBXProject "VisionSDK" */ = {
+		2E4EE20C20EFD378003431B3 /* Build configuration list for PBXProject "MapboxVision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E4EE21820EFD378003431B3 /* Debug */,
@@ -739,7 +739,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E4EE21A20EFD378003431B3 /* Build configuration list for PBXNativeTarget "VisionSDK" */ = {
+		2E4EE21A20EFD378003431B3 /* Build configuration list for PBXNativeTarget "MapboxVision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E4EE21B20EFD378003431B3 /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  VisionSettings.swift
-//  VisionSDK
+//  MapboxVision
 //
 //  Created by Alexander Pristavko on 7/7/18.
 //  Copyright © 2018 Mapbox. All rights reserved.

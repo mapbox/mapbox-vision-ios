@@ -1,6 +1,6 @@
 //
 //  RecordArchiver.swift
-//  VisionSDK
+//  MapboxVision
 //
 //  Created by Maksim on 8/6/18.
 //  Copyright © 2018 Mapbox. All rights reserved.

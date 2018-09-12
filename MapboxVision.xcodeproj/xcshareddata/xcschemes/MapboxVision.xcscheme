@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2E4EE21120EFD378003431B3"
-               BuildableName = "VisionSDK.framework"
-               BlueprintName = "VisionSDK"
-               ReferencedContainer = "container:VisionSDK.xcodeproj">
+               BuildableName = "MapboxVision.framework"
+               BlueprintName = "MapboxVision"
+               ReferencedContainer = "container:MapboxVision.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2E4EE21120EFD378003431B3"
-            BuildableName = "VisionSDK.framework"
-            BlueprintName = "VisionSDK"
-            ReferencedContainer = "container:VisionSDK.xcodeproj">
+            BuildableName = "MapboxVision.framework"
+            BlueprintName = "MapboxVision"
+            ReferencedContainer = "container:MapboxVision.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2E4EE21120EFD378003431B3"
-            BuildableName = "VisionSDK.framework"
-            BlueprintName = "VisionSDK"
-            ReferencedContainer = "container:VisionSDK.xcodeproj">
+            BuildableName = "MapboxVision.framework"
+            BlueprintName = "MapboxVision"
+            ReferencedContainer = "container:MapboxVision.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -7,7 +7,7 @@ import Foundation
 import VisionCore
 
 /**
-    Interface for AR relative data provider. It used for commutication between VisionSDK and VisionAR frameworks.
+    Interface for AR relative data provider. It used for commutication between MapboxVision and VisionAR frameworks.
 */
 
 public protocol ARDataProvider {

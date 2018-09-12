@@ -1,6 +1,6 @@
 //
 //  VideoTrimmer.swift
-//  VisionSDK
+//  MapboxVision
 //
 //  Created by Alexander Pristavko on 7/25/18.
 //  Copyright © 2018 Mapbox. All rights reserved.
