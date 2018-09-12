@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform              = :ios
   s.ios.deployment_target = '11.2'
 
-  s.source        = { :git => "git@github.com:mapbox/mapbox-vision-ios.git", :branch => "alpha-1" }
+  s.source        = { :git => "git@github.com:mapbox/mapbox-vision-ios.git", :tag => "v#{s.version}" }
 
   s.source_files  = "MapboxVision/**/*.{swift,h,metal}"
   s.resource      = "Resources/Assets.xcassets"
