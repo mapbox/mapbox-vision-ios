@@ -255,14 +255,9 @@ public final class VisionManager {
         Used for configuration of segmentation-related tasks performance.
     */
     
-    public var segmentationPerformance: ModelPerformance = ModelPerformance(mode: .dynamic, rate: .high) {
+    public var segmentationPerformance: ModelPerformance {
         didSet {
-            switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: segmentationPerformance) {
-            case .fixed(let fps):
-                dependencies.core.config.setSegmentationFixedFPS(fps)
-            case .dynamic(let minFps, let maxFps):
-                dependencies.core.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-            }
+            updateSegmentationPerformance(segmentationPerformance)
         }
     }
     
@@ -270,14 +265,9 @@ public final class VisionManager {
         Used for configuration of detection-related tasks performance.
     */
     
-    public var detectionPerformance: ModelPerformance = ModelPerformance(mode: .dynamic, rate: .high) {
+    public var detectionPerformance: ModelPerformance {
         didSet {
-            switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: detectionPerformance) {
-            case .fixed(let fps):
-                dependencies.core.config.setDetectionFixedFPS(fps)
-            case .dynamic(let minFps, let maxFps):
-                dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-            }
+            updateDetectionPerformance(detectionPerformance)
         }
     }
     
@@ -425,6 +415,13 @@ public final class VisionManager {
     private init() {
         self.dependencies = AppDependency()
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
+        self.segmentationPerformance = ModelPerformance(mode: .dynamic, rate: .high)
+        self.detectionPerformance = ModelPerformance(mode: .dynamic, rate: .high)
+        
+        dependencies.core.config = .basic
+
+        updateSegmentationPerformance(segmentationPerformance)
+        updateDetectionPerformance(detectionPerformance)
         
         registerDefaults()
         
@@ -539,6 +536,24 @@ public final class VisionManager {
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
+    }
+    
+    private func updateSegmentationPerformance(_ performance: ModelPerformance) {
+        switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
+        case .fixed(let fps):
+            dependencies.core.config.setSegmentationFixedFPS(fps)
+        case .dynamic(let minFps, let maxFps):
+            dependencies.core.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+        }
+    }
+    
+    private func updateDetectionPerformance(_ performance: ModelPerformance) {
+        switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
+        case .fixed(let fps):
+            dependencies.core.config.setDetectionFixedFPS(fps)
+        case .dynamic(let minFps, let maxFps):
+            dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+        }
     }
     
     private func registerDefaults() {
