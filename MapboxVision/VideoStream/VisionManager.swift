@@ -95,8 +95,6 @@ public enum VisualizationMode {
 }
 
 protocol VideoStreamInput: class {
-    var videoVisualizationMode: VisualizationMode { get set }
-    
     var isFPSTableEnabled: Bool { get set }
     var isWatermarkVisible: Bool { get set }
     
@@ -135,20 +133,6 @@ public final class VisionManager {
     */
     
     public weak var arDelegate: VisionManagerARDelegate?
-    
-    @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
-    var videoVisualizationMode: VisualizationMode = .clear {
-        didSet {
-            let config: CoreConfig
-            switch videoVisualizationMode {
-            case .segmentation: config = CoreConfig.segmentationFirst
-            case .detection: config = CoreConfig.detectionFirst
-            case .clear: config = CoreConfig.basic
-            }
-            self.dependencies.core.config = config
-            presenter?.present(visualizationMode: videoVisualizationMode)
-        }
-    }
     
     @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
     var isFPSTableEnabled: Bool = false {
