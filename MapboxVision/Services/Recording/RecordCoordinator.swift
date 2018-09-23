@@ -16,8 +16,8 @@ protocol RecordCoordinatorDelegate: class {
     func recordingStopped()
 }
 
-private let chunkLength: Float = 5 * 60
-private let chunkLimit = 3
+private let defaultChunkLength: Float = 5 * 60
+private let defaultChunkLimit = 3
 private let videoLogFile = "videos.json"
 
 final class RecordCoordinator {
@@ -51,12 +51,15 @@ final class RecordCoordinator {
     
     private var currentReferenceTime: Float?
     private var currentRecordingPath: RecordingPath?
+    private var currentStartTime: DispatchTime?
     
     private var stopRecordingInBackgroundTask = UIBackgroundTaskInvalid
     
+    var savesContinuousVideo: Bool = false
+    
     init(settings: VideoSettings) {
         self.videoSettings = settings
-        self.videoRecorder = VideoBuffer(chunkLength: chunkLength, chunkLimit: chunkLimit, settings: settings)
+        self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit, settings: settings)
         self.videoTrimmer = VideoTrimmer(videoSettings: settings)
         videoRecorder.delegate = self
     }
@@ -64,6 +67,7 @@ final class RecordCoordinator {
     func startRecording(referenceTime: Float) {
         isRecording = true
         currentReferenceTime = referenceTime
+        currentStartTime = DispatchTime.now()
         
         guard isReady else { return }
         
@@ -84,6 +88,9 @@ final class RecordCoordinator {
         jsonWriter = FileRecorder(path: recordingPath.appending(videoLogFile))
         
         recreateFolder(path: cachePath)
+        
+        videoRecorder.chunkLength = savesContinuousVideo ? 0 : defaultChunkLength
+        videoRecorder.chunkLimit = savesContinuousVideo ? 1 : defaultChunkLimit
         videoRecorder.startRecording(to: cachePath)
         
         delegate?.recordingStarted(path: recordingPath)
@@ -111,6 +118,7 @@ final class RecordCoordinator {
         
         let relativeStart = startTime - referenceTime
         let relativeEnd = endTime - referenceTime
+        let chunkLength = videoRecorder.chunkLength
     
         let startChunk = Int(floor(relativeStart / chunkLength))
         let endChunk = Int(floor(relativeEnd / chunkLength))
@@ -136,11 +144,7 @@ final class RecordCoordinator {
             for chunk in (startChunk + 1) ..< endChunk {
                 let clipStart = Float(chunk) * chunkLength
                 let clipEnd = Float(chunk + 1) * chunkLength
-                let clipName = destinationPath(basePath: recordingPath, clipStart, clipEnd)
-                let clipLog = VideoLog(name: (clipName as NSString).lastPathComponent,
-                                       start: referenceTime + clipStart,
-                                       end: referenceTime + clipEnd)
-                copyClip(sourcePath: chunkPath(for: chunk), destinationPath: clipName, log: clipLog)
+                copyClip(chunk: chunk, clipStart: clipStart, clipEnd: clipEnd)
             }
             
             // trim end clip
@@ -220,7 +224,15 @@ final class RecordCoordinator {
         }
     }
     
-    private func copyClip(sourcePath: String, destinationPath: String, log: VideoLog) {
+    private func copyClip(chunk: Int, clipStart: Float, clipEnd: Float) {
+        guard let referenceTime = currentReferenceTime else { return }
+        
+        let sourcePath = chunkPath(for: chunk)
+        let destinationPath = self.destinationPath(basePath: DocumentsLocation.currentRecording.path, clipStart, clipEnd)
+        let log = VideoLog(name: (destinationPath as NSString).lastPathComponent,
+                           start: referenceTime + clipStart,
+                           end: referenceTime + clipEnd)
+        
         processingQueue.async { [jsonWriter] in
             do {
                 try FileManager.default.copyItem(atPath: sourcePath, toPath: destinationPath)
@@ -256,6 +268,20 @@ final class RecordCoordinator {
 
 extension RecordCoordinator: VideoBufferDelegate {
     func chunkCut(number: Int, finished: Bool) {
+        if savesContinuousVideo, let startTime = currentStartTime {
+            let clipStart = Float(number) * videoRecorder.chunkLength
+            let clipEnd: Float
+            
+            if finished {
+                let sessionDuration = Float(DispatchTime.now().uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
+                clipEnd = sessionDuration - clipStart
+            } else {
+                clipEnd = Float(number + 1) * videoRecorder.chunkLength
+            }
+            
+            copyClip(chunk: number, clipStart: clipStart, clipEnd: clipEnd)
+        }
+        
         let group = DispatchGroup()
         if let requests = trimRequestCache.removeValue(forKey: number) {
             for request in requests {
