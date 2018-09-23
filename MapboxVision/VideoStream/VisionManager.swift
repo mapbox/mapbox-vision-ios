@@ -494,13 +494,10 @@ public final class VisionManager {
         sessionManager.listener = self
     
         subscribeToNotifications()
-        
-        start()
     }
     
     deinit {
         unsubscribeFromNotifications()
-        stop()
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
