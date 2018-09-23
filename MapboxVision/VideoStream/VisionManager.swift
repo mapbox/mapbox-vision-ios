@@ -118,6 +118,7 @@ protocol VideoStreamOutput: class {
 private let motionUpdateInterval = 0.02
 private let signTrackerMaxCapacity = 5
 private let sessionInterval: TimeInterval = 5 * 60
+private let dataRecordingSessionInterval: TimeInterval = 30 * 60
 
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
@@ -219,7 +220,7 @@ public final class VisionManager {
     public func start() {
         guard !isStarted else { return }
     
-        self.isStarted = true
+        isStarted = true
     
         dependencies.metaInfoManager.addObserver(self)
     
@@ -227,7 +228,8 @@ public final class VisionManager {
         dependencies.videoSampler.run()
         dependencies.coreUpdater.startUpdating()
     
-        sessionManager.startSession(interruptionInterval: sessionInterval)
+        let interval = isDataRecordingModeOn ? dataRecordingSessionInterval : sessionInterval
+        sessionManager.startSession(interruptionInterval: interval)
     
         if let recording = currentRecording {
             let videoURL = URL(fileURLWithPath: recording.videoPath)
@@ -377,6 +379,23 @@ public final class VisionManager {
         return dependencies.core.world(toPixel: worldCoordinate)
     }
     
+    /**
+        :nodoc:
+    */
+
+    public var isDataRecordingModeOn: Bool = false {
+        didSet {
+            guard isDataRecordingModeOn != oldValue else { return }
+            
+            dependencies.core.config.useSegmentation = !isDataRecordingModeOn
+            dependencies.core.config.useDetection = !isDataRecordingModeOn
+            
+            dependencies.recorder.savesContinuousVideo = isDataRecordingModeOn
+            
+            UserDefaults.standard.enableSync = !isDataRecordingModeOn
+        }
+    }
+    
     // MARK: - Private
     
     private var notificationObservers = [Any]()
@@ -475,6 +494,9 @@ public final class VisionManager {
             guard let `self` = self else { return }
     
             self.presenter?.present(sampleBuffer: frame)
+            
+            guard self.isStarted else { return }
+            
             self.dependencies.recorder.handleFrame(frame)
             
             guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
@@ -630,10 +652,6 @@ extension VisionManager: VideoStreamInteractable {
         presenter?.showClearCacheAlert()
     }
     
-    func toggleRecording() {
-        // handled by session
-    }
-    
     func selectRecording(at url: URL) {
         let showPath = url.lastPathComponent
         guard let recordingPath = RecordingPath(showPath: showPath, settings: dependencies.videoSettings) else { return }
@@ -695,7 +713,12 @@ fileprivate extension VideoSettings {
 
 private extension UserDefaults {
     @objc dynamic var enableSync: Bool {
-        return bool(forKey: VisionSettings.enableSync)
+        get {
+            return bool(forKey: VisionSettings.enableSync)
+        }
+        set {
+            set(newValue, forKey: VisionSettings.enableSync)
+        }
     }
     
     @objc dynamic var syncOverCellular: Bool {
