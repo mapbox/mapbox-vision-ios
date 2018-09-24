@@ -127,7 +127,7 @@ private let dataRecordingSessionInterval: TimeInterval = 30 * 60
 public final class VisionManager {
     
     /**
-     Shared instane of VisionManager.
+     Shared instance of VisionManager.
     */
     
     public static let shared = VisionManager()
@@ -226,7 +226,9 @@ public final class VisionManager {
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-        dependencies.videoSampler.run()
+        if !isVideoStreamAlwaysRunning {
+            dependencies.videoSampler.run()
+        }
         dependencies.coreUpdater.startUpdating()
     
         let interval = isDataRecordingModeOn ? dataRecordingSessionInterval : sessionInterval
@@ -250,7 +252,9 @@ public final class VisionManager {
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-        dependencies.videoSampler.stop()
+        if !isVideoStreamAlwaysRunning {
+            dependencies.videoSampler.stop()
+        }
         dependencies.coreUpdater.stopUpdating()
     
         sessionManager.stopSession()
@@ -394,6 +398,18 @@ public final class VisionManager {
             dependencies.recorder.savesContinuousVideo = isDataRecordingModeOn
             
             UserDefaults.standard.enableSync = !isDataRecordingModeOn
+        }
+    }
+    
+    /**
+        :nodoc:
+     */
+    
+    public var isVideoStreamAlwaysRunning = false {
+        didSet {
+            guard isVideoStreamAlwaysRunning != oldValue else { return }
+            let sampler = dependencies.videoSampler
+            isVideoStreamAlwaysRunning ? sampler.run() : sampler.stop()
         }
     }
     
