@@ -186,6 +186,7 @@ public final class VisionManager {
     private var enableSyncObservation: NSKeyValueObservation?
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
+    private var hasPendingRecordingRequest = false
     
     private let sessionManager = SessionManager()
     
@@ -683,12 +684,20 @@ extension VisionManager: RecordCoordinatorDelegate {
     
     func recordingStopped() {
         startSync()
+        if hasPendingRecordingRequest, dependencies.recorder.isReady {
+            hasPendingRecordingRequest = false
+            dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        }
     }
 }
 
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
-        dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        if dependencies.recorder.isReady {
+            dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        } else {
+            hasPendingRecordingRequest = true
+        }
     }
     
     func sessionStopped() {

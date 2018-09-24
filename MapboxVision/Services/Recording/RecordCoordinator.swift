@@ -39,7 +39,7 @@ final class RecordCoordinator {
     private var trimRequestCache = [Int : [VideoTrimRequest]]()
     
     private(set) var isRecording: Bool = false
-    private var isReady: Bool = true
+    private(set) var isReady: Bool = true
     weak var delegate: RecordCoordinatorDelegate?
     
     private let videoRecorder: VideoBuffer
@@ -52,6 +52,7 @@ final class RecordCoordinator {
     private var currentReferenceTime: Float?
     private var currentRecordingPath: RecordingPath?
     private var currentStartTime: DispatchTime?
+    private var currentEndTime: DispatchTime?
     
     private var stopRecordingInBackgroundTask = UIBackgroundTaskInvalid
     
@@ -65,11 +66,10 @@ final class RecordCoordinator {
     }
     
     func startRecording(referenceTime: Float) {
+        guard !isRecording, isReady else { return }
+        
         isRecording = true
         currentReferenceTime = referenceTime
-        currentStartTime = DispatchTime.now()
-        
-        guard isReady else { return }
         
         do {
             try FileManager.default.createDirectory(atPath: DocumentsLocation.recordings.path, withIntermediateDirectories: true, attributes: nil)
@@ -89,6 +89,9 @@ final class RecordCoordinator {
         
         recreateFolder(path: cachePath)
         
+        currentStartTime = DispatchTime.now()
+        currentEndTime = nil
+        
         videoRecorder.chunkLength = savesContinuousVideo ? 0 : defaultChunkLength
         videoRecorder.chunkLimit = savesContinuousVideo ? 1 : defaultChunkLimit
         videoRecorder.startRecording(to: cachePath)
@@ -97,8 +100,11 @@ final class RecordCoordinator {
     }
     
     func stopRecording() {
+        guard isRecording else { return }
+        
         isRecording = false
         isReady = false
+        currentEndTime = DispatchTime.now()
         
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
         videoRecorder.stopRecording()
@@ -272,8 +278,8 @@ extension RecordCoordinator: VideoBufferDelegate {
             let clipStart = Float(number) * videoRecorder.chunkLength
             let clipEnd: Float
             
-            if finished {
-                let sessionDuration = Float(DispatchTime.now().uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
+            if finished, let endTime = currentEndTime {
+                let sessionDuration = Float(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
                 clipEnd = sessionDuration - clipStart
             } else {
                 clipEnd = Float(number + 1) * videoRecorder.chunkLength
@@ -296,9 +302,6 @@ extension RecordCoordinator: VideoBufferDelegate {
             guard let `self` = self else { return }
             if finished {
                 self.recordingStopped()
-                if self.isRecording, let referenceTime = self.currentReferenceTime {
-                    self.startRecording(referenceTime: referenceTime)
-                }
             }
         }
     }
