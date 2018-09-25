@@ -549,14 +549,19 @@ public final class VisionManager {
         defaults.setDefaultValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
+    private var isStoppedForBackground = false
     private func subscribeToNotifications() {
         let center = NotificationCenter.default
         notificationObservers.append(center.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
-            self?.start()
+            guard let `self` = self, self.isStoppedForBackground else { return }
+            self.isStoppedForBackground = false
+            self.start()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
-            self?.stop()
+            guard let `self` = self, self.isStarted else { return }
+            self.isStoppedForBackground = true
+            self.stop()
         })
     }
     
