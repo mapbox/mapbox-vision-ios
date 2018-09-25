@@ -47,12 +47,12 @@ struct RecordingPath {
     let recordingPath: String
     let settings: VideoSettings
     
-    init?(settings: VideoSettings) {
+    init(settings: VideoSettings) {
         self.settings = settings
         recordingPath = RecordingPath.generatePath()
     }
     
-    init?(path: String, settings: VideoSettings) {
+    init(path: String, settings: VideoSettings) {
         self.settings = settings
         recordingPath = path
     }

@@ -650,18 +650,13 @@ extension VisionManager: VideoStreamInteractable {
     }
     
     func clearCache(force: Bool) {
-        if force {
-            let isCurrentlyRecording = dependencies.recorder.isRecording
-            if isCurrentlyRecording {
-                dependencies.recorder.stopRecording()
-            }
-            dependencies.recorder.clearCache()
-            if isCurrentlyRecording {
-                dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
-            }
+        guard force else {
+            presenter?.showClearCacheAlert()
             return
         }
-        presenter?.showClearCacheAlert()
+        
+        dependencies.recorder.stopRecording()
+        dependencies.recorder.clearCache()
     }
     
     func selectRecording(at url: URL) {
@@ -695,19 +690,22 @@ extension VisionManager: RecordCoordinatorDelegate {
     
     func recordingStopped() {
         startSync()
-        if hasPendingRecordingRequest, dependencies.recorder.isReady {
+        
+        if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
-            dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
         }
     }
 }
 
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
-        if dependencies.recorder.isReady {
-            dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
-        } else {
+        do {
+            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        } catch RecordCoordinatorError.cantStartNotReady {
             hasPendingRecordingRequest = true
+        } catch {
+            print(error)
         }
     }
     

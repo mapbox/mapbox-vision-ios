@@ -16,6 +16,11 @@ protocol RecordCoordinatorDelegate: class {
     func recordingStopped()
 }
 
+enum RecordCoordinatorError: LocalizedError {
+    case cantStartAlreadyRecording
+    case cantStartNotReady
+}
+
 private let defaultChunkLength: Float = 5 * 60
 private let defaultChunkLimit = 3
 private let videoLogFile = "videos.json"
@@ -39,7 +44,7 @@ final class RecordCoordinator {
     private var trimRequestCache = [Int : [VideoTrimRequest]]()
     
     private(set) var isRecording: Bool = false
-    private(set) var isReady: Bool = true
+    private var isReady: Bool = true
     weak var delegate: RecordCoordinatorDelegate?
     
     private let videoRecorder: VideoBuffer
@@ -66,25 +71,23 @@ final class RecordCoordinator {
         videoRecorder.delegate = self
     }
     
-    func startRecording(referenceTime: Float) {
-        guard !isRecording, isReady else { return }
+    func startRecording(referenceTime: Float) throws {
+        guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
+        guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
+        
+        try FileManager.default.createDirectory(atPath: DocumentsLocation.recordings.path,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
         
         isRecording = true
         currentReferenceTime = referenceTime
-        
-        do {
-            try FileManager.default.createDirectory(atPath: DocumentsLocation.recordings.path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print(error)
-        }
         
         let recordingPath = DocumentsLocation.currentRecording.path
         let cachePath = DocumentsLocation.cache.path
         
         recreateFolder(path: recordingPath)
         
-        guard let currentRecording = RecordingPath(settings: videoSettings) else { isRecording = false; return }
-        currentRecordingPath = currentRecording
+        currentRecordingPath = RecordingPath(settings: videoSettings)
         
         jsonWriter = FileRecorder(path: recordingPath.appending(videoLogFile))
         
