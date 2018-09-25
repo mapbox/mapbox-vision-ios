@@ -374,7 +374,7 @@ public final class VisionManager {
     }
     
     /**
-        Operation mode determines whether vision manager works normally or focuses just on gathering data
+        Operation mode determines whether vision manager works normally or focuses just on gathering data.
     */
     
     public var operationMode: OperationMode = .normal {
@@ -391,8 +391,9 @@ public final class VisionManager {
     }
     
     /**
-        :nodoc:
-     */
+        Determines whether video stream remains running outside of `start()` and `stop()` calls.
+        When property is set to `true` `VisionPresentationViewController` will update background view with frames from camera.
+    */
     
     public var isVideoStreamAlwaysRunning = false {
         didSet {
