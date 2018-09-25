@@ -112,8 +112,6 @@ protocol VideoStreamOutput: class {
 
 private let motionUpdateInterval = 0.02
 private let signTrackerMaxCapacity = 5
-private let sessionInterval: TimeInterval = 5 * 60
-private let dataRecordingSessionInterval: TimeInterval = 30 * 60
 
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
@@ -225,8 +223,7 @@ public final class VisionManager {
         videoStream.start()
         dependencies.coreUpdater.startUpdating()
     
-        let interval = isDataRecordingModeOn ? dataRecordingSessionInterval : sessionInterval
-        sessionManager.startSession(interruptionInterval: interval)
+        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     
         if let recording = currentRecording {
             let videoURL = URL(fileURLWithPath: recording.videoPath)
@@ -377,19 +374,19 @@ public final class VisionManager {
     }
     
     /**
-        :nodoc:
+        Operation mode determines whether vision manager works normally or focuses just on gathering data
     */
-
-    public var isDataRecordingModeOn: Bool = false {
+    
+    public var operationMode: OperationMode = .normal {
         didSet {
-            guard isDataRecordingModeOn != oldValue else { return }
+            guard operationMode != oldValue else { return }
             
-            dependencies.core.config.useSegmentation = !isDataRecordingModeOn
-            dependencies.core.config.useDetection = !isDataRecordingModeOn
+            dependencies.core.config.useSegmentation = operationMode.usesSegmentation
+            dependencies.core.config.useDetection = operationMode.usesDetection
             
-            dependencies.recorder.savesSourceVideo = isDataRecordingModeOn
+            dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
             
-            UserDefaults.standard.enableSync = !isDataRecordingModeOn
+            UserDefaults.standard.enableSync = operationMode.isSyncEnabled
         }
     }
     

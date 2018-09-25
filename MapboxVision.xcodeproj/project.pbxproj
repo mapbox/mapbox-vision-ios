@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
+		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
 		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */; };
 		2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23E20EFD651003431B3 /* VisionManager.swift */; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
+		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4EE21520EFD378003431B3 /* MapboxVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVision.h; sourceTree = "<group>"; };
 		2E4EE21620EFD378003431B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				2E4EE24320EFD651003431B3 /* blend.metal */,
 				2E4EE24420EFD651003431B3 /* DetectionsView.swift */,
 				2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */,
+				2E245B1B215A57D2008F57D1 /* OperationMode.swift */,
 			);
 			path = VideoStream;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				2E4EE27320F05652003431B3 /* Platform.swift in Sources */,
 				2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */,
 				2E4EE27820F05659003431B3 /* Path.swift in Sources */,
+				2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */,
 				2E4EE27A20F0565E003431B3 /* RecordDataSource.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
 				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
