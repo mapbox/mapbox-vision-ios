@@ -387,7 +387,7 @@ public final class VisionManager {
             dependencies.core.config.useSegmentation = !isDataRecordingModeOn
             dependencies.core.config.useDetection = !isDataRecordingModeOn
             
-            dependencies.recorder.savesContinuousVideo = isDataRecordingModeOn
+            dependencies.recorder.savesSourceVideo = isDataRecordingModeOn
             
             UserDefaults.standard.enableSync = !isDataRecordingModeOn
         }

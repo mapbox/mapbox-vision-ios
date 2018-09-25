@@ -56,7 +56,8 @@ final class RecordCoordinator {
     
     private var stopRecordingInBackgroundTask = UIBackgroundTaskInvalid
     
-    var savesContinuousVideo: Bool = false
+    // determines if the source video is saved
+    var savesSourceVideo: Bool = false
     
     init(settings: VideoSettings) {
         self.videoSettings = settings
@@ -92,8 +93,8 @@ final class RecordCoordinator {
         currentStartTime = DispatchTime.now()
         currentEndTime = nil
         
-        videoRecorder.chunkLength = savesContinuousVideo ? 0 : defaultChunkLength
-        videoRecorder.chunkLimit = savesContinuousVideo ? 1 : defaultChunkLimit
+        videoRecorder.chunkLength = savesSourceVideo ? 0 : defaultChunkLength
+        videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
         videoRecorder.startRecording(to: cachePath)
         
         delegate?.recordingStarted(path: recordingPath)
@@ -274,7 +275,7 @@ final class RecordCoordinator {
 
 extension RecordCoordinator: VideoBufferDelegate {
     func chunkCut(number: Int, finished: Bool) {
-        if savesContinuousVideo, let startTime = currentStartTime {
+        if savesSourceVideo, let startTime = currentStartTime {
             let clipStart = Float(number) * videoRecorder.chunkLength
             let clipEnd: Float
             
