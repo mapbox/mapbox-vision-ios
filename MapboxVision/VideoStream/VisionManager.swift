@@ -187,6 +187,7 @@ public final class VisionManager {
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
+    private var videoStream: Streamable
     
     private let sessionManager = SessionManager()
     
@@ -226,9 +227,7 @@ public final class VisionManager {
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-        if !isVideoStreamAlwaysRunning {
-            dependencies.videoSampler.run()
-        }
+        videoStream.start()
         dependencies.coreUpdater.startUpdating()
     
         let interval = isDataRecordingModeOn ? dataRecordingSessionInterval : sessionInterval
@@ -252,9 +251,7 @@ public final class VisionManager {
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-        if !isVideoStreamAlwaysRunning {
-            dependencies.videoSampler.stop()
-        }
+        videoStream.stop()
         dependencies.coreUpdater.stopUpdating()
     
         sessionManager.stopSession()
@@ -408,8 +405,16 @@ public final class VisionManager {
     public var isVideoStreamAlwaysRunning = false {
         didSet {
             guard isVideoStreamAlwaysRunning != oldValue else { return }
+            
             let sampler = dependencies.videoSampler
-            isVideoStreamAlwaysRunning ? sampler.run() : sampler.stop()
+            if isVideoStreamAlwaysRunning {
+                videoStream = AlwaysRunningStream(stream: sampler)
+            } else {
+                videoStream = ControlledStream(stream: sampler)
+                if !isStarted {
+                    videoStream.stop()
+                }
+            }
         }
     }
     
@@ -426,6 +431,7 @@ public final class VisionManager {
     
     private init() {
         self.dependencies = AppDependency()
+        self.videoStream = ControlledStream(stream: dependencies.videoSampler)
         
         registerDefaults()
         
