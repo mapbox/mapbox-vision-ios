@@ -69,11 +69,6 @@ public protocol VisionPresentationControllable: class {
 public typealias VisionPresentationViewController = UIViewController & VisionPresentationControllable
 
 protocol VideoStreamInteractable : VideoStreamInput {
-    @available(*, deprecated, message: "use start on instance instead")
-    func activate()
-    @available(*, deprecated, message: "use stop on instance instead")
-    func deactivate()
-    
     var output: VideoStreamOutput? { get set }
     
     func selectRecording(at url: URL)
@@ -643,15 +638,6 @@ extension VisionManager: SyncDelegate {
 }
 
 extension VisionManager: VideoStreamInteractable {
-    
-    func activate() {
-        start()
-    }
-    
-    func deactivate() {
-        stop()
-    }
-    
     func toggleDebugOverlay() {
         dependencies.core.config.useDebugOverlay = !dependencies.core.config.useDebugOverlay
     }
