@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 import ModelIO
 
-final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Streamable {
     
     typealias Handler = (CMSampleBuffer) -> Void
     
@@ -38,7 +38,7 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
                                                name: .UIDeviceOrientationDidChange, object: nil)
     }
     
-    func run() {
+    func start() {
         guard !cameraSession.isRunning else { return }
         cameraSession.startRunning()
     }

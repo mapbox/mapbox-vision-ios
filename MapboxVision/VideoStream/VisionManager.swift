@@ -69,11 +69,6 @@ public protocol VisionPresentationControllable: class {
 public typealias VisionPresentationViewController = UIViewController & VisionPresentationControllable
 
 protocol VideoStreamInteractable : VideoStreamInput {
-    @available(*, deprecated, message: "use start on instance instead")
-    func activate()
-    @available(*, deprecated, message: "use stop on instance instead")
-    func deactivate()
-    
     var output: VideoStreamOutput? { get set }
     
     func selectRecording(at url: URL)
@@ -117,7 +112,6 @@ protocol VideoStreamOutput: class {
 
 private let motionUpdateInterval = 0.02
 private let signTrackerMaxCapacity = 5
-private let sessionInterval: TimeInterval = 5 * 60
 
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
@@ -126,7 +120,7 @@ private let sessionInterval: TimeInterval = 5 * 60
 public final class VisionManager {
     
     /**
-     Shared instane of VisionManager.
+     Shared instance of VisionManager.
     */
     
     public static let shared = VisionManager()
@@ -185,6 +179,8 @@ public final class VisionManager {
     private var enableSyncObservation: NSKeyValueObservation?
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
+    private var hasPendingRecordingRequest = false
+    private var videoStream: Streamable
     
     private let sessionManager = SessionManager()
     
@@ -219,15 +215,15 @@ public final class VisionManager {
     public func start() {
         guard !isStarted else { return }
     
-        self.isStarted = true
+        isStarted = true
     
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-        dependencies.videoSampler.run()
+        videoStream.start()
         dependencies.coreUpdater.startUpdating()
     
-        sessionManager.startSession(interruptionInterval: sessionInterval)
+        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     
         if let recording = currentRecording {
             let videoURL = URL(fileURLWithPath: recording.videoPath)
@@ -247,7 +243,7 @@ public final class VisionManager {
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-        dependencies.videoSampler.stop()
+        videoStream.stop()
         dependencies.coreUpdater.stopUpdating()
     
         sessionManager.stopSession()
@@ -377,6 +373,44 @@ public final class VisionManager {
         return dependencies.core.world(toPixel: worldCoordinate)
     }
     
+    /**
+        Operation mode determines whether vision manager works normally or focuses just on gathering data.
+    */
+    
+    public var operationMode: OperationMode = .normal {
+        didSet {
+            guard operationMode != oldValue else { return }
+            
+            dependencies.core.config.useSegmentation = operationMode.usesSegmentation
+            dependencies.core.config.useDetection = operationMode.usesDetection
+            
+            dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
+            
+            UserDefaults.standard.enableSync = operationMode.isSyncEnabled
+        }
+    }
+    
+    /**
+        Determines whether video stream remains running outside of `start()` and `stop()` calls.
+        When property is set to `true` `VisionPresentationViewController` will update background view with frames from camera.
+    */
+    
+    public var isVideoStreamAlwaysRunning = false {
+        didSet {
+            guard isVideoStreamAlwaysRunning != oldValue else { return }
+            
+            let sampler = dependencies.videoSampler
+            if isVideoStreamAlwaysRunning {
+                videoStream = AlwaysRunningStream(stream: sampler)
+            } else {
+                videoStream = ControlledStream(stream: sampler)
+                if !isStarted {
+                    videoStream.stop()
+                }
+            }
+        }
+    }
+    
     // MARK: - Private
     
     private var notificationObservers = [Any]()
@@ -390,6 +424,7 @@ public final class VisionManager {
     
     private init() {
         self.dependencies = AppDependency()
+        self.videoStream = ControlledStream(stream: dependencies.videoSampler)
         
         registerDefaults()
         
@@ -475,6 +510,9 @@ public final class VisionManager {
             guard let `self` = self else { return }
     
             self.presenter?.present(sampleBuffer: frame)
+            
+            guard self.isStarted else { return }
+            
             self.dependencies.recorder.handleFrame(frame)
             
             guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
@@ -494,13 +532,10 @@ public final class VisionManager {
         sessionManager.listener = self
     
         subscribeToNotifications()
-        
-        start()
     }
     
     deinit {
         unsubscribeFromNotifications()
-        stop()
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
@@ -512,14 +547,19 @@ public final class VisionManager {
         defaults.setDefaultValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
+    private var isStoppedForBackground = false
     private func subscribeToNotifications() {
         let center = NotificationCenter.default
         notificationObservers.append(center.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
-            self?.start()
+            guard let `self` = self, self.isStoppedForBackground else { return }
+            self.isStoppedForBackground = false
+            self.start()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
-            self?.stop()
+            guard let `self` = self, self.isStarted else { return }
+            self.isStoppedForBackground = true
+            self.stop()
         })
     }
     
@@ -601,15 +641,6 @@ extension VisionManager: SyncDelegate {
 }
 
 extension VisionManager: VideoStreamInteractable {
-    
-    func activate() {
-        start()
-    }
-    
-    func deactivate() {
-        stop()
-    }
-    
     func toggleDebugOverlay() {
         dependencies.core.config.useDebugOverlay = !dependencies.core.config.useDebugOverlay
     }
@@ -619,22 +650,13 @@ extension VisionManager: VideoStreamInteractable {
     }
     
     func clearCache(force: Bool) {
-        if force {
-            let isCurrentlyRecording = dependencies.recorder.isRecording
-            if isCurrentlyRecording {
-                dependencies.recorder.stopRecording()
-            }
-            dependencies.recorder.clearCache()
-            if isCurrentlyRecording {
-                dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
-            }
+        guard force else {
+            presenter?.showClearCacheAlert()
             return
         }
-        presenter?.showClearCacheAlert()
-    }
-    
-    func toggleRecording() {
-        // handled by session
+        
+        dependencies.recorder.stopRecording()
+        dependencies.recorder.clearCache()
     }
     
     func selectRecording(at url: URL) {
@@ -668,12 +690,23 @@ extension VisionManager: RecordCoordinatorDelegate {
     
     func recordingStopped() {
         startSync()
+        
+        if hasPendingRecordingRequest {
+            hasPendingRecordingRequest = false
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        }
     }
 }
 
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
-        dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        do {
+            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+        } catch RecordCoordinatorError.cantStartNotReady {
+            hasPendingRecordingRequest = true
+        } catch {
+            print(error)
+        }
     }
     
     func sessionStopped() {
@@ -698,7 +731,12 @@ fileprivate extension VideoSettings {
 
 private extension UserDefaults {
     @objc dynamic var enableSync: Bool {
-        return bool(forKey: VisionSettings.enableSync)
+        get {
+            return bool(forKey: VisionSettings.enableSync)
+        }
+        set {
+            set(newValue, forKey: VisionSettings.enableSync)
+        }
     }
     
     @objc dynamic var syncOverCellular: Bool {

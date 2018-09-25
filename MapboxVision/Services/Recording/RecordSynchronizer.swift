@@ -167,7 +167,7 @@ final class RecordSynchronizer {
     }
     
     private func markAsSynced(dir: URL, remoteDir: String, completion: @escaping (Error?) -> Void) {
-        guard let syncFile = createSyncFile(in: dir) else {
+        guard let _ = createSyncFile(in: dir) else {
             completion(RecordSynchronizerError.syncFileCreationFail(dir))
             return
         }

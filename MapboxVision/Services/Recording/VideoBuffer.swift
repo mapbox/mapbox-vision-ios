@@ -17,8 +17,11 @@ final class VideoBuffer {
     private(set) var isRecording: Bool = false
     weak var delegate: VideoBufferDelegate?
     
-    private let chunkLength: Float
-    private let chunkLimit: Int
+    // make it 0 to prevent cutting video in chunks
+    var chunkLength: Float
+    
+    var chunkLimit: Int
+    
     private let settings: VideoSettings
     private let recorder: VideoRecorder
     
@@ -37,8 +40,10 @@ final class VideoBuffer {
         isRecording = true
         chunkCounter = 0
         currentBasePath = path
-        currentTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(chunkLength), repeats: true) { [weak self] _ in
-            self?.cutChunk(true)
+        if chunkLength > 0 {
+            currentTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(chunkLength), repeats: true) { [weak self] _ in
+                self?.cutChunk(true)
+            }
         }
         startChunk()
     }
@@ -96,7 +101,7 @@ final class VideoBuffer {
         
         let fileManager = FileManager.default
         if let contents = try? fileManager.contentsOfDirectory(atPath: basePath),
-            contents.count > chunkLimit {
+            contents.count >= chunkLimit {
             contents.sorted().prefix(contents.count - chunkLimit).forEach {
                 try? fileManager.removeItem(atPath: "\(basePath)/\($0)")
             }
