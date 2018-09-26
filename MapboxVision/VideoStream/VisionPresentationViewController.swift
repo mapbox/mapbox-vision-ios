@@ -234,11 +234,13 @@ final class VisionViewController: VisionPresentationViewController {
     private func setupFPSLabels() {
         segmentationFPSLabel = fpsLabel()
         detectionFPSLabel = fpsLabel()
+        mergedSegDetectFPSLabel = fpsLabel()
         roadConfidenceFPSLabel = fpsLabel()
         coreUpdateFPSLabel = fpsLabel()
         let stack = UIStackView(arrangedSubviews: [
             fpsStack(views: [fpsLabel(text: "Segmentation:"), segmentationFPSLabel]),
             fpsStack(views: [fpsLabel(text: "Detection:"), detectionFPSLabel]),
+            fpsStack(views: [fpsLabel(text: "Merged S+D:"), mergedSegDetectFPSLabel]),
             fpsStack(views: [fpsLabel(text: "Road conf:"), roadConfidenceFPSLabel]),
             fpsStack(views: [fpsLabel(text: "Core update:"), coreUpdateFPSLabel]),
         ])
@@ -340,6 +342,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     private var segmentationFPSLabel: UILabel!
     private var detectionFPSLabel: UILabel!
+    private var mergedSegDetectFPSLabel: UILabel!
     private var roadConfidenceFPSLabel: UILabel!
     private var coreUpdateFPSLabel: UILabel!
     private var measurementStack: UIStackView!
@@ -361,6 +364,7 @@ extension VisionViewController: VideoStreamPresentable {
         guard let fps = fps else { return }
         segmentationFPSLabel.text = String(format: "%.2f", fps.segmentation)
         detectionFPSLabel.text = String(format: "%.2f", fps.detection)
+        mergedSegDetectFPSLabel.text = String(format: "%.2", fps.mergedSegmentationDetection)
         roadConfidenceFPSLabel.text = String(format: "%.2f", fps.roadConfidence)
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
