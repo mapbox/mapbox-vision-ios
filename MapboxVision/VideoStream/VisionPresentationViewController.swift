@@ -364,7 +364,7 @@ extension VisionViewController: VideoStreamPresentable {
         guard let fps = fps else { return }
         segmentationFPSLabel.text = String(format: "%.2f", fps.segmentation)
         detectionFPSLabel.text = String(format: "%.2f", fps.detection)
-        mergedSegDetectFPSLabel.text = String(format: "%.2", fps.mergedSegmentationDetection)
+        mergedSegDetectFPSLabel.text = String(format: "%.2f", fps.mergedSegmentationDetection)
         roadConfidenceFPSLabel.text = String(format: "%.2f", fps.roadConfidence)
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
