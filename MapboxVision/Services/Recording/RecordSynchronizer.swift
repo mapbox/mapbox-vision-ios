@@ -30,6 +30,7 @@ final class RecordSynchronizer {
         let deviceId: String
         let devicePlatformName: String
         let archiver: Archiver
+        let fileManager: FileManagerProtocol
     }
     
     weak var delegate: SyncDelegate?
@@ -57,7 +58,7 @@ final class RecordSynchronizer {
     }
     
     private func isMarkAsSynced(url: URL) -> Bool {
-        guard let content = try? FileManager.default.contentsOfDirectory(atPath: url.path) else {
+        guard let content = try? dependencies.fileManager.contentsOfDirectory(atPath: url.path) else {
             return false
         }
         return content.contains(syncFileName)
@@ -65,7 +66,7 @@ final class RecordSynchronizer {
     
     private func getFiles(_ url: URL, types: [RecordFileType]) throws -> [URL] {
         let extensions = types.map { $0.fileExtension }
-        let files = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])
+        let files = try dependencies.fileManager.contentsOfDirectory(at: url)
             .filter { extensions.contains($0.pathExtension) }
         guard !files.isEmpty else { throw RecordSynchronizerError.noRequestedFiles(types, url) }
         
@@ -81,13 +82,13 @@ final class RecordSynchronizer {
             let destination = dir.appendingPathComponent(telemetryFileName).appendingPathExtension(RecordFileType.archive.fileExtension)
             
             do {
-                if !FileManager.default.fileExists(atPath: destination.path) {
+                if !dependencies.fileManager.fileExists(atPath: destination.path) {
                     let files = try getFiles(dir, types: [.bin, .json])
                     try dependencies.archiver.archive(files, destination: destination)
                     files.forEach(dependencies.dataSource.removeFile)
                 }
                 
-                try self.quota.reserve(memory: destination.fileSize)
+                try self.quota.reserve(memory: dependencies.fileManager.fileSize(at: destination))
             } catch {
                 print(error)
                 group.leave()
@@ -101,6 +102,7 @@ final class RecordSynchronizer {
                     print(error)
                     group.leave()
                 } else {
+                    self?.dependencies.dataSource.removeFile(at: destination)
                     self?.markAsSynced(dir: dir, remoteDir: remoteDir) { error in
                         if let error = error {
                             print(error)
@@ -117,16 +119,17 @@ final class RecordSynchronizer {
     private func uploadVideos(completion: @escaping () -> Void) {
         let group = DispatchGroup()
 
+        let fileSize = dependencies.fileManager.fileSize
         let sorted = dependencies.dataSource.recordDirectories
             .flatMap { (try? self.getFiles($0, types: [.video])) ?? [] }
-            .sorted { $0.fileSize < $1.fileSize }
+            .sorted { fileSize($0) < fileSize($1) }
             
             
         for file in sorted {
             group.enter()
             
             do {
-                try quota.reserve(memory: file.fileSize)
+                try quota.reserve(memory: fileSize(file))
             } catch {
                 print(error)
                 group.leave()
@@ -140,7 +143,6 @@ final class RecordSynchronizer {
                     print(error)
                 } else {
                     self?.dependencies.dataSource.removeFile(at: file)
-                    
                 }
                 group.leave()
             }
@@ -154,10 +156,10 @@ final class RecordSynchronizer {
             .sortedByCreationDate
             .filter(isMarkAsSynced)
             .reduce((Array<URL>(), 0.0)) { base, url in
-                let dirSize = Double(FileManager.default.sizeOfFolder(url)) / 1024.0 / 1024.0
+                let dirSize = Double(dependencies.fileManager.sizeOfDirectory(at: url)) / 1024.0 / 1024.0
 
                 let size = base.1 + dirSize
-                if size > memoryLimit {
+                if size > memoryLimit || size == 0 {
                     return (base.0 + [url], size)
                 } else {
                     return (base.0, size)
@@ -185,7 +187,7 @@ final class RecordSynchronizer {
     
     private func createSyncFile(in url: URL) -> URL? {
         let syncFilePath = url.appendingPathComponent(syncFileName).path
-        guard FileManager.default.createFile(atPath: syncFilePath, contents: nil, attributes: nil) else {
+        guard dependencies.fileManager.createFile(atPath: syncFilePath, contents: nil) else {
             return nil
         }
         return URL(fileURLWithPath: syncFilePath, relativeTo: url)
@@ -193,24 +195,5 @@ final class RecordSynchronizer {
     
     func stopSync() {
         dependencies.networkClient.cancel()
-    }
-}
-
-fileprivate extension FileManager {
-    
-    func sizeOfFolder(_ folderURL: URL) -> Int64 {
-        guard let contents = try? self.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: []) else {
-            return 0
-        }
-        
-        return contents.map { $0.fileSize }.reduce(0, +)
-    }
-}
-
-fileprivate extension URL {
-    
-    var fileSize: Int64 {
-        guard let attributes = try? FileManager.default.attributesOfItem(atPath: path) else { return 0 }
-        return attributes[FileAttributeKey.size] as? Int64 ?? 0
     }
 }
