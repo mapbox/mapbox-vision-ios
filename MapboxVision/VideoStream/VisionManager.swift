@@ -39,6 +39,10 @@ public protocol VisionManagerDelegate: class {
         Tells the delegate that distance to closest car ahead is updated.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
+    /**
+        Tells the delegate that lane departure state is updated.
+    */
+    func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
 }
 
 /**
@@ -290,6 +294,17 @@ public final class VisionManager {
         }
     }
     
+    /**
+        Current lane departure state.
+    */
+    
+    public var laneDepartureState: LaneDepartureState = .normal {
+        didSet {
+            guard oldValue != laneDepartureState else { return }
+            delegate?.visionManager(self, didUpdateLaneDepartureState: laneDepartureState)
+        }
+    }
+    
     // MARK: Presentation
     
     /**
@@ -471,6 +486,8 @@ public final class VisionManager {
             self.roadDescription = self.dependencies.core.getRoadDescription()
             
             self.worldDescription = self.dependencies.core.getWorldDescription()
+            
+            self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
             
             guard let presenter = self.presenter else { return }
             
