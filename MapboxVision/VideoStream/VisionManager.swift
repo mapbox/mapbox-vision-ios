@@ -28,8 +28,12 @@ public protocol VisionManagerDelegate: class {
     */
     func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
     /**
-        Tells the delegate that new road description is available.
+        Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
     */
+    func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
+    /**
+        Tells the delegate that new processed road description is available. These are smoothed and more stable values.
+     */
     func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
     /**
         Tells the delegate that newly estimated position is calculated.
@@ -273,6 +277,17 @@ public final class VisionManager {
     }
     
     /**
+        Unprocessed description of current road situation.
+     */
+    
+    public var rawRoadDescription: RoadDescription? {
+        didSet {
+            guard oldValue?.identifier != roadDescription?.identifier else { return }
+            delegate?.visionManager(self, didUpdateRawRoadDescription: roadDescription)
+        }
+    }
+    
+    /**
         Description of current road situation
     */
     
@@ -482,6 +497,8 @@ public final class VisionManager {
             self.delegate?.visionManager(self, didUpdateSignClassifications: signClassifications)
             
             self.estimatedPosition = self.dependencies.core.getEstimatedPosition()
+            
+            self.rawRoadDescription = self.dependencies.core.getRawRoadDescription()
             
             self.roadDescription = self.dependencies.core.getRoadDescription()
             
