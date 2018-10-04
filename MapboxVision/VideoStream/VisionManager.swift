@@ -381,16 +381,10 @@ public final class VisionManager {
         Operation mode determines whether vision manager works normally or focuses just on gathering data.
     */
     
-    public var operationMode: OperationMode = .normal {
+    public var operationMode: OperationMode {
         didSet {
             guard operationMode != oldValue else { return }
-            
-            dependencies.core.config.useSegmentation = operationMode.usesSegmentation
-            dependencies.core.config.useDetection = operationMode.usesDetection
-            
-            dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
-            
-            UserDefaults.standard.enableSync = operationMode.isSyncEnabled
+            updateOperationMode(operationMode)
         }
     }
     
@@ -432,10 +426,14 @@ public final class VisionManager {
         self.segmentationPerformance = ModelPerformance(mode: .dynamic, rate: .high)
         self.detectionPerformance = ModelPerformance(mode: .dynamic, rate: .high)
         
+        self.operationMode = .normal
+        
         dependencies.core.config = .basic
 
         updateSegmentationPerformance(segmentationPerformance)
         updateDetectionPerformance(detectionPerformance)
+        
+        updateOperationMode(operationMode)
         
         registerDefaults()
         
@@ -572,6 +570,15 @@ public final class VisionManager {
         case .dynamic(let minFps, let maxFps):
             dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
+    }
+    
+    private func updateOperationMode(_ operationMode: OperationMode) {
+        dependencies.core.config.useSegmentation = operationMode.usesSegmentation
+        dependencies.core.config.useDetection = operationMode.usesDetection
+        
+        dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
+        
+        UserDefaults.standard.enableSync = operationMode.isSyncEnabled
     }
     
     private func registerDefaults() {
