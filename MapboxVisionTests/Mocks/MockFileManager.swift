@@ -28,7 +28,7 @@ final class MockFileManager: FileManagerProtocol {
     
     func fileExists(atPath path: String) -> Bool {
         let url = URL(fileURLWithPath: path)
-        return data.values.flatMap { $0 }.map { $0.url }.filter { $0 == url }.first != nil
+        return data.values.flatMap { $0 }.contains { $0.url == url }
     }
     
     func createFile(atPath path: String, contents: Data?) -> Bool {
@@ -41,6 +41,6 @@ final class MockFileManager: FileManagerProtocol {
     
     func fileSize(at url: URL) -> Int64 {
         let dirUrl = url.deletingLastPathComponent()
-        return data[dirUrl]?.filter { $0.url == url }.map { $0.size }.first ?? 0
+        return data[dirUrl]?.first { $0.url == url }?.size ?? 0
     }
 }

@@ -159,7 +159,7 @@ final class RecordSynchronizer {
                 let dirSize = Double(dependencies.fileManager.sizeOfDirectory(at: url)) / 1024.0 / 1024.0
 
                 let size = base.1 + dirSize
-                if size > memoryLimit || size == 0 {
+                if size > memoryLimit || dirSize == 0 {
                     return (base.0 + [url], size)
                 } else {
                     return (base.0, size)
