@@ -65,7 +65,8 @@ final class AppDependency: VisionDependency {
             dataSource: dataSource,
             deviceId: deviceInfoProvider.id,
             devicePlatformName: deviceInfoProvider.platformName,
-            archiver: recordArchiver
+            archiver: recordArchiver,
+            fileManager: FileManager.default
         )
         self.recordSynchronizer = RecordSynchronizer(syncDependencies)
         
