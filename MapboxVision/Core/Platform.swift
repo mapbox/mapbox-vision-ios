@@ -10,7 +10,7 @@ import Foundation
 import MapboxVisionCore
 import CoreMotion
 
-final class Platform: CVAPlatformInterface {
+final class Platform: PlatformInterface {
     
     struct Dependencies {
         let recordCoordinator: RecordCoordinator
@@ -56,5 +56,23 @@ final class Platform: CVAPlatformInterface {
         }
         
         dependencies.eventsManager.sendEvent(name: name, entries: entries)
+    }
+    
+    func save(image: Image, path: String) {
+        guard let uiimage = image.getUIImage() else {
+            assertionFailure("ERROR: Unable to convert image to UIImage")
+            return
+        }
+        guard let data = UIImageJPEGRepresentation(uiimage, 1.0) else {
+            assertionFailure("ERROR: Unable to obtain data representation of UIImage")
+            return
+        }
+        
+        let url = URL(fileURLWithPath: path).appendingPathExtension(RecordFileType.image.fileExtension)
+        do {
+            try data.write(to: url)
+        } catch {
+            assertionFailure("ERROR: Unable to save image to \(path). Error: \(error)")
+        }
     }
 }
