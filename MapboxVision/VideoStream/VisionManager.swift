@@ -508,6 +508,8 @@ public final class VisionManager {
                 focalLenght: self.dependencies.videoSampler.focalLenght,
                 fieldOfView: self.dependencies.videoSampler.fieldOfView
             )
+            
+            self.currentFrame = capturedImageBuffer
         }
         
         sessionManager.listener = self
@@ -610,6 +612,8 @@ public final class VisionManager {
             self?.setDataProvider(recordedDataProvider)
         }
     }
+    
+    private var currentFrame: CVPixelBuffer?
 }
 
 extension VisionManager: ARDataProvider {
@@ -624,6 +628,10 @@ extension VisionManager: ARDataProvider {
     */
     public func getARRouteData() -> ARRouteData {
         return dependencies.core.getARRouteData()
+    }
+    
+    public func getCurrentFrame() -> CVPixelBuffer? {
+        return currentFrame
     }
 }
 
