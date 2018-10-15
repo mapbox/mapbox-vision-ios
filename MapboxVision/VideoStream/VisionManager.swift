@@ -40,13 +40,17 @@ public protocol VisionManagerDelegate: class {
     */
     func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
     /**
-        Tells the delegate that distance to closest car ahead is updated.
+        Tells the delegate that distance to closest car ahead is updated. This event won't be emitted until calibration progress reaches isCalibrated state.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
     /**
         Tells the delegate that lane departure state is updated.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
+    /**
+         Tells the delegate about the progress of camera pose estimation (calibration).
+    */
+    func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
 }
 
 /**
@@ -304,7 +308,10 @@ public final class VisionManager {
     
     public var worldDescription: WorldDescription? {
         didSet {
-            guard oldValue?.identifier != worldDescription?.identifier else { return }
+            guard
+                oldValue?.identifier != worldDescription?.identifier,
+                calibrationProgress.isCalibrated
+            else { return }
             delegate?.visionManager(self, didUpdateWorldDescription: worldDescription)
         }
     }
@@ -317,6 +324,17 @@ public final class VisionManager {
         didSet {
             guard oldValue != laneDepartureState else { return }
             delegate?.visionManager(self, didUpdateLaneDepartureState: laneDepartureState)
+        }
+    }
+    
+    /**
+        Current progress of camera pose estimation (calibration) process.
+    */
+    
+    public var calibrationProgress: CalibrationProgress = CalibrationProgress(progress: 0, calibrated: false) {
+        didSet {
+            guard oldValue != calibrationProgress else { return }
+            delegate?.visionManager(self, didUpdateCalibrationProgress: calibrationProgress)
         }
     }
     
@@ -484,6 +502,8 @@ public final class VisionManager {
             if self.isFPSTableEnabled {
                 self.presenter?.present(fps: fpsValue)
             }
+            
+            self.calibrationProgress = self.dependencies.core.getCalibrationProgress()
             
             let segmentationMask = self.dependencies.core.getSegmentationMask()
             self.delegate?.visionManager(self, didUpdateSegmentation: segmentationMask)
