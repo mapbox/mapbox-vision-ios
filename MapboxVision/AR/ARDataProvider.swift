@@ -7,7 +7,7 @@ import Foundation
 import MapboxVisionCore
 
 /**
-    Interface for AR relative data provider. It used for commutication between MapboxVision and MapboxVisionAR frameworks.
+    Interface for AR relative data provider. It used for communication between MapboxVision and MapboxVisionAR frameworks.
 */
 
 public protocol ARDataProvider {
