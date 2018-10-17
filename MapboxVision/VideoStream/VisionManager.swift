@@ -17,22 +17,27 @@ import MapboxVisionCore
 public protocol VisionManagerDelegate: class {
     /**
         Tells the delegate that new segmentation is available.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateSegmentation segmentation: SegmentationMask?) -> Void
     /**
         Tells the delegate that new detections are available.
+        Requires at least low performance for detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateDetections detections: Detections?) -> Void
     /**
         Tells the delegate that new sign classification is available.
+        Requires at least low performance for detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
     /**
         Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
     /**
         Tells the delegate that new processed road description is available. These are smoothed and more stable values.
+        Requires at least low performance for segmentation.
      */
     func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
     /**
@@ -41,14 +46,16 @@ public protocol VisionManagerDelegate: class {
     func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
     /**
         Tells the delegate that distance to closest car ahead is updated. This event won't be emitted until calibration progress reaches isCalibrated state.
+        Requires at least low performance for segmentation and detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
     /**
         Tells the delegate that lane departure state is updated.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
     /**
-         Tells the delegate about the progress of camera pose estimation (calibration).
+        Tells the delegate about the progress of camera pose estimation (calibration).
     */
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
 }
@@ -248,22 +255,15 @@ public final class VisionManager {
     // MARK: Performance control
     
     /**
-        Used for configuration of segmentation-related tasks performance.
+        Performance configuration for machine learning models.
+        Default value is merged with dynamic performance mode and high rate.
     */
     
-    public var segmentationPerformance: ModelPerformance {
+    public var modelPerformanceConfig: ModelPerformanceConfig =
+        .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
         didSet {
-            updateSegmentationPerformance(segmentationPerformance)
-        }
-    }
-    
-    /**
-        Used for configuration of detection-related tasks performance.
-    */
-    
-    public var detectionPerformance: ModelPerformance {
-        didSet {
-            updateDetectionPerformance(detectionPerformance)
+            guard oldValue != modelPerformanceConfig else { return }
+            updateModelPerformanceConfig(modelPerformanceConfig)
         }
     }
     
@@ -397,9 +397,10 @@ public final class VisionManager {
     
     /**
         Operation mode determines whether vision manager works normally or focuses just on gathering data.
+        Default value is normal.
     */
     
-    public var operationMode: OperationMode {
+    public var operationMode: OperationMode = .normal {
         didSet {
             guard operationMode != oldValue else { return }
             updateOperationMode(operationMode)
@@ -441,16 +442,10 @@ public final class VisionManager {
     private init() {
         self.dependencies = AppDependency()
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
-        self.segmentationPerformance = ModelPerformance(mode: .dynamic, rate: .high)
-        self.detectionPerformance = ModelPerformance(mode: .dynamic, rate: .high)
-        
-        self.operationMode = .normal
         
         dependencies.core.config = .basic
 
-        updateSegmentationPerformance(segmentationPerformance)
-        updateDetectionPerformance(detectionPerformance)
-        
+        updateModelPerformanceConfig(modelPerformanceConfig)
         updateOperationMode(operationMode)
         
         registerDefaults()
@@ -574,6 +569,19 @@ public final class VisionManager {
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
+    }
+    
+    private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
+        switch config {
+        case let .merged(performance):
+            dependencies.core.config.useMergeMLModelLaunch = true
+            updateSegmentationPerformance(performance)
+            updateDetectionPerformance(performance)
+        case let .separate(segmentationPerformance, detectionPerformance):
+            dependencies.core.config.useMergeMLModelLaunch = false
+            updateSegmentationPerformance(segmentationPerformance)
+            updateDetectionPerformance(detectionPerformance)
+        }
     }
     
     private func updateSegmentationPerformance(_ performance: ModelPerformance) {

@@ -28,6 +28,10 @@ public enum ModelPerformanceMode {
 */
 public enum ModelPerformanceRate {
     /**
+        Identifies that output of particular model is not required.
+    */
+    case off
+    /**
         Low.
     */
     case low
@@ -42,9 +46,40 @@ public enum ModelPerformanceRate {
 }
 
 /**
+ Enumeration representing configuration for ML models
+*/
+
+public enum ModelPerformanceConfig: Equatable {
+    public static func == (lhs: ModelPerformanceConfig, rhs: ModelPerformanceConfig) -> Bool {
+        switch (lhs, rhs) {
+        case let (.merged(rhsPerformance), .merged(lhsPerformance)):
+            return rhsPerformance == lhsPerformance
+        case let (.separate(lhsSegmentationPerformance, lhsDetectionPerformance),
+                  .separate(rhsSegmentationPerformance, rhsDetectionPerformance)):
+            return
+                lhsSegmentationPerformance == rhsSegmentationPerformance &&
+                lhsDetectionPerformance == rhsDetectionPerformance
+        default:
+            return false
+        }
+    }
+    
+    /**
+        Segmentation and detection are produced by one merged model.
+        Works more efficiently in a workflow requiring comparable performance for detection and segmentation.
+     */
+    case merged(performance: ModelPerformance)
+    /**
+        Segmentation and detection are produced by separate models.
+        May perform better when segmentation and detection are required to produce output with different frequencies.
+     */
+    case separate(segmentationPerformance: ModelPerformance, detectionPerformance: ModelPerformance)
+}
+
+/**
  Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
 */
-public struct ModelPerformance {
+public struct ModelPerformance: Equatable {
     
     /**
         Performance Mode.
@@ -75,11 +110,14 @@ enum CoreModelPerformance {
 
 struct ModelPerformanceResolver {
     private struct PerformanceEntry {
+        let off: Float
         let low: Float
         let high: Float
         
         func fps(for rate: ModelPerformanceRate) -> Float {
             switch rate {
+            case .off:
+                return off
             case .low:
                 return low
             case .medium:
@@ -92,11 +130,11 @@ struct ModelPerformanceResolver {
     
     private static let isTopDevice = UIDevice.current.isTopDevice
     
-    private static let segmentationHighEnd   = PerformanceEntry(low: 2, high: 7)
-    private static let detectionHighEnd      = PerformanceEntry(low: 4, high: 12)
+    private static let segmentationHighEnd   = PerformanceEntry(off: 1, low: 2, high: 7)
+    private static let detectionHighEnd      = PerformanceEntry(off: 3, low: 4, high: 12)
     
-    private static let segmentationLowEnd    = PerformanceEntry(low: 2, high: 5)
-    private static let detectionLowEnd       = PerformanceEntry(low: 4, high: 11)
+    private static let segmentationLowEnd    = PerformanceEntry(off: 1, low: 2, high: 5)
+    private static let detectionLowEnd       = PerformanceEntry(off: 3, low: 4, high: 11)
     
     private static func performanceEntry(for model: ModelType) -> PerformanceEntry {
         switch model {
