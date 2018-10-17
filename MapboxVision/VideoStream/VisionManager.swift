@@ -17,22 +17,27 @@ import MapboxVisionCore
 public protocol VisionManagerDelegate: class {
     /**
         Tells the delegate that new segmentation is available.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateSegmentation segmentation: SegmentationMask?) -> Void
     /**
         Tells the delegate that new detections are available.
+        Requires at least low performance for detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateDetections detections: Detections?) -> Void
     /**
         Tells the delegate that new sign classification is available.
+        Requires at least low performance for detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
     /**
         Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
     /**
         Tells the delegate that new processed road description is available. These are smoothed and more stable values.
+        Requires at least low performance for segmentation.
      */
     func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
     /**
@@ -41,14 +46,16 @@ public protocol VisionManagerDelegate: class {
     func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
     /**
         Tells the delegate that distance to closest car ahead is updated. This event won't be emitted until calibration progress reaches isCalibrated state.
+        Requires at least low performance for segmentation and detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
     /**
         Tells the delegate that lane departure state is updated.
+        Requires at least low performance for segmentation.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
     /**
-         Tells the delegate about the progress of camera pose estimation (calibration).
+        Tells the delegate about the progress of camera pose estimation (calibration).
     */
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
 }
