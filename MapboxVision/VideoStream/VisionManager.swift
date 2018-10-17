@@ -248,22 +248,15 @@ public final class VisionManager {
     // MARK: Performance control
     
     /**
-        Used for configuration of segmentation-related tasks performance.
+        Performance configuration for machine learning models.
+        Default value is merged with dynamic performance mode and high rate.
     */
     
-    public var segmentationPerformance: ModelPerformance {
+    public var modelPerformanceConfig: ModelPerformanceConfig =
+        .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
         didSet {
-            updateSegmentationPerformance(segmentationPerformance)
-        }
-    }
-    
-    /**
-        Used for configuration of detection-related tasks performance.
-    */
-    
-    public var detectionPerformance: ModelPerformance {
-        didSet {
-            updateDetectionPerformance(detectionPerformance)
+            guard oldValue != modelPerformanceConfig else { return }
+            updateModelPerformanceConfig(modelPerformanceConfig)
         }
     }
     
@@ -397,9 +390,10 @@ public final class VisionManager {
     
     /**
         Operation mode determines whether vision manager works normally or focuses just on gathering data.
+        Default value is normal.
     */
     
-    public var operationMode: OperationMode {
+    public var operationMode: OperationMode = .normal {
         didSet {
             guard operationMode != oldValue else { return }
             updateOperationMode(operationMode)
@@ -441,16 +435,10 @@ public final class VisionManager {
     private init() {
         self.dependencies = AppDependency()
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
-        self.segmentationPerformance = ModelPerformance(mode: .dynamic, rate: .high)
-        self.detectionPerformance = ModelPerformance(mode: .dynamic, rate: .high)
-        
-        self.operationMode = .normal
         
         dependencies.core.config = .basic
 
-        updateSegmentationPerformance(segmentationPerformance)
-        updateDetectionPerformance(detectionPerformance)
-        
+        updateModelPerformanceConfig(modelPerformanceConfig)
         updateOperationMode(operationMode)
         
         registerDefaults()
@@ -574,6 +562,19 @@ public final class VisionManager {
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
+    }
+    
+    private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
+        switch config {
+        case let .merged(performance):
+            dependencies.core.config.useMergeMLModelLaunch = true
+            updateSegmentationPerformance(performance)
+            updateDetectionPerformance(performance)
+        case let .separate(segmentationPerformance, detectionPerformance):
+            dependencies.core.config.useMergeMLModelLaunch = false
+            updateSegmentationPerformance(segmentationPerformance)
+            updateDetectionPerformance(detectionPerformance)
+        }
     }
     
     private func updateSegmentationPerformance(_ performance: ModelPerformance) {
