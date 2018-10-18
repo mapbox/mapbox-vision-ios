@@ -86,6 +86,7 @@ final class RecordCoordinator {
         let cachePath = DocumentsLocation.cache.path
         
         recreateFolder(path: recordingPath)
+        createStructure(at: recordingPath)
         
         currentRecordingPath = RecordingPath(settings: videoSettings)
         
@@ -272,6 +273,15 @@ final class RecordCoordinator {
                                             attributes: nil)
         } catch {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func createStructure(at path: String) {
+        do {
+            let imagesDirectoryPath = (path as NSString).appendingPathComponent("images")
+            try FileManager.default.createDirectory(atPath: imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("ERROR: failure during creating structure. Error: \(error)")
         }
     }
 }
