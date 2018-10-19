@@ -52,6 +52,7 @@ final class RecordCoordinator {
     private let videoSettings: VideoSettings
 
     private var jsonWriter: FileRecorder?
+    private var imageWriter: ImageRecorder = ImageRecorder()
     private let processingQueue = DispatchQueue(label: "com.mapbox.RecordCoordinator.Processing")
     
     private var currentReferenceTime: Float?
@@ -182,6 +183,21 @@ final class RecordCoordinator {
                                                log: log)
             trimClip(chunk: startChunk, request: trimRequest)
         }
+    }
+    
+    func saveImage(image: Image, path: String) {
+        guard isRecording else { return }
+        
+        guard let uiimage = image.getUIImage() else {
+            assertionFailure("ERROR: Unable to convert image to UIImage")
+            return
+        }
+        let imagePath = ((DocumentsLocation.currentRecording.path as NSString)
+            .appendingPathComponent("images") as NSString)
+            .appendingPathComponent(path)
+            .appending(".\(RecordFileType.image.fileExtension)")
+        
+        imageWriter.record(image: uiimage, to: imagePath)
     }
     
     func clearCache() {

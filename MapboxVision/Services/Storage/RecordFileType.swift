@@ -23,7 +23,7 @@ enum RecordFileType: Int {
         case .archive:
             return "zip"
         case .image:
-            return "jpeg"
+            return "jpg"
         }
     }
 }
