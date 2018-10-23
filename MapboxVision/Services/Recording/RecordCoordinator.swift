@@ -76,24 +76,17 @@ final class RecordCoordinator {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
         
-        try FileManager.default.createDirectory(atPath: DocumentsLocation.recordings.path,
-                                                withIntermediateDirectories: true,
-                                                attributes: nil)
-        
         isRecording = true
         currentReferenceTime = referenceTime
         
-        let recordingPath = DocumentsLocation.currentRecording.path
         let cachePath = DocumentsLocation.cache.path
-        
-        recreateFolder(path: recordingPath)
-        createStructure(at: recordingPath)
-        
-        currentRecordingPath = RecordingPath(settings: videoSettings)
-        
-        jsonWriter = FileRecorder(path: recordingPath.appending(videoLogFile))
-        
+        recreateFolder(path: DocumentsLocation.currentRecording.path)
         recreateFolder(path: cachePath)
+        
+        let recordingPath = RecordingPath(basePath: .currentRecording, settings: videoSettings)
+        currentRecordingPath = recordingPath
+        
+        jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
         
         currentStartTime = DispatchTime.now()
         currentEndTime = nil
@@ -102,7 +95,7 @@ final class RecordCoordinator {
         videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
         videoRecorder.startRecording(to: cachePath)
         
-        delegate?.recordingStarted(path: recordingPath)
+        delegate?.recordingStarted(path: recordingPath.recordingPath)
     }
     
     func stopRecording() {
@@ -123,10 +116,9 @@ final class RecordCoordinator {
     
     func makeClip(from startTime: Float, to endTime: Float) {
         guard
-            let referenceTime = currentReferenceTime
+            let referenceTime = currentReferenceTime,
+            let recordingPath = currentRecordingPath?.recordingPath
         else { return }
-        
-        let recordingPath = DocumentsLocation.currentRecording.path
         
         let relativeStart = startTime - referenceTime
         let relativeEnd = endTime - referenceTime
@@ -186,14 +178,13 @@ final class RecordCoordinator {
     }
     
     func saveImage(image: Image, path: String) {
-        guard isRecording else { return }
+        guard let recordingPath = currentRecordingPath else { return }
         
         guard let uiimage = image.getUIImage() else {
             assertionFailure("ERROR: Unable to convert image to UIImage")
             return
         }
-        let imagePath = ((DocumentsLocation.currentRecording.path as NSString)
-            .appendingPathComponent("images") as NSString)
+        let imagePath = recordingPath.imagesDirectoryPath
             .appendingPathComponent(path)
             .appending(".\(RecordFileType.image.fileExtension)")
         
@@ -201,21 +192,22 @@ final class RecordCoordinator {
     }
     
     func clearCache() {
-        RecordingPath.clearBasePath()
+        RecordingPath.clear(basePath: .recordings)
     }
     
     private func recordingStopped() {
         trimRequestCache.removeAll()
         jsonWriter = nil
         
-        if let path = currentRecordingPath?.recordingPath {
+        if let path = currentRecordingPath {
             do {
-                try FileManager.default.moveItem(atPath: DocumentsLocation.currentRecording.path, toPath: path)
+                try path.move(to: .recordings)
             } catch {
                 print("RecordCoordinator: moving current recording to \(path) failed. Error: \(error)")
             }
         }
         
+        currentRecordingPath = nil
         endBackgroundTask()
         isReady = true
         
@@ -252,10 +244,13 @@ final class RecordCoordinator {
     }
     
     private func copyClip(chunk: Int, clipStart: Float, clipEnd: Float) {
-        guard let referenceTime = currentReferenceTime else { return }
+        guard
+            let referenceTime = currentReferenceTime,
+            let recordingPath = currentRecordingPath
+        else { return }
         
         let sourcePath = chunkPath(for: chunk)
-        let destinationPath = self.destinationPath(basePath: DocumentsLocation.currentRecording.path, clipStart, clipEnd)
+        let destinationPath = self.destinationPath(basePath: recordingPath.recordingPath, clipStart, clipEnd)
         let log = VideoLog(name: (destinationPath as NSString).lastPathComponent,
                            start: referenceTime + clipStart,
                            end: referenceTime + clipEnd)
@@ -289,15 +284,6 @@ final class RecordCoordinator {
                                             attributes: nil)
         } catch {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
-        }
-    }
-    
-    private func createStructure(at path: String) {
-        do {
-            let imagesDirectoryPath = (path as NSString).appendingPathComponent("images")
-            try FileManager.default.createDirectory(atPath: imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print("ERROR: failure during creating structure. Error: \(error)")
         }
     }
 }
