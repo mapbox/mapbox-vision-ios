@@ -736,19 +736,15 @@ extension VisionManager: VideoStreamInteractable {
     }
     
     func selectRecording(at url: URL) {
-        let showPath = url.lastPathComponent
-        guard let recordingPath = RecordingPath(showPath: showPath, settings: dependencies.videoSettings) else { return }
+        guard let recordingPath = RecordingPath(existing: url.path, settings: dependencies.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
     
     func startBroadcasting(at timestamp: String) {
         guard
             let showPath = ShowcaseRecordDataSource().recordDirectories.first,
-            let path = RecordingPath(
-                showPath: showPath.lastPathComponent,
-                settings: dependencies.videoSettings
-            )
-            else { return }
+            let path = RecordingPath(existing: showPath.path, settings: dependencies.videoSettings)
+        else { return }
         
         let startTime = ms(from: timestamp)
         setRecording(at: path, startTime: startTime)

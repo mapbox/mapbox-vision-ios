@@ -10,7 +10,7 @@ import Foundation
 import MapboxVisionCore
 import CoreMotion
 
-final class Platform: CVAPlatformInterface {
+final class Platform: PlatformInterface {
     
     struct Dependencies {
         let recordCoordinator: RecordCoordinator
@@ -56,5 +56,9 @@ final class Platform: CVAPlatformInterface {
         }
         
         dependencies.eventsManager.sendEvent(name: name, entries: entries)
+    }
+    
+    func save(image: Image, path: String) {
+        dependencies.recordCoordinator.saveImage(image: image, path: path)
     }
 }

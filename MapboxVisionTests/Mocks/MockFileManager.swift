@@ -16,31 +16,29 @@ final class MockFileManager: FileManagerProtocol {
         let size: Int64
     }
     
-    var data: [URL: [File]] = [:]
+    var data: [File] = []
     
     func contentsOfDirectory(atPath path: String) throws -> [String] {
         return try contentsOfDirectory(at: URL(fileURLWithPath: path, isDirectory: true)).map { $0.lastPathComponent }
     }
     
     func contentsOfDirectory(at url: URL) throws -> [URL] {
-        return data[url]?.map { $0.url } ?? []
+        return data.filter { $0.url.deletingLastPathComponent() == url }.map { $0.url }
     }
     
     func fileExists(atPath path: String) -> Bool {
         let url = URL(fileURLWithPath: path)
-        return data.values.flatMap { $0 }.contains { $0.url == url }
+        return data.contains { $0.url == url }
     }
     
     func createFile(atPath path: String, contents: Data?) -> Bool {
         let fileUrl = URL(fileURLWithPath: path)
         let file = File(url: fileUrl, size: fileSize(at: fileUrl))
-        let dirUrl = fileUrl.deletingLastPathComponent()
-        data[dirUrl]?.append(file)
+        data.append(file)
         return true
     }
     
     func fileSize(at url: URL) -> Int64 {
-        let dirUrl = url.deletingLastPathComponent()
-        return data[dirUrl]?.first { $0.url == url }?.size ?? 0
+        return data.first { $0.url == url }?.size ?? 0
     }
 }

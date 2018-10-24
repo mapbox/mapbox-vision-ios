@@ -11,13 +11,14 @@ import UIKit
 
 final class ImageRecorder {
     func record(image: UIImage, to path: String) {
-        DispatchQueue.global(qos: .utility).async {
-            guard let data = UIImagePNGRepresentation(image) else { return }
-            do {
-                try data.write(to: URL(fileURLWithPath: path))
-            } catch {
-                assertionFailure(error.localizedDescription)
-            }
+        guard let data = UIImageJPEGRepresentation(image, 1.0) else {
+            assertionFailure("ERROR: Unable to obtain data representation of UIImage")
+            return
+        }
+        do {
+            try data.write(to: URL(fileURLWithPath: path))
+        } catch {
+            assertionFailure("ERROR: Unable to save image to \(path). Error: \(error)")
         }
     }
 }

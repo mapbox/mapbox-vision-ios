@@ -16,27 +16,22 @@ enum DocumentsLocation: String {
     
     var path: String {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        return (documentsPath as NSString).appendingPathComponent(rawValue).appending("/")
+        return documentsPath.appendingPathComponent(rawValue, isDirectory: true)
     }
 }
 
 struct RecordingPath {
-    
-    static var basePath: String {
-        return DocumentsLocation.recordings.path
-    }
-    
-    static func generatePath() -> String {
+    static func generateDirectoryName() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let currentDateString = dateFormatter.string(from: Date())
         
-        return (basePath as NSString).appendingPathComponent(currentDateString).appending("/")
+        return currentDateString
     }
     
-    static func clearBasePath() {
-        let directoryPath = basePath
+    static func clear(basePath: DocumentsLocation) {
+        let directoryPath = basePath.path
         do {
             try FileManager.default.removeItem(atPath: directoryPath)
         } catch {
@@ -47,30 +42,59 @@ struct RecordingPath {
     let recordingPath: String
     let settings: VideoSettings
     
-    init(settings: VideoSettings) {
+    private let basePath: DocumentsLocation
+    
+    init(basePath: DocumentsLocation = DocumentsLocation.recordings, directory: String? = nil, settings: VideoSettings) {
         self.settings = settings
-        recordingPath = RecordingPath.generatePath()
+        self.basePath = basePath
+        let dir = directory ?? RecordingPath.generateDirectoryName()
+        recordingPath = basePath.path.appendingPathComponent(dir, isDirectory: true)
+        
+        createStructure()
     }
     
-    init(path: String, settings: VideoSettings) {
+    init?(existing path: String, settings: VideoSettings) {
+        guard let basePath = DocumentsLocation(rawValue: path.deletingLastPathComponent) else { return nil }
+        self.basePath = basePath
+        
         self.settings = settings
-        recordingPath = path
-    }
-    
-    init?(showPath: String, settings: VideoSettings) {
-        self.settings = settings
-        recordingPath = (DocumentsLocation.showcase.path as NSString).appendingPathComponent(showPath).appending("/")
-        var isDirectory = ObjCBool(false)
-        guard FileManager.default.fileExists(atPath: recordingPath, isDirectory: &isDirectory), isDirectory.boolValue else {
-            return nil
-        }
+        self.recordingPath = path
+        
+        guard exists else { return nil }
     }
     
     var videoPath: String {
-        return (recordingPath as NSString).appendingPathComponent("video.\(settings.fileExtension)")
+        return recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
     }
     
     var videosLogPath: String {
-        return (recordingPath as NSString).appendingPathComponent("videos.json")
+        return recordingPath.appendingPathComponent("videos.json")
+    }
+    
+    var imagesDirectoryPath: String {
+        return recordingPath.appendingPathComponent("images", isDirectory: true)
+    }
+    
+    @discardableResult
+    func move(to newBasePath: DocumentsLocation) throws -> RecordingPath {
+        let newPath = recordingPath.replacingOccurrences(of: self.basePath.path, with: newBasePath.path)
+        
+        try FileManager.default.moveItem(atPath: recordingPath, toPath: newPath)
+        
+        let directory = recordingPath.lastPathComponent
+        return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
+    }
+    
+    private func createStructure() {
+        do {
+            try FileManager.default.createDirectory(atPath: imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("ERROR: failure during creating structure. Error: \(error)")
+        }
+    }
+    
+    private var exists: Bool {
+        var isDirectory = ObjCBool(false)
+        return FileManager.default.fileExists(atPath: recordingPath, isDirectory: &isDirectory) && isDirectory.boolValue
     }
 }
