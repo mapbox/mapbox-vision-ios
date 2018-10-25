@@ -695,7 +695,7 @@ extension VisionManager: ARDataProvider {
     /**
         AR Qubic spline of route
     */
-    public func getARRouteData() -> ARRouteData {
+    public func getARRouteData() -> ARRouteData? {
         return dependencies.core.getARRouteData()
     }
     
