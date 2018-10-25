@@ -18,7 +18,7 @@ public protocol ARDataProvider {
     /**
         AR Qubic spline of route
     */
-    func getARRouteData() -> ARRouteData
+    func getARRouteData() -> ARRouteData?
     /**
         Current frame
     */
