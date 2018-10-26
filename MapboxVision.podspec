@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVision"
-  s.version      = "0.0.1-alpha.3"
+  s.version      = "0.0.1-alpha.4"
   s.summary      = "ML empowered vision framework"
 
   s.homepage     = 'https://www.mapbox.com/vision/'
@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
 
   s.swift_version = '4.1'
 
-  s.dependency "MapboxVisionCore", "= 0.0.1-alpha.3"
+  s.dependency "MapboxVisionCore", "= 0.0.1-alpha.4"
   s.dependency "Zip",   "~> 1.1.0"
   s.dependency "MapboxMobileEvents", "~> 0.5.1"
 
