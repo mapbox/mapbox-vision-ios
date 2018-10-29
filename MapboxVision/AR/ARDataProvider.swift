@@ -18,9 +18,9 @@ public protocol ARDataProvider {
     /**
         AR Qubic spline of route
     */
-    func getARRouteData() -> ARRouteData
+    func getARRouteData() -> ARRouteData?
     /**
-        Current frame
+        Last captured frame from video stream
     */
     func getCurrentFrame() -> CVPixelBuffer?
 }

@@ -45,9 +45,7 @@ final class EventsManager {
     }
     
     func sendEvent(name: String, entries: [String: Any]) {
-        #if PROD
         manager.enqueueEvent(withName: name, attributes: entries)
-        #endif
     }
 }
 

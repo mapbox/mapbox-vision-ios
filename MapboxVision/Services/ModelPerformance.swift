@@ -50,6 +50,11 @@ public enum ModelPerformanceRate {
 */
 
 public enum ModelPerformanceConfig: Equatable {
+    
+    /**
+     :nodoc:
+     */
+    
     public static func == (lhs: ModelPerformanceConfig, rhs: ModelPerformanceConfig) -> Bool {
         switch (lhs, rhs) {
         case let (.merged(rhsPerformance), .merged(lhsPerformance)):
