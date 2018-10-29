@@ -26,6 +26,6 @@ Pod::Spec.new do |s|
 
   s.dependency "MapboxVisionCore", "= 0.0.1-alpha.4"
   s.dependency "Zip",   "~> 1.1.0"
-  s.dependency "MapboxMobileEvents", "~> 0.5.1"
+  s.dependency "MapboxMobileEvents", "~> 0.6.0"
 
 end
