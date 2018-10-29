@@ -58,6 +58,7 @@
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
+		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
 		9D72A606297AB6773AB5BAAC /* Streamable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AE8DCB328563DEF2ADF0 /* Streamable.swift */; };
 		9D72AD9942D85AAFFFC93CA4 /* ARDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A90A515B6C4D75C77F36 /* ARDataProvider.swift */; };
@@ -155,6 +156,7 @@
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManeuverLocation.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
+		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		9D72A90A515B6C4D75C77F36 /* ARDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDataProvider.swift; sourceTree = "<group>"; };
 		9D72AE8DCB328563DEF2ADF0 /* Streamable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Streamable.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
 				2E6033532142900C0050EDB3 /* Images.swift */,
 				9D72AE8DCB328563DEF2ADF0 /* Streamable.swift */,
+				2EC332A2217E02BA00E041FE /* String.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */,
 				2E4EE27F20F05661003431B3 /* RecordCoordinator.swift in Sources */,
 				2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */,
+				2EC332A3217E02BA00E041FE /* String.swift in Sources */,
 				2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */,
 				2E4EE2EF20F0EE6C003431B3 /* RecordPickerViewController.swift in Sources */,
 				2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */,
@@ -783,7 +787,6 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "PROD=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -794,7 +797,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PROD;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;

@@ -10,6 +10,7 @@ enum RecordFileType: Int {
     case bin
     case json
     case archive
+    case image
 
     var fileExtension: String {
         switch self {
@@ -21,6 +22,8 @@ enum RecordFileType: Int {
             return "json"
         case .archive:
             return "zip"
+        case .image:
+            return "jpg"
         }
     }
 }
