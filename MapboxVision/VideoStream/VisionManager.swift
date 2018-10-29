@@ -45,7 +45,7 @@ public protocol VisionManagerDelegate: class {
     */
     func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
     /**
-        Tells the delegate that distance to closest car ahead is updated. This event won't be emitted until calibration progress reaches isCalibrated state.
+        Tells the delegate description about situation on the road, including collision objects, distance to objects and much more. This event won't be emitted until calibration progress reaches isCalibrated state.
         Requires at least low performance for segmentation and detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
@@ -698,7 +698,9 @@ extension VisionManager: ARDataProvider {
     public func getARRouteData() -> ARRouteData? {
         return dependencies.core.getARRouteData()
     }
-    
+    /**
+        Last captured frame from video session
+    */
     public func getCurrentFrame() -> CVPixelBuffer? {
         return currentFrame
     }
