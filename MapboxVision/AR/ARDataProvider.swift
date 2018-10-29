@@ -20,7 +20,7 @@ public protocol ARDataProvider {
     */
     func getARRouteData() -> ARRouteData?
     /**
-        Last captured frame from video session
+        Last captured frame from video stream
     */
     func getCurrentFrame() -> CVPixelBuffer?
 }

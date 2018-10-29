@@ -45,7 +45,7 @@ public protocol VisionManagerDelegate: class {
     */
     func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
     /**
-        Tells the delegate description about situation on the road, including collision objects, distance to objects and much more. This event won't be emitted until calibration progress reaches isCalibrated state.
+     Tells the delegate that description of the situation on the road is updated (see [WorldDescription](https://www.mapbox.com/ios-sdk/vision/data-types/Classes/WorldDescription.html) documentation for available properties). This event won't be emitted until calibration progress reaches isCalibrated state.
         Requires at least low performance for segmentation and detection.
     */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
@@ -687,20 +687,20 @@ public final class VisionManager {
 
 extension VisionManager: ARDataProvider {
     /**
-        Device parameters
+     :nodoc
     */
     public func getCameraParams() -> ARCameraParameters {
         return dependencies.core.getARCameraParams()
     }
     /**
-        AR Qubic spline of route
-    */
+     :nodoc
+     */
     public func getARRouteData() -> ARRouteData? {
         return dependencies.core.getARRouteData()
     }
     /**
-        Last captured frame from video session
-    */
+     :nodoc
+     */
     public func getCurrentFrame() -> CVPixelBuffer? {
         return currentFrame
     }
