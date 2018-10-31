@@ -58,6 +58,9 @@ public protocol VisionManagerDelegate: class {
         Tells the delegate about the progress of camera pose estimation (calibration).
     */
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
+    
+    // :nodoc:
+    func visionManager(_ visionManager: VisionManager, didUpdateSpeedLimit speedLimit: SpeedLimitValue?) -> Void
 }
 
 /**
@@ -338,6 +341,13 @@ public final class VisionManager {
         }
     }
     
+    public var lastSpeedLimit: SpeedLimitValue? {
+        didSet {
+            guard oldValue != lastSpeedLimit else { return }
+            delegate?.visionManager(self, didUpdateSpeedLimit: lastSpeedLimit)
+        }
+    }
+    
     // MARK: Presentation
     
     /**
@@ -518,6 +528,8 @@ public final class VisionManager {
             self.worldDescription = self.dependencies.core.getWorldDescription()
             
             self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
+            
+            self.lastSpeedLimit = self.dependencies.core.getCurrentSpeedLimit()
             
             guard let presenter = self.presenter else { return }
             
