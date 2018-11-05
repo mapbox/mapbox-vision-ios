@@ -54,7 +54,7 @@ struct RecordingPath {
     }
     
     init?(existing path: String, settings: VideoSettings) {
-        guard let basePath = DocumentsLocation(rawValue: path.deletingLastPathComponent) else { return nil }
+        guard let basePath = DocumentsLocation(rawValue: path.deletingLastPathComponent.lastPathComponent) else { return nil }
         self.basePath = basePath
         
         self.settings = settings
