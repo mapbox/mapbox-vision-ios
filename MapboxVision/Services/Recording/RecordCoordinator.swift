@@ -70,6 +70,8 @@ final class RecordCoordinator {
         self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit, settings: settings)
         self.videoTrimmer = VideoTrimmer(videoSettings: settings)
         videoRecorder.delegate = self
+        
+        createFolder(path: DocumentsLocation.recordings.path)
     }
     
     func startRecording(referenceTime: Float) throws {
@@ -284,6 +286,14 @@ final class RecordCoordinator {
                                             attributes: nil)
         } catch {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
+        }
+    }
+    
+    private func createFolder(path: String) {
+        do {
+            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            assertionFailure("Folder creation has failed for path \(path). Error: \(error.localizedDescription)")
         }
     }
 }
