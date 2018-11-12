@@ -351,6 +351,7 @@ final class VisionViewController: VisionPresentationViewController {
 extension VisionViewController: VideoStreamPresentable {
     func present(sampleBuffer: CMSampleBuffer) {
         DispatchQueue.main.async {
+            guard self.viewIfLoaded?.window != nil else { return }
             self.videoStreamView.enqueue(sampleBuffer)
         }
     }
