@@ -49,8 +49,6 @@ final class RecordedDataProvider: DataProvider {
     func stop() {}
 }
 
-private let motionUpdateInterval: TimeInterval = 1 / 30.0
-
 final class RealtimeDataProvider: DataProvider {
     struct Dependencies {
         let core: Core
@@ -68,7 +66,7 @@ final class RealtimeDataProvider: DataProvider {
     func start() {
         dependencies.metaInfoManager.addObserver(self)
         dependencies.metaInfoManager.start()
-        dependencies.motionManager.start(updateInterval: motionUpdateInterval)
+        dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
     func update() {}
