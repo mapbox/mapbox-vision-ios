@@ -127,9 +127,6 @@ protocol VideoStreamOutput: class {
     func locationUpdated(_ location: CLLocation)
 }
 
-private let motionUpdateInterval = 0.02
-private let signTrackerMaxCapacity = 5
-
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
 */
@@ -184,6 +181,7 @@ public final class VisionManager {
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
     private var videoStream: Streamable
+    private var interruptionStartTime: Date?
     
     private let sessionManager = SessionManager()
     
@@ -621,12 +619,14 @@ public final class VisionManager {
     private func subscribeToNotifications() {
         let center = NotificationCenter.default
         notificationObservers.append(center.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
+            self?.stopInterruption()
             guard let `self` = self, self.isStoppedForBackground else { return }
             self.isStoppedForBackground = false
             self.start()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
+            self?.interruptionStartTime = Date()
             guard let `self` = self, self.isStarted else { return }
             self.isStoppedForBackground = true
             self.stop()
@@ -679,6 +679,15 @@ public final class VisionManager {
         
         DispatchQueue.main.async { [weak self] in
             self?.setDataProvider(recordedDataProvider)
+        }
+    }
+    
+    private func stopInterruption() {
+        guard let interruptionStartTime = interruptionStartTime else { return }
+        
+        let elapsedTime = Date().timeIntervalSince(interruptionStartTime)
+        if elapsedTime >= Constants.foregroundInterruptionResetThreshold {
+            dependencies.deviceInfo.reset()
         }
     }
     
