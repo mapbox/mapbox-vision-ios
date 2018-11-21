@@ -34,10 +34,14 @@ final class EventsManager {
     }()
     
     init() {
+        let bundle = Bundle(for: type(of: self))
+        let name = bundle.infoDictionary!["CFBundleName"] as! String
+        let version = bundle.infoDictionary!["CFBundleShortVersionString"] as! String
+        
         manager.initialize(
             withAccessToken: accessToken,
-            userAgentBase: "MapboxVision",
-            hostSDKVersion: String(MapboxVisionVersionNumber)
+            userAgentBase: name,
+            hostSDKVersion: version
         )
         manager.sendTurnstileEvent()
         manager.isMetricsEnabled = true
