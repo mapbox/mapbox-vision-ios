@@ -60,6 +60,14 @@ public protocol VisionManagerDelegate: class {
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
 }
 
+public protocol VisionManagerRoadRestrictionsDelegate: class {
+    
+    /**
+        Tells the delegate that current speed limit is updated.
+     */
+    func visionManager(_ visionManager: VisionManager, didUpdateSpeedLimit speedLimit: SpeedLimit?) -> Void
+}
+
 /**
     The interface that allows to receive instructions on how to render navigation route. Object that implements this interface is supposed to display navigation route based on provided instructions.
 */
@@ -134,9 +142,8 @@ protocol VideoStreamOutput: class {
 public final class VisionManager {
     
     /**
-     Shared instance of VisionManager.
+        Shared instance of VisionManager.
     */
-    
     public static let shared = VisionManager()
     
     /**
@@ -145,9 +152,13 @@ public final class VisionManager {
     public weak var delegate: VisionManagerDelegate?
     
     /**
+        The delegate receiving events about currently applied road restrictions.
+     */
+    public weak var roadRestrictionsDelegate: VisionManagerRoadRestrictionsDelegate?
+    
+    /**
         Set delegate which will receive and handle instructions on rendering AR navigation.
     */
-    
     public weak var arDelegate: VisionManagerARDelegate?
     
     @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
@@ -336,6 +347,19 @@ public final class VisionManager {
         }
     }
     
+    // MARK: Road restrictions
+    
+    /**
+        Currently applied speed limit.
+     */
+    
+    public var speedLimit: SpeedLimit? {
+        didSet {
+            guard oldValue?.identifier != speedLimit?.identifier else { return }
+            roadRestrictionsDelegate?.visionManager(self, didUpdateSpeedLimit: speedLimit)
+        }
+    }
+    
     // MARK: Presentation
     
     /**
@@ -516,6 +540,8 @@ public final class VisionManager {
             self.worldDescription = self.dependencies.core.getWorldDescription()
             
             self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
+            
+            self.speedLimit = self.dependencies.core.getSpeedLimit()
             
             guard let presenter = self.presenter else { return }
             
