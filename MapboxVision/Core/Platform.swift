@@ -10,8 +10,8 @@ import Foundation
 import MapboxVisionCore
 import CoreMotion
 
-final class Platform: PlatformInterface {
-    
+final class Platform: NSObject, PlatformInterface {
+
     struct Dependencies {
         let recordCoordinator: RecordCoordinator
         let eventsManager: EventsManager
@@ -60,5 +60,9 @@ final class Platform: PlatformInterface {
     
     func save(image: Image, path: String) {
         dependencies.recordCoordinator.saveImage(image: image, path: path)
+    }
+    
+    func update(_ market: Market) {
+        
     }
 }
