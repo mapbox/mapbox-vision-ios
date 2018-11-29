@@ -15,33 +15,37 @@ enum VideoRecorderError: LocalizedError {
     case recordingFailed
 }
 
+private extension VideoSettings {
+    var outputSettings: [String : Any] {
+        return [
+            AVVideoWidthKey: self.width,
+            AVVideoHeightKey: self.height,
+            AVVideoCodecKey: self.codec,
+            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: self.bitRate]
+        ]
+    }
+}
+
 final class VideoRecorder {
-    private let assetWriterInput: AVAssetWriterInput
+    private var currentAssetWriterInput: AVAssetWriterInput?
     private var currentAssetWriter: AVAssetWriter?
     private(set) var isRecording = false
-    private let settings: VideoSettings
     private var startTime: CMTime?
     private var currentTime: CMTime?
     
     private let writerQueue = DispatchQueue(label: "com.mapbox.VideoRecorder")
+    
+    var settings: VideoSettings
 
     init(settings: VideoSettings) {
         self.settings = settings
-        
-        let outputSettings: [String : Any] = [
-            AVVideoWidthKey: settings.width,
-            AVVideoHeightKey: settings.height,
-            AVVideoCodecKey: settings.codec,
-            AVVideoCompressionPropertiesKey: [
-                AVVideoAverageBitRateKey: settings.bitRate
-            ]
-        ]
-
-        assetWriterInput = AVAssetWriterInput(mediaType: .video, outputSettings: outputSettings)
-        assetWriterInput.expectsMediaDataInRealTime = true
     }
     
     func startRecording(to path: String) {
+        let assetWriterInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings.outputSettings)
+        currentAssetWriterInput = assetWriterInput
+        assetWriterInput.expectsMediaDataInRealTime = true
+        
         writerQueue.async {
             let outputURL = URL(fileURLWithPath: path)
             let assetWriter: AVAssetWriter
@@ -52,7 +56,7 @@ final class VideoRecorder {
                 return
             }
             
-            assetWriter.add(self.assetWriterInput)
+            assetWriter.add(assetWriterInput)
             
             self.currentAssetWriter = assetWriter
             self.isRecording = true
@@ -72,8 +76,12 @@ final class VideoRecorder {
                 return
             }
             
-            guard let `self` = self else { return }
-            self.assetWriterInput.markAsFinished()
+            guard
+                let `self` = self,
+                let assetWriterInput = self.currentAssetWriterInput
+            else { return }
+            
+            assetWriterInput.markAsFinished()
             if let currentTime = self.currentTime {
                 writer.endSession(atSourceTime: currentTime)
             }
@@ -110,11 +118,11 @@ final class VideoRecorder {
     }
     
     private func append(_ sampleBuffer: CMSampleBuffer, completion: @escaping ((Result<Float64, VideoRecorderError>) -> Void)) {
-        guard self.assetWriterInput.isReadyForMoreMediaData else {
+        guard let assetWriterInput = currentAssetWriterInput, assetWriterInput.isReadyForMoreMediaData else {
             completion(.error(.notReadyForData))
             return
         }
-        self.assetWriterInput.append(sampleBuffer)
+        assetWriterInput.append(sampleBuffer)
         
         self.currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         

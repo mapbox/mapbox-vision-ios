@@ -49,7 +49,6 @@ final class RecordCoordinator {
     
     private let videoRecorder: VideoBuffer
     private let videoTrimmer: VideoTrimmer
-    private let videoSettings: VideoSettings
 
     private var jsonWriter: FileRecorder?
     private var imageWriter: ImageRecorder = ImageRecorder()
@@ -64,6 +63,12 @@ final class RecordCoordinator {
     
     // determines if the source video is saved
     var savesSourceVideo: Bool = false
+    
+    var videoSettings: VideoSettings {
+        didSet {
+            videoRecorder.settings = videoSettings
+        }
+    }
     
     init(settings: VideoSettings) {
         self.videoSettings = settings

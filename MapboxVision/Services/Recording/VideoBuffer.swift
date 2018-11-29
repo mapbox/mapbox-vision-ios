@@ -22,9 +22,13 @@ final class VideoBuffer {
     
     var chunkLimit: Int
     
-    private let settings: VideoSettings
-    private let recorder: VideoRecorder
+    var settings: VideoSettings {
+        didSet {
+            recorder.settings = settings
+        }
+    }
     
+    private let recorder: VideoRecorder
     private var chunkCounter: Int = 0
     private var currentTimer: Timer?
     private var currentBasePath: String?

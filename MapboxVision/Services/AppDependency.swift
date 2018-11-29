@@ -18,7 +18,6 @@ protocol VisionDependency {
     var videoSampler: VideoSampler { get }
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
-    var videoSettings: VideoSettings { get }
     var countryService: CountryService { get }
     var deviceInfo: DeviceInfoProvidable { get }
     var showcaseRecordDataSource: RecordDataSource { get }
@@ -44,23 +43,14 @@ final class AppDependency: VisionDependency {
     private let eventsManager = EventsManager()
     private let platform: Platform
     
-    let videoSettings = VideoSettings(
-        width: 960,
-        height: 540,
-        codec: .h264,
-        fileType: .mp4,
-        fileExtension: "mp4",
-        bitRate: 6_000_000
-    )
-    
-    init() {
+    init(operationMode: OperationMode) {
         
         guard let reachability = Reachability() else {
             fatalError("Reachability failed to initialize")
         }
         self.reachability = reachability
         
-        self.videoSampler = VideoSampler(settings: videoSettings)
+        self.videoSampler = VideoSampler(settings: operationMode.videoSettings)
         
         self.deviceInfo = DeviceInfoProvider()
         
@@ -75,8 +65,8 @@ final class AppDependency: VisionDependency {
         )
         self.recordSynchronizer = RecordSynchronizer(syncDependencies)
         
-        self.recorder = RecordCoordinator(settings: videoSettings)
         self.countryService = CountryProvider()
+        self.recorder = RecordCoordinator(settings: operationMode.videoSettings)
         
         self.platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: recorder,
