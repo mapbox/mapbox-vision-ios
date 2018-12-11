@@ -23,6 +23,8 @@ protocol VisionDependency {
     var deviceInfo: DeviceInfoProvidable { get }
     var showcaseRecordDataSource: RecordDataSource { get }
     var broadcasting: Broadcasting { get }
+    
+    func set(platformDelegate: PlatformDelegate?)
 }
 
 final class AppDependency: VisionDependency {
@@ -40,6 +42,7 @@ final class AppDependency: VisionDependency {
     private(set) var broadcasting = Broadcasting(ip: "192.168.0.66", port: 5097)
     private let handlerDisposable: CountryService.Disposable
     private let eventsManager = EventsManager()
+    private let platform: Platform
     
     let videoSettings = VideoSettings(
         width: 960,
@@ -75,7 +78,7 @@ final class AppDependency: VisionDependency {
         self.recorder = RecordCoordinator(settings: videoSettings)
         self.countryService = CountryProvider()
         
-        let platform = Platform(dependencies: Platform.Dependencies(
+        self.platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: recorder,
             eventsManager: eventsManager
         ))
@@ -89,6 +92,10 @@ final class AppDependency: VisionDependency {
         self.handlerDisposable = self.countryService.subscribe(handler: core.setCountry)
         
         self.showcaseRecordDataSource = ShowcaseRecordDataSource()
+    }
+    
+    func set(platformDelegate: PlatformDelegate?) {
+        platform.delegate = platformDelegate
     }
     
     deinit {
