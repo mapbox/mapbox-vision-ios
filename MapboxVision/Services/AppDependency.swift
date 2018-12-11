@@ -19,7 +19,7 @@ protocol VisionDependency {
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
     var videoSettings: VideoSettings { get }
-    var marketService: MarketService { get }
+    var countryService: CountryService { get }
     var deviceInfo: DeviceInfoProvidable { get }
     var showcaseRecordDataSource: RecordDataSource { get }
     var broadcasting: Broadcasting { get }
@@ -34,11 +34,11 @@ final class AppDependency: VisionDependency {
     private(set) var recorder: RecordCoordinator
     private(set) var metaInfoManager: MetaInfoManager
     private(set) var motionManager: MotionManager
-    private(set) var marketService: MarketService
+    private(set) var countryService: CountryService
     private(set) var deviceInfo: DeviceInfoProvidable
     private(set) var showcaseRecordDataSource: RecordDataSource
     private(set) var broadcasting = Broadcasting(ip: "192.168.0.66", port: 5097)
-    private let handlerDisposable: MarketService.Disposable
+    private let handlerDisposable: CountryService.Disposable
     private let eventsManager = EventsManager()
     
     let videoSettings = VideoSettings(
@@ -73,7 +73,7 @@ final class AppDependency: VisionDependency {
         self.recordSynchronizer = RecordSynchronizer(syncDependencies)
         
         self.recorder = RecordCoordinator(settings: videoSettings)
-        self.marketService = MarketProvider()
+        self.countryService = CountryProvider()
         
         let platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: recorder,
@@ -85,13 +85,13 @@ final class AppDependency: VisionDependency {
         self.metaInfoManager = MetaInfoManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
         
-        self.core.setCountry(self.marketService.currentMarket)
-        self.handlerDisposable = self.marketService.subscribe(handler: core.setCountry)
+        self.core.setCountry(self.countryService.currentCountry)
+        self.handlerDisposable = self.countryService.subscribe(handler: core.setCountry)
         
         self.showcaseRecordDataSource = ShowcaseRecordDataSource()
     }
     
     deinit {
-        self.marketService.unsubscribe(handlerDisposable)
+        self.countryService.unsubscribe(handlerDisposable)
     }
 }

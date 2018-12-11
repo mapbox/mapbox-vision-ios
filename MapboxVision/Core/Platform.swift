@@ -62,7 +62,7 @@ final class Platform: NSObject, PlatformInterface {
         dependencies.recordCoordinator.saveImage(image: image, path: path)
     }
     
-    func update(_ market: Market) {
+    func update(_ country: Country) {
         
     }
 }
