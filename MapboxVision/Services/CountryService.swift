@@ -21,7 +21,7 @@ protocol CountryService {
 
 final class CountryProvider: NSObject, CountryService {
     
-    private(set) var currentCountry: Country = .us {
+    private(set) var currentCountry: Country = .USA {
         didSet {
             guard currentCountry == oldValue else { return }
             handlers.values.forEach { $0(currentCountry) }
@@ -36,7 +36,7 @@ final class CountryProvider: NSObject, CountryService {
         let defaults = UserDefaults.standard
         observer = defaults.observe(\.isChina, options: [.initial, .new]) { [weak self] (defaults, change) in
             guard let isChina = change.newValue else { return }
-            self?.currentCountry = isChina ? .china : .us
+            self?.currentCountry = isChina ? .china : .USA
         }
     }
     
