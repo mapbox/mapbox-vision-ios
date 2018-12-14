@@ -24,11 +24,14 @@ final class RecordedDataProvider: DataProvider {
     
     let dependencies: Dependencies
     let telemetryPlayer: TelemetryPlayer
+    var time: UInt
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         self.telemetryPlayer = TelemetryPlayer()
         telemetryPlayer.read(fromFolder: dependencies.recordingPath.recordingPath)
+        telemetryPlayer.scrollData(Int(dependencies.startTime))
+        time = dependencies.startTime
     }
     
     private var startTime = DispatchTime.now().uptimeMilliseconds
@@ -37,13 +40,21 @@ final class RecordedDataProvider: DataProvider {
         startTime = DispatchTime.now().uptimeMilliseconds
     }
     
+    private func getDelta() -> UInt {
+        let currentTime = DispatchTime.now().uptimeMilliseconds
+        let dt = DispatchTime.now().uptimeMilliseconds - startTime
+        startTime = currentTime
+        return dt
+    }
+    
     func update() {
         let settings = dependencies.recordingPath.settings
         let frameSize = Point2I(x: settings.width, y: settings.height)
-        let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
-        telemetryPlayer.setCurrentTime(currentTimeMS)
+
+        time += getDelta()
+        
+        telemetryPlayer.setCurrentTime(time)
         telemetryPlayer.updateData(dependencies.core, frameSize: frameSize, srcSize: frameSize)
-        telemetryPlayer.moveNextFrame()
     }
     
     func stop() {}
