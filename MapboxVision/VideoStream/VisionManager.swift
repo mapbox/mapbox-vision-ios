@@ -80,6 +80,11 @@ public protocol VisionPresentationControllable: class {
         Set visualization mode which can be either original frame, original frame with segmentation as an overlay or original frame with detections as an overlay.
     */
     var frameVisualizationMode: VisualizationMode { get set }
+    
+    /**
+        Control the visibility of the Mapbox logo.
+    */
+    var isLogoVisible: Bool { get set }
 }
 
 /**
@@ -115,7 +120,6 @@ public enum VisualizationMode {
 
 protocol VideoStreamInput: class {
     var isFPSTableEnabled: Bool { get set }
-    var isWatermarkVisible: Bool { get set }
     
     func toggleDebugOverlay()
     func toggleSegmentationOverlay()
@@ -159,13 +163,6 @@ public final class VisionManager {
             if !isFPSTableEnabled {
                 presenter?.present(fps: nil)
             }
-        }
-    }
-    
-    @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
-    var isWatermarkVisible: Bool = false {
-        didSet {
-            presenter?.present(isWatermarkVisible: isWatermarkVisible)
         }
     }
     
