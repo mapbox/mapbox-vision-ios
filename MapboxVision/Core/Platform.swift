@@ -23,14 +23,14 @@ final class Platform: NSObject, PlatformInterface {
         self.dependencies = dependencies
     }
     
-    func httpRequest(_ url: String, method: String, data: String, completion: @escaping HttpRequestCompletion) {
+    func httpRequest(_ url: String, method: String, body: Data, completion: @escaping HttpRequestCompletion) {
         guard let url = URL(string: url) else {
             assertionFailure("Can't create URL")
             return
         }
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.httpBody = data.data(using: .utf8)
+        request.httpBody = body
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, let responseString = String(data: data, encoding: .utf8), error == nil else { return }
             completion(responseString)
