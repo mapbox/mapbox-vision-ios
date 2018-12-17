@@ -1,5 +1,5 @@
 //
-//  MarketService.swift
+//  CountryService.swift
 //  cv-assist-ios
 //
 //  Created by Alexander Pristavko on 4/19/18.
@@ -9,22 +9,22 @@
 import Foundation
 import MapboxVisionCore
 
-protocol MarketService {
-    typealias UpdateHandler = (Market) -> Void
+protocol CountryService {
+    typealias UpdateHandler = (Country) -> Void
     typealias Disposable = Int
     
-    var currentMarket: Market { get }
+    var currentCountry: Country { get }
     
     func subscribe(handler: @escaping UpdateHandler) -> Disposable
     func unsubscribe(_ disposable: Disposable)
 }
 
-final class MarketProvider: NSObject, MarketService {
+final class CountryProvider: NSObject, CountryService {
     
-    private(set) var currentMarket: Market = .us {
+    private(set) var currentCountry: Country = .USA {
         didSet {
-            guard currentMarket == oldValue else { return }
-            handlers.values.forEach { $0(currentMarket) }
+            guard currentCountry == oldValue else { return }
+            handlers.values.forEach { $0(currentCountry) }
         }
     }
     private var observer: NSKeyValueObservation?
@@ -34,13 +34,13 @@ final class MarketProvider: NSObject, MarketService {
     override init() {
         super.init()
         let defaults = UserDefaults.standard
-        observer = defaults.observe(\.chinaMarket, options: [.initial, .new]) { [weak self] (defaults, change) in
+        observer = defaults.observe(\.isChina, options: [.initial, .new]) { [weak self] (defaults, change) in
             guard let isChina = change.newValue else { return }
-            self?.currentMarket = isChina ? .china : .us
+            self?.currentCountry = isChina ? .china : .USA
         }
     }
     
-    func subscribe(handler: @escaping MarketService.UpdateHandler) -> Disposable {
+    func subscribe(handler: @escaping CountryService.UpdateHandler) -> Disposable {
         handlers[handlersCount] = handler
         let disposable = handlersCount
         handlersCount += 1
@@ -58,7 +58,7 @@ final class MarketProvider: NSObject, MarketService {
 }
 
 private extension UserDefaults {
-    @objc dynamic var chinaMarket: Bool {
-        return bool(forKey: VisionSettings.chinaMarket)
+    @objc dynamic var isChina: Bool {
+        return bool(forKey: VisionSettings.isChina)
     }
 }

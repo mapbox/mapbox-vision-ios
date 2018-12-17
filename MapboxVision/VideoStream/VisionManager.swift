@@ -450,6 +450,13 @@ public final class VisionManager {
         }
     }
     
+    /**
+        Determines estimated country where the device is situated.
+        For supported values see `CVACountry`.
+    */
+    
+    public var country: Country
+    
     // MARK: - Private
     
     private var notificationObservers = [Any]()
@@ -464,6 +471,7 @@ public final class VisionManager {
     private init() {
         self.dependencies = AppDependency()
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
+        self.country = dependencies.core.getCountry()
         
         dependencies.core.config = .basic
 
@@ -479,6 +487,8 @@ public final class VisionManager {
         ))
         
         setDataProvider(realtimeDataProvider)
+        
+        dependencies.set(platformDelegate: self)
         
         dependencies.recordSynchronizer.delegate = self
         dependencies.recorder.delegate = self
@@ -830,6 +840,12 @@ extension VisionManager: MetaInfoObserver {
     }
     
     func heading(_ heading: CLHeading) {}
+}
+
+extension VisionManager: PlatformDelegate {
+    func countryChanged(_ country: Country) {
+        self.country = country
+    }
 }
 
 fileprivate extension VideoSettings {

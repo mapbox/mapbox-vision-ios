@@ -11,5 +11,5 @@ import Foundation
 struct VisionSettings {
     public static let enableSync = "enableSync"
     public static let syncOverCellular = "syncOverCellular"
-    static let chinaMarket = "chinaMarket"
+    static let isChina = "isChina"
 }
