@@ -66,7 +66,7 @@ final class AppDependency: VisionDependency {
         self.recordSynchronizer = RecordSynchronizer(syncDependencies)
         
         self.countryService = CountryProvider()
-        self.recorder = RecordCoordinator(settings: operationMode.videoSettings)
+        self.recorder = RecordCoordinator()
         
         self.platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: recorder,

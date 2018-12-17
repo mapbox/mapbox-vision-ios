@@ -18,10 +18,10 @@ enum VideoRecorderError: LocalizedError {
 private extension VideoSettings {
     var outputSettings: [String : Any] {
         return [
-            AVVideoWidthKey: self.width,
-            AVVideoHeightKey: self.height,
-            AVVideoCodecKey: self.codec,
-            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: self.bitRate]
+            AVVideoWidthKey: width,
+            AVVideoHeightKey: height,
+            AVVideoCodecKey: codec,
+            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: bitRate]
         ]
     }
 }
@@ -35,13 +35,7 @@ final class VideoRecorder {
     
     private let writerQueue = DispatchQueue(label: "com.mapbox.VideoRecorder")
     
-    var settings: VideoSettings
-
-    init(settings: VideoSettings) {
-        self.settings = settings
-    }
-    
-    func startRecording(to path: String) {
+    func startRecording(to path: String, settings: VideoSettings) {
         let assetWriterInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings.outputSettings)
         currentAssetWriterInput = assetWriterInput
         assetWriterInput.expectsMediaDataInRealTime = true
@@ -50,7 +44,7 @@ final class VideoRecorder {
             let outputURL = URL(fileURLWithPath: path)
             let assetWriter: AVAssetWriter
             do {
-                assetWriter = try AVAssetWriter(outputURL: outputURL, fileType: self.settings.fileType)
+                assetWriter = try AVAssetWriter(outputURL: outputURL, fileType: settings.fileType)
             } catch {
                 assertionFailure(error.localizedDescription)
                 return

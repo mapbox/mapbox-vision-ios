@@ -641,7 +641,6 @@ public final class VisionManager {
         dependencies.core.config.useDetection = operationMode.usesDetection
         
         dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
-        dependencies.recorder.videoSettings = operationMode.videoSettings
         
         UserDefaults.standard.enableSync = operationMode.isSyncEnabled
         
@@ -815,7 +814,7 @@ extension VisionManager: RecordCoordinatorDelegate {
         
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
-            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
         }
     }
 }
@@ -823,7 +822,7 @@ extension VisionManager: RecordCoordinatorDelegate {
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
         do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
         } catch RecordCoordinatorError.cantStartNotReady {
             hasPendingRecordingRequest = true
         } catch {
