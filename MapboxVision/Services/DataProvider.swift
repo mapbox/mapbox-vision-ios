@@ -35,6 +35,7 @@ final class RecordedDataProvider: DataProvider {
     
     func start() {
         startTime = DispatchTime.now().uptimeMilliseconds
+        telemetryPlayer.scrollData(dependencies.startTime)
     }
     
     func update() {
@@ -43,7 +44,6 @@ final class RecordedDataProvider: DataProvider {
         let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
         telemetryPlayer.setCurrentTime(currentTimeMS)
         telemetryPlayer.updateData(dependencies.core, frameSize: frameSize, srcSize: frameSize)
-        telemetryPlayer.moveNextFrame()
     }
     
     func stop() {}
