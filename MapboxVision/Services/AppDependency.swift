@@ -20,6 +20,7 @@ protocol VisionDependency {
     var motionManager: MotionManager { get }
     var videoSettings: VideoSettings { get }
     var marketService: MarketService { get }
+    var deviceInfo: DeviceInfoProvidable { get }
     var showcaseRecordDataSource: RecordDataSource { get }
     var broadcasting: Broadcasting { get }
 }
@@ -34,6 +35,7 @@ final class AppDependency: VisionDependency {
     private(set) var metaInfoManager: MetaInfoManager
     private(set) var motionManager: MotionManager
     private(set) var marketService: MarketService
+    private(set) var deviceInfo: DeviceInfoProvidable
     private(set) var showcaseRecordDataSource: RecordDataSource
     private(set) var broadcasting = Broadcasting(ip: "192.168.0.66", port: 5097)
     private let handlerDisposable: MarketService.Disposable
@@ -57,14 +59,14 @@ final class AppDependency: VisionDependency {
         
         self.videoSampler = VideoSampler(settings: videoSettings)
         
+        self.deviceInfo = DeviceInfoProvider()
+        
         let dataSource = SyncRecordDataSource()
-        let deviceInfoProvider = DeviceInfoProvider()
         let recordArchiver = RecordArchiver()
         let syncDependencies = RecordSynchronizer.Dependencies(
             networkClient: eventsManager,
             dataSource: dataSource,
-            deviceId: deviceInfoProvider.id,
-            devicePlatformName: deviceInfoProvider.platformName,
+            deviceInfo: deviceInfo,
             archiver: recordArchiver,
             fileManager: FileManager.default
         )

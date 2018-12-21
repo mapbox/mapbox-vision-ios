@@ -27,8 +27,7 @@ final class RecordSynchronizer {
     struct Dependencies {
         let networkClient: NetworkClient
         let dataSource: RecordDataSource
-        let deviceId: String
-        let devicePlatformName: String
+        let deviceInfo: DeviceInfoProvidable
         let archiver: Archiver
         let fileManager: FileManagerProtocol
     }
@@ -199,8 +198,8 @@ final class RecordSynchronizer {
         return Path([
             dir.lastPathComponent,
             Locale.current.identifier,
-            dependencies.deviceId,
-            dependencies.devicePlatformName
+            dependencies.deviceInfo.id,
+            dependencies.deviceInfo.platformName
         ]).components.joined(separator: "_")
     }
     

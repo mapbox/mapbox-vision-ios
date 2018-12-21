@@ -17,6 +17,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
     var archiver: MockArchiver!
     var recordSynchronizer: RecordSynchronizer!
     var fileManager: MockFileManager!
+    var deviceInfo: DeviceInfoProvider!
     
     let positiveScenarioExpectation = XCTestExpectation(description: "Positive scenario")
 
@@ -25,11 +26,11 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         dataSource = MockRecordDataSource()
         archiver = MockArchiver()
         fileManager = MockFileManager()
+        deviceInfo = DeviceInfoProvider()
         recordSynchronizer = RecordSynchronizer(RecordSynchronizer.Dependencies(
             networkClient: networkClient,
             dataSource: dataSource,
-            deviceId: "DEVICE_ID",
-            devicePlatformName: "iOS",
+            deviceInfo: deviceInfo,
             archiver: archiver,
             fileManager: fileManager
         ))
@@ -99,7 +100,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         archives.forEach { (archive) in
             XCTAssertNotNil(archiver.archives[archive], "Archiver should create archive with right path")
             let uploadDir = networkClient.uploaded[archive]
-            let dir = "\(archive.pathComponents[1])_en_US_DEVICE_ID_iOS"
+            let dir = "\(archive.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
             XCTAssert(uploadDir == dir, "\(archive) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
             XCTAssert(dataSource.removedFiles.contains(archive), "\(archive) should be removed after upload")
         }
@@ -121,7 +122,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         
         files.forEach { (file) in
             let uploadDir = networkClient.uploaded[file]
-            let dir = "\(file.pathComponents[1])_en_US_DEVICE_ID_iOS"
+            let dir = "\(file.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
             XCTAssert(uploadDir == dir, "\(file) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
             XCTAssert(dataSource.removedFiles.contains(file), "\(file) should be removed after upload")
         }
