@@ -23,8 +23,6 @@ protocol VideoStreamPresentable: VisionPresentationControllable {
     func present(segMask: SegmentationMask?)
     func present(detections: Detections?, canvasSize: CGSize)
     
-    func present(isWatermarkVisible: Bool)
-
     func showClearCacheAlert()
     
     func presentRecordingPicker(dataSource: RecordDataSource)
@@ -48,8 +46,6 @@ private let maneuverSignHeight: CGFloat = 105
 private let roadLanesTopInset: CGFloat = 18
 private let roadLanesHeight: CGFloat = 64
 
-private let watermarkInset: CGFloat = 25
-
 private let signImageAlignInsets = UIEdgeInsets(top: 6, left: 7, bottom: 8, right: 7)
 
 final class VisionViewController: VisionPresentationViewController {
@@ -61,6 +57,15 @@ final class VisionViewController: VisionPresentationViewController {
             let newTopView = view(for: frameVisualizationMode)
             newTopView.isHidden = false
             backgroundView.bringSubview(toFront: newTopView)
+        }
+    }
+    
+    public var isLogoVisible: Bool {
+        get {
+            return !logoView.isHidden
+        }
+        set {
+            logoView.isHidden = !newValue
         }
     }
     
@@ -185,10 +190,10 @@ final class VisionViewController: VisionPresentationViewController {
         
         setupContentLayout()
         
-        view.addSubview(waterMarkImageView)
+        view.addSubview(logoView)
         NSLayoutConstraint.activate([
-            waterMarkImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -watermarkInset),
-            waterMarkImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -watermarkInset),
+            view.safeAreaLayoutGuide.bottomAnchor.constraintEqualToSystemSpacingBelow(logoView.bottomAnchor, multiplier: 1),
+            view.safeAreaLayoutGuide.rightAnchor.constraintEqualToSystemSpacingAfter(logoView.rightAnchor, multiplier: 1),
         ])
     }
     
@@ -332,10 +337,9 @@ final class VisionViewController: VisionPresentationViewController {
         return view
     }()
     
-    private let waterMarkImageView: UIImageView = {
+    private let logoView: UIView = {
         let view = UIImageView(image: VisionImages.logo.image)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = false
         view.alpha = 0.5
         return view
     }()
@@ -425,10 +429,6 @@ extension VisionViewController: VideoStreamPresentable {
         
         detectionsView.isHidden = false
         detectionsView.present(detections: values, at: image)
-    }
-    
-    func present(isWatermarkVisible: Bool) {
-        waterMarkImageView.isHidden = !isWatermarkVisible
     }
     
     func showClearCacheAlert() {
