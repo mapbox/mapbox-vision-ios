@@ -61,4 +61,13 @@ public enum OperationMode {
             return 30 * 60
         }
     }
+    
+    var videoSettings: VideoSettings {
+        switch self {
+        case .normal:
+            return VideoSettings.lowQuality
+        case .dataRecording:
+            return VideoSettings.highQuality
+        }
+    }
 }

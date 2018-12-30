@@ -395,7 +395,7 @@ public final class VisionManager {
     */
     
     public var frameSize: CGSize {
-        return dependencies.videoSettings.size
+        return operationMode.videoSettings.size
     }
     
     /**
@@ -466,7 +466,7 @@ public final class VisionManager {
     }
     
     private init() {
-        self.dependencies = AppDependency()
+        self.dependencies = AppDependency(operationMode: operationMode)
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
         self.country = dependencies.core.getCountry()
         
@@ -557,7 +557,7 @@ public final class VisionManager {
             case .segmentation:
                 presenter.present(segMask: segmentationMask)
             case .detection:
-                presenter.present(detections: detections, canvasSize: self.dependencies.videoSettings.size)
+                presenter.present(detections: detections, canvasSize: self.frameSize)
             }
             
             let crossroad = self.dependencies.core.getNearestCrossroad()
@@ -640,6 +640,8 @@ public final class VisionManager {
         dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
         
         UserDefaults.standard.enableSync = operationMode.isSyncEnabled
+        
+        dependencies.videoSampler.settings = operationMode.videoSettings
     }
     
     private func registerDefaults() {
@@ -780,14 +782,14 @@ extension VisionManager: VideoStreamInteractable {
     }
     
     func selectRecording(at url: URL) {
-        guard let recordingPath = RecordingPath(existing: url.path, settings: dependencies.videoSettings) else { return }
+        guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
     
     func startBroadcasting(at timestamp: String) {
         guard
             let showPath = ShowcaseRecordDataSource().recordDirectories.first,
-            let path = RecordingPath(existing: showPath.path, settings: dependencies.videoSettings)
+            let path = RecordingPath(existing: showPath.path, settings: operationMode.videoSettings)
         else { return }
         
         let startTime = ms(from: timestamp)
@@ -809,7 +811,7 @@ extension VisionManager: RecordCoordinatorDelegate {
         
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
-            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
         }
     }
 }
@@ -817,7 +819,7 @@ extension VisionManager: RecordCoordinatorDelegate {
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
         do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds())
+            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
         } catch RecordCoordinatorError.cantStartNotReady {
             hasPendingRecordingRequest = true
         } catch {

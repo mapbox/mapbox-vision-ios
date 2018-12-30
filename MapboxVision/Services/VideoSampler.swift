@@ -13,8 +13,6 @@ import ModelIO
 final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Streamable {
     
     typealias Handler = (CMSampleBuffer) -> Void
-    
-    private let settings: VideoSettings
 
     private let mdlCamera = MDLCamera()
     
@@ -60,12 +58,16 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
         return camera?.activeFormat.videoFieldOfView ?? 0
     }
     
+    var settings: VideoSettings {
+        didSet {
+            guard let preset = settings.sessionPreset else { return }
+            cameraSession.sessionPreset = preset
+        }
+    }
+    
     // MARK: - Private
     
     private func configureSession() {
-        guard let preset = settings.sessionPreset else { return }
-        
-        cameraSession.sessionPreset = preset
         
         guard let captureDevice = camera
             else { return }

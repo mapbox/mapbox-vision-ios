@@ -30,4 +30,22 @@ struct VideoSettings {
             return nil
         }
     }
+    
+    static let lowQuality = VideoSettings(
+        width: 960,
+        height: 540,
+        codec: .h264,
+        fileType: .mp4,
+        fileExtension: "mp4",
+        bitRate: 6_000_000
+    )
+    
+    static let highQuality = VideoSettings(
+        width: 1920,
+        height: 1080,
+        codec: .h264,
+        fileType: .mp4,
+        fileExtension: "mp4",
+        bitRate: 6_000_000
+    )
 }
