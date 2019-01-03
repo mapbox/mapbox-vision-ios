@@ -49,12 +49,12 @@ final class RecordCoordinator {
     
     private let videoRecorder: VideoBuffer
     private let videoTrimmer = VideoTrimmer()
-    private var videoSettings: VideoSettings?
 
     private var jsonWriter: FileRecorder?
     private var imageWriter: ImageRecorder = ImageRecorder()
     private let processingQueue = DispatchQueue(label: "com.mapbox.RecordCoordinator.Processing")
     
+    private var currentVideoSettings: VideoSettings?
     private var currentReferenceTime: Float?
     private var currentRecordingPath: RecordingPath?
     private var currentStartTime: DispatchTime?
@@ -76,7 +76,7 @@ final class RecordCoordinator {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
         
-        self.videoSettings = videoSettings
+        currentVideoSettings = videoSettings
         
         isRecording = true
         currentReferenceTime = referenceTime
@@ -109,8 +109,6 @@ final class RecordCoordinator {
         
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
         videoRecorder.stopRecording()
-        
-        videoSettings = nil
     }
     
     func handleFrame(_ sampleBuffer: CMSampleBuffer) -> Void {
@@ -225,6 +223,7 @@ final class RecordCoordinator {
         }
         
         currentRecordingPath = nil
+        currentVideoSettings = nil
         endBackgroundTask()
         isReady = true
         
@@ -233,7 +232,7 @@ final class RecordCoordinator {
     
     private func trimClip(chunk: Int, request: VideoTrimRequest, completion: (() -> Void)? = nil) {
         guard FileManager.default.fileExists(atPath: request.sourcePath) else { return }
-        guard let settings = videoSettings else { return }
+        guard let settings = currentVideoSettings else { return }
         
         let sourceURL = URL(fileURLWithPath: request.sourcePath)
         let destinationURL = URL(fileURLWithPath: request.destinationPath)
@@ -285,7 +284,7 @@ final class RecordCoordinator {
     }
     
     private func destinationPath(basePath: String, _ start: Float, _ end: Float) -> String? {
-        guard let settings = videoSettings else {
+        guard let settings = currentVideoSettings else {
             assertionFailure("Video Settings should be exists before asking for destination path")
             return nil
         }
@@ -293,7 +292,7 @@ final class RecordCoordinator {
     }
     
     private func chunkPath(for number: Int) -> String? {
-        guard let settings = videoSettings else {
+        guard let settings = currentVideoSettings else {
             assertionFailure("Video Settings should be exists before asking for chunk path")
             return nil
         }
