@@ -67,6 +67,10 @@ struct RecordingPath {
         return recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
     }
     
+    func videoClipPath(start: Float, end: Float) -> String {
+        return recordingPath.appendingPathComponent("\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(settings.fileExtension)")
+    }
+    
     var videosLogPath: String {
         return recordingPath.appendingPathComponent("videos.json")
     }
