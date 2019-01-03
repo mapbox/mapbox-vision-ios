@@ -119,7 +119,8 @@ final class RecordCoordinator {
     func makeClip(from startTime: Float, to endTime: Float) {
         guard
             let referenceTime = currentReferenceTime,
-            let recordingPath = currentRecordingPath
+            let recordingPath = currentRecordingPath,
+            let videoSettings = currentVideoSettings
         else { return }
         
         let relativeStart = startTime - referenceTime
@@ -135,11 +136,7 @@ final class RecordCoordinator {
         if startChunk != endChunk {
             // trim start clip
             let startJointTime = Float(startChunk + 1) * chunkLength
-            
-            guard
-                let startSourcePath = chunkPath(for: startChunk)
-            else { return }
-            
+            let startSourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
             let startName = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
             let startLog = VideoLog(name: startName.lastPathComponent,
                                     start: startTime,
@@ -160,10 +157,7 @@ final class RecordCoordinator {
             
             // trim end clip
             let endJointTime = Float(endChunk) * chunkLength
-            guard
-                let endSourcePath = chunkPath(for: endChunk)
-            else { return }
-            
+            let endSourcePath = chunkPath(for: endChunk, fileExtension: videoSettings.fileExtension)
             let endName = recordingPath.videoClipPath(start: endJointTime, end: relativeEnd)
             let endLog = VideoLog(name: endName.lastPathComponent,
                                   start: referenceTime + endJointTime,
@@ -175,10 +169,7 @@ final class RecordCoordinator {
                                                   log: endLog)
             trimClip(chunk: endChunk, request: endTrimRequest)
         } else {
-            guard
-                let sourcePath = chunkPath(for: startChunk)
-            else { return }
-            
+            let sourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
             let path = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
             let log = VideoLog(name: path.lastPathComponent,
                                start: startTime,
@@ -265,9 +256,10 @@ final class RecordCoordinator {
         guard
             let referenceTime = currentReferenceTime,
             let recordingPath = currentRecordingPath,
-            let sourcePath = chunkPath(for: chunk)
+            let videoSettings = currentVideoSettings
         else { return }
         
+        let sourcePath = chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
         let destinationPath = recordingPath.videoClipPath(start: clipStart, end: clipEnd)
         let log = VideoLog(name: destinationPath.lastPathComponent,
                            start: referenceTime + clipStart,
@@ -283,12 +275,8 @@ final class RecordCoordinator {
         }
     }
     
-    private func chunkPath(for number: Int) -> String? {
-        guard let settings = currentVideoSettings else {
-            assertionFailure("Video Settings should be exists before asking for chunk path")
-            return nil
-        }
-        return "\(DocumentsLocation.cache.path)/\(number).\(settings.fileExtension)"
+    private func chunkPath(for number: Int, fileExtension: String) -> String {
+        return "\(DocumentsLocation.cache.path)/\(number).\(fileExtension)"
     }
     
     private func recreateFolder(path: String) {
