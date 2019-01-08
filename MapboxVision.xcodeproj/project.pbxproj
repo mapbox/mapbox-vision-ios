@@ -59,6 +59,8 @@
 		2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
+		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
+		2EDD8709219EDC0200760C6D /* DeviceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */; };
 		2EF31C9021904BB300752D23 /* RecordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
 		9D72A606297AB6773AB5BAAC /* Streamable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AE8DCB328563DEF2ADF0 /* Streamable.swift */; };
@@ -158,6 +160,8 @@
 		2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManeuverLocation.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProviderTests.swift; sourceTree = "<group>"; };
 		2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorTests.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		9D72A90A515B6C4D75C77F36 /* ARDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDataProvider.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				2E6033532142900C0050EDB3 /* Images.swift */,
 				9D72AE8DCB328563DEF2ADF0 /* Streamable.swift */,
 				2EC332A2217E02BA00E041FE /* String.swift */,
+				2EDD8706219ED89E00760C6D /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				B51E557B215E313500650DDE /* RecordSynchronizerTests.swift */,
 				2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */,
+				2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
 			);
 			path = MapboxVisionTests;
@@ -526,6 +532,7 @@
 				2E4EE2EB20F0D1BC003431B3 /* VisionSettings.swift in Sources */,
 				2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */,
 				2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */,
+				2EDD8707219ED89E00760C6D /* Constants.swift in Sources */,
 				2E4EE28120F05661003431B3 /* BinaryRecorder.swift in Sources */,
 				2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */,
 				2E4EE25320F05045003431B3 /* DetectionsView.swift in Sources */,
@@ -575,6 +582,7 @@
 				B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */,
 				B50CFBB12163C9AC00C9C5A5 /* MockArchiver.swift in Sources */,
 				B50CFBB32163C9C500C9C5A5 /* MockFileManager.swift in Sources */,
+				2EDD8709219EDC0200760C6D /* DeviceProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

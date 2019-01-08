@@ -66,6 +66,8 @@ private extension ObjectType {
             return UIColor(red: 144.0/255.0, green: 255.0/255.0, blue: 22.0/255.0, alpha: 1.0)
         case .person:
             return UIColor(red: 239.0/255.0, green: 6.0/255.0, blue: 255.0/255.0, alpha: 1.0)
+        case .bicycle:
+            return UIColor(red: 0, green: 165.0/255.0, blue: 1.0, alpha: 1.0)
         }
     }
     
@@ -79,6 +81,8 @@ private extension ObjectType {
             return "Car"
         case .person:
             return "Person"
+        case .bicycle:
+            return "Bicycle"
         }
     }
 }

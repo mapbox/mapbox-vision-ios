@@ -60,6 +60,14 @@ public protocol VisionManagerDelegate: class {
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
 }
 
+public protocol VisionManagerRoadRestrictionsDelegate: class {
+    
+    /**
+        Tells the delegate that current speed limit is updated.
+     */
+    func visionManager(_ visionManager: VisionManager, didUpdateSpeedLimit speedLimit: SpeedLimit?) -> Void
+}
+
 /**
     The interface that allows to receive instructions on how to render navigation route. Object that implements this interface is supposed to display navigation route based on provided instructions.
 */
@@ -131,9 +139,6 @@ protocol VideoStreamOutput: class {
     func locationUpdated(_ location: CLLocation)
 }
 
-private let motionUpdateInterval = 0.02
-private let signTrackerMaxCapacity = 5
-
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
 */
@@ -141,9 +146,8 @@ private let signTrackerMaxCapacity = 5
 public final class VisionManager {
     
     /**
-     Shared instance of VisionManager.
+        Shared instance of VisionManager.
     */
-    
     public static let shared = VisionManager()
     
     /**
@@ -152,9 +156,13 @@ public final class VisionManager {
     public weak var delegate: VisionManagerDelegate?
     
     /**
+        The delegate receiving events about currently applied road restrictions.
+     */
+    public weak var roadRestrictionsDelegate: VisionManagerRoadRestrictionsDelegate?
+    
+    /**
         Set delegate which will receive and handle instructions on rendering AR navigation.
     */
-    
     public weak var arDelegate: VisionManagerARDelegate?
     
     @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
@@ -181,6 +189,7 @@ public final class VisionManager {
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
     private var videoStream: Streamable
+    private var interruptionStartTime: Date?
     
     private let sessionManager = SessionManager()
     
@@ -332,6 +341,19 @@ public final class VisionManager {
         didSet {
             guard oldValue != calibrationProgress else { return }
             delegate?.visionManager(self, didUpdateCalibrationProgress: calibrationProgress)
+        }
+    }
+    
+    // MARK: Road restrictions
+    
+    /**
+        Currently applied speed limit.
+     */
+    
+    public var speedLimit: SpeedLimit? {
+        didSet {
+            guard oldValue?.identifier != speedLimit?.identifier else { return }
+            roadRestrictionsDelegate?.visionManager(self, didUpdateSpeedLimit: speedLimit)
         }
     }
     
@@ -516,6 +538,8 @@ public final class VisionManager {
             
             self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
             
+            self.speedLimit = self.dependencies.core.getSpeedLimit()
+            
             guard let presenter = self.presenter else { return }
             
             switch presenter.frameVisualizationMode {
@@ -618,12 +642,14 @@ public final class VisionManager {
     private func subscribeToNotifications() {
         let center = NotificationCenter.default
         notificationObservers.append(center.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
+            self?.stopInterruption()
             guard let `self` = self, self.isStoppedForBackground else { return }
             self.isStoppedForBackground = false
             self.start()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
+            self?.interruptionStartTime = Date()
             guard let `self` = self, self.isStarted else { return }
             self.isStoppedForBackground = true
             self.stop()
@@ -676,6 +702,15 @@ public final class VisionManager {
         
         DispatchQueue.main.async { [weak self] in
             self?.setDataProvider(recordedDataProvider)
+        }
+    }
+    
+    private func stopInterruption() {
+        guard let interruptionStartTime = interruptionStartTime else { return }
+        
+        let elapsedTime = Date().timeIntervalSince(interruptionStartTime)
+        if elapsedTime >= Constants.foregroundInterruptionResetThreshold {
+            dependencies.deviceInfo.reset()
         }
     }
     
