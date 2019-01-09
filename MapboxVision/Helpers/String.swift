@@ -28,4 +28,8 @@ extension String {
     var deletingLastPathComponent: String {
         return nsString.deletingLastPathComponent
     }
+    
+    var deletingPathExtension: String {
+        return nsString.deletingPathExtension
+    }
 }
