@@ -260,7 +260,10 @@ final class RecordCoordinator {
         else { return }
         
         let sourcePath = chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
-        let destinationPath = recordingPath.videoClipPath(start: clipStart, end: clipEnd)
+        let destinationPath = savesSourceVideo
+            ? recordingPath.videoPath
+            : recordingPath.videoClipPath(start: clipStart, end: clipEnd)
+        
         let log = VideoLog(name: destinationPath.lastPathComponent,
                            start: referenceTime + clipStart,
                            end: referenceTime + clipEnd)
