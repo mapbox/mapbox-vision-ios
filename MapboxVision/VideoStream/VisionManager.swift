@@ -570,14 +570,16 @@ public final class VisionManager {
     
             self.presenter?.present(sampleBuffer: frame)
             
-            guard self.isStarted else { return }
-            
-            self.dependencies.recorder.handleFrame(frame)
-            
             guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
                 assertionFailure("Can't create pixel buffer")
                 return
             }
+            
+            self.currentFrame = capturedImageBuffer
+            
+            guard self.isStarted else { return }
+            
+            self.dependencies.recorder.handleFrame(frame)
             
             self.dependencies.core.setImage(capturedImageBuffer)
             self.dependencies.core.setCameraWidth(
@@ -586,8 +588,6 @@ public final class VisionManager {
                 focalLenght: self.dependencies.videoSampler.focalLenght,
                 fieldOfView: self.dependencies.videoSampler.fieldOfView
             )
-            
-            self.currentFrame = capturedImageBuffer
         }
         
         sessionManager.listener = self

@@ -33,6 +33,8 @@ final class EventsManager {
         return dateFormatter
     }()
     
+    private lazy var recordingFormatter = DateFormatter.createRecordingFormatter()
+    
     init() {
         let bundle = Bundle(for: type(of: self))
         let name = bundle.infoDictionary!["CFBundleName"] as! String
@@ -73,7 +75,7 @@ extension EventsManager: NetworkClient {
         let created = file.creationDate.map(formatter.string) ?? ""
 
         var metadata = [
-            "name": file.lastPathComponent,
+            "name": name,
             "fileId": folder + "/" + name,
             "sessionId": folderName,
             "format": file.pathExtension,
@@ -82,8 +84,23 @@ extension EventsManager: NetworkClient {
         ]
         
         if contentType == "video" {
-            metadata["startTime"] = created
-            metadata["endTime"] = created
+            var startTime = created
+            var endTime = created
+            
+            let components = name.deletingPathExtension.split(separator: "-")
+            if
+                let date = recordingFormatter.date(from: folder),
+                let start = components[safe: 0],
+                let startInterval = TimeInterval(start),
+                let end = components[safe: 1],
+                let endInterval = TimeInterval(end)
+            {
+                startTime = formatter.string(from: date.addingTimeInterval(startInterval))
+                endTime = formatter.string(from: date.addingTimeInterval(endInterval))
+            }
+            
+            metadata["startTime"] = startTime
+            metadata["endTime"] = endTime
         }
         
         manager.postMetadata([metadata], filePaths: [file.path], completionHandler: completion)
