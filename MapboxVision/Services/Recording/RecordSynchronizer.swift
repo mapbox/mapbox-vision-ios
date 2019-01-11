@@ -42,19 +42,50 @@ final class RecordSynchronizer {
     private let imagesFileName = "images"
     private let quota = RecordingQuota(memoryLimit: networkingMemoryLimit, updatingInterval: updatingInterval)
     
+    private var isSyncing: Bool = false {
+        didSet {
+            let value = isSyncing
+            DispatchQueue.main.async {
+                if value {
+                    self.delegate?.syncStarted()
+                } else {
+                    self.delegate?.syncStopped()
+                }
+            }
+        }
+    }
+    
+    private var hasPendingRequest: Bool = false
+    
     init(_ dependencies: Dependencies) {
         self.dependencies = dependencies
     }
     
     func sync() {
-        DispatchQueue.global().async { [weak self] in
-            self?.clean()
-            DispatchQueue.main.async { self?.delegate?.syncStarted() }
-            self?.uploadTelemetry {
-                self?.uploadImages {
-                    self?.uploadVideos {
-                        DispatchQueue.main.async { self?.delegate?.syncStopped() }
+        queue.async { [weak self] in
+            guard let `self` = self else { return }
+            
+            if self.isSyncing {
+                self.hasPendingRequest = true
+                return
+            }
+            
+            self.isSyncing = true
+            self.executeSync()
+        }
+    }
+    
+    private func executeSync() {
+        hasPendingRequest = false
+        clean()
+        uploadTelemetry {
+            self.uploadImages {
+                self.uploadVideos {
+                    if self.hasPendingRequest {
+                        self.executeSync()
+                        return
                     }
+                    self.isSyncing = false
                 }
             }
         }
@@ -115,7 +146,7 @@ final class RecordSynchronizer {
             
                 try self.quota.reserve(memory: dependencies.fileManager.fileSize(at: destination))
             } catch {
-                print(error)
+                print("Directory \(dir) failed to archive. Error: \(error.localizedDescription)")
                 group.leave()
                 continue
             }
@@ -151,7 +182,7 @@ final class RecordSynchronizer {
             do {
                 try quota.reserve(memory: fileSize(file))
             } catch {
-                print(error)
+                print("Quota reservation error: \(error.localizedDescription)")
                 group.leave()
                 continue
             }
