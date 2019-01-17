@@ -555,28 +555,28 @@ public final class VisionManager {
             self.maneuverLocation = isValidCrossroad ? ManeuverLocation(origin: crossroad.origin.cgPoint) : nil
         }
         
-        dependencies.videoSampler.didCaptureFrame = { [weak self] frame in
+        dependencies.videoSampler.videoSampleOutput = { [weak self] sample in
             guard let `self` = self else { return }
     
-            self.presenter?.present(sampleBuffer: frame)
-            
-            guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
-                assertionFailure("Can't create pixel buffer")
+            guard let pixelBuffer = sample.buffer.pixelBuffer else {
+                assertionFailure("Sample buffer containing pixel buffer is expected here")
                 return
             }
             
-            self.currentFrame = capturedImageBuffer
+            self.presenter?.present(sampleBuffer: sample.buffer)
+            
+            self.currentFrame = pixelBuffer
             
             guard self.isStarted else { return }
             
-            self.dependencies.recorder.handleFrame(frame)
+            self.dependencies.recorder.handleFrame(sample.buffer)
             
-            self.dependencies.core.setImage(capturedImageBuffer)
+            self.dependencies.core.setImage(pixelBuffer)
             self.dependencies.core.setCameraWidth(
-                Float(CVPixelBufferGetWidth(capturedImageBuffer)),
-                height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
-                focalLenght: self.dependencies.videoSampler.focalLenght,
-                fieldOfView: self.dependencies.videoSampler.fieldOfView
+                Float(sample.parameters.width),
+                height: Float(sample.parameters.height),
+                focalLenght: sample.parameters.focalLength ?? -1,
+                fieldOfView: sample.parameters.fieldOfView ?? -1
             )
         }
         

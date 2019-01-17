@@ -10,17 +10,14 @@ import Foundation
 import AVFoundation
 import ModelIO
 
-final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Streamable {
+final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Streamable, VideoSource {
     
-    typealias Handler = (CMSampleBuffer) -> Void
+    var videoSampleOutput: VideoSource.Output?
 
     private let mdlCamera = MDLCamera()
-    
     private let cameraSession: AVCaptureSession
     private let camera: AVCaptureDevice?
     private var dataOutput: AVCaptureVideoDataOutput?
-    
-    var didCaptureFrame: Handler?
     
     init(settings: VideoSettings) {
         self.settings = settings
@@ -47,10 +44,25 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
     }
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        didCaptureFrame?(sampleBuffer)
+        videoSampleOutput?(VideoSample(buffer: sampleBuffer, parameters: cameraParameters(sampleBuffer: sampleBuffer)))
     }
     
-    var focalLenght: Float {
+    private func cameraParameters(sampleBuffer: CMSampleBuffer) -> CameraParameters {
+        let width: Int
+        let height: Int
+        
+        if let pixelBuffer = sampleBuffer.pixelBuffer {
+            width = pixelBuffer.width
+            height = pixelBuffer.height
+        } else {
+            width = settings.width
+            height = settings.height
+        }
+    
+        return CameraParameters(width: width, height: height, focalLength: self.focalLength, fieldOfView: self.fieldOfView)
+    }
+    
+    var focalLength: Float {
         return mdlCamera.focalLength
     }
     
