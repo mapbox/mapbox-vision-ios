@@ -182,7 +182,6 @@ public final class VisionManager {
     
     private var dataProvider: DataProvider?
     private var backgroundTask = UIBackgroundTaskInvalid
-    private var hasPendingSyncRequest: Bool = false
     private var isStarted: Bool = false
     private var enableSyncObservation: NSKeyValueObservation?
     private var syncOverCellularObservation: NSKeyValueObservation?
@@ -192,15 +191,6 @@ public final class VisionManager {
     private var interruptionStartTime: Date?
     
     private let sessionManager = SessionManager()
-    
-    private var isSyncing = false {
-        didSet {
-            print(isSyncing ? "Syncing..." : "Syncing stopped")
-            if !isSyncing, hasPendingSyncRequest {
-                startSync()
-            }
-        }
-    }
     
     private var isSyncAllowedOverCellular: Bool {
         return UserDefaults.standard.syncOverCellular
@@ -673,17 +663,8 @@ public final class VisionManager {
     }
     
     private func startSync() {
-        guard isSyncAllowed else {
-            hasPendingSyncRequest = false
-            return
-        }
-        
-        if isSyncing {
-            hasPendingSyncRequest = true
-        } else {
-            hasPendingSyncRequest = false
-            dependencies.recordSynchronizer.sync()
-        }
+        guard isSyncAllowed else { return }
+        dependencies.recordSynchronizer.sync()
     }
     
     private func stopSync() {
@@ -753,12 +734,10 @@ extension VisionManager: ARDataProvider {
 extension VisionManager: SyncDelegate {
     func syncStarted() {
         backgroundTask = UIApplication.shared.beginBackgroundTask()
-        isSyncing = true
     }
     
     func syncStopped() {
         UIApplication.shared.endBackgroundTask(backgroundTask)
-        isSyncing = false
     }
 }
 
