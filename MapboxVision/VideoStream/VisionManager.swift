@@ -769,7 +769,7 @@ extension VisionManager: VideoStreamInteractable {
         dependencies.recorder.clearCache()
     }
     
-    func selectRecording(at url: URL) {
+    public func selectRecording(at url: URL) {
         guard let recordingPath = RecordingPath(existing: url.path, settings: dependencies.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
