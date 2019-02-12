@@ -14,7 +14,7 @@ public enum DocumentsLocation: String {
     case showcase = "Showcase"
     case cache = "Cache"
     
-    var path: String {
+    public var path: String {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         return documentsPath.appendingPathComponent(rawValue, isDirectory: true)
     }
