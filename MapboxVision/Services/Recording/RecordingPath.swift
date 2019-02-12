@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DocumentsLocation: String {
+public enum DocumentsLocation: String {
     case currentRecording = "Current"
     case recordings = "Recordings"
     case showcase = "Showcase"
