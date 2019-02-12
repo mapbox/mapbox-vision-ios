@@ -770,7 +770,9 @@ extension VisionManager: VideoStreamInteractable {
     }
     
     public func selectRecording(at url: URL) {
-        guard let recordingPath = RecordingPath(existing: url.path, settings: dependencies.videoSettings) else { return }
+        //adding a backslash to the path here fixes some bad path strings later in playback
+        let directoryPath = "\(url.path)/"
+        guard let recordingPath = RecordingPath(existing: directoryPath, settings: dependencies.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
     
