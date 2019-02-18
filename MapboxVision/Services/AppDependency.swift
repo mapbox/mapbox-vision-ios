@@ -63,7 +63,7 @@ final class AppDependency: VisionDependency {
         self.videoSampler = VideoSampler(settings: videoSettings)
 
         //avic harcoded for now...
-        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: "/var/mobile/Containers/Data/Application/13E189F5-2458-4424-9CF6-EBE352B8BAF0/Documents/Showcase/2019-02-11_16-51-25/")
+        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: "/var/mobile/Containers/Data/Application/13E189F5-2458-4424-9CF6-EBE352B8BAF0/Documents/Showcase/2019-02-11_16-51-25/video.mp4")
         
         self.deviceInfo = DeviceInfoProvider()
         
