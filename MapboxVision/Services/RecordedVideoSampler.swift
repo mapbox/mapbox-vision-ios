@@ -37,16 +37,19 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     func setupAsset() -> AVAssetReaderTrackOutput? {
-        guard let asset = recordedAsset(), let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first else { return nil }
+        guard let asset = recordedAsset() else { return nil }
 
-        print("found at least one video track")
+        if let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
+            print("found at least one video track")
 
-        let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
-        let assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
+            let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
+            let assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
 
-        //avic now do something with the samples
-        // i'll try a repeating times
-        return assetVideoTrackReader
+            //avic now do something with the samples
+            // i'll try a repeating times
+            return assetVideoTrackReader
+        }
+        return nil
     }
 
     @objc func update() {
