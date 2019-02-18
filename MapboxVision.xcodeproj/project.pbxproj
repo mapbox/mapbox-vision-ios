@@ -79,6 +79,7 @@
 		B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AEB46921186CCF00AF198E /* RecordArchiver.swift */; };
 		B5AEB46C211996E800AF198E /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AEB46B211996E800AF198E /* Zip.framework */; };
 		B5BD9F6F211C69FF001EE97F /* RecordingQuota.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */; };
+		F4AF086722161347005FF372 /* RecordedVideoSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AF086622161347005FF372 /* RecordedVideoSampler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +180,7 @@
 		B5AEB46921186CCF00AF198E /* RecordArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordArchiver.swift; sourceTree = "<group>"; };
 		B5AEB46B211996E800AF198E /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = SOURCE_ROOT; };
 		B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuota.swift; sourceTree = "<group>"; };
+		F4AF086622161347005FF372 /* RecordedVideoSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedVideoSampler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +306,7 @@
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
 				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
+				F4AF086622161347005FF372 /* RecordedVideoSampler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
 				2E4EE28220F05661003431B3 /* RecordSynchronizer.swift in Sources */,
 				2E4EE28420F05665003431B3 /* AppDependency.swift in Sources */,
+				F4AF086722161347005FF372 /* RecordedVideoSampler.swift in Sources */,
 				2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */,
 				2E4EE2AC20F0590F003431B3 /* MetaInfoManager.swift in Sources */,
 				2E4EE2A220F058B9003431B3 /* AVCaptureConnection+Orientation.swift in Sources */,

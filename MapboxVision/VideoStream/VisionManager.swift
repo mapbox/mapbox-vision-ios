@@ -188,6 +188,7 @@ public final class VisionManager {
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
+    private var recordedVideoSampler: Streamable
     private var videoStream: Streamable
     private var interruptionStartTime: Date?
     
@@ -229,11 +230,13 @@ public final class VisionManager {
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
+        // avic provide the recorded stream here
         videoStream.start()
         dependencies.coreUpdater.startUpdating()
     
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-    
+
+        //avic - Turn this off
         if let recording = currentRecording {
             let videoURL = URL(fileURLWithPath: recording.videoPath)
             presenter?.presentVideo(at: videoURL)
@@ -461,6 +464,7 @@ public final class VisionManager {
     private init() {
         self.dependencies = AppDependency()
         self.videoStream = ControlledStream(stream: dependencies.videoSampler)
+        self.recordedVideoSampler = dependencies.recordedVideoSampler
         
         dependencies.core.config = .basic
 
@@ -573,11 +577,17 @@ public final class VisionManager {
             self.dependencies.core.setCameraWidth(
                 Float(CVPixelBufferGetWidth(capturedImageBuffer)),
                 height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
-                focalLenght: self.dependencies.videoSampler.focalLenght,
+                focalLenght: self.dependencies.videoSampler.focalLength,
                 fieldOfView: self.dependencies.videoSampler.fieldOfView
             )
             
             self.currentFrame = capturedImageBuffer
+        }
+
+        dependencies.recordedVideoSampler.didCaptureFrame = { [weak self] frame in
+            guard let `self` = self else { return }
+
+            print("frame is: \(frame)")
         }
         
         sessionManager.listener = self
@@ -722,6 +732,7 @@ extension VisionManager: ARDataProvider {
      :nodoc
     */
     public func getCameraParams() -> ARCameraParameters {
+        // avic MAybe patch this to return the saved ones?
         return dependencies.core.getARCameraParams()
     }
     /**

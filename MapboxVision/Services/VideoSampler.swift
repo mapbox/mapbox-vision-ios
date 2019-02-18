@@ -52,7 +52,7 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
         didCaptureFrame?(sampleBuffer)
     }
     
-    var focalLenght: Float {
+    var focalLength: Float {
         return mdlCamera.focalLength
     }
     

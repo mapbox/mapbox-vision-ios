@@ -15,6 +15,7 @@ protocol VisionDependency {
     var recorder: RecordCoordinator { get }
     var core: Core { get }
     var coreUpdater: CoreUpdater { get }
+    var recordedVideoSampler: RecordedVideoSampler { get }
     var videoSampler: VideoSampler { get }
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
@@ -27,6 +28,8 @@ protocol VisionDependency {
 
 final class AppDependency: VisionDependency {
     private(set) var reachability: Reachability
+    //avic add recorded video sampler
+    private(set) var recordedVideoSampler: RecordedVideoSampler
     private(set) var videoSampler: VideoSampler
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var core: Core
@@ -58,6 +61,9 @@ final class AppDependency: VisionDependency {
         self.reachability = reachability
         
         self.videoSampler = VideoSampler(settings: videoSettings)
+
+        //avic harcoded for now...
+        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: "/var/mobile/Containers/Data/Application/13E189F5-2458-4424-9CF6-EBE352B8BAF0/Documents/Showcase/2019-02-11_16-51-25/")
         
         self.deviceInfo = DeviceInfoProvider()
         
