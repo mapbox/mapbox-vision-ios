@@ -36,27 +36,38 @@ class RecordedVideoSampler: NSObject, Streamable {
         return asset
     }
 
-    func setupAsset() -> AVAssetReaderTrackOutput? {
-        guard let asset = recordedAsset() else { return nil }
+    func setupAsset() {
+        guard let asset = recordedAsset() else { return }
 
-        if let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
-            print("found at least one video track")
+        asset.loadValuesAsynchronously(forKeys: ["tracks"]) { [weak self] in
+            print("setup asset worked")
 
-            let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
-            let assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
+            if let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
+                print("found at least one video track")
 
-            //avic now do something with the samples
-            // i'll try a repeating times
-            return assetVideoTrackReader
+                if let self = self {
+                    let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
+                    self.assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
+
+                    if let assetVideoTrackReader = self.assetVideoTrackReader {
+                        // setup a repeating read of the asset
+                        print("created asset reader track: \(assetVideoTrackReader)")
+                        self.displayLink = CADisplayLink(target: self, selector: #selector(self.update))
+
+                        if let displayLink = self.displayLink {
+                            displayLink.add(to: .current, forMode: .commonModes)
+                        }
+                    }
+                }
+            }
         }
-        return nil
     }
 
     @objc func update() {
         print("Updating!")
 
         if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
-
+            print("got a buffer: \(nextSampleBuffer)")
             let now = Date.timeIntervalSinceReferenceDate
             let timeElapsed = now - lastUpdateInterval
 
@@ -72,20 +83,21 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         // begin reading from the file and sending frames to the delegate
         print("start()")
-        if let reader = setupAsset() {
-            print("setup asset worked")
-            assetVideoTrackReader = reader
-
-            // setup a repeating read of the asset
-
-            displayLink = CADisplayLink(target: self, selector: #selector(update))
-            
-            if let displayLink = displayLink {
-                displayLink.add(to: .current, forMode: .commonModes)
-            }
-        } else {
-            print("setup asset did not work")
-        }
+        setupAsset()
+//        if let reader = setupAsset() {
+//            print("setup asset worked")
+//            assetVideoTrackReader = reader
+//
+//            // setup a repeating read of the asset
+//
+//            displayLink = CADisplayLink(target: self, selector: #selector(update))
+//
+//            if let displayLink = displayLink {
+//                displayLink.add(to: .current, forMode: .commonModes)
+//            }
+//        } else {
+//            print("setup asset did not work")
+//        }
     }
 
     func stop() {
