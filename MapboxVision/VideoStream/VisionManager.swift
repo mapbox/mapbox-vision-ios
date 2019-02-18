@@ -233,6 +233,7 @@ public final class VisionManager {
         // avic provide the recorded stream here
         videoStream.start()
         recordedVideoSampler.start()
+        // hello
         dependencies.coreUpdater.startUpdating()
     
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
