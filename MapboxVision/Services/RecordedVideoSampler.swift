@@ -68,8 +68,9 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     func start() {
         // begin reading from the file and sending frames to the delegate
-
+        print("start()")
         if let reader = setupAsset() {
+            print("setup asset worked")
             assetVideoTrackReader = reader
 
             // setup a repeating read of the asset
@@ -79,6 +80,8 @@ class RecordedVideoSampler: NSObject, Streamable {
             if let displayLink = displayLink {
                 displayLink.add(to: .current, forMode: .commonModes)
             }
+        } else {
+            print("setup asset did not work")
         }
     }
 
