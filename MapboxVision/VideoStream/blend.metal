@@ -9,8 +9,8 @@
 #include <metal_stdlib>
 using namespace metal;
 
-constant half4 segColors[12] = {
-    { 255.0 / 255, 255.0 / 255, 255.0 / 255, 1 },    // Other
+constant half4 segColors[14] = {
+    { 120.0 / 255, 120.0 / 255, 120.0 / 255, 1 },    // Other
     { 100.0 / 255, 255.0 / 255, 130.0 / 255, 1 },    // Road
     { 255.0 / 255, 236.0 / 255, 0.0   / 255, 1 },    // RoadMarkupVertical
     { 73.0  / 255, 45.0  / 255, 255.0 / 255, 1 },    // FlatNonRoad
@@ -21,7 +21,9 @@ constant half4 segColors[12] = {
     { 189.0 / 255, 16.0  / 255, 224.0 / 255, 1 },    // Person
     { 74.0  / 255, 144.0 / 255, 226.0 / 255, 1 },    // RoadMarkupOther
     { 255.0 / 255, 159.0 / 255, 0.0   / 255, 1 },    // Curb
-    { 255.0 / 255, 0.0   / 255, 0.0   / 255, 1 }     // Double yellow
+    { 255.0 / 255, 0.0   / 255, 0.0   / 255, 1 },    // Double yellow
+    { 255.0 / 255, 0.0   / 255, 162.0 / 255, 1 },    // Traffic sign
+    { 255.0 / 255, 255.0 / 255, 255.0 / 255, 1 }     // Traffic light
 };
 
 kernel void blend(texture2d<half, access::sample> sourceTexture [[texture(0)]],
