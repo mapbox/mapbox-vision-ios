@@ -92,11 +92,14 @@ class RecordedVideoSampler: NSObject, Streamable {
         let now = Date.timeIntervalSinceReferenceDate
         let timeElapsed = Float(now - lastUpdateInterval)
 
-        if (timeElapsed >= self.updateFrequence), let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
-//            print("RecordedVideoSampler didCaptureFrame")
+        if (timeElapsed >= self.updateFrequence) {
             print("timeElapsed: \(timeElapsed)")
-            didCaptureFrame?(nextSampleBuffer)
-            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+            if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
+                //            print("RecordedVideoSampler didCaptureFrame")
+                print("sampleBuffer: \(nextSampleBuffer)")
+                didCaptureFrame?(nextSampleBuffer)
+                lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+            }
         }
     }
 }
