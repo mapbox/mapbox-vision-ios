@@ -95,20 +95,13 @@ class RecordedVideoSampler: NSObject, Streamable {
         print("RecordedVideoSampler Updating!")
 
         guard self.assetReader?.status == AVAssetReaderStatus.reading else { return }
+        let now = Date.timeIntervalSinceReferenceDate
+        let timeElapsed = Float(now - lastUpdateInterval)
 
-        if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
-            print(nextSampleBuffer)
-            let now = Date.timeIntervalSinceReferenceDate
-            let timeElapsed = Float(now - lastUpdateInterval)
-
-            // avic - add some kind of tolerance over 60fps?
-            if (timeElapsed >= self.updateFrequence) {
-                print("RecordedVideoSampler didCaptureFrame")
-                didCaptureFrame?(nextSampleBuffer)
-                lastUpdateInterval = Date.timeIntervalSinceReferenceDate
-            }
-        } else {
-            print("AVAssetReader: \(self.assetReader) - AVAssetReaderTrackOutput: \(self.assetVideoTrackReader)")
+        if (timeElapsed >= self.updateFrequence), let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
+            print("RecordedVideoSampler didCaptureFrame")
+            didCaptureFrame?(nextSampleBuffer)
+            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
         }
     }
 }
