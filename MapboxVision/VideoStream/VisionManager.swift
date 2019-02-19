@@ -565,8 +565,8 @@ public final class VisionManager {
         dependencies.videoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
 
-            print("videoSampler didCaptureFrame: \(frame)")
-    
+//            print("videoSampler didCaptureFrame: \(frame)")
+
             self.presenter?.present(sampleBuffer: frame)
             
             guard self.isStarted else { return }
@@ -592,7 +592,7 @@ public final class VisionManager {
         dependencies.recordedVideoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
 
-            print("recordedVideoSampler didCaptureFrame: \(frame)")
+//            print("recordedVideoSampler didCaptureFrame: \(frame)")
 
             self.presenter?.present(sampleBuffer: frame)
 
