@@ -62,8 +62,18 @@ final class AppDependency: VisionDependency {
         
         self.videoSampler = VideoSampler(settings: videoSettings)
 
+        var fullURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         //avic harcoded for now...
-        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: "/var/mobile/Containers/Data/Application/13E189F5-2458-4424-9CF6-EBE352B8BAF0/Documents/Showcase/2019-02-11_16-51-25/video.mp4")
+        if let documentsPathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let directoryString = "Showcase"
+            let recordingName = "2019-02-11_16-51-25"
+            let videoFileName = "video.mp4"
+
+            fullURL = documentsPathURL.appendingPathComponent(directoryString, isDirectory: true).appendingPathComponent(recordingName, isDirectory: true).appendingPathComponent(videoFileName)
+
+        }
+
+        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: (fullURL?.absoluteString)!)
         
         self.deviceInfo = DeviceInfoProvider()
         

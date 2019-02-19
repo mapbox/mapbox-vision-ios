@@ -40,7 +40,14 @@ class RecordedVideoSampler: NSObject, Streamable {
         guard let asset = recordedAsset() else { return }
 
         asset.loadValuesAsynchronously(forKeys: ["tracks"]) { [weak self] in
-            print("setup asset worked")
+            print("loadValuesAsynchronously worked")
+
+            var error: NSError?
+            guard asset.statusOfValue(forKey: "tracks", error: &error) == AVKeyValueStatus.loaded
+                else {
+                    print("\(error)")
+                    return
+            }
 
             if let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
                 print("found at least one video track")
