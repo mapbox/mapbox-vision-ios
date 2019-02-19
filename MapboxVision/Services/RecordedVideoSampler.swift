@@ -88,15 +88,18 @@ class RecordedVideoSampler: NSObject, Streamable {
     // with sampleBuffer: CMSampleBuffer
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        guard self.assetReader?.status == AVAssetReaderStatus.reading else { return }
+        guard self.assetReader?.status == AVAssetReaderStatus.reading else {
+            return
+
+        }
         let now = Date.timeIntervalSinceReferenceDate
         let timeElapsed = Float(now - lastUpdateInterval)
 
         if (timeElapsed >= self.updateFrequence) {
-            print("timeElapsed: \(timeElapsed)")
+            print("timeElapsed: \(timeElapsed) rate: \(1.0 / timeElapsed)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
-                //            print("RecordedVideoSampler didCaptureFrame")
-                print("sampleBuffer: \(nextSampleBuffer)")
+                print("RecordedVideoSampler didCaptureFrame")
+                //                print("sampleBuffer: \(nextSampleBuffer)")
                 didCaptureFrame?(nextSampleBuffer)
                 lastUpdateInterval = Date.timeIntervalSinceReferenceDate
             }
