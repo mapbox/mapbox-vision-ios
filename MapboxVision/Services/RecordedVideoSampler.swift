@@ -18,6 +18,8 @@ class RecordedVideoSampler: NSObject, Streamable {
     let iPhoneXBackFacingCameraFocalLength: Float = Float(23.551327)
 
     var assetPath: String?
+    var assetFrameRate: Float = 60.0
+    var updateFrequence: Float = 1.0 / 60.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
@@ -46,6 +48,8 @@ class RecordedVideoSampler: NSObject, Streamable {
                 print("found at least one video track")
 
                 if let self = self {
+                    self.assetFrameRate = firstVideoTrack.nominalFrameRate
+                    self.updateFrequence = 1.0 / self.assetFrameRate
                     self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
 
@@ -95,10 +99,10 @@ class RecordedVideoSampler: NSObject, Streamable {
         if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
             print(nextSampleBuffer)
             let now = Date.timeIntervalSinceReferenceDate
-            let timeElapsed = now - lastUpdateInterval
+            let timeElapsed = Float(now - lastUpdateInterval)
 
             // avic - add some kind of tolerance over 60fps?
-            if (timeElapsed >= 1.0 / 60.0) {
+            if (timeElapsed >= self.updateFrequence) {
                 print("RecordedVideoSampler didCaptureFrame")
                 didCaptureFrame?(nextSampleBuffer)
                 lastUpdateInterval = Date.timeIntervalSinceReferenceDate
