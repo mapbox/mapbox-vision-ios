@@ -231,7 +231,7 @@ public final class VisionManager {
     
         dataProvider?.start()
         // avic provide the recorded stream here
-        videoStream.start()
+//        videoStream.start()
         recordedVideoSampler.start()
         // hello
         dependencies.coreUpdater.startUpdating()
@@ -257,7 +257,8 @@ public final class VisionManager {
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-        videoStream.stop()
+//        videoStream.stop()
+        recordedVideoSampler.stop()
         dependencies.coreUpdater.stopUpdating()
     
         sessionManager.stopSession()

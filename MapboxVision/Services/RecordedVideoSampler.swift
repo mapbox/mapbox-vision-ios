@@ -90,6 +90,8 @@ class RecordedVideoSampler: NSObject, Streamable {
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
         print("RecordedVideoSampler Updating!")
 
+        guard self.assetReader?.status == AVAssetReaderStatus.reading else { return }
+
         if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
             print(nextSampleBuffer)
             let now = Date.timeIntervalSinceReferenceDate
@@ -104,18 +106,5 @@ class RecordedVideoSampler: NSObject, Streamable {
         } else {
             print("AVAssetReader: \(self.assetReader) - AVAssetReaderTrackOutput: \(self.assetVideoTrackReader)")
         }
-
-        //        if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
-        //            print("got a buffer: \(nextSampleBuffer)")
-        //            let now = Date.timeIntervalSinceReferenceDate
-        //            let timeElapsed = now - lastUpdateInterval
-        //
-        //            // avic - add some kind of tolerance over 60fps?
-        //            if (timeElapsed <= 1.0 / 60.0) {
-        //                didCaptureFrame?(nextSampleBuffer)
-        //            }
-        //        }
-        //
-        //        lastUpdateInterval = Date.timeIntervalSinceReferenceDate
     }
 }
