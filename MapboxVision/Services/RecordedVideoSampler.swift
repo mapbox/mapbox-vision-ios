@@ -21,7 +21,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
-    var lastUpdateInterval: TimeInterval = 0
+    var lastUpdateInterval: TimeInterval = Date.timeIntervalSinceReferenceDate
     var didCaptureFrame: Handler?
 
     init(pathToRecording: String) {
@@ -61,23 +61,6 @@ class RecordedVideoSampler: NSObject, Streamable {
         }
     }
 
-    @objc func update() {
-        print("RecordedVideoSampler Updating!")
-
-        if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
-            print("got a buffer: \(nextSampleBuffer)")
-            let now = Date.timeIntervalSinceReferenceDate
-            let timeElapsed = now - lastUpdateInterval
-
-            // avic - add some kind of tolerance over 60fps?
-            if (timeElapsed <= 1.0 / 60.0) {
-                didCaptureFrame?(nextSampleBuffer)
-            }
-        }
-
-        lastUpdateInterval = Date.timeIntervalSinceReferenceDate
-    }
-
     func start() {
         // begin reading from the file and sending frames to the delegate
         print("start()")
@@ -113,9 +96,10 @@ class RecordedVideoSampler: NSObject, Streamable {
             let timeElapsed = now - lastUpdateInterval
 
             // avic - add some kind of tolerance over 60fps?
-            if (timeElapsed <= 1.0 / 60.0) {
+            if (timeElapsed >= 1.0 / 60.0) {
                 print("RecordedVideoSampler didCaptureFrame")
                 didCaptureFrame?(nextSampleBuffer)
+                lastUpdateInterval = Date.timeIntervalSinceReferenceDate
             }
         } else {
             print("AVAssetReader: \(self.assetReader) - AVAssetReaderTrackOutput: \(self.assetVideoTrackReader)")
