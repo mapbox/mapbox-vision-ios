@@ -563,6 +563,8 @@ public final class VisionManager {
         
         dependencies.videoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
+
+            print("videoSampler didCaptureFrame: \(frame)")
     
             self.presenter?.present(sampleBuffer: frame)
             
@@ -589,7 +591,28 @@ public final class VisionManager {
         dependencies.recordedVideoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
 
-            print("frame is: \(frame)")
+            print("recordedVideoSampler didCaptureFrame: \(frame)")
+
+            self.presenter?.present(sampleBuffer: frame)
+
+            guard self.isStarted else { return }
+
+            self.dependencies.recorder.handleFrame(frame)
+
+            guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
+                assertionFailure("Can't create pixel buffer")
+                return
+            }
+
+            self.dependencies.core.setImage(capturedImageBuffer)
+            self.dependencies.core.setCameraWidth(
+                Float(CVPixelBufferGetWidth(capturedImageBuffer)),
+                height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
+                focalLenght: self.dependencies.videoSampler.focalLength,
+                fieldOfView: self.dependencies.videoSampler.fieldOfView
+            )
+
+            self.currentFrame = capturedImageBuffer
         }
         
         sessionManager.listener = self
