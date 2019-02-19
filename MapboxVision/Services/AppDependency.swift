@@ -73,7 +73,7 @@ final class AppDependency: VisionDependency {
 
         }
 
-        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: (fullURL?.absoluteString)!)
+        self.recordedVideoSampler = RecordedVideoSampler(pathToRecording: (fullURL?.path)!)
         
         self.deviceInfo = DeviceInfoProvider()
         

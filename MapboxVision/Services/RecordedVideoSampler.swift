@@ -19,6 +19,7 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     var assetPath: String?
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
+    var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
     var lastUpdateInterval: TimeInterval = 0
     var didCaptureFrame: Handler?
@@ -28,16 +29,8 @@ class RecordedVideoSampler: NSObject, Streamable {
         assetPath = pathToRecording
     }
 
-    func recordedAsset() -> AVAsset? {
-        guard let assetPath = assetPath else { return nil }
-        let movieFileURL = URL(fileURLWithPath: assetPath)
-        let asset = AVAsset(url: movieFileURL)
-
-        return asset
-    }
-
-    func setupAsset() {
-        guard let asset = recordedAsset() else { return }
+    func setupAsset(url: URL) {
+        let asset = AVAsset(url: url)
 
         asset.loadValuesAsynchronously(forKeys: ["tracks"]) { [weak self] in
             print("loadValuesAsynchronously worked")
@@ -53,18 +46,20 @@ class RecordedVideoSampler: NSObject, Streamable {
                 print("found at least one video track")
 
                 if let self = self {
+                    self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
+
                     self.assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
+                    self.assetReader?.add(self.assetVideoTrackReader!)
+                    self.assetReader?.startReading()
 
-                    if let assetVideoTrackReader = self.assetVideoTrackReader {
-                        // setup a repeating read of the asset
-                        print("created asset reader track: \(assetVideoTrackReader)")
-                        self.displayLink = CADisplayLink(target: self, selector: #selector(self.update))
-
-                        if let displayLink = self.displayLink {
-                            displayLink.add(to: .current, forMode: .commonModes)
-                        }
+                    if let nextSampleBuffer = self.assetVideoTrackReader!.copyNextSampleBuffer() {
+                        print(nextSampleBuffer)
                     }
+                    // setup a repeating read of the asset
+                    //                    self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+                    //
+                    //                    self.displayLink?.add(to: .current, forMode: .common)
                 }
             }
         }
@@ -90,21 +85,11 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         // begin reading from the file and sending frames to the delegate
         print("start()")
-        setupAsset()
-//        if let reader = setupAsset() {
-//            print("setup asset worked")
-//            assetVideoTrackReader = reader
-//
-//            // setup a repeating read of the asset
-//
-//            displayLink = CADisplayLink(target: self, selector: #selector(update))
-//
-//            if let displayLink = displayLink {
-//                displayLink.add(to: .current, forMode: .commonModes)
-//            }
-//        } else {
-//            print("setup asset did not work")
-//        }
+
+        let fileURL = URL(fileURLWithPath: assetPath!)
+        setupAsset(url: fileURL)
+        displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+        displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
     }
 
     func stop() {
@@ -122,4 +107,32 @@ class RecordedVideoSampler: NSObject, Streamable {
     // avic - call this
     // didCaptureFrame?(sampleBuffer)
     // with sampleBuffer: CMSampleBuffer
+
+    @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
+        print("Updating!")
+
+        if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
+            print(nextSampleBuffer)
+            let now = Date.timeIntervalSinceReferenceDate
+            let timeElapsed = now - lastUpdateInterval
+
+            // avic - add some kind of tolerance over 60fps?
+            if (timeElapsed <= 1.0 / 60.0) {
+                didCaptureFrame?(nextSampleBuffer)
+            }
+        }
+
+        //        if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
+        //            print("got a buffer: \(nextSampleBuffer)")
+        //            let now = Date.timeIntervalSinceReferenceDate
+        //            let timeElapsed = now - lastUpdateInterval
+        //
+        //            // avic - add some kind of tolerance over 60fps?
+        //            if (timeElapsed <= 1.0 / 60.0) {
+        //                didCaptureFrame?(nextSampleBuffer)
+        //            }
+        //        }
+        //
+        //        lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+    }
 }
