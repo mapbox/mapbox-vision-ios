@@ -56,17 +56,13 @@ class RecordedVideoSampler: NSObject, Streamable {
                     if let nextSampleBuffer = self.assetVideoTrackReader!.copyNextSampleBuffer() {
                         print(nextSampleBuffer)
                     }
-                    // setup a repeating read of the asset
-                    //                    self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-                    //
-                    //                    self.displayLink?.add(to: .current, forMode: .common)
                 }
             }
         }
     }
 
     @objc func update() {
-        print("Updating!")
+        print("RecordedVideoSampler Updating!")
 
         if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
             print("got a buffer: \(nextSampleBuffer)")
@@ -109,7 +105,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     // with sampleBuffer: CMSampleBuffer
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        print("Updating!")
+        print("RecordedVideoSampler Updating!")
 
         if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
             print(nextSampleBuffer)
@@ -118,8 +114,11 @@ class RecordedVideoSampler: NSObject, Streamable {
 
             // avic - add some kind of tolerance over 60fps?
             if (timeElapsed <= 1.0 / 60.0) {
+                print("RecordedVideoSampler didCaptureFrame")
                 didCaptureFrame?(nextSampleBuffer)
             }
+        } else {
+            print("AVAssetReader: \(self.assetReader) - AVAssetReaderTrackOutput: \(self.assetVideoTrackReader)")
         }
 
         //        if let nextSampleBuffer = assetVideoTrackReader?.copyNextSampleBuffer() {
