@@ -96,8 +96,13 @@ class RecordedVideoSampler: NSObject, Streamable {
             print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
 
             // stop updates
-            frameUpdateTimer?.invalidate()
-            displayLink?.remove(from: .current, forMode: .commonModes)
+            if let frameUpdateTimer = frameUpdateTimer {
+                frameUpdateTimer.invalidate()
+            }
+
+            if let displayLink = displayLink {
+                displayLink.invalidate()
+            }
             return
         }
         let now = Date.timeIntervalSinceReferenceDate
