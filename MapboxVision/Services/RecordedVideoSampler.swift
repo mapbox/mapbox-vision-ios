@@ -18,8 +18,8 @@ class RecordedVideoSampler: NSObject, Streamable {
     let iPhoneXBackFacingCameraFocalLength: Float = Float(23.551327)
 
     var assetPath: String?
-    var assetFrameRate: Float = 60.0
-    var updateFrequence: Float = 1.0 / 60.0
+    var assetFrameRate: Float = 30.0
+    var updateFrequence: Float = 1.0 / 30.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
@@ -34,6 +34,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     func setupAsset(url: URL) {
         let asset = AVAsset(url: url)
 
+        // load the asset tracks so we can read from the video track
         asset.loadValuesAsynchronously(forKeys: ["tracks"]) { [weak self] in
             print("loadValuesAsynchronously worked")
 
@@ -48,8 +49,9 @@ class RecordedVideoSampler: NSObject, Streamable {
                 print("found at least one video track")
 
                 if let self = self {
+                    // use the framerate of the video file to control the rate of sending frames to the callback
                     self.assetFrameRate = firstVideoTrack.nominalFrameRate
-                    self.updateFrequence = 1.0 / self.assetFrameRate
+//                    self.updateFrequence = 1.0 / self.assetFrameRate
                     self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
 
@@ -62,9 +64,6 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     func start() {
-        // begin reading from the file and sending frames to the delegate
-        print("start()")
-
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
         displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
@@ -76,27 +75,26 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     var focalLength: Float {
+        //avic -- pull this from the recorded camera info
         return iPhoneXBackFacingCameraFocalLength
     }
 
     var fieldOfView: Float {
+        //avic -- pull this from the recorded camera info
         return iPhoneXBackFacingCameraFoV
     }
 
-    // avic - call this
-    // didCaptureFrame?(sampleBuffer)
-    // with sampleBuffer: CMSampleBuffer
-
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
         guard self.assetReader?.status == AVAssetReaderStatus.reading else {
+            // can't read the asset frames (yet)
             return
-
         }
         let now = Date.timeIntervalSinceReferenceDate
-        let timeElapsed = Float(now - lastUpdateInterval)
+        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
 
-        if (timeElapsed >= self.updateFrequence) {
-            print("timeElapsed: \(timeElapsed) rate: \(1.0 / timeElapsed)")
+        // send a video frame at no faster than the video file framerate. We should match it identically
+        if (timeSinceLastFrameSent >= self.updateFrequence) {
+            print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 print("RecordedVideoSampler didCaptureFrame")
                 //                print("sampleBuffer: \(nextSampleBuffer)")

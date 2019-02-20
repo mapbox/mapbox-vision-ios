@@ -230,18 +230,16 @@ public final class VisionManager {
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-        // avic provide the recorded stream here
-//        videoStream.start()
-        recordedVideoSampler.start()
+
         // hello
         dependencies.coreUpdater.startUpdating()
     
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
 
-        //avic - Turn this off
         if let recording = currentRecording {
-            let videoURL = URL(fileURLWithPath: recording.videoPath)
-            presenter?.presentVideo(at: videoURL)
+//            let videoURL = URL(fileURLWithPath: recording.videoPath)
+//            presenter?.presentVideo(at: videoURL)
+            recordedVideoSampler.start()
         }
     }
     
@@ -609,8 +607,8 @@ public final class VisionManager {
             self.dependencies.core.setCameraWidth(
                 Float(CVPixelBufferGetWidth(capturedImageBuffer)),
                 height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
-                focalLenght: self.dependencies.videoSampler.focalLength,
-                fieldOfView: self.dependencies.videoSampler.fieldOfView
+                focalLenght: self.dependencies.recordedVideoSampler.focalLength,
+                fieldOfView: self.dependencies.recordedVideoSampler.fieldOfView
             )
 
             self.currentFrame = capturedImageBuffer
