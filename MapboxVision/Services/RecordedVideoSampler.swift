@@ -41,7 +41,7 @@ class RecordedVideoSampler: NSObject, Streamable {
             var error: NSError?
             guard asset.statusOfValue(forKey: "tracks", error: &error) == AVKeyValueStatus.loaded
                 else {
-                    print("\(error)")
+                    print("\(String(describing: error))")
                     return
             }
 
@@ -51,7 +51,7 @@ class RecordedVideoSampler: NSObject, Streamable {
                 if let self = self {
                     // use the framerate of the video file to control the rate of sending frames to the callback
                     self.assetFrameRate = firstVideoTrack.nominalFrameRate
-//                    self.updateFrequence = 1.0 / self.assetFrameRate
+                    self.updateFrequence = 1.0 / self.assetFrameRate
                     self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
 
@@ -99,7 +99,12 @@ class RecordedVideoSampler: NSObject, Streamable {
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 print("RecordedVideoSampler didCaptureFrame")
                 //                print("sampleBuffer: \(nextSampleBuffer)")
-                didCaptureFrame?(nextSampleBuffer)
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.didCaptureFrame?(nextSampleBuffer)
+                }
                 lastUpdateInterval = Date.timeIntervalSinceReferenceDate
             }
         }
