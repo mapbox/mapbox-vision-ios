@@ -94,7 +94,7 @@ class RecordedVideoSampler: NSObject, Streamable {
         let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
 
         // send a video frame at no faster than the video file framerate. We should match it identically
-        if (timeSinceLastFrameSent >= self.updateFrequence) {
+        if (timeSinceLastFrameSent >= self.updateFrequence / 2.0) {
             print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 print("RecordedVideoSampler didCaptureFrame")
