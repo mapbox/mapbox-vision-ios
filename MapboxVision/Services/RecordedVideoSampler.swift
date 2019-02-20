@@ -25,6 +25,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     var displayLink: CADisplayLink?
     var lastUpdateInterval: TimeInterval = Date.timeIntervalSinceReferenceDate
     var didCaptureFrame: Handler?
+    var frameUpdateTimer: Timer?
 
     init(pathToRecording: String) {
         super.init()
@@ -66,8 +67,9 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
-        displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-        displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
+//        displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+//        displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
+        frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
     }
 
     func stop() {
@@ -84,7 +86,7 @@ class RecordedVideoSampler: NSObject, Streamable {
         return iPhoneXBackFacingCameraFoV
     }
 
-    @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
+    private func updateFrameIfNeeded() {
         guard let assetReader = self.assetReader, assetReader.status == AVAssetReaderStatus.reading else {
             // can't read the asset frames
             print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
@@ -94,7 +96,7 @@ class RecordedVideoSampler: NSObject, Streamable {
         let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
 
         // send a video frame at no faster than the video file framerate. We should match it identically
-        if (timeSinceLastFrameSent >= self.updateFrequence / 2.0) {
+        if (timeSinceLastFrameSent >= self.updateFrequence) {
             print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 print("RecordedVideoSampler didCaptureFrame")
@@ -108,5 +110,13 @@ class RecordedVideoSampler: NSObject, Streamable {
                 lastUpdateInterval = Date.timeIntervalSinceReferenceDate
             }
         }
+    }
+
+    @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
+        updateFrameIfNeeded()
+    }
+
+    @objc func updateOnTimer() {
+        updateFrameIfNeeded()
     }
 }
