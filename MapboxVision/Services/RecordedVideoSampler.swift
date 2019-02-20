@@ -90,7 +90,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     private func updateFrameIfNeeded() {
-        let assetReadingFailed = (assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
+        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
         guard assetReadingFailed == false else {
             // can't read the asset frames
             print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
