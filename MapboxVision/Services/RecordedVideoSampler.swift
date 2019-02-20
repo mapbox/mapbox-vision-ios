@@ -58,6 +58,9 @@ class RecordedVideoSampler: NSObject, Streamable {
                     self.assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
                     self.assetReader?.add(self.assetVideoTrackReader!)
                     self.assetReader?.startReading()
+
+                    self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+                    self.displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
                 }
             }
         }
@@ -66,8 +69,6 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
-        displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-        displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
     }
 
     func stop() {
@@ -86,7 +87,8 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
         guard self.assetReader?.status == AVAssetReaderStatus.reading else {
-            // can't read the asset frames (yet)
+            // can't read the asset frames
+            print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
             return
         }
         let now = Date.timeIntervalSinceReferenceDate
