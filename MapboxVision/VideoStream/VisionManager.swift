@@ -230,16 +230,14 @@ public final class VisionManager {
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-
-        // hello
         dependencies.coreUpdater.startUpdating()
     
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
 
-        if let recording = currentRecording {
-//            let videoURL = URL(fileURLWithPath: recording.videoPath)
-//            presenter?.presentVideo(at: videoURL)
+        if currentRecording != nil {
             recordedVideoSampler.start()
+        } else {
+            videoStream.start()
         }
     }
     
@@ -255,7 +253,7 @@ public final class VisionManager {
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-//        videoStream.stop()
+        videoStream.stop()
         recordedVideoSampler.stop()
         dependencies.coreUpdater.stopUpdating()
     
@@ -563,8 +561,6 @@ public final class VisionManager {
         dependencies.videoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
 
-//            print("videoSampler didCaptureFrame: \(frame)")
-
             self.presenter?.present(sampleBuffer: frame)
             
             guard self.isStarted else { return }
@@ -589,8 +585,6 @@ public final class VisionManager {
 
         dependencies.recordedVideoSampler.didCaptureFrame = { [weak self] frame in
             guard let `self` = self else { return }
-
-//            print("recordedVideoSampler didCaptureFrame: \(frame)")
 
             self.presenter?.present(sampleBuffer: frame)
 
@@ -756,7 +750,6 @@ extension VisionManager: ARDataProvider {
      :nodoc
     */
     public func getCameraParams() -> ARCameraParameters {
-        // avic MAybe patch this to return the saved ones?
         return dependencies.core.getARCameraParams()
     }
     /**
