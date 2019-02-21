@@ -68,10 +68,14 @@ class RecordedVideoSampler: NSObject, Streamable {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
         #if UPDATE_FRAMES_ON_TIMER
-        frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
+        if frameUpdateTimer == nil {
+            frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
+        }
         #else
-        displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-        displayLink!.add(to: .current, forMode: RunLoopMode.commonModes)
+        if displayLink == nil {
+            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
+        }
         #endif
     }
 
@@ -96,13 +100,18 @@ class RecordedVideoSampler: NSObject, Streamable {
             print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
 
             // stop updates
-            if let frameUpdateTimer = frameUpdateTimer {
-                frameUpdateTimer.invalidate()
+            if frameUpdateTimer != nil {
+                frameUpdateTimer!.invalidate()
+                frameUpdateTimer = nil
             }
 
-            if let displayLink = displayLink {
-                displayLink.invalidate()
+            if displayLink != nil {
+                displayLink!.isPaused = true
+                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
+                displayLink!.invalidate()
+                displayLink = nil
             }
+
             return
         }
         let now = Date.timeIntervalSinceReferenceDate
