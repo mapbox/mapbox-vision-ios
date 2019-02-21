@@ -37,12 +37,13 @@ public struct VideoSample {
     }
 }
 
-public protocol VideoSource: Streamable {
-    typealias SampleOutput = (VideoSample) -> Void
+public protocol VideoSource: class {
+    typealias VideoSampleOutput = (VideoSample) -> Void
     typealias CameraParametersOutput = (CameraParameters) -> Void
     
-    var videoSampleOutput: SampleOutput? { get set }
-    var cameraParametersOutput: CameraParametersOutput? { get set }
-    
     var isExternal: Bool { get }
+    
+    func attach(_ observer: AnyObject, videoSampleOutput: @escaping VideoSampleOutput, cameraParametersOutput: @escaping CameraParametersOutput)
+    
+    func detach(_ observer: AnyObject)
 }

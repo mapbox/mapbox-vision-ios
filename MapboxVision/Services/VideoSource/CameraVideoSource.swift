@@ -9,20 +9,34 @@
 import Foundation
 import AVFoundation
 
-open class CameraVideoSource: NSObject, VideoSource {
+public protocol CameraVideoSourceDelegate: class {
     
-    public var videoSampleOutput: VideoSource.SampleOutput?
-    public var cameraParametersOutput: VideoSource.CameraParametersOutput?
+    func cameraVideoSource(_ cameraVideoSource: CameraVideoSource, didOutput videoSample: CMSampleBuffer)
     
-    public var isExternal: Bool {
-        return false
-    }
+    func cameraVideoSourceShouldStart(_ cameraVideoSource: CameraVideoSource) -> Bool
+    
+    func cameraVideoSourceShouldStop(_ cameraVideoSource: CameraVideoSource) -> Bool
+}
 
+extension CameraVideoSourceDelegate {
+    
+    func cameraVideoSourceShouldStart(_ cameraVideoSource: CameraVideoSource) -> Bool { return false }
+    
+    func cameraVideoSourceShouldStop(_ cameraVideoSource: CameraVideoSource) -> Bool { return false }
+}
+
+open class CameraVideoSource: NSObject {
+    
+    public weak var delegate: CameraVideoSourceDelegate?
+    
     public let cameraSession: AVCaptureSession
+    
     private let camera: AVCaptureDevice?
     private var dataOutput: AVCaptureVideoDataOutput?
+    private var videoSampleOutput: VideoSampleOutput?
+    private var cameraParametersOutput: CameraParametersOutput?
     
-    public init(preset: AVCaptureSession.Preset) {
+    public init(preset: AVCaptureSession.Preset = .iFrame960x540) {
         self.cameraSession = AVCaptureSession()
         self.camera = AVCaptureDevice.default(for: .video)
         
@@ -33,6 +47,16 @@ open class CameraVideoSource: NSObject, VideoSource {
         orientationChanged()
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged),
                                                name: .UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    public func start() {
+        guard !cameraSession.isRunning else { return }
+        cameraSession.startRunning()
+    }
+    
+    public func stop() {
+        guard !cameraSession.isRunning else { return }
+        cameraSession.startRunning()
     }
     
     // MARK: - Private
@@ -106,22 +130,36 @@ open class CameraVideoSource: NSObject, VideoSource {
     }
 }
 
-extension CameraVideoSource: Streamable {
-    open func start() {
-        guard !cameraSession.isRunning else { return }
-        cameraSession.startRunning()
+extension CameraVideoSource: VideoSource {
+    
+    open var isExternal: Bool {
+        return false
     }
     
-    open func stop() {
-        guard cameraSession.isRunning else { return }
-        cameraSession.stopRunning()
+    open func attach(_ observer: AnyObject, videoSampleOutput: @escaping VideoSampleOutput, cameraParametersOutput: @escaping CameraParametersOutput) {
+        self.videoSampleOutput = videoSampleOutput
+        self.cameraParametersOutput = cameraParametersOutput
+        
+        if let delegate = delegate, !delegate.cameraVideoSourceShouldStart(self) { return }
+        start()
+    }
+    
+    open func detach(_ observer: AnyObject) {
+        self.videoSampleOutput = nil
+        self.cameraParametersOutput = nil
+        
+        if let delegate = delegate, !delegate.cameraVideoSourceShouldStart(self) { return }
+        stop()
     }
 }
 
 extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
     open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
         videoSampleOutput?(sample)
+        
+        delegate?.cameraVideoSource(self, didOutput: sampleBuffer)
         
         if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
             cameraParametersOutput?(cameraParameters)

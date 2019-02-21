@@ -187,7 +187,6 @@ public final class VisionManager {
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
-    private var videoStream: Streamable
     private var interruptionStartTime: Date?
     
     private let sessionManager = SessionManager()
@@ -211,15 +210,17 @@ public final class VisionManager {
         Start delivering events from SDK.
     */
     
-    public func start() {
-        guard !isStarted else { return }
+    public func start(videoSource: VideoSource = CameraVideoSource(), operationMode: OperationMode = .dataRecording) {
+        guard state.isStopped else { return }
     
-        isStarted = true
+        state = .started(videoSource: videoSource)
+        
+        updateOperationMode(operationMode)
     
         dependencies.metaInfoManager.addObserver(self)
     
         dataProvider?.start()
-        videoStream.start()
+        startVideoStream()
         dependencies.coreUpdater.startUpdating()
     
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
@@ -235,17 +236,27 @@ public final class VisionManager {
     */
     
     public func stop() {
-        guard isStarted else { return }
-    
-        isStarted = false
+        guard state.isStarted else { return }
     
         dependencies.metaInfoManager.removeObserver(self)
     
         dataProvider?.stop()
-        videoStream.stop()
+        stopVideoStream()
         dependencies.coreUpdater.stopUpdating()
     
         sessionManager.stopSession()
+        
+        state = .stopped
+    }
+    
+    private func startVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.attach(self, videoSampleOutput: handle, cameraParametersOutput: handle)
+    }
+    
+    private func stopVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.detach(self)
     }
     
     // MARK: Performance control
@@ -417,27 +428,6 @@ public final class VisionManager {
     }
     
     /**
-        Determines whether video stream remains running outside of `start()` and `stop()` calls.
-        When property is set to `true` `VisionPresentationViewController` will update background view with frames from camera.
-    */
-    
-    public var isVideoStreamAlwaysRunning = false {
-        didSet {
-            guard isVideoStreamAlwaysRunning != oldValue else { return }
-            
-            let sampler = dependencies.videoSampler
-            if isVideoStreamAlwaysRunning {
-                videoStream = AlwaysRunningStream(stream: sampler)
-            } else {
-                videoStream = ControlledStream(stream: sampler)
-                if !isStarted {
-                    videoStream.stop()
-                }
-            }
-        }
-    }
-    
-    /**
         Determines estimated country where the device is situated.
         For supported values see `CVACountry`.
     */
@@ -445,6 +435,23 @@ public final class VisionManager {
     public var country: Country
     
     // MARK: - Private
+    
+    private enum State {
+        case started(videoSource: VideoSource)
+        case stopped
+        
+        var isStarted: Bool {
+            guard case .started = self else { return false }
+            return true
+        }
+        
+        var isStopped: Bool {
+            guard case .stopped = self else { return false }
+            return true
+        }
+    }
+    
+    private var state: State = .stopped
     
     private var notificationObservers = [Any]()
     
@@ -457,7 +464,6 @@ public final class VisionManager {
     
     private init() {
         self.dependencies = AppDependency(operationMode: operationMode)
-        self.videoStream = ControlledStream(stream: dependencies.videoSampler)
         self.country = dependencies.core.getCountry()
         
         dependencies.core.config = .basic
@@ -555,9 +561,6 @@ public final class VisionManager {
             self.maneuverLocation = isValidCrossroad ? ManeuverLocation(origin: crossroad.origin.cgPoint) : nil
         }
         
-        dependencies.videoSampler.videoSampleOutput = { [weak self] in self?.handle(videoSample: $0) }
-        dependencies.videoSampler.cameraParametersOutput = { [weak self] in self?.handle(cameraParameters: $0) }
-        
         sessionManager.listener = self
     
         subscribeToNotifications()
@@ -573,7 +576,7 @@ public final class VisionManager {
         
         currentFrame = pixelBuffer
         
-        guard isStarted else { return }
+        guard state.isStarted else { return }
         
         dependencies.recorder.handleFrame(videoSample.buffer)
         
@@ -655,7 +658,7 @@ public final class VisionManager {
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
             self?.interruptionStartTime = Date()
-            guard let `self` = self, self.isStarted else { return }
+            guard let `self` = self, self.state.isStarted else { return }
             self.isStoppedForBackground = true
             self.stop()
         })
@@ -675,7 +678,7 @@ public final class VisionManager {
     }
     
     private func setDataProvider(_ dataProvider: DataProvider) {
-        let isActivated = self.isStarted
+        let isActivated = state.isStarted
         
         stop()
         
