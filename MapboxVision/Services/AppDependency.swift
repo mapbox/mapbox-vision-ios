@@ -50,7 +50,7 @@ final class AppDependency: VisionDependency {
         }
         self.reachability = reachability
         
-        self.videoSampler = VideoSampler(settings: operationMode.videoSettings)
+        self.videoSampler = VideoSampler(preset: operationMode.videoSettings.sessionPreset!)
         
         self.deviceInfo = DeviceInfoProvider()
         

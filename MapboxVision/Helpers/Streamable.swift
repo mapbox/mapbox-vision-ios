@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Streamable {
+public protocol Streamable {
     func start()
     func stop()
 }

@@ -8,78 +8,36 @@
 
 import Foundation
 import AVFoundation
-import ModelIO
 
-final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, Streamable, VideoSource {
+open class VideoSampler: NSObject, VideoSource {
     
-    var videoSampleOutput: VideoSource.Output?
+    public var videoSampleOutput: VideoSource.SampleOutput?
+    public var cameraParametersOutput: VideoSource.CameraParametersOutput?
+    
+    public var isExternal: Bool {
+        return false
+    }
 
-    private let mdlCamera = MDLCamera()
-    private let cameraSession: AVCaptureSession
+    public let cameraSession: AVCaptureSession
     private let camera: AVCaptureDevice?
     private var dataOutput: AVCaptureVideoDataOutput?
     
-    init(settings: VideoSettings) {
-        self.settings = settings
+    public init(preset: AVCaptureSession.Preset) {
         self.cameraSession = AVCaptureSession()
         self.camera = AVCaptureDevice.default(for: .video)
         
         super.init()
         
-        configureSession()
+        configureSession(preset: preset)
         
         orientationChanged()
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged),
                                                name: .UIDeviceOrientationDidChange, object: nil)
     }
     
-    func start() {
-        guard !cameraSession.isRunning else { return }
-        cameraSession.startRunning()
-    }
-    
-    func stop() {
-        guard cameraSession.isRunning else { return }
-        cameraSession.stopRunning()
-    }
-
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        videoSampleOutput?(VideoSample(buffer: sampleBuffer, parameters: cameraParameters(sampleBuffer: sampleBuffer)))
-    }
-    
-    private func cameraParameters(sampleBuffer: CMSampleBuffer) -> CameraParameters {
-        let width: Int
-        let height: Int
-        
-        if let pixelBuffer = sampleBuffer.pixelBuffer {
-            width = pixelBuffer.width
-            height = pixelBuffer.height
-        } else {
-            width = settings.width
-            height = settings.height
-        }
-    
-        return CameraParameters(width: width, height: height, focalLength: self.focalLength, fieldOfView: self.fieldOfView)
-    }
-    
-    var focalLength: Float {
-        return mdlCamera.focalLength
-    }
-    
-    var fieldOfView: Float {
-        return camera?.activeFormat.videoFieldOfView ?? 0
-    }
-    
-    var settings: VideoSettings {
-        didSet {
-            guard let preset = settings.sessionPreset else { return }
-            cameraSession.sessionPreset = preset
-        }
-    }
-    
     // MARK: - Private
     
-    private func configureSession() {
+    private func configureSession(preset: AVCaptureSession.Preset) {
         
         guard let captureDevice = camera
             else { return }
@@ -88,6 +46,8 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
             else { return }
         
         cameraSession.beginConfiguration()
+        
+        cameraSession.sessionPreset = preset
         
         if cameraSession.canAddInput(deviceInput) {
             cameraSession.addInput(deviceInput)
@@ -101,6 +61,10 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
             cameraSession.addOutput(dataOutput)
         }
         
+        if let connection = dataOutput.connection(with: .video), connection.isCameraIntrinsicMatrixDeliverySupported {
+            connection.isCameraIntrinsicMatrixDeliveryEnabled = true
+        }
+        
         cameraSession.commitConfiguration()
         
         let queue = DispatchQueue(label: "com.mapbox.videoQueue")
@@ -109,9 +73,64 @@ final class VideoSampler: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate
         self.dataOutput = dataOutput
     }
     
+    private func getCameraParameters(sampleBuffer: CMSampleBuffer) -> CameraParameters? {
+        guard let pixelBuffer = sampleBuffer.pixelBuffer else { return nil }
+        
+        let width = pixelBuffer.width
+        let height = pixelBuffer.height
+        
+        let focalPixelX: Float?
+        let focalPixelY: Float?
+        
+        if let attachment = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) as? Data {
+            let matrix: matrix_float3x3 = attachment.withUnsafeBytes { $0.pointee }
+            focalPixelX = matrix[0,0]
+            focalPixelY = matrix[1,1]
+        } else {
+            focalPixelX = formatFieldOfView
+            focalPixelY = formatFieldOfView
+        }
+        
+        return CameraParameters(width: width, height: height, focalXPixels: focalPixelX, focalYPixels: focalPixelY)
+    }
+    
+    private var formatFieldOfView: Float? {
+        guard let fov = camera?.activeFormat.videoFieldOfView else { return nil }
+        return fov > 0 ? fov : nil
+    }
+    
     // MARK: - Observations
     
     @objc private func orientationChanged() {
         dataOutput?.connection(with: .video)?.set(deviceOrientation: UIDevice.current.orientation)
+    }
+}
+
+extension VideoSampler: Streamable {
+    open func start() {
+        guard !cameraSession.isRunning else { return }
+        cameraSession.startRunning()
+    }
+    
+    open func stop() {
+        guard cameraSession.isRunning else { return }
+        cameraSession.stopRunning()
+    }
+}
+
+extension VideoSampler: AVCaptureVideoDataOutputSampleBufferDelegate {
+    open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
+        videoSampleOutput?(sample)
+        
+        if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
+            cameraParametersOutput?(cameraParameters)
+        }
+    }
+    
+    open func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        var mode: CMAttachmentMode = 0
+        guard let reason = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_DroppedFrameReason, &mode) else { return }
+        print("Sample buffer was dropped. Reason: \(reason)")
     }
 }

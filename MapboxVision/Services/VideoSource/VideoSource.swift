@@ -8,29 +8,41 @@ import Foundation
 public struct CameraParameters {
     public let width: Int
     public let height: Int
-    public let focalLength: Float?
-    public let fieldOfView: Float?
+    public let focalXPixels: Float?
+    public let focalYPixels: Float?
     
-    public init(width: Int, height: Int, focalLength: Float? = nil, fieldOfView: Float? = nil) {
+    public init(width: Int, height: Int, focalXPixels: Float? = nil, focalYPixels: Float? = nil) {
         self.width = width
         self.height = height
-        self.focalLength = focalLength
-        self.fieldOfView = fieldOfView
+        self.focalXPixels = focalXPixels
+        self.focalYPixels = focalYPixels
     }
+}
+
+// TODO: use core type
+public enum InputImageFormat {
+    case rgb
+    case bgr
+    case rgba
+    case bgra
 }
 
 public struct VideoSample {
     public let buffer: CMSampleBuffer
-    public let parameters: CameraParameters
+    public let format: InputImageFormat
     
-    public init(buffer: CMSampleBuffer, parameters: CameraParameters) {
+    public init(buffer: CMSampleBuffer, format: InputImageFormat) {
         self.buffer = buffer
-        self.parameters = parameters
+        self.format = format
     }
 }
 
-protocol VideoSource: Streamable {
-    typealias Output = (VideoSample) -> Void
+public protocol VideoSource: Streamable {
+    typealias SampleOutput = (VideoSample) -> Void
+    typealias CameraParametersOutput = (CameraParameters) -> Void
     
-    var videoSampleOutput: Output? { get set }
+    var videoSampleOutput: SampleOutput? { get set }
+    var cameraParametersOutput: CameraParametersOutput? { get set }
+    
+    var isExternal: Bool { get }
 }
