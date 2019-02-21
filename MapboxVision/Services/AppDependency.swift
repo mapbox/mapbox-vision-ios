@@ -15,7 +15,7 @@ protocol VisionDependency {
     var recorder: RecordCoordinator { get }
     var core: Core { get }
     var coreUpdater: CoreUpdater { get }
-    var videoSampler: VideoSampler { get }
+    var videoSampler: CameraVideoSource { get }
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
     var countryService: CountryService { get }
@@ -28,7 +28,7 @@ protocol VisionDependency {
 
 final class AppDependency: VisionDependency {
     private(set) var reachability: Reachability
-    private(set) var videoSampler: VideoSampler
+    private(set) var videoSampler: CameraVideoSource
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var core: Core
     private(set) var coreUpdater: CoreUpdater
@@ -50,7 +50,7 @@ final class AppDependency: VisionDependency {
         }
         self.reachability = reachability
         
-        self.videoSampler = VideoSampler(preset: operationMode.videoSettings.sessionPreset!)
+        self.videoSampler = CameraVideoSource(preset: operationMode.videoSettings.sessionPreset!)
         
         self.deviceInfo = DeviceInfoProvider()
         

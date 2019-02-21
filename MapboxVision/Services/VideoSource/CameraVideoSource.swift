@@ -1,5 +1,5 @@
 //
-//  VideoSampler.swift
+//  CameraVideoSource.swift
 //  cv-assist-ios
 //
 //  Created by Maksim on 12/11/17.
@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-open class VideoSampler: NSObject, VideoSource {
+open class CameraVideoSource: NSObject, VideoSource {
     
     public var videoSampleOutput: VideoSource.SampleOutput?
     public var cameraParametersOutput: VideoSource.CameraParametersOutput?
@@ -106,7 +106,7 @@ open class VideoSampler: NSObject, VideoSource {
     }
 }
 
-extension VideoSampler: Streamable {
+extension CameraVideoSource: Streamable {
     open func start() {
         guard !cameraSession.isRunning else { return }
         cameraSession.startRunning()
@@ -118,7 +118,7 @@ extension VideoSampler: Streamable {
     }
 }
 
-extension VideoSampler: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
         videoSampleOutput?(sample)
