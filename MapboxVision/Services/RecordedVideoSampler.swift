@@ -96,8 +96,11 @@ class RecordedVideoSampler: NSObject, Streamable {
     private func updateFrameIfNeeded() {
         let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
         guard assetReadingFailed == false else {
-            // can't read the asset frames
-            print("Asset reader status: \(String(describing: self.assetReader?.status)) - error: \(String(describing: self.assetReader?.error))")
+            if self.assetReader?.status == AVAssetReaderStatus.failed {
+                print("RecordedViewSampler - Video asset read error!")
+            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
+                print("RecordedViewSampler - Video asset read completed.")
+            }
 
             // stop updates
             if frameUpdateTimer != nil {
@@ -120,7 +123,6 @@ class RecordedVideoSampler: NSObject, Streamable {
         // send a video frame at no faster than the video file framerate. We should match it identically
         let shouldSendNewFrame = timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
         if shouldSendNewFrame {
-//            print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                     guard let self = self else {
