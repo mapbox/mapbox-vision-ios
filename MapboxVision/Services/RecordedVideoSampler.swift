@@ -111,7 +111,7 @@ class RecordedVideoSampler: NSObject, Streamable {
         // send a video frame at no faster than the video file framerate. We should match it identically
         let shouldSendNewFrame = timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
         if shouldSendNewFrame {
-            print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
+//            print("timeSinceLastFrameSent: \(timeSinceLastFrameSent) rate: \(1.0 / timeSinceLastFrameSent)")
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                     guard let self = self else {
