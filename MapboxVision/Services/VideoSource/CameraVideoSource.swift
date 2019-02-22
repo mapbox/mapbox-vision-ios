@@ -9,32 +9,9 @@
 import Foundation
 import AVFoundation
 
-public protocol CameraVideoSourceDelegate: class {
-    
-    func cameraVideoSource(_ cameraVideoSource: CameraVideoSource, didOutput videoSample: CMSampleBuffer)
-    
-    func cameraVideoSourceShouldStart(_ cameraVideoSource: CameraVideoSource) -> Bool
-    
-    func cameraVideoSourceShouldStop(_ cameraVideoSource: CameraVideoSource) -> Bool
-}
-
-extension CameraVideoSourceDelegate {
-    
-    func cameraVideoSourceShouldStart(_ cameraVideoSource: CameraVideoSource) -> Bool { return false }
-    
-    func cameraVideoSourceShouldStop(_ cameraVideoSource: CameraVideoSource) -> Bool { return false }
-}
-
 open class CameraVideoSource: NSObject {
     
-    public weak var delegate: CameraVideoSourceDelegate?
-    
     public let cameraSession: AVCaptureSession
-    
-    private let camera: AVCaptureDevice?
-    private var dataOutput: AVCaptureVideoDataOutput?
-    private var videoSampleOutput: VideoSampleOutput?
-    private var cameraParametersOutput: CameraParametersOutput?
     
     public init(preset: AVCaptureSession.Preset = .iFrame960x540) {
         self.cameraSession = AVCaptureSession()
@@ -60,6 +37,15 @@ open class CameraVideoSource: NSObject {
     }
     
     // MARK: - Private
+    
+    private struct Observation {
+        weak var observer: VideoSourceObserver?
+    }
+    
+    private let camera: AVCaptureDevice?
+    private var dataOutput: AVCaptureVideoDataOutput?
+    
+    private var observations = [ObjectIdentifier : Observation]()
     
     private func configureSession(preset: AVCaptureSession.Preset) {
         
@@ -118,6 +104,16 @@ open class CameraVideoSource: NSObject {
         return CameraParameters(width: width, height: height, focalXPixels: focalPixelX, focalYPixels: focalPixelY)
     }
     
+    private func notify(closure: (VideoSourceObserver) -> Void) {
+        observations.forEach { (id, observation) in
+            guard let observer = observation.observer else {
+                observations.removeValue(forKey: id)
+                return
+            }
+            closure(observer)
+        }
+    }
+    
     private var formatFieldOfView: Float? {
         guard let fov = camera?.activeFormat.videoFieldOfView else { return nil }
         return fov > 0 ? fov : nil
@@ -131,42 +127,34 @@ open class CameraVideoSource: NSObject {
 }
 
 extension CameraVideoSource: VideoSource {
+    public func add(observer: VideoSourceObserver) {
+        let id = ObjectIdentifier(observer)
+        observations[id] = Observation(observer: observer)
+    }
+    
+    public func remove(observer: VideoSourceObserver) {
+        let id = ObjectIdentifier(observer)
+        observations.removeValue(forKey: id)
+    }
     
     open var isExternal: Bool {
         return false
     }
-    
-    open func attach(_ observer: AnyObject, videoSampleOutput: @escaping VideoSampleOutput, cameraParametersOutput: @escaping CameraParametersOutput) {
-        self.videoSampleOutput = videoSampleOutput
-        self.cameraParametersOutput = cameraParametersOutput
-        
-        if let delegate = delegate, !delegate.cameraVideoSourceShouldStart(self) { return }
-        start()
-    }
-    
-    open func detach(_ observer: AnyObject) {
-        self.videoSampleOutput = nil
-        self.cameraParametersOutput = nil
-        
-        if let delegate = delegate, !delegate.cameraVideoSourceShouldStart(self) { return }
-        stop()
-    }
 }
 
 extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
-    open func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
-        videoSampleOutput?(sample)
-        
-        delegate?.cameraVideoSource(self, didOutput: sampleBuffer)
-        
-        if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
-            cameraParametersOutput?(cameraParameters)
+    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        notify { (observer) in
+            let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
+            observer.videoSource(self, didOutput: sample)
+            
+            if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
+                observer.videoSource(self, didOutput: cameraParameters)
+            }
         }
     }
     
-    open func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         var mode: CMAttachmentMode = 0
         guard let reason = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_DroppedFrameReason, &mode) else { return }
         print("Sample buffer was dropped. Reason: \(reason)")

@@ -43,7 +43,18 @@ public protocol VideoSource: class {
     
     var isExternal: Bool { get }
     
-    func attach(_ observer: AnyObject, videoSampleOutput: @escaping VideoSampleOutput, cameraParametersOutput: @escaping CameraParametersOutput)
+    func add(observer: VideoSourceObserver)
+    func remove(observer: VideoSourceObserver)
+}
+
+public protocol VideoSourceObserver: class {
+    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample)
     
-    func detach(_ observer: AnyObject)
+    func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters)
+}
+
+extension VideoSourceObserver {
+    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {}
+    
+    func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {}
 }

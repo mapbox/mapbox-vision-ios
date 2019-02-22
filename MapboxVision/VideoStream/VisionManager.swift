@@ -251,12 +251,12 @@ public final class VisionManager {
     
     private func startVideoStream() {
         guard case let .started(videoSource) = state else { return }
-        videoSource.attach(self, videoSampleOutput: handle, cameraParametersOutput: handle)
+        videoSource.add(observer: self)
     }
     
     private func stopVideoStream() {
         guard case let .started(videoSource) = state else { return }
-        videoSource.detach(self)
+        videoSource.remove(observer: self)
     }
     
     // MARK: Performance control
@@ -566,33 +566,6 @@ public final class VisionManager {
         subscribeToNotifications()
     }
     
-    private func handle(videoSample: VideoSample) {
-        guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
-            assertionFailure("Sample buffer containing pixel buffer is expected here")
-            return
-        }
-        
-        presenter?.present(sampleBuffer: videoSample.buffer)
-        
-        currentFrame = pixelBuffer
-        
-        guard state.isStarted else { return }
-        
-        dependencies.recorder.handleFrame(videoSample.buffer)
-        
-        dependencies.core.setImage(pixelBuffer)
-    }
-    
-    private func handle(cameraParameters: CameraParameters) {
-        // TODO: use new camera params
-        dependencies.core.setCameraWidth(
-            Float(cameraParameters.width),
-            height: Float(cameraParameters.height),
-            focalLenght: -1,
-            fieldOfView: -1
-        )
-    }
-    
     deinit {
         unsubscribeFromNotifications()
         dependencies.broadcasting.stop()
@@ -714,6 +687,35 @@ public final class VisionManager {
     }
     
     private var currentFrame: CVPixelBuffer?
+}
+
+extension VisionManager: VideoSourceObserver {
+    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+        guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
+            assertionFailure("Sample buffer containing pixel buffer is expected here")
+            return
+        }
+        
+        presenter?.present(sampleBuffer: videoSample.buffer)
+        
+        currentFrame = pixelBuffer
+        
+        guard state.isStarted else { return }
+        
+        dependencies.recorder.handleFrame(videoSample.buffer)
+        
+        dependencies.core.setImage(pixelBuffer)
+    }
+    
+    public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
+        // TODO: use new camera params
+        dependencies.core.setCameraWidth(
+            Float(cameraParameters.width),
+            height: Float(cameraParameters.height),
+            focalLenght: -1,
+            fieldOfView: -1
+        )
+    }
 }
 
 extension VisionManager: ARDataProvider {
