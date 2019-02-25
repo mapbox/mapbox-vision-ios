@@ -210,25 +210,13 @@ public final class VisionManager {
         Start delivering events from SDK.
     */
     
-    public func start(videoSource: VideoSource = CameraVideoSource(), operationMode: OperationMode = .dataRecording) {
+    public func start(videoSource: VideoSource, operationMode: OperationMode = .normal) {
         guard state.isStopped else { return }
     
         state = .started(videoSource: videoSource)
-        
         updateOperationMode(operationMode)
-    
-        dependencies.metaInfoManager.addObserver(self)
-    
-        dataProvider?.start()
-        startVideoStream()
-        dependencies.coreUpdater.startUpdating()
-    
-        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-    
-        if let recording = currentRecording {
-            let videoURL = URL(fileURLWithPath: recording.videoPath)
-            presenter?.presentVideo(at: videoURL)
-        }
+        
+        resume()
     }
     
     /**
@@ -237,26 +225,10 @@ public final class VisionManager {
     
     public func stop() {
         guard state.isStarted else { return }
-    
-        dependencies.metaInfoManager.removeObserver(self)
-    
-        dataProvider?.stop()
-        stopVideoStream()
-        dependencies.coreUpdater.stopUpdating()
-    
-        sessionManager.stopSession()
+        
+        pause()
         
         state = .stopped
-    }
-    
-    private func startVideoStream() {
-        guard case let .started(videoSource) = state else { return }
-        videoSource.add(observer: self)
-    }
-    
-    private func stopVideoStream() {
-        guard case let .started(videoSource) = state else { return }
-        videoSource.remove(observer: self)
     }
     
     // MARK: Performance control
@@ -573,6 +545,41 @@ public final class VisionManager {
         syncOverCellularObservation?.invalidate()
     }
     
+    private func startVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.add(observer: self)
+    }
+    
+    private func stopVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.remove(observer: self)
+    }
+    
+    private func resume() {
+        dependencies.metaInfoManager.addObserver(self)
+        
+        dataProvider?.start()
+        startVideoStream()
+        dependencies.coreUpdater.startUpdating()
+        
+        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+        
+        if let recording = currentRecording {
+            let videoURL = URL(fileURLWithPath: recording.videoPath)
+            presenter?.presentVideo(at: videoURL)
+        }
+    }
+    
+    private func pause() {
+        dependencies.metaInfoManager.removeObserver(self)
+        
+        dataProvider?.stop()
+        stopVideoStream()
+        dependencies.coreUpdater.stopUpdating()
+        
+        sessionManager.stopSession()
+    }
+    
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
         switch config {
         case let .merged(performance):
@@ -626,14 +633,14 @@ public final class VisionManager {
             self?.stopInterruption()
             guard let `self` = self, self.isStoppedForBackground else { return }
             self.isStoppedForBackground = false
-            self.start()
+            self.resume()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
             self?.interruptionStartTime = Date()
             guard let `self` = self, self.state.isStarted else { return }
             self.isStoppedForBackground = true
-            self.stop()
+            self.pause()
         })
     }
     
@@ -653,13 +660,13 @@ public final class VisionManager {
     private func setDataProvider(_ dataProvider: DataProvider) {
         let isActivated = state.isStarted
         
-        stop()
+        pause()
         
         self.dataProvider = dataProvider
         dependencies.core.restart()
         
         if isActivated {
-            start()
+            resume()
         }
     }
     
