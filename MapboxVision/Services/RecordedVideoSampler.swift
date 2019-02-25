@@ -117,11 +117,8 @@ class RecordedVideoSampler: NSObject, Streamable {
 
             return
         }
-        let now = Date.timeIntervalSinceReferenceDate
-        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
 
-        // send a video frame at no faster than the video file framerate. We should match it identically
-        let shouldSendNewFrame = timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
+        let shouldSendNewFrame = assetReader?.status == AVAssetReaderStatus.reading
         if shouldSendNewFrame {
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -130,13 +127,21 @@ class RecordedVideoSampler: NSObject, Streamable {
                     }
                     self.didCaptureFrame?(nextSampleBuffer)
                 }
-                lastUpdateInterval = Date.timeIntervalSinceReferenceDate
             }
         }
     }
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        updateFrameIfNeeded()
+        let now = Date.timeIntervalSinceReferenceDate
+        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
+
+        // send a video frame at no faster than the video file framerate. We should match it identically
+        let shouldSendNewFrame = assetReader?.status == AVAssetReaderStatus.reading && timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
+        if shouldSendNewFrame {
+            updateFrameIfNeeded()
+            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+        }
+
     }
 
     @objc func updateOnTimer() {
