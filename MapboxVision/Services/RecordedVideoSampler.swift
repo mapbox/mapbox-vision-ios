@@ -67,16 +67,16 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
-        #if UPDATE_FRAMES_ON_TIMER
+//        #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
             frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
         }
-        #else
-        if displayLink == nil {
-            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
-        }
-        #endif
+//        #else
+//        if displayLink == nil {
+//            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+//            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
+//        }
+//        #endif
     }
 
     func stop() {
