@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import MapboxVisionCore
 
 public struct CameraParameters {
     public let width: Int
@@ -19,28 +20,17 @@ public struct CameraParameters {
     }
 }
 
-// TODO: use core type
-public enum InputImageFormat {
-    case rgb
-    case bgr
-    case rgba
-    case bgra
-}
-
 public struct VideoSample {
     public let buffer: CMSampleBuffer
-    public let format: InputImageFormat
+    public let format: Image.Format
     
-    public init(buffer: CMSampleBuffer, format: InputImageFormat) {
+    public init(buffer: CMSampleBuffer, format: Image.Format) {
         self.buffer = buffer
         self.format = format
     }
 }
 
 public protocol VideoSource: class {
-    typealias VideoSampleOutput = (VideoSample) -> Void
-    typealias CameraParametersOutput = (CameraParameters) -> Void
-    
     var isExternal: Bool { get }
     
     func add(observer: VideoSourceObserver)

@@ -8,6 +8,9 @@
 
 import Foundation
 import AVFoundation
+import MapboxVisionCore
+
+private let imageOutputFormat = Image.Format.BGRA
 
 open class CameraVideoSource: NSObject {
     
@@ -64,10 +67,10 @@ open class CameraVideoSource: NSObject {
         }
         
         let dataOutput = AVCaptureVideoDataOutput()
-        dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
+        dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: imageOutputFormat.pixelFormatType)]
         dataOutput.alwaysDiscardsLateVideoFrames = true
         
-        if (cameraSession.canAddOutput(dataOutput) == true) {
+        if cameraSession.canAddOutput(dataOutput) {
             cameraSession.addOutput(dataOutput)
         }
         
@@ -137,7 +140,7 @@ extension CameraVideoSource: VideoSource {
         observations.removeValue(forKey: id)
     }
     
-    open var isExternal: Bool {
+    public var isExternal: Bool {
         return false
     }
 }
@@ -145,7 +148,7 @@ extension CameraVideoSource: VideoSource {
 extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         notify { (observer) in
-            let sample = VideoSample(buffer: sampleBuffer, format: .bgra)
+            let sample = VideoSample(buffer: sampleBuffer, format: imageOutputFormat)
             observer.videoSource(self, didOutput: sample)
             
             if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
@@ -158,5 +161,24 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         var mode: CMAttachmentMode = 0
         guard let reason = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_DroppedFrameReason, &mode) else { return }
         print("Sample buffer was dropped. Reason: \(reason)")
+    }
+}
+
+private extension Image.Format {
+    var pixelFormatType: OSType {
+        switch self {
+        case .unknown:
+            return 0
+        case .RGBA:
+            return kCVPixelFormatType_32RGBA
+        case .BGRA:
+            return kCVPixelFormatType_32BGRA
+        case .RGB:
+            return kCVPixelFormatType_24RGB
+        case .BGR:
+            return kCVPixelFormatType_24BGR
+        case .grayscale8:
+            return kCVPixelFormatType_8Indexed
+        }
     }
 }
