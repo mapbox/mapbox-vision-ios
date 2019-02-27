@@ -32,7 +32,6 @@ public final class VisionPresentationViewController: UIViewController {
             oldTopView.isHidden = true
             
             let newTopView = view(for: frameVisualizationMode)
-            newTopView.isHidden = false
             backgroundView.bringSubview(toFront: newTopView)
         }
     }
@@ -200,6 +199,7 @@ public final class VisionPresentationViewController: UIViewController {
     private let videoStreamView: VideoStreamView = {
         let view = VideoStreamView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
         return view
     }()
     
@@ -302,15 +302,18 @@ extension VisionPresentationViewController {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    public func present(segMask: SegmentationMask) {
+    public func present(segmentation: SegmentationMask) {
         guard frameVisualizationMode == .segmentation else { return }
         
         if segmentationView.delegate == nil {
             segmentationView.delegate = segmentationDrawer
         }
+    
+        segmentationView.isHidden = false
         
-        segmentationView.drawableSize = CGSize(width: CGFloat(segMask.sourceImage.width), height: CGFloat(segMask.sourceImage.height))
-        segmentationDrawer?.set(segMask)
+        let sourceImage = segmentation.sourceImage
+        segmentationView.drawableSize = CGSize(width: CGFloat(sourceImage.width), height: CGFloat(sourceImage.height))
+        segmentationDrawer?.set(segmentation)
         segmentationView.draw()
     }
     
