@@ -19,8 +19,6 @@ protocol VisionDependency {
     var motionManager: MotionManager { get }
     var countryService: CountryService { get }
     var deviceInfo: DeviceInfoProvidable { get }
-    var showcaseRecordDataSource: RecordDataSource { get }
-    var broadcasting: Broadcasting { get }
     
     func set(platformDelegate: PlatformDelegate?)
 }
@@ -35,8 +33,6 @@ final class AppDependency: VisionDependency {
     private(set) var motionManager: MotionManager
     private(set) var countryService: CountryService
     private(set) var deviceInfo: DeviceInfoProvidable
-    private(set) var showcaseRecordDataSource: RecordDataSource
-    private(set) var broadcasting = Broadcasting(ip: "192.168.0.66", port: 5097)
     private let handlerDisposable: CountryService.Disposable
     private let eventsManager = EventsManager()
     private let platform: Platform
@@ -76,8 +72,6 @@ final class AppDependency: VisionDependency {
         
         self.core.setCountry(self.countryService.currentCountry)
         self.handlerDisposable = self.countryService.subscribe(handler: core.setCountry)
-        
-        self.showcaseRecordDataSource = ShowcaseRecordDataSource()
     }
     
     func set(platformDelegate: PlatformDelegate?) {

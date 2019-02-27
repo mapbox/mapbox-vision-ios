@@ -496,7 +496,6 @@ public final class VisionManager {
     
     deinit {
         unsubscribeFromNotifications()
-        dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
     }
@@ -622,8 +621,6 @@ public final class VisionManager {
     }
     
     private func setRecording(at path: RecordingPath, startTime: UInt) {
-//        currentRecording = path
-        
         let recordedDataProvider = RecordedDataProvider(dependencies: RecordedDataProvider.Dependencies(
             core: dependencies.core,
             recordingPath: path,
@@ -647,16 +644,6 @@ public final class VisionManager {
     private func selectRecording(at url: URL) {
         guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
-    }
-    
-    private func startBroadcasting(at timestamp: String) {
-        guard
-            let showPath = ShowcaseRecordDataSource().recordDirectories.first,
-            let path = RecordingPath(existing: showPath.path, settings: operationMode.videoSettings)
-            else { return }
-        
-        let startTime = ms(from: timestamp)
-        setRecording(at: path, startTime: startTime)
     }
     
     private var currentFrame: CVPixelBuffer?
@@ -783,19 +770,4 @@ private extension UserDefaults {
     @objc dynamic var syncOverCellular: Bool {
         return bool(forKey: VisionSettings.syncOverCellular)
     }
-}
-
-private func ms(from timestamp: String) -> UInt {
-    let components = timestamp.components(separatedBy: CharacterSet([":", "."]))
-    
-    guard
-        components.count == 4,
-        let h = UInt(components[0]),
-        let m = UInt(components[1]),
-        let s = UInt(components[2]),
-        let ms = UInt(components[3])
-        else { return 0 }
-    
-    let value = (h * 3600000) + (m * 60000) + (s * 1000) + ms
-    return value
 }
