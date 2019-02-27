@@ -19,7 +19,7 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     var assetPath: String?
     var assetFrameRate: Float = 30.0
-    var updateFrequence: Float = 1.0 / 30.0
+    var updateFrequence: Float = 1.0 / 10.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
@@ -52,7 +52,7 @@ class RecordedVideoSampler: NSObject, Streamable {
                 if let self = self {
                     // use the framerate of the video file to control the rate of sending frames to the callback
                     self.assetFrameRate = firstVideoTrack.nominalFrameRate
-                    self.updateFrequence = 1.0 / self.assetFrameRate
+//                    self.updateFrequence = 1.0 / self.assetFrameRate
                     self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
 
