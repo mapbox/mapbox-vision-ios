@@ -13,22 +13,6 @@ import MetalKit
 import AVKit
 import MapboxVisionCore
 
-protocol VideoStreamPresentable: VisionPresentationControllable {
-    func present(sampleBuffer: CMSampleBuffer)
-    func present(visualizationMode: VisualizationMode)
-    
-    func present(debugOverlay: UIImage?)
-    func present(fps: FPSValue?)
-    
-    func present(segMask: SegmentationMask?)
-    func present(detections: Detections?, canvasSize: CGSize)
-    
-    func showClearCacheAlert()
-    
-    func presentRecordingPicker(dataSource: RecordDataSource)
-    func presentVideo(at url: URL)
-}
-
 private let contentInset: CGFloat = 16
 private let safeAreaContentInset: CGFloat = 2
 private let additionalContentInset: CGFloat = 7
@@ -48,7 +32,15 @@ private let roadLanesHeight: CGFloat = 64
 
 private let signImageAlignInsets = UIEdgeInsets(top: 6, left: 7, bottom: 8, right: 7)
 
-final class VisionViewController: VisionPresentationViewController {
+/**
+    An object that is capable of presenting objects emitted with VisionManager events
+*/
+
+public final class VisionPresentationViewController: UIViewController {
+    
+    /**
+        Set visualization mode which can be either original frame, original frame with segmentation as an overlay or original frame with detections as an overlay.
+     */
     public var frameVisualizationMode: VisualizationMode = .clear {
         didSet {
             let oldTopView = view(for: oldValue)
@@ -60,6 +52,9 @@ final class VisionViewController: VisionPresentationViewController {
         }
     }
     
+    /**
+        Control the visibility of the Mapbox logo.
+     */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -69,7 +64,6 @@ final class VisionViewController: VisionPresentationViewController {
         }
     }
     
-    weak var interactor: VideoStreamInteractable?
     private let dateFormatter = DateFormatter()
     
     private let alertPlayer = AlertPlayer()
@@ -180,14 +174,6 @@ final class VisionViewController: VisionPresentationViewController {
     private func setupLayout() {
         setupBackgroundView()
         
-        view.addSubview(debugView)
-        NSLayoutConstraint.activate([
-            debugView.topAnchor.constraint(equalTo: view.topAnchor),
-            debugView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            debugView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            debugView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
         setupContentLayout()
         
         view.addSubview(logoView)
@@ -295,13 +281,6 @@ final class VisionViewController: VisionPresentationViewController {
         return view
     }()
     
-    private let debugView: UIImageView = {
-        let view = UIImageView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
-    
     private let backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -352,18 +331,15 @@ final class VisionViewController: VisionPresentationViewController {
     private var measurementStack: UIStackView!
 }
 
-extension VisionViewController: VideoStreamPresentable {
-    func present(sampleBuffer: CMSampleBuffer) {
+extension VisionPresentationViewController {
+    public func present(sampleBuffer: CMSampleBuffer) {
         DispatchQueue.main.async {
+            guard self.viewIfLoaded?.window != nil else { return }
             self.videoStreamView.enqueue(sampleBuffer)
         }
     }
     
-    func present(visualizationMode: VisualizationMode) {
-        self.frameVisualizationMode = visualizationMode
-    }
-
-    func present(fps: FPSValue?) {
+    public func present(fps: FPSValue?) {
         measurementStack.isHidden = fps == nil
         guard let fps = fps else { return }
         segmentationFPSLabel.text = String(format: "%.2f", fps.segmentation)
@@ -373,11 +349,7 @@ extension VisionViewController: VideoStreamPresentable {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    func present(debugOverlay: UIImage?) {
-        debugView.image = debugOverlay
-    }
-    
-    func present(segMask: SegmentationMask?) {
+    public func present(segMask: SegmentationMask?) {
         guard let segMask = segMask else {
             segmentationView.isHidden = true
             return
@@ -393,7 +365,7 @@ extension VisionViewController: VideoStreamPresentable {
         segmentationView.draw()
     }
     
-    func present(detections: Detections?, canvasSize: CGSize) {
+    public func present(detections: Detections?, canvasSize: CGSize) {
         
         guard
             let detections = detections,
@@ -429,39 +401,5 @@ extension VisionViewController: VideoStreamPresentable {
         
         detectionsView.isHidden = false
         detectionsView.present(detections: values, at: image)
-    }
-    
-    func showClearCacheAlert() {
-        let alert = UIAlertController(title: "Clearing the cache", message: "Do you want to clear the cache?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "YES", style: .destructive, handler: { [weak self] _ in
-            self?.interactor?.clearCache(force: true)
-        }))
-        alert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: nil))
-        show(alert, sender: self)
-    }
-    
-    func presentRecordingPicker(dataSource: RecordDataSource) {
-        let picker = RecordPickerViewController(dataSource: dataSource) { [weak self] url in
-            if let url = url {
-                self?.interactor?.selectRecording(at: url)
-            }
-            self?.dismiss(animated: true)
-        }
-        let navigationController = UINavigationController(rootViewController: picker)
-        present(navigationController, animated: true)
-    }
-    
-    func presentVideo(at url: URL) {
-        let player = AVPlayer(url: url)
-        
-        let playerController = AVPlayerViewController()
-        playerController.player = player
-        playerController.showsPlaybackControls = false
-        playerController.entersFullScreenWhenPlaybackBegins = true
-        
-        externalWindow?.rootViewController = playerController
-        externalWindow?.isHidden = false
-        
-        player.play()
     }
 }

@@ -80,34 +80,6 @@ public protocol VisionManagerARDelegate: class {
 }
 
 /**
-    The interface that allows managing the presentation state of provided visual components.
-*/
-
-public protocol VisionPresentationControllable: class {
-    /**
-        Set visualization mode which can be either original frame, original frame with segmentation as an overlay or original frame with detections as an overlay.
-    */
-    var frameVisualizationMode: VisualizationMode { get set }
-    
-    /**
-        Control the visibility of the Mapbox logo.
-    */
-    var isLogoVisible: Bool { get set }
-}
-
-/**
-    Interface for visual presentation based on UIViewController 
-*/
-public typealias VisionPresentationViewController = UIViewController & VisionPresentationControllable
-
-protocol VideoStreamInteractable : VideoStreamInput {
-    var output: VideoStreamOutput? { get set }
-    
-    func selectRecording(at url: URL)
-    func startBroadcasting(at timestamp: String)
-}
-
-/**
     Visual (debug) mode of neural networks
 */
 
@@ -124,19 +96,6 @@ public enum VisualizationMode {
         Show detected objects with bounding boxes
     */
     case detection
-}
-
-protocol VideoStreamInput: class {
-    var isFPSTableEnabled: Bool { get set }
-    
-    func toggleDebugOverlay()
-    func toggleSegmentationOverlay()
-    
-    func clearCache(force: Bool)
-}
-
-protocol VideoStreamOutput: class {
-    func locationUpdated(_ location: CLLocation)
 }
 
 /**
@@ -165,19 +124,6 @@ public final class VisionManager {
     */
     public weak var arDelegate: VisionManagerARDelegate?
     
-    @available(*, deprecated, message: "configure presentation with VisionPresentationControllable and performance on manager instance")
-    var isFPSTableEnabled: Bool = false {
-        didSet {
-            if !isFPSTableEnabled {
-                presenter?.present(fps: nil)
-            }
-        }
-    }
-    
-    var output: VideoStreamOutput?
-    
-    private weak var presenter: VideoStreamPresentable?
-    
     private let dependencies: VisionDependency
     
     private var dataProvider: DataProvider?
@@ -185,7 +131,6 @@ public final class VisionManager {
     private var isStarted: Bool = false
     private var enableSyncObservation: NSKeyValueObservation?
     private var syncOverCellularObservation: NSKeyValueObservation?
-    private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
     private var interruptionStartTime: Date?
     
@@ -364,19 +309,6 @@ public final class VisionManager {
         }
     }
     
-    // MARK: Presentation
-    
-    /**
-        Create and setup presentation objects. Caller may configure presentation with presenter and display platform-specific view component.
-    */
-    
-    public func createPresentation() -> VisionPresentationViewController {
-        let viewController = VisionViewController()
-        presenter = viewController
-        viewController.interactor = self
-        return viewController
-    }
-    
     // MARK: Navigation
     
     /**
@@ -529,18 +461,6 @@ public final class VisionManager {
             
             self.dataProvider?.update()
             
-            var overlay: UIImage? = nil
-            var fpsValue: FPSValue? = self.dependencies.core.getFPS()
-            if self.dependencies.core.config.useDebugOverlay {
-                overlay = self.dependencies.core.getDebugOverlay().getUIImage()
-                fpsValue = nil
-            }
-            self.presenter?.present(debugOverlay: overlay)
-            
-            if self.isFPSTableEnabled {
-                self.presenter?.present(fps: fpsValue)
-            }
-            
             self.calibrationProgress = self.dependencies.core.getCalibrationProgress()
             
             let segmentationMask = self.dependencies.core.getSegmentationMask()
@@ -563,16 +483,6 @@ public final class VisionManager {
             self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
             
             self.speedLimit = self.dependencies.core.getSpeedLimit()
-            
-            guard let presenter = self.presenter else { return }
-            
-            switch presenter.frameVisualizationMode {
-            case .clear: break
-            case .segmentation:
-                presenter.present(segMask: segmentationMask)
-            case .detection:
-                presenter.present(detections: detections, canvasSize: self.frameSize)
-            }
             
             let crossroad = self.dependencies.core.getNearestCrossroad()
             let isValidCrossroad = crossroad.routePoint.isManeuver && crossroad.origin.y > 0
@@ -609,11 +519,6 @@ public final class VisionManager {
         dependencies.coreUpdater.startUpdating()
         
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-        
-        if let recording = currentRecording {
-            let videoURL = URL(fileURLWithPath: recording.videoPath)
-            presenter?.presentVideo(at: videoURL)
-        }
     }
     
     private func pause() {
@@ -717,7 +622,7 @@ public final class VisionManager {
     }
     
     private func setRecording(at path: RecordingPath, startTime: UInt) {
-        currentRecording = path
+//        currentRecording = path
         
         let recordedDataProvider = RecordedDataProvider(dependencies: RecordedDataProvider.Dependencies(
             core: dependencies.core,
@@ -739,6 +644,21 @@ public final class VisionManager {
         }
     }
     
+    private func selectRecording(at url: URL) {
+        guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
+        setRecording(at: recordingPath, startTime: 0)
+    }
+    
+    private func startBroadcasting(at timestamp: String) {
+        guard
+            let showPath = ShowcaseRecordDataSource().recordDirectories.first,
+            let path = RecordingPath(existing: showPath.path, settings: operationMode.videoSettings)
+            else { return }
+        
+        let startTime = ms(from: timestamp)
+        setRecording(at: path, startTime: startTime)
+    }
+    
     private var currentFrame: CVPixelBuffer?
 }
 
@@ -748,8 +668,6 @@ extension VisionManager: VideoSourceObserver {
             assertionFailure("Sample buffer containing pixel buffer is expected here")
             return
         }
-        
-        presenter?.present(sampleBuffer: videoSample.buffer)
         
         currentFrame = pixelBuffer
         
@@ -802,45 +720,6 @@ extension VisionManager: SyncDelegate {
     }
 }
 
-extension VisionManager: VideoStreamInteractable {
-    func toggleDebugOverlay() {
-        dependencies.core.config.useDebugOverlay = !dependencies.core.config.useDebugOverlay
-    }
-    
-    func toggleSegmentationOverlay() {
-        dependencies.core.config.drawSegMaskInDebug = !dependencies.core.config.drawSegMaskInDebug
-    }
-    
-    func clearCache(force: Bool) {
-        guard force else {
-            presenter?.showClearCacheAlert()
-            return
-        }
-        
-        dependencies.recorder.stopRecording()
-        dependencies.recorder.clearCache()
-    }
-    
-    func selectRecording(at url: URL) {
-        guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
-        setRecording(at: recordingPath, startTime: 0)
-    }
-    
-    func startBroadcasting(at timestamp: String) {
-        guard
-            let showPath = ShowcaseRecordDataSource().recordDirectories.first,
-            let path = RecordingPath(existing: showPath.path, settings: operationMode.videoSettings)
-        else { return }
-        
-        let startTime = ms(from: timestamp)
-        setRecording(at: path, startTime: startTime)
-    }
-    
-    var core: Core {
-        return dependencies.core
-    }
-}
-
 extension VisionManager: RecordCoordinatorDelegate {
     func recordingStarted(path: String) {
         dependencies.core.startSession(path)
@@ -874,9 +753,7 @@ extension VisionManager: SessionDelegate {
 }
 
 extension VisionManager: MetaInfoObserver {
-    func location(_ location: CLLocation) {
-        output?.locationUpdated(location)
-    }
+    func location(_ location: CLLocation) {}
     
     func heading(_ heading: CLHeading) {}
 }
