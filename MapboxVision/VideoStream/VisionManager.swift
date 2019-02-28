@@ -207,14 +207,35 @@ public final class VisionManager {
     // MARK: Lifetime
     
     /**
-        Start delivering events from SDK.
+        Initialize VisionManger supplying it with required dependencies.
     */
     
-    public func start(videoSource: VideoSource, operationMode: OperationMode = .normal) {
-        guard state.isStopped else { return }
+    public func initialize(videoSource: VideoSource, operationMode: OperationMode = .normal) {
+        guard state.isUninitialized else {
+            assertionFailure("VisionManager is already initialized. Call shutdown() to clean its state and reinitialize")
+            return
+        }
+        
+        state = .initialized(videoSource: videoSource)
+        self.operationMode = operationMode
+    }
     
-        state = .started(videoSource: videoSource)
-        updateOperationMode(operationMode)
+    /**
+        Start delivering events from VisionManager.
+        VisionManager is required to be initialized before calling this method.
+    */
+    
+    public func start() {
+        switch state {
+        case .uninitialized:
+            assertionFailure("VisionManager should be initialized before starting")
+            return
+        case .started:
+            assertionFailure("VisionManager is already started")
+            return
+        case let .initialized(videoSource), let .stopped(videoSource):
+            state = .started(videoSource: videoSource)
+        }
         
         resume()
     }
@@ -224,11 +245,24 @@ public final class VisionManager {
     */
     
     public func stop() {
-        guard state.isStarted else { return }
+        guard case let .started(videoSource) = state else {
+            assertionFailure("VisionManager is not started")
+            return
+        }
         
         pause()
         
-        state = .stopped
+        state = .stopped(videoSource: videoSource)
+    }
+    
+    /**
+        Cleanup the state and resources of VisionManger.
+    */
+    
+    public func shutdown() {
+        guard !state.isUninitialized else { return }
+        
+        state = .uninitialized
     }
     
     // MARK: Performance control
@@ -409,8 +443,20 @@ public final class VisionManager {
     // MARK: - Private
     
     private enum State {
+        case uninitialized
+        case initialized(videoSource: VideoSource)
         case started(videoSource: VideoSource)
-        case stopped
+        case stopped(videoSource: VideoSource)
+        
+        var isUninitialized: Bool {
+            guard case .uninitialized = self else { return false }
+            return true
+        }
+        
+        var isInitialized: Bool {
+            guard case .initialized = self else { return false }
+            return true
+        }
         
         var isStarted: Bool {
             guard case .started = self else { return false }
@@ -423,7 +469,7 @@ public final class VisionManager {
         }
     }
     
-    private var state: State = .stopped
+    private var state: State = .uninitialized
     
     private var notificationObservers = [Any]()
     
