@@ -13,6 +13,7 @@ protocol DataProvider: AnyObject {
     func start()
     func update()
     func stop()
+    func currentTime() -> UInt
 }
 
 final class RecordedDataProvider: DataProvider {
@@ -40,13 +41,16 @@ final class RecordedDataProvider: DataProvider {
     func update() {
         let settings = dependencies.recordingPath.settings
         let frameSize = Point2I(x: settings.width, y: settings.height)
-        let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
-        telemetryPlayer.setCurrentTime(currentTimeMS)
+        telemetryPlayer.setCurrentTime(currentTime())
         telemetryPlayer.updateData(dependencies.core, frameSize: frameSize, srcSize: frameSize)
         telemetryPlayer.moveNextFrame()
     }
     
     func stop() {}
+
+    func currentTime() -> UInt {
+        return DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
+    }
 }
 
 final class RealtimeDataProvider: DataProvider {
@@ -76,6 +80,10 @@ final class RealtimeDataProvider: DataProvider {
         dependencies.metaInfoManager.stop()
         dependencies.motionManager.stop()
     }
+
+    func currentTime() -> UInt {
+        return UInt(dependencies.core.getSeconds())
+    }
 }
 
 extension RealtimeDataProvider: MetaInfoObserver {
@@ -94,6 +102,10 @@ final class EmptyDataProvider: DataProvider {
     func update() {}
     
     func stop() {}
+
+    func currentTime() -> UInt {
+        return 0
+    }
 }
 
 private extension DispatchTime {

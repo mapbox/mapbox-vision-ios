@@ -19,7 +19,7 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     var assetPath: String?
     var assetFrameRate: Float = 30.0
-    var updateFrequence: Float = 1.0 / 10.0
+    var updateFrequence: Float = 1.0 / 30.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
@@ -52,7 +52,7 @@ class RecordedVideoSampler: NSObject, Streamable {
                 if let self = self {
                     // use the framerate of the video file to control the rate of sending frames to the callback
                     self.assetFrameRate = firstVideoTrack.nominalFrameRate
-//                    self.updateFrequence = 1.0 / self.assetFrameRate
+                    self.updateFrequence = 1.0 / self.assetFrameRate
                     self.assetReader = try! AVAssetReader(asset: asset)
                     let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
 
@@ -67,16 +67,16 @@ class RecordedVideoSampler: NSObject, Streamable {
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
-//        #if UPDATE_FRAMES_ON_TIMER
+        #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
             frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
         }
-//        #else
-//        if displayLink == nil {
-//            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
-//            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
-//        }
-//        #endif
+        #else
+        if displayLink == nil {
+            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
+        }
+        #endif
     }
 
     func stop() {

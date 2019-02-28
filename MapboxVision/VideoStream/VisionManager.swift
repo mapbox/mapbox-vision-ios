@@ -58,6 +58,8 @@ public protocol VisionManagerDelegate: class {
         Tells the delegate about the progress of camera pose estimation (calibration).
     */
     func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
+
+    func visionManager(_ visionManager: VisionManager, didUpdateTimestamp timestamp: UInt) -> Void
 }
 
 public protocol VisionManagerRoadRestrictionsDelegate: class {
@@ -542,6 +544,8 @@ public final class VisionManager {
             self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
             
             self.speedLimit = self.dependencies.core.getSpeedLimit()
+
+            self.delegate?.visionManager(self, didUpdateTimestamp: self.dataProvider?.currentTime() ?? 0)
             
             guard let presenter = self.presenter else { return }
             

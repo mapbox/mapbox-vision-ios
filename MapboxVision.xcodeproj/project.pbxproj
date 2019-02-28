@@ -299,6 +299,7 @@
 				2E4EE23320EFD5BA003431B3 /* MarketService.swift */,
 				2E4EE23420EFD5BA003431B3 /* DataProvider.swift */,
 				2E4EE2A620F0590C003431B3 /* VideoSampler.swift */,
+				F4AF086622161347005FF372 /* RecordedVideoSampler.swift */,
 				2E4EE2A920F0590E003431B3 /* MetaInfo.swift */,
 				2E4EE2A720F0590D003431B3 /* MetaInfoManager.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
@@ -306,7 +307,6 @@
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
 				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
-				F4AF086622161347005FF372 /* RecordedVideoSampler.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
