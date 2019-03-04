@@ -9,12 +9,17 @@
 import Foundation
 import MapboxVisionCore
 
+struct BasicDetection {
+    let boundingBox: CGRect
+    let objectType: ObjectType
+}
+
 final class DetectionsView: UIImageView {
     
     private static let labelHeight = CGFloat(18)
     private static let labelSidePadding = CGFloat(5)
     
-    func present(detections: [Detection], at image: UIImage) {
+    func present(detections: [BasicDetection], at image: UIImage) {
         
         self.subviews.forEach { $0.removeFromSuperview() }
         

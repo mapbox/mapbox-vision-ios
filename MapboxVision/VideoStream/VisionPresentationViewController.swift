@@ -13,53 +13,32 @@ import MetalKit
 import AVKit
 import MapboxVisionCore
 
-protocol VideoStreamPresentable: VisionPresentationControllable {
-    func present(sampleBuffer: CMSampleBuffer)
-    func present(visualizationMode: VisualizationMode)
-    
-    func present(debugOverlay: UIImage?)
-    func present(fps: FPSValue?)
-    
-    func present(segMask: SegmentationMask?)
-    func present(detections: Detections?, canvasSize: CGSize)
-    
-    func showClearCacheAlert()
-    
-    func presentRecordingPicker(dataSource: RecordDataSource)
-    func presentVideo(at url: URL)
-}
-
 private let contentInset: CGFloat = 16
 private let safeAreaContentInset: CGFloat = 2
-private let additionalContentInset: CGFloat = 7
-private let baseLineContentInset: CGFloat = 18
-
-private let bigRelativeInset: CGFloat = 23
-private let smallRelativeInset: CGFloat = 16
 private let innerRelativeInset: CGFloat = 10
 
-private let buttonHeight: CGFloat = 36
+/**
+    An object that is capable of presenting objects emitted with VisionManager events
+*/
 
-private let maneuverSignWidth: CGFloat = 78
-private let maneuverSignHeight: CGFloat = 105
-
-private let roadLanesTopInset: CGFloat = 18
-private let roadLanesHeight: CGFloat = 64
-
-private let signImageAlignInsets = UIEdgeInsets(top: 6, left: 7, bottom: 8, right: 7)
-
-final class VisionViewController: VisionPresentationViewController {
+public final class VisionPresentationViewController: UIViewController {
+    
+    /**
+        Set visualization mode which can be either original frame, original frame with segmentation as an overlay or original frame with detections as an overlay.
+     */
     public var frameVisualizationMode: VisualizationMode = .clear {
         didSet {
             let oldTopView = view(for: oldValue)
             oldTopView.isHidden = true
             
             let newTopView = view(for: frameVisualizationMode)
-            newTopView.isHidden = false
             backgroundView.bringSubview(toFront: newTopView)
         }
     }
     
+    /**
+        Control the visibility of the Mapbox logo.
+     */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -69,18 +48,7 @@ final class VisionViewController: VisionPresentationViewController {
         }
     }
     
-    weak var interactor: VideoStreamInteractable?
-    private let dateFormatter = DateFormatter()
-    
-    private let alertPlayer = AlertPlayer()
-    
     private var contentContainerConstraints = [NSLayoutConstraint]()
-    
-    private let syncDebouncer = Debouncer(delay: 0.5)
-    
-    private var externalWindow: UIWindow?
-    
-    private var notificationObservers = [Any]()
     
     private func view(for mode: VisualizationMode) -> UIView {
         switch mode {
@@ -103,10 +71,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupLayout()
-        
-        dateFormatter.timeStyle = .short
     }
     
     public override func viewSafeAreaInsetsDidChange() {
@@ -116,26 +81,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let center = NotificationCenter.default
-        notificationObservers.append(center.addObserver(forName: .UIScreenDidConnect, object: nil, queue: .main) { [weak self] notification in
-            guard let screen = notification.object as? UIScreen else { return }
-            self?.externalWindow = UIWindow(frame: screen.bounds)
-            self?.externalWindow?.screen = screen
-        })
-    
-        notificationObservers.append(center.addObserver(forName: .UIScreenDidDisconnect, object: nil, queue: .main) { [weak self] _ in
-            self?.externalWindow = nil
-        })
-        
         setupContentView()
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        notificationObservers.forEach(NotificationCenter.default.removeObserver)
-        notificationObservers.removeAll()
     }
     
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -152,14 +98,14 @@ final class VisionViewController: VisionPresentationViewController {
         var leadingInset: CGFloat = contentInset
         var trailingInset: CGFloat = contentInset
         
-        let uiOrientation = UIApplication.shared.statusBarOrientation
         if view.safeAreaInsets.right > 0 {
             // iPhone X in landscape
+            let uiOrientation = UIApplication.shared.statusBarOrientation
             if uiOrientation == .landscapeRight {
-                // ear on the left
+                // notch is on the left
                 leadingInset = view.safeAreaInsets.left
             } else if uiOrientation == .landscapeLeft {
-                // ear on the right
+                // notch is on the right
                 trailingInset = view.safeAreaInsets.right
             }
         }
@@ -179,14 +125,6 @@ final class VisionViewController: VisionPresentationViewController {
     
     private func setupLayout() {
         setupBackgroundView()
-        
-        view.addSubview(debugView)
-        NSLayoutConstraint.activate([
-            debugView.topAnchor.constraint(equalTo: view.topAnchor),
-            debugView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            debugView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            debugView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
         
         setupContentLayout()
         
@@ -233,42 +171,11 @@ final class VisionViewController: VisionPresentationViewController {
     
     private func setupContentLayout() {
         view.addSubview(contentView)
-        setupFPSLabels()
-    }
-    
-    private func setupFPSLabels() {
-        segmentationFPSLabel = fpsLabel()
-        detectionFPSLabel = fpsLabel()
-        mergedSegDetectFPSLabel = fpsLabel()
-        roadConfidenceFPSLabel = fpsLabel()
-        coreUpdateFPSLabel = fpsLabel()
-        let stack = UIStackView(arrangedSubviews: [
-            fpsStack(views: [fpsLabel(text: "Segmentation:"), segmentationFPSLabel]),
-            fpsStack(views: [fpsLabel(text: "Detection:"), detectionFPSLabel]),
-            fpsStack(views: [fpsLabel(text: "Merged S+D:"), mergedSegDetectFPSLabel]),
-            fpsStack(views: [fpsLabel(text: "Road conf:"), roadConfidenceFPSLabel]),
-            fpsStack(views: [fpsLabel(text: "Core update:"), coreUpdateFPSLabel]),
-        ])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .equalCentering
-        stack.spacing = innerRelativeInset
-        stack.isHidden = true
-        measurementStack = stack
         
-        let backgroundView = UIView()
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        stack.insertSubview(backgroundView, at: 0)
-        
-        view.addSubview(stack)
+        contentView.addSubview(measurementStack)
         NSLayoutConstraint.activate([
-            backgroundView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
-            backgroundView.topAnchor.constraint(equalTo: stack.topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            measurementStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            measurementStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
         ])
     }
     
@@ -292,13 +199,7 @@ final class VisionViewController: VisionPresentationViewController {
     private let videoStreamView: VideoStreamView = {
         let view = VideoStreamView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let debugView: UIImageView = {
-        let view = UIImageView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
+        view.isHidden = true
         return view
     }()
     
@@ -344,26 +245,56 @@ final class VisionViewController: VisionPresentationViewController {
         return view
     }()
     
-    private var segmentationFPSLabel: UILabel!
-    private var detectionFPSLabel: UILabel!
-    private var mergedSegDetectFPSLabel: UILabel!
-    private var roadConfidenceFPSLabel: UILabel!
-    private var coreUpdateFPSLabel: UILabel!
-    private var measurementStack: UIStackView!
+    private lazy var segmentationFPSLabel: UILabel = fpsLabel()
+    private lazy var detectionFPSLabel: UILabel = fpsLabel()
+    private lazy var mergedSegDetectFPSLabel: UILabel = fpsLabel()
+    private lazy var roadConfidenceFPSLabel: UILabel = fpsLabel()
+    private lazy var coreUpdateFPSLabel: UILabel = fpsLabel()
+    
+    private lazy var measurementStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            fpsStack(views: [fpsLabel(text: "Segmentation:"), segmentationFPSLabel]),
+            fpsStack(views: [fpsLabel(text: "Detection:"), detectionFPSLabel]),
+            fpsStack(views: [fpsLabel(text: "Merged S+D:"), mergedSegDetectFPSLabel]),
+            fpsStack(views: [fpsLabel(text: "Road conf:"), roadConfidenceFPSLabel]),
+            fpsStack(views: [fpsLabel(text: "Core update:"), coreUpdateFPSLabel]),
+        ])
+        
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .equalCentering
+        stack.spacing = innerRelativeInset
+        stack.isHidden = true
+        
+        let backgroundView = UIView()
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        stack.insertSubview(backgroundView, at: 0)
+        
+        NSLayoutConstraint.activate([
+            backgroundView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            backgroundView.topAnchor.constraint(equalTo: stack.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
+        ])
+        
+        return stack
+    }()
 }
 
-extension VisionViewController: VideoStreamPresentable {
-    func present(sampleBuffer: CMSampleBuffer) {
+extension VisionPresentationViewController {
+    public func present(sampleBuffer: CMSampleBuffer) {
+        guard frameVisualizationMode == .clear else { return }
+        
         DispatchQueue.main.async {
+            guard self.viewIfLoaded?.window != nil else { return }
+            
+            self.videoStreamView.isHidden = false
             self.videoStreamView.enqueue(sampleBuffer)
         }
     }
     
-    func present(visualizationMode: VisualizationMode) {
-        self.frameVisualizationMode = visualizationMode
-    }
-
-    func present(fps: FPSValue?) {
+    public func present(fps: FPSValue?) {
         measurementStack.isHidden = fps == nil
         guard let fps = fps else { return }
         segmentationFPSLabel.text = String(format: "%.2f", fps.segmentation)
@@ -373,95 +304,44 @@ extension VisionViewController: VideoStreamPresentable {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    func present(debugOverlay: UIImage?) {
-        debugView.image = debugOverlay
-    }
-    
-    func present(segMask: SegmentationMask?) {
-        guard let segMask = segMask else {
-            segmentationView.isHidden = true
-            return
-        }
-
+    public func present(segmentation: SegmentationMask) {
+        guard frameVisualizationMode == .segmentation else { return }
+        
         if segmentationView.delegate == nil {
             segmentationView.delegate = segmentationDrawer
         }
-        
+    
         segmentationView.isHidden = false
-        segmentationView.drawableSize = CGSize(width: CGFloat(segMask.sourceImage.width), height: CGFloat(segMask.sourceImage.height))
-        segmentationDrawer?.set(segMask)
+        
+        let sourceImage = segmentation.sourceImage
+        segmentationView.drawableSize = CGSize(width: CGFloat(sourceImage.width), height: CGFloat(sourceImage.height))
+        segmentationDrawer?.set(segmentation)
         segmentationView.draw()
     }
     
-    func present(detections: Detections?, canvasSize: CGSize) {
-        
+    public func present(detections: Detections) {
         guard
-            let detections = detections,
+            frameVisualizationMode == .detection,
             let image = detections.sourceImage.getUIImage()
-        else {
-            detectionsView.isHidden = true
-            return
-        }
+        else { return }
         
-        let values = detections.items.map { detection -> Detection in
-            
-            let leftTop = detection.boundingBox.origin.convertForAspectRatioFill(
-                from: canvasSize,
-                to: detectionsView.bounds.size
-            )
-            
-            let rightBottom = CGPoint(x: detection.boundingBox.maxX,
-                                      y: detection.boundingBox.maxY)
-                .convertForAspectRatioFill(from: canvasSize, to: detectionsView.bounds.size)
-            
-            let rect = CGRect(
-                x: leftTop.x,
-                y: leftTop.y,
-                width: rightBottom.x - leftTop.x,
-                height: rightBottom.y - leftTop.y
-            )
-            
-            return Detection(identifier: detection.identifier,
-                             boundingBox: rect,
-                             objectType: detection.objectType,
-                             confidence: detection.confidence)
+        let sourceImage = detections.sourceImage
+        let imageSize = CGSize(width: sourceImage.width, height: sourceImage.height)
+        
+        let values = detections.items.map { detection -> BasicDetection in
+            let rect = detection.boundingBox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
+            return BasicDetection(boundingBox: rect, objectType: detection.objectType)
         }
         
         detectionsView.isHidden = false
         detectionsView.present(detections: values, at: image)
     }
-    
-    func showClearCacheAlert() {
-        let alert = UIAlertController(title: "Clearing the cache", message: "Do you want to clear the cache?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "YES", style: .destructive, handler: { [weak self] _ in
-            self?.interactor?.clearCache(force: true)
-        }))
-        alert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: nil))
-        show(alert, sender: self)
-    }
-    
-    func presentRecordingPicker(dataSource: RecordDataSource) {
-        let picker = RecordPickerViewController(dataSource: dataSource) { [weak self] url in
-            if let url = url {
-                self?.interactor?.selectRecording(at: url)
-            }
-            self?.dismiss(animated: true)
-        }
-        let navigationController = UINavigationController(rootViewController: picker)
-        present(navigationController, animated: true)
-    }
-    
-    func presentVideo(at url: URL) {
-        let player = AVPlayer(url: url)
-        
-        let playerController = AVPlayerViewController()
-        playerController.player = player
-        playerController.showsPlaybackControls = false
-        playerController.entersFullScreenWhenPlaybackBegins = true
-        
-        externalWindow?.rootViewController = playerController
-        externalWindow?.isHidden = false
-        
-        player.play()
+}
+
+private extension CGRect {
+    func convertForAspectRatioFill(from: CGSize, to: CGSize) -> CGRect {
+        let leftTop = origin.convertForAspectRatioFill(from: from, to: to)
+        let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: from, to: to)
+        return CGRect(x: leftTop.x, y: leftTop.y, width: rightBottom.x - leftTop.x, height: rightBottom.y - leftTop.y)
     }
 }
