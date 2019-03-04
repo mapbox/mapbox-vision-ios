@@ -187,7 +187,6 @@ public final class VisionManager {
     private var syncOverCellularObservation: NSKeyValueObservation?
     private var currentRecording: RecordingPath?
     private var hasPendingRecordingRequest = false
-    private var videoStream: Streamable
     private var interruptionStartTime: Date?
     
     private let sessionManager = SessionManager()
@@ -208,26 +207,37 @@ public final class VisionManager {
     // MARK: Lifetime
     
     /**
-        Start delivering events from SDK.
+        Initialize VisionManger supplying it with required dependencies.
+    */
+    
+    public func initialize(videoSource: VideoSource, operationMode: OperationMode = .normal) {
+        guard state.isUninitialized else {
+            assertionFailure("VisionManager is already initialized. Call shutdown() to clean its state and reinitialize")
+            return
+        }
+        
+        state = .initialized(videoSource: videoSource)
+        self.operationMode = operationMode
+    }
+    
+    /**
+        Start delivering events from VisionManager.
+        VisionManager is required to be initialized before calling this method.
     */
     
     public func start() {
-        guard !isStarted else { return }
-    
-        isStarted = true
-    
-        dependencies.metaInfoManager.addObserver(self)
-    
-        dataProvider?.start()
-        videoStream.start()
-        dependencies.coreUpdater.startUpdating()
-    
-        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-    
-        if let recording = currentRecording {
-            let videoURL = URL(fileURLWithPath: recording.videoPath)
-            presenter?.presentVideo(at: videoURL)
+        switch state {
+        case .uninitialized:
+            assertionFailure("VisionManager should be initialized before starting")
+            return
+        case .started:
+            assertionFailure("VisionManager is already started")
+            return
+        case let .initialized(videoSource), let .stopped(videoSource):
+            state = .started(videoSource: videoSource)
         }
+        
+        resume()
     }
     
     /**
@@ -235,17 +245,24 @@ public final class VisionManager {
     */
     
     public func stop() {
-        guard isStarted else { return }
+        guard case let .started(videoSource) = state else {
+            assertionFailure("VisionManager is not started")
+            return
+        }
+        
+        pause()
+        
+        state = .stopped(videoSource: videoSource)
+    }
     
-        isStarted = false
+    /**
+        Cleanup the state and resources of VisionManger.
+    */
     
-        dependencies.metaInfoManager.removeObserver(self)
-    
-        dataProvider?.stop()
-        videoStream.stop()
-        dependencies.coreUpdater.stopUpdating()
-    
-        sessionManager.stopSession()
+    public func shutdown() {
+        guard !state.isUninitialized else { return }
+        
+        state = .uninitialized
     }
     
     // MARK: Performance control
@@ -417,27 +434,6 @@ public final class VisionManager {
     }
     
     /**
-        Determines whether video stream remains running outside of `start()` and `stop()` calls.
-        When property is set to `true` `VisionPresentationViewController` will update background view with frames from camera.
-    */
-    
-    public var isVideoStreamAlwaysRunning = false {
-        didSet {
-            guard isVideoStreamAlwaysRunning != oldValue else { return }
-            
-            let sampler = dependencies.videoSampler
-            if isVideoStreamAlwaysRunning {
-                videoStream = AlwaysRunningStream(stream: sampler)
-            } else {
-                videoStream = ControlledStream(stream: sampler)
-                if !isStarted {
-                    videoStream.stop()
-                }
-            }
-        }
-    }
-    
-    /**
         Determines estimated country where the device is situated.
         For supported values see `CVACountry`.
     */
@@ -445,6 +441,35 @@ public final class VisionManager {
     public var country: Country
     
     // MARK: - Private
+    
+    private enum State {
+        case uninitialized
+        case initialized(videoSource: VideoSource)
+        case started(videoSource: VideoSource)
+        case stopped(videoSource: VideoSource)
+        
+        var isUninitialized: Bool {
+            guard case .uninitialized = self else { return false }
+            return true
+        }
+        
+        var isInitialized: Bool {
+            guard case .initialized = self else { return false }
+            return true
+        }
+        
+        var isStarted: Bool {
+            guard case .started = self else { return false }
+            return true
+        }
+        
+        var isStopped: Bool {
+            guard case .stopped = self else { return false }
+            return true
+        }
+    }
+    
+    private var state: State = .uninitialized
     
     private var notificationObservers = [Any]()
     
@@ -457,7 +482,6 @@ public final class VisionManager {
     
     private init() {
         self.dependencies = AppDependency(operationMode: operationMode)
-        self.videoStream = ControlledStream(stream: dependencies.videoSampler)
         self.country = dependencies.core.getCountry()
         
         dependencies.core.config = .basic
@@ -555,31 +579,6 @@ public final class VisionManager {
             self.maneuverLocation = isValidCrossroad ? ManeuverLocation(origin: crossroad.origin.cgPoint) : nil
         }
         
-        dependencies.videoSampler.didCaptureFrame = { [weak self] frame in
-            guard let `self` = self else { return }
-    
-            self.presenter?.present(sampleBuffer: frame)
-            
-            guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
-                assertionFailure("Can't create pixel buffer")
-                return
-            }
-            
-            self.currentFrame = capturedImageBuffer
-            
-            guard self.isStarted else { return }
-            
-            self.dependencies.recorder.handleFrame(frame)
-            
-            self.dependencies.core.setImage(capturedImageBuffer)
-            self.dependencies.core.setCameraWidth(
-                Float(CVPixelBufferGetWidth(capturedImageBuffer)),
-                height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
-                focalLenght: self.dependencies.videoSampler.focalLenght,
-                fieldOfView: self.dependencies.videoSampler.fieldOfView
-            )
-        }
-        
         sessionManager.listener = self
     
         subscribeToNotifications()
@@ -590,6 +589,41 @@ public final class VisionManager {
         dependencies.broadcasting.stop()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
+    }
+    
+    private func startVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.add(observer: self)
+    }
+    
+    private func stopVideoStream() {
+        guard case let .started(videoSource) = state else { return }
+        videoSource.remove(observer: self)
+    }
+    
+    private func resume() {
+        dependencies.metaInfoManager.addObserver(self)
+        
+        dataProvider?.start()
+        startVideoStream()
+        dependencies.coreUpdater.startUpdating()
+        
+        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+        
+        if let recording = currentRecording {
+            let videoURL = URL(fileURLWithPath: recording.videoPath)
+            presenter?.presentVideo(at: videoURL)
+        }
+    }
+    
+    private func pause() {
+        dependencies.metaInfoManager.removeObserver(self)
+        
+        dataProvider?.stop()
+        stopVideoStream()
+        dependencies.coreUpdater.stopUpdating()
+        
+        sessionManager.stopSession()
     }
     
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
@@ -630,8 +664,6 @@ public final class VisionManager {
         dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
         
         UserDefaults.standard.enableSync = operationMode.isSyncEnabled
-        
-        dependencies.videoSampler.settings = operationMode.videoSettings
     }
     
     private func registerDefaults() {
@@ -647,14 +679,14 @@ public final class VisionManager {
             self?.stopInterruption()
             guard let `self` = self, self.isStoppedForBackground else { return }
             self.isStoppedForBackground = false
-            self.start()
+            self.resume()
         })
     
         notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
             self?.interruptionStartTime = Date()
-            guard let `self` = self, self.isStarted else { return }
+            guard let `self` = self, self.state.isStarted else { return }
             self.isStoppedForBackground = true
-            self.stop()
+            self.pause()
         })
     }
     
@@ -672,15 +704,15 @@ public final class VisionManager {
     }
     
     private func setDataProvider(_ dataProvider: DataProvider) {
-        let isActivated = self.isStarted
+        let isActivated = state.isStarted
         
-        stop()
+        pause()
         
         self.dataProvider = dataProvider
         dependencies.core.restart()
         
         if isActivated {
-            start()
+            resume()
         }
     }
     
@@ -708,6 +740,35 @@ public final class VisionManager {
     }
     
     private var currentFrame: CVPixelBuffer?
+}
+
+extension VisionManager: VideoSourceObserver {
+    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+        guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
+            assertionFailure("Sample buffer containing pixel buffer is expected here")
+            return
+        }
+        
+        presenter?.present(sampleBuffer: videoSample.buffer)
+        
+        currentFrame = pixelBuffer
+        
+        guard state.isStarted else { return }
+        
+        dependencies.recorder.handleFrame(videoSample.buffer)
+        
+        dependencies.core.setImage(pixelBuffer)
+    }
+    
+    public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
+        // TODO: use new camera params
+        dependencies.core.setCameraWidth(
+            Float(cameraParameters.width),
+            height: Float(cameraParameters.height),
+            focalLenght: -1,
+            fieldOfView: -1
+        )
+    }
 }
 
 extension VisionManager: ARDataProvider {

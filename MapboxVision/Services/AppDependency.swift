@@ -15,7 +15,6 @@ protocol VisionDependency {
     var recorder: RecordCoordinator { get }
     var core: Core { get }
     var coreUpdater: CoreUpdater { get }
-    var videoSampler: VideoSampler { get }
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
     var countryService: CountryService { get }
@@ -28,7 +27,6 @@ protocol VisionDependency {
 
 final class AppDependency: VisionDependency {
     private(set) var reachability: Reachability
-    private(set) var videoSampler: VideoSampler
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var core: Core
     private(set) var coreUpdater: CoreUpdater
@@ -49,8 +47,6 @@ final class AppDependency: VisionDependency {
             fatalError("Reachability failed to initialize")
         }
         self.reachability = reachability
-        
-        self.videoSampler = VideoSampler(settings: operationMode.videoSettings)
         
         self.deviceInfo = DeviceInfoProvider()
         
