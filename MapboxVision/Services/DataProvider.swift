@@ -17,7 +17,6 @@ protocol DataProvider: AnyObject {
 
 final class RecordedDataProvider: DataProvider {
     struct Dependencies {
-        let core: Core
         let recordingPath: RecordingPath
         let startTime: UInt
     }
@@ -51,7 +50,7 @@ final class RecordedDataProvider: DataProvider {
 
 final class RealtimeDataProvider: DataProvider {
     struct Dependencies {
-        let core: Core
+        let native: VisionManagerNative
         let motionManager: MotionManager
         let metaInfoManager: MetaInfoManager
     }
@@ -60,7 +59,7 @@ final class RealtimeDataProvider: DataProvider {
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        dependencies.motionManager.handler = dependencies.core.setDeviceMotion
+        dependencies.motionManager.handler = dependencies.native.setDeviceMotion
     }
     
     func start() {
@@ -80,11 +79,11 @@ final class RealtimeDataProvider: DataProvider {
 
 extension RealtimeDataProvider: MetaInfoObserver {
     func location(_ location: CLLocation) {
-        dependencies.core.setGPSData(location)
+        dependencies.native.setGPS(location)
     }
     
     func heading(_ heading: CLHeading) {
-        dependencies.core.setHeadingData(heading)
+        dependencies.native.setHeading(heading)
     }
 }
 
