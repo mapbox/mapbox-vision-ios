@@ -40,10 +40,10 @@ final class RecordedDataProvider: DataProvider {
     
     func update() {
         let settings = dependencies.recordingPath.settings
-        let frameSize = Point2I(x: settings.width, y: settings.height)
+        let frameSize = CGPoint(x: settings.width, y: settings.height)
         let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
         telemetryPlayer.setCurrentTime(currentTimeMS)
-        telemetryPlayer.updateData(dependencies.core, frameSize: frameSize, srcSize: frameSize)
+        telemetryPlayer.updateData(withFrameSize: frameSize, srcSize: frameSize)
     }
     
     func stop() {}

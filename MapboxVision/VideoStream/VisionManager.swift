@@ -14,51 +14,51 @@ import MapboxVisionCore
     The interface that user’s custom object should conform to in order to receive events from SDK.
 */
 
-public protocol VisionManagerDelegate: class {
-    /**
-        Tells the delegate that new segmentation is available.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateSegmentation segmentation: SegmentationMask?) -> Void
-    /**
-        Tells the delegate that new detections are available.
-        Requires at least low performance for detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateDetections detections: Detections?) -> Void
-    /**
-        Tells the delegate that new sign classification is available.
-        Requires at least low performance for detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
-    /**
-        Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
-    /**
-        Tells the delegate that new processed road description is available. These are smoothed and more stable values.
-        Requires at least low performance for segmentation.
-     */
-    func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
-    /**
-        Tells the delegate that newly estimated position is calculated.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
-    /**
-     Tells the delegate that description of the situation on the road is updated (see [WorldDescription](https://www.mapbox.com/ios-sdk/vision/data-types/Classes/WorldDescription.html) documentation for available properties). This event won't be emitted until calibration progress reaches isCalibrated state.
-        Requires at least low performance for segmentation and detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
-    /**
-        Tells the delegate that lane departure state is updated.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
-    /**
-        Tells the delegate about the progress of camera pose estimation (calibration).
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
-}
+//public protocol VisionManagerDelegate: class {
+//    /**
+//        Tells the delegate that new segmentation is available.
+//        Requires at least low performance for segmentation.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateSegmentation segmentation: SegmentationMask?) -> Void
+//    /**
+//        Tells the delegate that new detections are available.
+//        Requires at least low performance for detection.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateDetections detections: Detections?) -> Void
+//    /**
+//        Tells the delegate that new sign classification is available.
+//        Requires at least low performance for detection.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
+//    /**
+//        Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
+//        Requires at least low performance for segmentation.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
+//    /**
+//        Tells the delegate that new processed road description is available. These are smoothed and more stable values.
+//        Requires at least low performance for segmentation.
+//     */
+//    func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
+//    /**
+//        Tells the delegate that newly estimated position is calculated.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
+//    /**
+//     Tells the delegate that description of the situation on the road is updated (see [WorldDescription](https://www.mapbox.com/ios-sdk/vision/data-types/Classes/WorldDescription.html) documentation for available properties). This event won't be emitted until calibration progress reaches isCalibrated state.
+//        Requires at least low performance for segmentation and detection.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
+//    /**
+//        Tells the delegate that lane departure state is updated.
+//        Requires at least low performance for segmentation.
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
+//    /**
+//        Tells the delegate about the progress of camera pose estimation (calibration).
+//    */
+//    func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
+//}
 
 public protocol VisionManagerRoadRestrictionsDelegate: class {
     
@@ -112,7 +112,7 @@ public final class VisionManager {
     /**
         The delegate receiving events from SDK. This is a custom object that user of the SDK provides.
     */
-    public weak var delegate: VisionManagerDelegate?
+//    public weak var delegate: VisionManagerDelegate?
     
     /**
         The delegate receiving events about currently applied road restrictions.
@@ -231,83 +231,83 @@ public final class VisionManager {
         Current position estimated by SDK defined as a set of location-related parameters.
     */
     
-    public var estimatedPosition: Position? {
-        didSet {
-            guard oldValue?.identifier != estimatedPosition?.identifier else { return }
-            delegate?.visionManager(self, didUpdateEstimatedPosition: estimatedPosition)
-        }
-    }
-    
-    /**
-        Unprocessed description of current road situation.
-     */
-    
-    public var rawRoadDescription: RoadDescription? {
-        didSet {
-            guard oldValue?.identifier != roadDescription?.identifier else { return }
-            delegate?.visionManager(self, didUpdateRawRoadDescription: roadDescription)
-        }
-    }
-    
-    /**
-        Description of current road situation
-    */
-    
-    public var roadDescription: RoadDescription? {
-        didSet {
-            guard oldValue?.identifier != roadDescription?.identifier else { return }
-            delegate?.visionManager(self, didUpdateRoadDescription: roadDescription)
-        }
-    }
-    
-    /**
-        World description.
-    */
-    
-    public var worldDescription: WorldDescription? {
-        didSet {
-            guard
-                oldValue?.identifier != worldDescription?.identifier,
-                calibrationProgress.isCalibrated
-            else { return }
-            delegate?.visionManager(self, didUpdateWorldDescription: worldDescription)
-        }
-    }
-    
-    /**
-        Current lane departure state.
-    */
-    
-    public var laneDepartureState: LaneDepartureState = .normal {
-        didSet {
-            guard oldValue != laneDepartureState else { return }
-            delegate?.visionManager(self, didUpdateLaneDepartureState: laneDepartureState)
-        }
-    }
-    
-    /**
-        Current progress of camera pose estimation (calibration) process.
-    */
-    
-    public var calibrationProgress: CalibrationProgress = CalibrationProgress(progress: 0, calibrated: false) {
-        didSet {
-            guard oldValue != calibrationProgress else { return }
-            delegate?.visionManager(self, didUpdateCalibrationProgress: calibrationProgress)
-        }
-    }
-    
-    // MARK: Road restrictions
-    
-    /**
-        Currently applied speed limit.
-     */
-    
-    public var speedLimit: SpeedLimit? {
-        didSet {
-            guard oldValue?.identifier != speedLimit?.identifier else { return }
-            roadRestrictionsDelegate?.visionManager(self, didUpdateSpeedLimit: speedLimit)
-        }
-    }
+//    public var estimatedPosition: Position? {
+//        didSet {
+//            guard oldValue?.identifier != estimatedPosition?.identifier else { return }
+//            delegate?.visionManager(self, didUpdateEstimatedPosition: estimatedPosition)
+//        }
+//    }
+//
+//    /**
+//        Unprocessed description of current road situation.
+//     */
+//
+//    public var rawRoadDescription: RoadDescription? {
+//        didSet {
+//            guard oldValue?.identifier != roadDescription?.identifier else { return }
+//            delegate?.visionManager(self, didUpdateRawRoadDescription: roadDescription)
+//        }
+//    }
+//
+//    /**
+//        Description of current road situation
+//    */
+//
+//    public var roadDescription: RoadDescription? {
+//        didSet {
+//            guard oldValue?.identifier != roadDescription?.identifier else { return }
+//            delegate?.visionManager(self, didUpdateRoadDescription: roadDescription)
+//        }
+//    }
+//
+//    /**
+//        World description.
+//    */
+//
+//    public var worldDescription: WorldDescription? {
+//        didSet {
+//            guard
+//                oldValue?.identifier != worldDescription?.identifier,
+//                calibrationProgress.isCalibrated
+//            else { return }
+//            delegate?.visionManager(self, didUpdateWorldDescription: worldDescription)
+//        }
+//    }
+//
+//    /**
+//        Current lane departure state.
+//    */
+//
+//    public var laneDepartureState: LaneDepartureState = .normal {
+//        didSet {
+//            guard oldValue != laneDepartureState else { return }
+//            delegate?.visionManager(self, didUpdateLaneDepartureState: laneDepartureState)
+//        }
+//    }
+//
+//    /**
+//        Current progress of camera pose estimation (calibration) process.
+//    */
+//
+//    public var calibrationProgress: CalibrationProgress = CalibrationProgress(progress: 0, calibrated: false) {
+//        didSet {
+//            guard oldValue != calibrationProgress else { return }
+//            delegate?.visionManager(self, didUpdateCalibrationProgress: calibrationProgress)
+//        }
+//    }
+//
+//    // MARK: Road restrictions
+//
+//    /**
+//        Currently applied speed limit.
+//     */
+//
+//    public var speedLimit: SpeedLimit? {
+//        didSet {
+//            guard oldValue?.identifier != speedLimit?.identifier else { return }
+//            roadRestrictionsDelegate?.visionManager(self, didUpdateSpeedLimit: speedLimit)
+//        }
+//    }
     
     // MARK: Navigation
     
@@ -416,7 +416,7 @@ public final class VisionManager {
         self.dependencies = AppDependency(operationMode: operationMode)
         self.country = dependencies.core.getCountry()
         
-        dependencies.core.config = .basic
+//        dependencies.core.config = .basic
 
         updateModelPerformanceConfig(modelPerformanceConfig)
         updateOperationMode(operationMode)
@@ -461,28 +461,28 @@ public final class VisionManager {
             
             self.dataProvider?.update()
             
-            self.calibrationProgress = self.dependencies.core.getCalibrationProgress()
-            
-            let segmentationMask = self.dependencies.core.getSegmentationMask()
-            self.delegate?.visionManager(self, didUpdateSegmentation: segmentationMask)
-            
-            let detections = self.dependencies.core.getDetections()
-            self.delegate?.visionManager(self, didUpdateDetections: detections)
-            
-            let signClassifications = self.dependencies.core.getSignClassifications()
-            self.delegate?.visionManager(self, didUpdateSignClassifications: signClassifications)
-            
-            self.estimatedPosition = self.dependencies.core.getEstimatedPosition()
-            
-            self.rawRoadDescription = self.dependencies.core.getRawRoadDescription()
-            
-            self.roadDescription = self.dependencies.core.getRoadDescription()
-            
-            self.worldDescription = self.dependencies.core.getWorldDescription()
-            
-            self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
-            
-            self.speedLimit = self.dependencies.core.getSpeedLimit()
+//            self.calibrationProgress = self.dependencies.core.getCalibrationProgress()
+//
+//            let segmentationMask = self.dependencies.core.getSegmentationMask()
+//            self.delegate?.visionManager(self, didUpdateSegmentation: segmentationMask)
+//
+//            let detections = self.dependencies.core.getDetections()
+//            self.delegate?.visionManager(self, didUpdateDetections: detections)
+//
+//            let signClassifications = self.dependencies.core.getSignClassifications()
+//            self.delegate?.visionManager(self, didUpdateSignClassifications: signClassifications)
+//
+//            self.estimatedPosition = self.dependencies.core.getEstimatedPosition()
+//
+//            self.rawRoadDescription = self.dependencies.core.getRawRoadDescription()
+//
+//            self.roadDescription = self.dependencies.core.getRoadDescription()
+//
+//            self.worldDescription = self.dependencies.core.getWorldDescription()
+//
+//            self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
+//
+//            self.speedLimit = self.dependencies.core.getSpeedLimit()
             
             let crossroad = self.dependencies.core.getNearestCrossroad()
             let isValidCrossroad = crossroad.routePoint.isManeuver && crossroad.origin.y > 0
@@ -533,37 +533,37 @@ public final class VisionManager {
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
         switch config {
         case let .merged(performance):
-            dependencies.core.config.useMergeMLModelLaunch = true
+//            dependencies.core.config.useMergeMLModelLaunch = true
             updateSegmentationPerformance(performance)
             updateDetectionPerformance(performance)
         case let .separate(segmentationPerformance, detectionPerformance):
-            dependencies.core.config.useMergeMLModelLaunch = false
+//            dependencies.core.config.useMergeMLModelLaunch = false
             updateSegmentationPerformance(segmentationPerformance)
             updateDetectionPerformance(detectionPerformance)
         }
     }
     
     private func updateSegmentationPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
-        case .fixed(let fps):
-            dependencies.core.config.setSegmentationFixedFPS(fps)
-        case .dynamic(let minFps, let maxFps):
-            dependencies.core.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-        }
+//        switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
+//        case .fixed(let fps):
+//            dependencies.core.config.setSegmentationFixedFPS(fps)
+//        case .dynamic(let minFps, let maxFps):
+//            dependencies.core.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+//        }
     }
     
     private func updateDetectionPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
-        case .fixed(let fps):
-            dependencies.core.config.setDetectionFixedFPS(fps)
-        case .dynamic(let minFps, let maxFps):
-            dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-        }
+//        switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
+//        case .fixed(let fps):
+//            dependencies.core.config.setDetectionFixedFPS(fps)
+//        case .dynamic(let minFps, let maxFps):
+//            dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+//        }
     }
     
     private func updateOperationMode(_ operationMode: OperationMode) {
-        dependencies.core.config.useSegmentation = operationMode.usesSegmentation
-        dependencies.core.config.useDetection = operationMode.usesDetection
+//        dependencies.core.config.useSegmentation = operationMode.usesSegmentation
+//        dependencies.core.config.useDetection = operationMode.usesDetection
         
         dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
         

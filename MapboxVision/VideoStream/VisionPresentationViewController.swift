@@ -304,7 +304,7 @@ extension VisionPresentationViewController {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    public func present(segmentation: SegmentationMask) {
+    public func present(segmentation: FrameSegmentation) {
         guard frameVisualizationMode == .segmentation else { return }
         
         if segmentationView.delegate == nil {
@@ -313,24 +313,22 @@ extension VisionPresentationViewController {
     
         segmentationView.isHidden = false
         
-        let sourceImage = segmentation.sourceImage
-        segmentationView.drawableSize = CGSize(width: CGFloat(sourceImage.width), height: CGFloat(sourceImage.height))
+        segmentationView.drawableSize = segmentation.frame.size.cgSize
         segmentationDrawer?.set(segmentation)
         segmentationView.draw()
     }
     
-    public func present(detections: Detections) {
+    public func present(detections: FrameDetections) {
         guard
             frameVisualizationMode == .detection,
-            let image = detections.sourceImage.getUIImage()
+            let image = detections.frame.getUIImage()
         else { return }
         
-        let sourceImage = detections.sourceImage
-        let imageSize = CGSize(width: sourceImage.width, height: sourceImage.height)
+        let imageSize = detections.frame.size.cgSize
         
-        let values = detections.items.map { detection -> BasicDetection in
-            let rect = detection.boundingBox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
-            return BasicDetection(boundingBox: rect, objectType: detection.objectType)
+        let values = detections.detections.map { detection -> BasicDetection in
+            let rect = detection.bbox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
+            return BasicDetection(boundingBox: rect, objectType: detection.detectionClass)
         }
         
         detectionsView.isHidden = false
@@ -343,5 +341,12 @@ private extension CGRect {
         let leftTop = origin.convertForAspectRatioFill(from: from, to: to)
         let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: from, to: to)
         return CGRect(x: leftTop.x, y: leftTop.y, width: rightBottom.x - leftTop.x, height: rightBottom.y - leftTop.y)
+    }
+}
+
+// TODO: move to type or substitute type for CGSize
+private extension ImageSize {
+    var cgSize: CGSize {
+        return CGSize(width: Int(width), height: Int(height))
     }
 }

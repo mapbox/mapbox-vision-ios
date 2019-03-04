@@ -11,7 +11,7 @@ import MapboxVisionCore
 
 struct BasicDetection {
     let boundingBox: CGRect
-    let objectType: ObjectType
+    let objectType: DetectionClass
 }
 
 final class DetectionsView: UIImageView {
@@ -59,13 +59,13 @@ final class DetectionsView: UIImageView {
     }
 }
 
-private extension ObjectType {
+private extension DetectionClass {
     
     var color: UIColor {
         switch self {
-        case .lights:
+        case .trafficLight:
             return UIColor(red: 6.0/255.0, green: 241.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        case .sign:
+        case .trafficSign:
             return UIColor(red: 255.0/255.0, green: 204.0/255.0, blue: 22.0/255.0, alpha: 1.0)
         case .car:
             return UIColor(red: 144.0/255.0, green: 255.0/255.0, blue: 22.0/255.0, alpha: 1.0)
@@ -73,14 +73,16 @@ private extension ObjectType {
             return UIColor(red: 239.0/255.0, green: 6.0/255.0, blue: 255.0/255.0, alpha: 1.0)
         case .bicycle:
             return UIColor(red: 0, green: 165.0/255.0, blue: 1.0, alpha: 1.0)
+        case .unknown:
+            return .clear
         }
     }
     
     var title: String {
         switch self {
-        case .lights:
+        case .trafficLight:
             return "Lights"
-        case .sign:
+        case .trafficSign:
             return "Sign"
         case .car:
             return "Car"
@@ -88,6 +90,8 @@ private extension ObjectType {
             return "Person"
         case .bicycle:
             return "Bicycle"
+        case .unknown:
+            return "Unknown"
         }
     }
 }
