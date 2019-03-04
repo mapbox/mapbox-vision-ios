@@ -43,7 +43,7 @@ public protocol VideoSourceObserver: class {
     func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters)
 }
 
-extension VideoSourceObserver {
+public extension VideoSourceObserver {
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {}
     
     func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {}

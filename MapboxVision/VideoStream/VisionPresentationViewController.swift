@@ -288,6 +288,8 @@ extension VisionPresentationViewController {
         
         DispatchQueue.main.async {
             guard self.viewIfLoaded?.window != nil else { return }
+            
+            self.videoStreamView.isHidden = false
             self.videoStreamView.enqueue(sampleBuffer)
         }
     }
