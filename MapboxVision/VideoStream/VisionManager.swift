@@ -44,7 +44,7 @@ public final class VisionManager {
         The delegate receiving events from SDK. This is a custom object that user of the SDK provides.
     */
     // TODO: move to initialize. don't store in swift
-    public weak var delegate: VisionDelegate!
+    public weak var delegate: VisionManagerDelegate!
     
     private let dependencies: VisionDependency
     
@@ -294,7 +294,7 @@ public final class VisionManager {
         
         dataProvider?.start()
         startVideoStream()
-        dependencies.native.start(delegate)
+        dependencies.native.start(self)
         
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     }
@@ -425,6 +425,40 @@ public final class VisionManager {
     }
     
     private var currentFrame: CVPixelBuffer?
+}
+
+extension VisionManager: VisionDelegate {
+    public func onClientUpdate() {
+        delegate.visionManagerDidFinishUpdate(self)
+    }
+    
+    public func onSegmentationUpdated(_ segmentation: FrameSegmentation) {
+        delegate.visionManager(self, didUpdateFrameSegmentation: segmentation)
+    }
+    
+    public func onDetectionUpdated(_ detections: FrameDetections) {
+        delegate.visionManager(self, didUpdateFrameDetections: detections)
+    }
+    
+    public func onSignsUpdated(_ signs: FrameSigns) {
+        delegate.visionManager(self, didUpdateFrameSigns: signs)
+    }
+    
+    public func onRoadUpdated(_ road: RoadDescription) {
+        delegate.visionManager(self, didUpdateRoadDescription: road)
+    }
+    
+    public func onWorldUpdated(_ world: WorldDescription) {
+        delegate.visionManager(self, didUpdateWorldDescription: world)
+    }
+    
+    public func onVehicleLocationUpdated(_ vehicleLocation: VehicleLocation) {
+        delegate.visionManager(self, didUpdateVehicleLocation: vehicleLocation)
+    }
+    
+    public func onCameraUpdated(_ camera: Camera) {
+        delegate.visionManager(self, didUpdateCamera: camera)
+    }
 }
 
 extension VisionManager: VideoSourceObserver {

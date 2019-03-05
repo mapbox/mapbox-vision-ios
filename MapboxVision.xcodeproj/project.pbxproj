@@ -56,6 +56,7 @@
 		2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E539DE8210F00190058D9B2 /* SessionManager.swift */; };
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */; };
+		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
@@ -159,6 +160,7 @@
 		2E539DE8210F00190058D9B2 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManeuverLocation.swift; sourceTree = "<group>"; };
+		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				2E4EE2EE20F0EE6C003431B3 /* RecordPickerViewController.swift */,
 				2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */,
 				2E4EE23E20EFD651003431B3 /* VisionManager.swift */,
+				2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */,
 				2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */,
 				2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */,
 				2E4EE24320EFD651003431B3 /* blend.metal */,
@@ -562,6 +565,7 @@
 				2E4EE28720F05665003431B3 /* CountryService.swift in Sources */,
 				2E4EE27B20F0565E003431B3 /* RecordFileType.swift in Sources */,
 				2E4EE27D20F05661003431B3 /* VideoRecorder.swift in Sources */,
+				2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */,
 				2E4EE2AD20F0590F003431B3 /* MotionInfo.swift in Sources */,
 				2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */,
 				2E4EE25120F05045003431B3 /* SegmentationDrawer.swift in Sources */,
