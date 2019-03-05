@@ -19,6 +19,8 @@ final class CoreUpdater {
     private let core: Core
     private var updateHandler: UpdateHandler?
     private var updateHandlerQueue: DispatchQueue?
+
+    private var displayLink: CADisplayLink?
     
     private let updateQueue = DispatchQueue(label: "com.mapbox.core.update", qos: DispatchQoS.default)
     
@@ -53,13 +55,22 @@ final class CoreUpdater {
         guard !isRunning else { return }
         
         isRunning = true
-        updateQueue.async { [weak self] in
-            self?.startLoop()
+
+        if displayLink == nil {
+            displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
+            displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
+        } else {
+            displayLink?.isPaused = false
         }
+
+//        updateQueue.async { [weak self] in
+//            self?.startLoop()
+//        }
     }
     
     func stopUpdating() {
         isRunning = false
+        displayLink?.isPaused = true
         self.core.pause()
     }
     
@@ -75,6 +86,16 @@ final class CoreUpdater {
                 let delayTime = UInt32(frameDuration - updateDuration)
                 usleep(delayTime)
             }
+        }
+    }
+
+    @objc private func updateOnDisplayLink(_ sender: CADisplayLink) {
+
+//        var currentTime = kCMTimeInvalid
+//        let nextVSync = sender.timestamp + sender.duration
+
+        if let queue = updateHandlerQueue, let handler = updateHandler {
+            queue.async(execute: handler)
         }
     }
 }
