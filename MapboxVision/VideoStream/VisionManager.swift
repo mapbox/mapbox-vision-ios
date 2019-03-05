@@ -191,6 +191,7 @@ public final class VisionManager {
     private var recordedVideoSampler: Streamable
     private var videoStream: Streamable
     private var interruptionStartTime: Date?
+    private var isFirstFrame: Bool = false
     
     private let sessionManager = SessionManager()
     
@@ -507,7 +508,6 @@ public final class VisionManager {
             guard let `self` = self else { return }
             
             self.dataProvider?.update()
-            
             var overlay: UIImage? = nil
             var fpsValue: FPSValue? = self.dependencies.core.getFPS()
             if self.dependencies.core.config.useDebugOverlay {
@@ -590,7 +590,7 @@ public final class VisionManager {
 
             guard self.isStarted else { return }
 
-            self.dependencies.recorder.handleFrame(frame)
+//            self.dependencies.recorder.handleFrame(frame)
 
             guard let capturedImageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(frame) else {
                 assertionFailure("Can't create pixel buffer")
@@ -598,12 +598,14 @@ public final class VisionManager {
             }
 
             self.dependencies.core.setImage(capturedImageBuffer)
-            self.dependencies.core.setCameraWidth(
-                Float(CVPixelBufferGetWidth(capturedImageBuffer)),
-                height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
-                focalLenght: self.dependencies.recordedVideoSampler.focalLength,
-                fieldOfView: self.dependencies.recordedVideoSampler.fieldOfView
-            )
+            if self.isFirstFrame {
+                self.dependencies.core.setCameraWidth(
+                    Float(CVPixelBufferGetWidth(capturedImageBuffer)),
+                    height: Float(CVPixelBufferGetHeight(capturedImageBuffer)),
+                    focalLenght: self.dependencies.recordedVideoSampler.focalLength,
+                    fieldOfView: self.dependencies.recordedVideoSampler.fieldOfView
+                )
+            }
 
             self.currentFrame = capturedImageBuffer
         }

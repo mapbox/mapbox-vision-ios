@@ -15,13 +15,13 @@ private let frameDuration = 30 * milliSecToMicroSec
 
 final class CoreUpdater {
     typealias UpdateHandler = () -> Void
-    
+
     private let core: Core
     private var updateHandler: UpdateHandler?
     private var updateHandlerQueue: DispatchQueue?
-    
+
     private let updateQueue = DispatchQueue(label: "com.mapbox.core.update", qos: DispatchQoS.default)
-    
+
     private var isRunningSemaphore = DispatchSemaphore(value: 1)
     private var _isRunning = false
     var isRunning: Bool {
@@ -37,40 +37,40 @@ final class CoreUpdater {
             isRunningSemaphore.signal()
         }
     }
-    
+
     init(core: Core) {
         self.core = core
     }
-    
+
     func set(updateHandlerQueue: DispatchQueue, updateHandler: @escaping UpdateHandler) {
         self.updateHandlerQueue = updateHandlerQueue
         self.updateHandler = updateHandler
     }
-    
+
     func startUpdating() {
         self.core.resume()
-        
+
         guard !isRunning else { return }
-        
+
         isRunning = true
         updateQueue.async { [weak self] in
             self?.startLoop()
         }
     }
-    
+
     func stopUpdating() {
         isRunning = false
         self.core.pause()
     }
-    
+
     private func startLoop() {
         while isRunning {
             let updateDuration = core.update() * secToMicroSec
-            
+
             if let queue = updateHandlerQueue, let handler = updateHandler {
                 queue.async(execute: handler)
             }
-            
+
             if (frameDuration > updateDuration) {
                 let delayTime = UInt32(frameDuration - updateDuration)
                 usleep(delayTime)

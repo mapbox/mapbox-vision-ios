@@ -21,66 +21,51 @@ class RecordedVideoSampler: NSObject, Streamable {
     var assetFrameRate: Float = 30.0
     var updateFrequence: Float = 1.0 / 30.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
+    var playerItemVideoOutput: AVPlayerItemVideoOutput?
+    var player: AVPlayer?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
     var lastUpdateInterval: TimeInterval = Date.timeIntervalSinceReferenceDate
     var didCaptureFrame: Handler?
     var frameUpdateTimer: Timer?
+    var startTimestamp: TimeInterval = 0
 
     init(pathToRecording: String) {
         super.init()
         assetPath = pathToRecording
     }
 
-    func setupAsset(url: URL) {
+    func setupPlayer(url: URL) {
         let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
 
-        // load the asset tracks so we can read from the video track
-        asset.loadValuesAsynchronously(forKeys: ["tracks"]) { [weak self] in
-            print("loadValuesAsynchronously worked")
+        player = AVPlayer(playerItem: playerItem)
 
-            var error: NSError?
-            guard asset.statusOfValue(forKey: "tracks", error: &error) == AVKeyValueStatus.loaded
-                else {
-                    print("\(String(describing: error))")
-                    return
-            }
+        let attributes = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_32BGRA)]
+        playerItemVideoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
 
-            if let firstVideoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
-                print("found at least one video track")
-
-                if let self = self {
-                    // use the framerate of the video file to control the rate of sending frames to the callback
-                    self.assetFrameRate = firstVideoTrack.nominalFrameRate
-                    self.updateFrequence = 1.0 / self.assetFrameRate
-                    self.assetReader = try! AVAssetReader(asset: asset)
-                    let outputSettings = [(kCVPixelBufferPixelFormatTypeKey as String) : NSNumber(value: kCVPixelFormatType_32BGRA)]
-
-                    self.assetVideoTrackReader = AVAssetReaderTrackOutput(track: firstVideoTrack, outputSettings: outputSettings)
-                    self.assetReader?.add(self.assetVideoTrackReader!)
-                    self.assetReader?.startReading()
-                }
-            }
+        if let playerItemVideoOutput = playerItemVideoOutput {
+            playerItem.add(playerItemVideoOutput)
+            player!.play()
         }
     }
 
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
-        setupAsset(url: fileURL)
-        #if UPDATE_FRAMES_ON_TIMER
-        if frameUpdateTimer == nil {
-            frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
-        }
-        #else
+        setupPlayer(url: fileURL)
+        startTimestamp = Date.timeIntervalSinceReferenceDate
+
         if displayLink == nil {
             displayLink = CADisplayLink(target: self, selector: #selector(self.updateOnDisplayLink))
             displayLink!.add(to: .main, forMode: .defaultRunLoopMode)
+        } else {
+            displayLink?.isPaused = false
         }
-        #endif
     }
 
     func stop() {
         // stop reading
+        displayLink?.isPaused = true
     }
 
     var focalLength: Float {
@@ -93,58 +78,32 @@ class RecordedVideoSampler: NSObject, Streamable {
         return iPhoneXBackFacingCameraFoV
     }
 
-    private func updateFrameIfNeeded() {
-        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
-        guard assetReadingFailed == false else {
-            if self.assetReader?.status == AVAssetReaderStatus.failed {
-                print("RecordedViewSampler - Video asset read error!")
-            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
-                print("RecordedViewSampler - Video asset read completed.")
-            }
+    private func sampleBuffer(from pixelBuffer: CVPixelBuffer, timestamp: CMTime) -> CMSampleBuffer {
+            var info = CMSampleTimingInfo()
+            info.presentationTimeStamp = kCMTimeZero
+            info.duration = kCMTimeInvalid
+            info.decodeTimeStamp = timestamp
 
-            // stop updates
-            if frameUpdateTimer != nil {
-                frameUpdateTimer!.invalidate()
-                frameUpdateTimer = nil
-            }
+            var formatDesc: CMFormatDescription? = nil
+            CMVideoFormatDescriptionCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, &formatDesc)
 
-            if displayLink != nil {
-                displayLink!.isPaused = true
-                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
-                displayLink!.invalidate()
-                displayLink = nil
-            }
+            var sampleBuffer: CMSampleBuffer? = nil
 
-            return
-        }
+            CMSampleBufferCreateReadyWithImageBuffer(kCFAllocatorDefault, pixelBuffer, formatDesc!, &info, &sampleBuffer);
 
-        let shouldSendNewFrame = assetReader?.status == AVAssetReaderStatus.reading
-        if shouldSendNewFrame {
-            if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    self.didCaptureFrame?(nextSampleBuffer)
-                }
-            }
-        }
+            return sampleBuffer!
     }
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        let now = Date.timeIntervalSinceReferenceDate
-        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
+        if let playerItemVideoOutput = playerItemVideoOutput {
+            var currentTime = kCMTimeInvalid
+            let nextVSync = displaylink.timestamp + displaylink.duration
+            currentTime = playerItemVideoOutput.itemTime(forHostTime: nextVSync)
 
-        // send a video frame at no faster than the video file framerate. We should match it identically
-        let shouldSendNewFrame = timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
-        if shouldSendNewFrame {
-            updateFrameIfNeeded()
-            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+            if playerItemVideoOutput.hasNewPixelBuffer(forItemTime: currentTime), let pixelBuffer = playerItemVideoOutput.copyPixelBuffer(forItemTime: currentTime, itemTimeForDisplay: nil) {
+                let nextSampleBuffer = sampleBuffer(from: pixelBuffer, timestamp: currentTime)
+                self.didCaptureFrame?(nextSampleBuffer)
+            }
         }
-
-    }
-
-    @objc func updateOnTimer() {
-        updateFrameIfNeeded()
     }
 }
