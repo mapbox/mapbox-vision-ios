@@ -134,29 +134,29 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     private func updateFrameIfNeeded() {
-        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
-        guard assetReadingFailed == false else {
-            if self.assetReader?.status == AVAssetReaderStatus.failed {
-                print("RecordedViewSampler - Video asset read error!")
-            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
-                print("RecordedViewSampler - Video asset read completed.")
-            }
-
-            // stop updates
-            if frameUpdateTimer != nil {
-                frameUpdateTimer!.invalidate()
-                frameUpdateTimer = nil
-            }
-
-            if displayLink != nil {
-                displayLink!.isPaused = true
-                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
-                displayLink!.invalidate()
-                displayLink = nil
-            }
-
-            return
-        }
+//        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
+//        guard assetReadingFailed == false else {
+//            if self.assetReader?.status == AVAssetReaderStatus.failed {
+//                print("RecordedViewSampler - Video asset read error!")
+//            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
+//                print("RecordedViewSampler - Video asset read completed.")
+//            }
+//
+//            // stop updates
+//            if frameUpdateTimer != nil {
+//                frameUpdateTimer!.invalidate()
+//                frameUpdateTimer = nil
+//            }
+//
+//            if displayLink != nil {
+//                displayLink!.isPaused = true
+//                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
+//                displayLink!.invalidate()
+//                displayLink = nil
+//            }
+//
+//            return
+//        }
 
         if let displayLink = displayLink, let playerItemVideoOutput = playerItemVideoOutput {
             var currentTime = kCMTimeInvalid
