@@ -84,8 +84,8 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
-//        setupAsset(url: fileURL)
-        setupPlayer(url: fileURL)
+        setupAsset(url: fileURL)
+//        setupPlayer(url: fileURL)
         startTimestamp = Date.timeIntervalSinceReferenceDate
         #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
@@ -134,30 +134,7 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     private func updateFrameIfNeeded() {
-//        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
-//        guard assetReadingFailed == false else {
-//            if self.assetReader?.status == AVAssetReaderStatus.failed {
-//                print("RecordedViewSampler - Video asset read error!")
-//            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
-//                print("RecordedViewSampler - Video asset read completed.")
-//            }
-//
-//            // stop updates
-//            if frameUpdateTimer != nil {
-//                frameUpdateTimer!.invalidate()
-//                frameUpdateTimer = nil
-//            }
-//
-//            if displayLink != nil {
-//                displayLink!.isPaused = true
-//                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
-//                displayLink!.invalidate()
-//                displayLink = nil
-//            }
-//
-//            return
-//        }
-
+        #if false
         if let displayLink = displayLink, let playerItemVideoOutput = playerItemVideoOutput {
             var currentTime = kCMTimeInvalid
             let nextVSync = displayLink.timestamp + displayLink.duration
@@ -166,10 +143,34 @@ class RecordedVideoSampler: NSObject, Streamable {
             if playerItemVideoOutput.hasNewPixelBuffer(forItemTime: currentTime), let pixelBuffer = playerItemVideoOutput.copyPixelBuffer(forItemTime: currentTime, itemTimeForDisplay: nil) {
                 let nextSampleBuffer = sampleBuffer(from: pixelBuffer)
                 self.didCaptureFrame?(nextSampleBuffer)
-                print("bla")
+                print("didCaptureFrame")
             }
         }
-        #if false
+        #else
+        let assetReadingFailed = !(assetReader?.status == AVAssetReaderStatus.unknown || assetReader?.status == AVAssetReaderStatus.reading)
+        guard assetReadingFailed == false else {
+            if self.assetReader?.status == AVAssetReaderStatus.failed {
+                print("RecordedViewSampler - Video asset read error!")
+            } else if self.assetReader?.status == AVAssetReaderStatus.completed {
+                print("RecordedViewSampler - Video asset read completed.")
+            }
+
+            // stop updates
+            if frameUpdateTimer != nil {
+                frameUpdateTimer!.invalidate()
+                frameUpdateTimer = nil
+            }
+
+            if displayLink != nil {
+                displayLink!.isPaused = true
+                displayLink!.remove(from: .main, forMode: .defaultRunLoopMode)
+                displayLink!.invalidate()
+                displayLink = nil
+            }
+
+            return
+        }
+
         let shouldSendNewFrame = assetReader?.status == AVAssetReaderStatus.reading
         if shouldSendNewFrame {
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
@@ -178,6 +179,12 @@ class RecordedVideoSampler: NSObject, Streamable {
                         return
                     }
                     self.didCaptureFrame?(nextSampleBuffer)
+                    let durationInfo = CMSampleBufferGetDuration(nextSampleBuffer)
+                    let presentationInfo = CMSampleBufferGetPresentationTimeStamp(nextSampleBuffer)
+                    let decodeTimestamp = CMSampleBufferGetDecodeTimeStamp(nextSampleBuffer)
+                    print("sample buffer: dur sec: \(durationInfo.seconds) scale: \(durationInfo.timescale)")
+                    print("sample buffer: present sec: \(presentationInfo.seconds) scale: \(presentationInfo.timescale)")
+                    print("sample buffer: decode sec: \(decodeTimestamp.seconds) scale: \(decodeTimestamp.timescale)")
                 }
             }
         }

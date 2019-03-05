@@ -11,6 +11,10 @@ import MapboxVisionCore
 import CoreMotion
 
 final class Platform: NSObject, PlatformInterface {
+    func httpRequest(_ url: String, method: String, body: Data?, completion: @escaping HttpRequestCompletion) {
+        httpRequest(url, completion: completion)
+    }
+
 
     struct Dependencies {
         let recordCoordinator: RecordCoordinator
