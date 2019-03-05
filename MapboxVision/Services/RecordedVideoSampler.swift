@@ -21,11 +21,14 @@ class RecordedVideoSampler: NSObject, Streamable {
     var assetFrameRate: Float = 30.0
     var updateFrequence: Float = 1.0 / 30.0
     var assetVideoTrackReader: AVAssetReaderTrackOutput?
+    var playerItemVideoOutput: AVPlayerItemVideoOutput?
+    var player: AVPlayer?
     var assetReader: AVAssetReader?
     var displayLink: CADisplayLink?
     var lastUpdateInterval: TimeInterval = Date.timeIntervalSinceReferenceDate
     var didCaptureFrame: Handler?
     var frameUpdateTimer: Timer?
+    var startTimestamp: TimeInterval = 0
 
     init(pathToRecording: String) {
         super.init()
@@ -64,9 +67,25 @@ class RecordedVideoSampler: NSObject, Streamable {
         }
     }
 
+    func setupPlayer(url: URL) {
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+
+        player = AVPlayer(playerItem: playerItem)
+
+        let attributes = [kCVPixelBufferPixelFormatTypeKey as String : Int(kCVPixelFormatType_32BGRA)]
+        playerItemVideoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
+
+        if let playerItemVideoOutput = playerItemVideoOutput {
+            playerItem.add(playerItemVideoOutput)
+            player!.play()
+        }
+    }
+
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
         setupAsset(url: fileURL)
+        startTimestamp = Date.timeIntervalSinceReferenceDate
         #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
             frameUpdateTimer = Timer.scheduledTimer(timeInterval: TimeInterval(self.updateFrequence), target: self, selector: #selector(updateOnTimer), userInfo: nil, repeats: true)
@@ -91,6 +110,26 @@ class RecordedVideoSampler: NSObject, Streamable {
     var fieldOfView: Float {
         //avic -- pull this from the recorded camera info
         return iPhoneXBackFacingCameraFoV
+    }
+
+    private func sampleBuffer(from pixelBuffer: CVPixelBuffer) -> CMSampleBuffer {
+            var info = CMSampleTimingInfo()
+            info.presentationTimeStamp = kCMTimeZero
+            info.duration = kCMTimeInvalid
+            info.decodeTimeStamp = kCMTimeInvalid
+
+            var formatDesc: CMFormatDescription? = nil
+            CMVideoFormatDescriptionCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, &formatDesc)
+
+            var sampleBuffer: CMSampleBuffer? = nil
+
+            CMSampleBufferCreateReadyWithImageBuffer(kCFAllocatorDefault,
+                                                     pixelBuffer,
+                                                     formatDesc!,
+                                                     &info,
+                                                     &sampleBuffer);
+
+            return sampleBuffer!
     }
 
     private func updateFrameIfNeeded() {
@@ -118,6 +157,18 @@ class RecordedVideoSampler: NSObject, Streamable {
             return
         }
 
+        if let displayLink = displayLink, let playerItemVideoOutput = playerItemVideoOutput {
+            var currentTime = kCMTimeInvalid
+            let nextVSync = displayLink.timestamp + displayLink.duration
+            currentTime = playerItemVideoOutput.itemTime(forHostTime: nextVSync)
+
+            if playerItemVideoOutput.hasNewPixelBuffer(forItemTime: currentTime), let pixelBuffer = playerItemVideoOutput.copyPixelBuffer(forItemTime: currentTime, itemTimeForDisplay: nil) {
+                let nextSampleBuffer = sampleBuffer(from: pixelBuffer)
+                self.didCaptureFrame?(nextSampleBuffer)
+                print("bla")
+            }
+        }
+        #if false
         let shouldSendNewFrame = assetReader?.status == AVAssetReaderStatus.reading
         if shouldSendNewFrame {
             if let nextSampleBuffer = self.assetVideoTrackReader?.copyNextSampleBuffer() {
@@ -129,6 +180,7 @@ class RecordedVideoSampler: NSObject, Streamable {
                 }
             }
         }
+        #endif
     }
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
@@ -136,7 +188,7 @@ class RecordedVideoSampler: NSObject, Streamable {
         let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
 
         // send a video frame at no faster than the video file framerate. We should match it identically
-        let shouldSendNewFrame = timeSinceLastFrameSent >= (self.updateFrequence * 0.75)
+        let shouldSendNewFrame = timeSinceLastFrameSent >= self.updateFrequence
         if shouldSendNewFrame {
             updateFrameIfNeeded()
             lastUpdateInterval = Date.timeIntervalSinceReferenceDate
