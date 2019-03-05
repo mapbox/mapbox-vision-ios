@@ -92,16 +92,20 @@ open class CameraVideoSource: NSObject {
         let width = pixelBuffer.width
         let height = pixelBuffer.height
         
-        let focalPixelX: Float?
-        let focalPixelY: Float?
+        let focalPixelX: Float
+        let focalPixelY: Float
         
         if let attachment = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) as? Data {
             let matrix: matrix_float3x3 = attachment.withUnsafeBytes { $0.pointee }
             focalPixelX = matrix[0,0]
             focalPixelY = matrix[1,1]
+        } else if let fov = formatFieldOfView {
+            let pixel = CameraVideoSource.focalPixel(fov: fov, dimension: width)
+            focalPixelX = pixel
+            focalPixelY = pixel
         } else {
-            focalPixelX = formatFieldOfView
-            focalPixelY = formatFieldOfView
+            focalPixelX = -1
+            focalPixelY = -1
         }
         
         return CameraParameters(width: width, height: height, focalXPixels: focalPixelX, focalYPixels: focalPixelY)
@@ -120,6 +124,11 @@ open class CameraVideoSource: NSObject {
     private var formatFieldOfView: Float? {
         guard let fov = camera?.activeFormat.videoFieldOfView else { return nil }
         return fov > 0 ? fov : nil
+    }
+    
+    private static func focalPixel(fov: Float, dimension: Int) -> Float {
+        let measurement = Measurement(value: Double(fov), unit: UnitAngle.degrees)
+        return (Float(dimension) / 2) / tan(Float(measurement.converted(to: .radians).value) / 2)
     }
     
     // MARK: - Observations

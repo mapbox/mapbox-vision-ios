@@ -6,20 +6,6 @@
 import Foundation
 import MapboxVisionCore
 
-public struct CameraParameters {
-    public let width: Int
-    public let height: Int
-    public let focalXPixels: Float?
-    public let focalYPixels: Float?
-    
-    public init(width: Int, height: Int, focalXPixels: Float? = nil, focalYPixels: Float? = nil) {
-        self.width = width
-        self.height = height
-        self.focalXPixels = focalXPixels
-        self.focalYPixels = focalYPixels
-    }
-}
-
 public struct VideoSample {
     public let buffer: CMSampleBuffer
     public let format: Image.Format

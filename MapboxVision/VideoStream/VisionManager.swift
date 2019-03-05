@@ -449,8 +449,7 @@ extension VisionManager: VideoSourceObserver {
     }
     
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
-        // TODO: use new camera params
-        dependencies.native.setCameraParams(CameraParams(width: 0, height: 0, focalXPixels: 0, focalYPixels: 0))
+        dependencies.native.setCameraParameters(cameraParameters)
     }
 }
 
