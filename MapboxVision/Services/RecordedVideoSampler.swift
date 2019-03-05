@@ -84,8 +84,8 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
-        setupAsset(url: fileURL)
-//        setupPlayer(url: fileURL)
+//        setupAsset(url: fileURL)
+        setupPlayer(url: fileURL)
         startTimestamp = Date.timeIntervalSinceReferenceDate
         #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
@@ -113,11 +113,11 @@ class RecordedVideoSampler: NSObject, Streamable {
         return iPhoneXBackFacingCameraFoV
     }
 
-    private func sampleBuffer(from pixelBuffer: CVPixelBuffer) -> CMSampleBuffer {
+    private func sampleBuffer(from pixelBuffer: CVPixelBuffer, timestamp: CMTime) -> CMSampleBuffer {
             var info = CMSampleTimingInfo()
             info.presentationTimeStamp = kCMTimeZero
             info.duration = kCMTimeInvalid
-            info.decodeTimeStamp = kCMTimeInvalid
+            info.decodeTimeStamp = timestamp//CMTime(seconds: timestamp, preferredTimescale: CMTimeScale(90000))
 
             var formatDesc: CMFormatDescription? = nil
             CMVideoFormatDescriptionCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, &formatDesc)
@@ -131,6 +131,22 @@ class RecordedVideoSampler: NSObject, Streamable {
                                                      &sampleBuffer);
 
             return sampleBuffer!
+    }
+
+    private func updateFrame(displayLink: CADisplayLink) {
+        if let playerItemVideoOutput = playerItemVideoOutput {
+            var currentTime = kCMTimeInvalid
+            let nextVSync = displayLink.timestamp + displayLink.duration
+            currentTime = playerItemVideoOutput.itemTime(forHostTime: nextVSync)
+
+            if playerItemVideoOutput.hasNewPixelBuffer(forItemTime: currentTime), let pixelBuffer = playerItemVideoOutput.copyPixelBuffer(forItemTime: currentTime, itemTimeForDisplay: nil) {
+                let nextSampleBuffer = sampleBuffer(from: pixelBuffer, timestamp: currentTime)
+                let decodeTimestamp = CMSampleBufferGetDecodeTimeStamp(nextSampleBuffer)
+                print("sample buffer: decode sec: \(decodeTimestamp.seconds) scale: \(decodeTimestamp.timescale)")
+                self.didCaptureFrame?(nextSampleBuffer)
+                print("didCaptureFrame")
+            }
+        }
     }
 
     private func updateFrameIfNeeded() {
@@ -192,16 +208,16 @@ class RecordedVideoSampler: NSObject, Streamable {
     }
 
     @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        let now = Date.timeIntervalSinceReferenceDate
-        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
-
-        // send a video frame at no faster than the video file framerate. We should match it identically
-        let shouldSendNewFrame = timeSinceLastFrameSent >= self.updateFrequence
-        if shouldSendNewFrame {
-            updateFrameIfNeeded()
-            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
-        }
-
+//        let now = Date.timeIntervalSinceReferenceDate
+//        let timeSinceLastFrameSent = Float(now - lastUpdateInterval)
+//
+//        // send a video frame at no faster than the video file framerate. We should match it identically
+//        let shouldSendNewFrame = timeSinceLastFrameSent >= self.updateFrequence
+//        if shouldSendNewFrame {
+//            updateFrameIfNeeded()
+//            lastUpdateInterval = Date.timeIntervalSinceReferenceDate
+//        }
+        updateFrame(displayLink: displaylink)
     }
 
     @objc func updateOnTimer() {
