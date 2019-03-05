@@ -84,7 +84,8 @@ class RecordedVideoSampler: NSObject, Streamable {
 
     func start() {
         let fileURL = URL(fileURLWithPath: assetPath!)
-        setupAsset(url: fileURL)
+//        setupAsset(url: fileURL)
+        setupPlayer(url: fileURL)
         startTimestamp = Date.timeIntervalSinceReferenceDate
         #if UPDATE_FRAMES_ON_TIMER
         if frameUpdateTimer == nil {
