@@ -161,20 +161,16 @@ public final class VisionManager {
         Converts location of the point from screen coordinates to world coordinates.
     */
     
-    public func pixelToWorld(screenCoordinate: CGPoint) -> WorldCoordinate {
-        // TODO: move to native
-        return WorldCoordinate(x: 0, y: 0, z: 0)
-//        return dependencies.core.pixel(toWorld: screenCoordinate)
+    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
+        return dependencies.native.pixel(toWorld: screenCoordinate)
     }
     
     /**
         Converts location of the point from world coordinates to screen coordinates.
     */
     
-    public func worldToPixel(worldCoordinate: WorldCoordinate) -> CGPoint {
-        // TODO: move to native
-        return .zero
-//        return dependencies.core.world(toPixel: worldCoordinate)
+    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
+        return dependencies.native.world(toPixel: worldCoordinate)
     }
     
     /**
@@ -390,14 +386,13 @@ public final class VisionManager {
         dependencies.recordSynchronizer.stopSync()
     }
     
+    // TODO: refactor to setting data provider on initialization
     private func setDataProvider(_ dataProvider: DataProvider) {
         let isActivated = state.isStarted
         
         pause()
         
         self.dataProvider = dataProvider
-        // TODO: restart in native
-//        dependencies.core.restart()
         
         if isActivated {
             resume()
@@ -465,8 +460,7 @@ extension VisionManager: SyncDelegate {
 
 extension VisionManager: RecordCoordinatorDelegate {
     func recordingStarted(path: String) {
-        // TODO: start native
-//        dependencies.core.startSession(path)
+        dependencies.native.startSavingSession(path)
     }
     
     func recordingStopped() {
@@ -474,27 +468,26 @@ extension VisionManager: RecordCoordinatorDelegate {
         
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
-            // TODO: get seconds
-//            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
+                                                      videoSettings: operationMode.videoSettings)
         }
     }
 }
 
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
-        // TODO: get seconds
-//        do {
-//            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
-//        } catch RecordCoordinatorError.cantStartNotReady {
-//            hasPendingRecordingRequest = true
-//        } catch {
-//            print(error)
-//        }
+        do {
+            try dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
+                                                     videoSettings: operationMode.videoSettings)
+        } catch RecordCoordinatorError.cantStartNotReady {
+            hasPendingRecordingRequest = true
+        } catch {
+            print(error)
+        }
     }
     
     func sessionStopped() {
-        // TODO: stop native
-//        dependencies.core.stopSession()
+        dependencies.native.stopSavingSession()
         dependencies.recorder.stopRecording()
     }
 }
