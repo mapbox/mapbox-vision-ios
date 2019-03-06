@@ -507,9 +507,6 @@ public final class VisionManager {
             guard let `self` = self else { return }
             
             self.dataProvider?.update()
-
-            print("core updater")
-            
             var overlay: UIImage? = nil
             var fpsValue: FPSValue? = self.dependencies.core.getFPS()
             if self.dependencies.core.config.useDebugOverlay {
