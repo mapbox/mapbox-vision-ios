@@ -18,6 +18,25 @@ private let safeAreaContentInset: CGFloat = 2
 private let innerRelativeInset: CGFloat = 10
 
 /**
+    Mode that determines which type of events is currently being visualized
+*/
+
+public enum VisualizationMode {
+    /**
+        Show a raw frame from the camera
+    */
+    case clear
+    /**
+        Show segmentation mask above video stream
+    */
+    case segmentation
+    /**
+        Show detected objects with bounding boxes
+    */
+    case detection
+}
+
+/**
     An object that is capable of presenting objects emitted with VisionManager events
 */
 

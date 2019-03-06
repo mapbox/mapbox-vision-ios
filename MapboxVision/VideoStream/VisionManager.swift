@@ -11,25 +11,6 @@ import UIKit
 import MapboxVisionCore
 
 /**
-    Visual (debug) mode of neural networks
-*/
-
-public enum VisualizationMode {
-    /**
-        Show a raw frame from the camera
-    */
-    case clear
-    /**
-        Show segmentation mask above video stream
-    */
-    case segmentation
-    /**
-        Show detected objects with bounding boxes
-    */
-    case detection
-}
-
-/**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
 */
 
@@ -38,6 +19,7 @@ public final class VisionManager {
     /**
         Shared instance of VisionManager.
     */
+    
     public static let shared = VisionManager()
     
     /**
