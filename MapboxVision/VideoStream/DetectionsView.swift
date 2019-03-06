@@ -73,8 +73,6 @@ private extension DetectionClass {
             return UIColor(red: 239.0/255.0, green: 6.0/255.0, blue: 255.0/255.0, alpha: 1.0)
         case .bicycle:
             return UIColor(red: 0, green: 165.0/255.0, blue: 1.0, alpha: 1.0)
-        case .unknown:
-            return .clear
         }
     }
     
@@ -90,8 +88,6 @@ private extension DetectionClass {
             return "Person"
         case .bicycle:
             return "Bicycle"
-        case .unknown:
-            return "Unknown"
         }
     }
 }
