@@ -35,7 +35,6 @@
 		2E4EE28320F05665003431B3 /* DeviceInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */; };
 		2E4EE28420F05665003431B3 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23020EFD5BA003431B3 /* AppDependency.swift */; };
 		2E4EE28620F05665003431B3 /* AlertPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */; };
-		2E4EE28720F05665003431B3 /* CountryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23320EFD5BA003431B3 /* CountryService.swift */; };
 		2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23420EFD5BA003431B3 /* DataProvider.swift */; };
 		2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */; };
 		2E4EE29420F05844003431B3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29220F05843003431B3 /* URL.swift */; };
@@ -128,7 +127,6 @@
 		2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProvider.swift; sourceTree = "<group>"; };
 		2E4EE23020EFD5BA003431B3 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
 		2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPlayer.swift; sourceTree = "<group>"; };
-		2E4EE23320EFD5BA003431B3 /* CountryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryService.swift; sourceTree = "<group>"; };
 		2E4EE23420EFD5BA003431B3 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		2E4EE23820EFD5BB003431B3 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreConfig.swift; sourceTree = "<group>"; };
@@ -295,7 +293,6 @@
 				2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */,
 				2E4EE23020EFD5BA003431B3 /* AppDependency.swift */,
 				2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */,
-				2E4EE23320EFD5BA003431B3 /* CountryService.swift */,
 				2E4EE23420EFD5BA003431B3 /* DataProvider.swift */,
 				2E4EE2A920F0590E003431B3 /* MetaInfo.swift */,
 				2E4EE2A720F0590D003431B3 /* MetaInfoManager.swift */,
@@ -547,7 +544,6 @@
 				2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */,
 				2E4EE2A120F058B9003431B3 /* Collection+Safe.swift in Sources */,
 				2E6033542142900C0050EDB3 /* Images.swift in Sources */,
-				2E4EE28720F05665003431B3 /* CountryService.swift in Sources */,
 				2E4EE27B20F0565E003431B3 /* RecordFileType.swift in Sources */,
 				2E4EE27D20F05661003431B3 /* VideoRecorder.swift in Sources */,
 				2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */,

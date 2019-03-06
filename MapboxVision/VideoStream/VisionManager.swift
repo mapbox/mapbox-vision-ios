@@ -190,7 +190,7 @@ public final class VisionManager {
         For supported values see `CVACountry`.
     */
     
-    public var country: Country = .USA
+    public var country: Country
     
     // MARK: - Private
     
@@ -227,6 +227,9 @@ public final class VisionManager {
     
     private init() {
         self.dependencies = AppDependency(operationMode: operationMode)
+        // TODO: retrieve initial value from native when algorightm is implemented
+        // country = dependencies.native.country
+        country = .USA
         
         dependencies.native.config = .basic
 
