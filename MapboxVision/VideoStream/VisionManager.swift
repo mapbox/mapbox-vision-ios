@@ -120,14 +120,6 @@ public final class VisionManager {
     // MARK: Utility
     
     /**
-        Returns the size of the frame.
-    */
-    
-    public var frameSize: CGSize {
-        return operationMode.videoSettings.size
-    }
-    
-    /**
         Converts location of the point from screen coordinates to world coordinates.
     */
     
@@ -141,18 +133,6 @@ public final class VisionManager {
     
     public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
         return dependencies.native.world(toPixel: worldCoordinate)
-    }
-    
-    /**
-        Operation mode determines whether vision manager works normally or focuses just on gathering data.
-        Default value is normal.
-    */
-    
-    public var operationMode: OperationMode = .normal {
-        didSet {
-            guard operationMode != oldValue else { return }
-            updateOperationMode(operationMode)
-        }
     }
     
     /**
@@ -197,8 +177,14 @@ public final class VisionManager {
     }
     
     private var state: State = .uninitialized
-    
     private var notificationObservers = [Any]()
+    
+    private var operationMode: OperationMode = .normal {
+        didSet {
+            guard operationMode != oldValue else { return }
+            updateOperationMode(operationMode)
+        }
+    }
     
     private init(dependencies: AppDependency, videoSource: VideoSource, operationMode: OperationMode) {
         self.dependencies = dependencies
