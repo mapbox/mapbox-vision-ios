@@ -16,29 +16,6 @@ import MapboxVisionCore
 
 public final class VisionManager {
     
-    private let dependencies: VisionDependency
-    
-    private var dataProvider: DataProvider?
-    private var backgroundTask = UIBackgroundTaskInvalid
-    private var enableSyncObservation: NSKeyValueObservation?
-    private var syncOverCellularObservation: NSKeyValueObservation?
-    private var hasPendingRecordingRequest = false
-    private var interruptionStartTime: Date?
-    
-    private let sessionManager = SessionManager()
-    
-    private var isSyncAllowedOverCellular: Bool {
-        return UserDefaults.standard.syncOverCellular
-    }
-    
-    private var isSyncEnabled: Bool {
-        return UserDefaults.standard.enableSync
-    }
-    
-    private var isSyncAllowed: Bool {
-        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
-    }
-    
     // MARK: - Public
     // MARK: Lifetime
     
@@ -176,8 +153,32 @@ public final class VisionManager {
         }
     }
     
+    private let dependencies: VisionDependency
     private var state: State = .uninitialized
+    
+    private var interruptionStartTime: Date?
+    private var currentFrame: CVPixelBuffer?
+    private var dataProvider: DataProvider?
+    
+    private var backgroundTask = UIBackgroundTaskInvalid
+    private var hasPendingRecordingRequest = false
     private var notificationObservers = [Any]()
+    private var enableSyncObservation: NSKeyValueObservation?
+    private var syncOverCellularObservation: NSKeyValueObservation?
+    
+    private let sessionManager = SessionManager()
+    
+    private var isSyncAllowedOverCellular: Bool {
+        return UserDefaults.standard.syncOverCellular
+    }
+    
+    private var isSyncEnabled: Bool {
+        return UserDefaults.standard.enableSync
+    }
+    
+    private var isSyncAllowed: Bool {
+        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
+    }
     
     private var operationMode: OperationMode = .normal {
         didSet {
@@ -393,8 +394,6 @@ public final class VisionManager {
         guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
-    
-    private var currentFrame: CVPixelBuffer?
 }
 
 extension VisionManager: VisionDelegate {
