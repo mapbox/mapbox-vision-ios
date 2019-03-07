@@ -59,8 +59,7 @@ final class AppDependency: VisionDependency {
             eventsManager: eventsManager
         ))
         
-        self.native = VisionManagerNative()
-        native.initialize(withPlatform: platform)
+        self.native = VisionManagerNative.create(withPlatform: platform)
         
         self.metaInfoManager = MetaInfoManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
