@@ -38,9 +38,9 @@ final class SegmentationDrawer: NSObject, MTKViewDelegate {
         self.pipelineState = pipelineState
     }
     
-    func set(_ segMask: SegmentationMask) {
-        source = segMask.sourceImage.getTexture();
-        mask = segMask.segmentationMaskImage.getTexture();
+    func set(_ segMask: FrameSegmentation) {
+        source = segMask.frame.getTexture();
+        mask = segMask.mask.getTexture();
     }
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
@@ -68,6 +68,3 @@ final class SegmentationDrawer: NSObject, MTKViewDelegate {
         #endif
     }
 }
-
-
-

@@ -11,94 +11,6 @@ import UIKit
 import MapboxVisionCore
 
 /**
-    The interface that user’s custom object should conform to in order to receive events from SDK.
-*/
-
-public protocol VisionManagerDelegate: class {
-    /**
-        Tells the delegate that new segmentation is available.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateSegmentation segmentation: SegmentationMask?) -> Void
-    /**
-        Tells the delegate that new detections are available.
-        Requires at least low performance for detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateDetections detections: Detections?) -> Void
-    /**
-        Tells the delegate that new sign classification is available.
-        Requires at least low performance for detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateSignClassifications classifications: SignClassifications?) -> Void
-    /**
-        Tells the delegate that new road description is available. These values are high-frequency but unprocessed.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateRawRoadDescription roadDescription: RoadDescription?) -> Void
-    /**
-        Tells the delegate that new processed road description is available. These are smoothed and more stable values.
-        Requires at least low performance for segmentation.
-     */
-    func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription?) -> Void
-    /**
-        Tells the delegate that newly estimated position is calculated.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateEstimatedPosition estimatedPosition: Position?) -> Void
-    /**
-     Tells the delegate that description of the situation on the road is updated (see [WorldDescription](https://www.mapbox.com/ios-sdk/vision/data-types/Classes/WorldDescription.html) documentation for available properties). This event won't be emitted until calibration progress reaches isCalibrated state.
-        Requires at least low performance for segmentation and detection.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription?) -> Void
-    /**
-        Tells the delegate that lane departure state is updated.
-        Requires at least low performance for segmentation.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateLaneDepartureState laneDepartureState: LaneDepartureState) -> Void
-    /**
-        Tells the delegate about the progress of camera pose estimation (calibration).
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateCalibrationProgress calibrationProgress: CalibrationProgress) -> Void
-}
-
-public protocol VisionManagerRoadRestrictionsDelegate: class {
-    
-    /**
-        Tells the delegate that current speed limit is updated.
-     */
-    func visionManager(_ visionManager: VisionManager, didUpdateSpeedLimit speedLimit: SpeedLimit?) -> Void
-}
-
-/**
-    The interface that allows to receive instructions on how to render navigation route. Object that implements this interface is supposed to display navigation route based on provided instructions.
-*/
-
-public protocol VisionManagerARDelegate: class {
-    /**
-        Provides updated instructions on how to render navigation route.
-    */
-    func visionManager(_ visionManager: VisionManager, didUpdateManeuverLocation maneuverLocation: ManeuverLocation?) -> Void
-}
-
-/**
-    Visual (debug) mode of neural networks
-*/
-
-public enum VisualizationMode {
-    /**
-        Show a raw frame from the camera
-    */
-    case clear
-    /**
-        Show segmentation mask above video stream
-    */
-    case segmentation
-    /**
-        Show detected objects with bounding boxes
-    */
-    case detection
-}
-
-/**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
 */
 
@@ -107,22 +19,14 @@ public final class VisionManager {
     /**
         Shared instance of VisionManager.
     */
+    
     public static let shared = VisionManager()
     
     /**
         The delegate receiving events from SDK. This is a custom object that user of the SDK provides.
     */
-    public weak var delegate: VisionManagerDelegate?
-    
-    /**
-        The delegate receiving events about currently applied road restrictions.
-     */
-    public weak var roadRestrictionsDelegate: VisionManagerRoadRestrictionsDelegate?
-    
-    /**
-        Set delegate which will receive and handle instructions on rendering AR navigation.
-    */
-    public weak var arDelegate: VisionManagerARDelegate?
+    // TODO: move to initialize. don't store in swift
+    public weak var delegate: VisionManagerDelegate!
     
     private let dependencies: VisionDependency
     
@@ -225,108 +129,6 @@ public final class VisionManager {
         }
     }
     
-    // MARK: Current values
-    
-    /**
-        Current position estimated by SDK defined as a set of location-related parameters.
-    */
-    
-    public var estimatedPosition: Position? {
-        didSet {
-            guard oldValue?.identifier != estimatedPosition?.identifier else { return }
-            delegate?.visionManager(self, didUpdateEstimatedPosition: estimatedPosition)
-        }
-    }
-    
-    /**
-        Unprocessed description of current road situation.
-     */
-    
-    public var rawRoadDescription: RoadDescription? {
-        didSet {
-            guard oldValue?.identifier != roadDescription?.identifier else { return }
-            delegate?.visionManager(self, didUpdateRawRoadDescription: roadDescription)
-        }
-    }
-    
-    /**
-        Description of current road situation
-    */
-    
-    public var roadDescription: RoadDescription? {
-        didSet {
-            guard oldValue?.identifier != roadDescription?.identifier else { return }
-            delegate?.visionManager(self, didUpdateRoadDescription: roadDescription)
-        }
-    }
-    
-    /**
-        World description.
-    */
-    
-    public var worldDescription: WorldDescription? {
-        didSet {
-            guard
-                oldValue?.identifier != worldDescription?.identifier,
-                calibrationProgress.isCalibrated
-            else { return }
-            delegate?.visionManager(self, didUpdateWorldDescription: worldDescription)
-        }
-    }
-    
-    /**
-        Current lane departure state.
-    */
-    
-    public var laneDepartureState: LaneDepartureState = .normal {
-        didSet {
-            guard oldValue != laneDepartureState else { return }
-            delegate?.visionManager(self, didUpdateLaneDepartureState: laneDepartureState)
-        }
-    }
-    
-    /**
-        Current progress of camera pose estimation (calibration) process.
-    */
-    
-    public var calibrationProgress: CalibrationProgress = CalibrationProgress(progress: 0, calibrated: false) {
-        didSet {
-            guard oldValue != calibrationProgress else { return }
-            delegate?.visionManager(self, didUpdateCalibrationProgress: calibrationProgress)
-        }
-    }
-    
-    // MARK: Road restrictions
-    
-    /**
-        Currently applied speed limit.
-     */
-    
-    public var speedLimit: SpeedLimit? {
-        didSet {
-            guard oldValue?.identifier != speedLimit?.identifier else { return }
-            roadRestrictionsDelegate?.visionManager(self, didUpdateSpeedLimit: speedLimit)
-        }
-    }
-    
-    // MARK: Navigation
-    
-    /**
-        Provide information about navigation route to get instructions on rendering AR navigation.
-    */
-    
-    public func startNavigation(to route: NavigationRoute) -> Void {
-        dependencies.core.setRoute(route)
-    }
-    
-    /**
-        Stop navigation.
-    */
-    
-    public func stopNavigation() {
-        dependencies.core.setRoute(nil)
-    }
-    
     // MARK: Utility
     
     /**
@@ -341,16 +143,16 @@ public final class VisionManager {
         Converts location of the point from screen coordinates to world coordinates.
     */
     
-    public func pixelToWorld(screenCoordinate: CGPoint) -> WorldCoordinate {
-        return dependencies.core.pixel(toWorld: screenCoordinate)
+    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
+        return dependencies.native.pixel(toWorld: screenCoordinate)
     }
     
     /**
         Converts location of the point from world coordinates to screen coordinates.
     */
     
-    public func worldToPixel(worldCoordinate: WorldCoordinate) -> CGPoint {
-        return dependencies.core.world(toPixel: worldCoordinate)
+    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
+        return dependencies.native.world(toPixel: worldCoordinate)
     }
     
     /**
@@ -405,18 +207,13 @@ public final class VisionManager {
     
     private var notificationObservers = [Any]()
     
-    private var maneuverLocation: ManeuverLocation? {
-        didSet {
-            guard maneuverLocation != oldValue else { return }
-            arDelegate?.visionManager(self, didUpdateManeuverLocation: maneuverLocation)
-        }
-    }
-    
     private init() {
         self.dependencies = AppDependency(operationMode: operationMode)
-        self.country = dependencies.core.getCountry()
+        // TODO: retrieve initial value from native when algorightm is implemented
+        // country = dependencies.native.country
+        country = .USA
         
-        dependencies.core.config = .basic
+        dependencies.native.config = .basic
 
         updateModelPerformanceConfig(modelPerformanceConfig)
         updateOperationMode(operationMode)
@@ -424,7 +221,7 @@ public final class VisionManager {
         registerDefaults()
         
         let realtimeDataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
-            core: dependencies.core,
+            native: dependencies.native,
             motionManager: dependencies.motionManager,
             metaInfoManager: dependencies.metaInfoManager
         ))
@@ -456,39 +253,6 @@ public final class VisionManager {
         enableSyncObservation = defaults.observe(\.enableSync, changeHandler: settingHandler)
         syncOverCellularObservation = defaults.observe(\.syncOverCellular, changeHandler: settingHandler)
         
-        dependencies.coreUpdater.set(updateHandlerQueue: .main) { [weak self] in
-            guard let `self` = self else { return }
-            
-            self.dataProvider?.update()
-            
-            self.calibrationProgress = self.dependencies.core.getCalibrationProgress()
-            
-            let segmentationMask = self.dependencies.core.getSegmentationMask()
-            self.delegate?.visionManager(self, didUpdateSegmentation: segmentationMask)
-            
-            let detections = self.dependencies.core.getDetections()
-            self.delegate?.visionManager(self, didUpdateDetections: detections)
-            
-            let signClassifications = self.dependencies.core.getSignClassifications()
-            self.delegate?.visionManager(self, didUpdateSignClassifications: signClassifications)
-            
-            self.estimatedPosition = self.dependencies.core.getEstimatedPosition()
-            
-            self.rawRoadDescription = self.dependencies.core.getRawRoadDescription()
-            
-            self.roadDescription = self.dependencies.core.getRoadDescription()
-            
-            self.worldDescription = self.dependencies.core.getWorldDescription()
-            
-            self.laneDepartureState = self.dependencies.core.getLaneDepartureState()
-            
-            self.speedLimit = self.dependencies.core.getSpeedLimit()
-            
-            let crossroad = self.dependencies.core.getNearestCrossroad()
-            let isValidCrossroad = crossroad.routePoint.isManeuver && crossroad.origin.y > 0
-            self.maneuverLocation = isValidCrossroad ? ManeuverLocation(origin: crossroad.origin.cgPoint) : nil
-        }
-        
         sessionManager.listener = self
     
         subscribeToNotifications()
@@ -515,7 +279,7 @@ public final class VisionManager {
         
         dataProvider?.start()
         startVideoStream()
-        dependencies.coreUpdater.startUpdating()
+        dependencies.native.start(self)
         
         sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     }
@@ -525,7 +289,7 @@ public final class VisionManager {
         
         dataProvider?.stop()
         stopVideoStream()
-        dependencies.coreUpdater.stopUpdating()
+        dependencies.native.stop()
         
         sessionManager.stopSession()
     }
@@ -533,11 +297,11 @@ public final class VisionManager {
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
         switch config {
         case let .merged(performance):
-            dependencies.core.config.useMergeMLModelLaunch = true
+            dependencies.native.config.useMergeMLModelLaunch = true
             updateSegmentationPerformance(performance)
             updateDetectionPerformance(performance)
         case let .separate(segmentationPerformance, detectionPerformance):
-            dependencies.core.config.useMergeMLModelLaunch = false
+            dependencies.native.config.useMergeMLModelLaunch = false
             updateSegmentationPerformance(segmentationPerformance)
             updateDetectionPerformance(detectionPerformance)
         }
@@ -546,24 +310,24 @@ public final class VisionManager {
     private func updateSegmentationPerformance(_ performance: ModelPerformance) {
         switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
         case .fixed(let fps):
-            dependencies.core.config.setSegmentationFixedFPS(fps)
+            dependencies.native.config.setSegmentationFixedFPS(fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.core.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
     }
     
     private func updateDetectionPerformance(_ performance: ModelPerformance) {
         switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
         case .fixed(let fps):
-            dependencies.core.config.setDetectionFixedFPS(fps)
+            dependencies.native.config.setDetectionFixedFPS(fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.core.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
     }
     
     private func updateOperationMode(_ operationMode: OperationMode) {
-        dependencies.core.config.useSegmentation = operationMode.usesSegmentation
-        dependencies.core.config.useDetection = operationMode.usesDetection
+        dependencies.native.config.useSegmentation = operationMode.usesSegmentation
+        dependencies.native.config.useDetection = operationMode.usesDetection
         
         dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
         
@@ -607,13 +371,13 @@ public final class VisionManager {
         dependencies.recordSynchronizer.stopSync()
     }
     
+    // TODO: refactor to setting data provider on initialization
     private func setDataProvider(_ dataProvider: DataProvider) {
         let isActivated = state.isStarted
         
         pause()
         
         self.dataProvider = dataProvider
-        dependencies.core.restart()
         
         if isActivated {
             resume()
@@ -622,7 +386,6 @@ public final class VisionManager {
     
     private func setRecording(at path: RecordingPath, startTime: UInt) {
         let recordedDataProvider = RecordedDataProvider(dependencies: RecordedDataProvider.Dependencies(
-            core: dependencies.core,
             recordingPath: path,
             startTime: startTime
         ))
@@ -649,6 +412,40 @@ public final class VisionManager {
     private var currentFrame: CVPixelBuffer?
 }
 
+extension VisionManager: VisionDelegate {
+    public func onClientUpdate() {
+        delegate.visionManagerDidFinishUpdate(self)
+    }
+    
+    public func onSegmentationUpdated(_ segmentation: FrameSegmentation) {
+        delegate.visionManager(self, didUpdateFrameSegmentation: segmentation)
+    }
+    
+    public func onDetectionUpdated(_ detections: FrameDetections) {
+        delegate.visionManager(self, didUpdateFrameDetections: detections)
+    }
+    
+    public func onSignsUpdated(_ signs: FrameSigns) {
+        delegate.visionManager(self, didUpdateFrameSigns: signs)
+    }
+    
+    public func onRoadUpdated(_ road: RoadDescription) {
+        delegate.visionManager(self, didUpdateRoadDescription: road)
+    }
+    
+    public func onWorldUpdated(_ world: WorldDescription) {
+        delegate.visionManager(self, didUpdateWorldDescription: world)
+    }
+    
+    public func onVehicleLocationUpdated(_ vehicleLocation: VehicleLocation) {
+        delegate.visionManager(self, didUpdateVehicleLocation: vehicleLocation)
+    }
+    
+    public func onCameraUpdated(_ camera: Camera) {
+        delegate.visionManager(self, didUpdateCamera: camera)
+    }
+}
+
 extension VisionManager: VideoSourceObserver {
     public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
@@ -662,38 +459,11 @@ extension VisionManager: VideoSourceObserver {
         
         dependencies.recorder.handleFrame(videoSample.buffer)
         
-        dependencies.core.setImage(pixelBuffer)
+        dependencies.native.setImage(pixelBuffer)
     }
     
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
-        // TODO: use new camera params
-        dependencies.core.setCameraWidth(
-            Float(cameraParameters.width),
-            height: Float(cameraParameters.height),
-            focalLenght: -1,
-            fieldOfView: -1
-        )
-    }
-}
-
-extension VisionManager: ARDataProvider {
-    /**
-     :nodoc
-    */
-    public func getCameraParams() -> ARCameraParameters {
-        return dependencies.core.getARCameraParams()
-    }
-    /**
-     :nodoc
-     */
-    public func getARRouteData() -> ARRouteData? {
-        return dependencies.core.getARRouteData()
-    }
-    /**
-     :nodoc
-     */
-    public func getCurrentFrame() -> CVPixelBuffer? {
-        return currentFrame
+        dependencies.native.setCameraParameters(cameraParameters)
     }
 }
 
@@ -709,7 +479,7 @@ extension VisionManager: SyncDelegate {
 
 extension VisionManager: RecordCoordinatorDelegate {
     func recordingStarted(path: String) {
-        dependencies.core.startSession(path)
+        dependencies.native.startSavingSession(path)
     }
     
     func recordingStopped() {
@@ -717,7 +487,8 @@ extension VisionManager: RecordCoordinatorDelegate {
         
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
-            try? dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
+            try? dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
+                                                      videoSettings: operationMode.videoSettings)
         }
     }
 }
@@ -725,7 +496,8 @@ extension VisionManager: RecordCoordinatorDelegate {
 extension VisionManager: SessionDelegate {
     func sessionStarted() {
         do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.core.getSeconds(), videoSettings: operationMode.videoSettings)
+            try dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
+                                                     videoSettings: operationMode.videoSettings)
         } catch RecordCoordinatorError.cantStartNotReady {
             hasPendingRecordingRequest = true
         } catch {
@@ -734,7 +506,7 @@ extension VisionManager: SessionDelegate {
     }
     
     func sessionStopped() {
-        dependencies.core.stopSession()
+        dependencies.native.stopSavingSession()
         dependencies.recorder.stopRecording()
     }
 }

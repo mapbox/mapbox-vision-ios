@@ -18,6 +18,25 @@ private let safeAreaContentInset: CGFloat = 2
 private let innerRelativeInset: CGFloat = 10
 
 /**
+    Mode that determines which type of events is currently being visualized
+*/
+
+public enum VisualizationMode {
+    /**
+        Show a raw frame from the camera
+    */
+    case clear
+    /**
+        Show segmentation mask above video stream
+    */
+    case segmentation
+    /**
+        Show detected objects with bounding boxes
+    */
+    case detection
+}
+
+/**
     An object that is capable of presenting objects emitted with VisionManager events
 */
 
@@ -304,7 +323,7 @@ extension VisionPresentationViewController {
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
 
-    public func present(segmentation: SegmentationMask) {
+    public func present(segmentation: FrameSegmentation) {
         guard frameVisualizationMode == .segmentation else { return }
         
         if segmentationView.delegate == nil {
@@ -313,24 +332,22 @@ extension VisionPresentationViewController {
     
         segmentationView.isHidden = false
         
-        let sourceImage = segmentation.sourceImage
-        segmentationView.drawableSize = CGSize(width: CGFloat(sourceImage.width), height: CGFloat(sourceImage.height))
+        segmentationView.drawableSize = segmentation.frame.size.cgSize
         segmentationDrawer?.set(segmentation)
         segmentationView.draw()
     }
     
-    public func present(detections: Detections) {
+    public func present(detections: FrameDetections) {
         guard
             frameVisualizationMode == .detection,
-            let image = detections.sourceImage.getUIImage()
+            let image = detections.frame.getUIImage()
         else { return }
         
-        let sourceImage = detections.sourceImage
-        let imageSize = CGSize(width: sourceImage.width, height: sourceImage.height)
+        let imageSize = detections.frame.size.cgSize
         
-        let values = detections.items.map { detection -> BasicDetection in
+        let values = detections.detections.map { detection -> BasicDetection in
             let rect = detection.boundingBox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
-            return BasicDetection(boundingBox: rect, objectType: detection.objectType)
+            return BasicDetection(boundingBox: rect, objectType: detection.detectionClass)
         }
         
         detectionsView.isHidden = false

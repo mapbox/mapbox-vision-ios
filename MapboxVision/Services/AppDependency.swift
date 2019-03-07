@@ -13,11 +13,9 @@ protocol VisionDependency {
     var recordSynchronizer: RecordSynchronizer { get }
     var reachability: Reachability { get }
     var recorder: RecordCoordinator { get }
-    var core: Core { get }
-    var coreUpdater: CoreUpdater { get }
+    var native: VisionManagerNative { get }
     var metaInfoManager: MetaInfoManager { get }
     var motionManager: MotionManager { get }
-    var countryService: CountryService { get }
     var deviceInfo: DeviceInfoProvidable { get }
     
     func set(platformDelegate: PlatformDelegate?)
@@ -26,14 +24,11 @@ protocol VisionDependency {
 final class AppDependency: VisionDependency {
     private(set) var reachability: Reachability
     private(set) var recordSynchronizer: RecordSynchronizer
-    private(set) var core: Core
-    private(set) var coreUpdater: CoreUpdater
+    private(set) var native: VisionManagerNative
     private(set) var recorder: RecordCoordinator
     private(set) var metaInfoManager: MetaInfoManager
     private(set) var motionManager: MotionManager
-    private(set) var countryService: CountryService
     private(set) var deviceInfo: DeviceInfoProvidable
-    private let handlerDisposable: CountryService.Disposable
     private let eventsManager = EventsManager()
     private let platform: Platform
     
@@ -57,28 +52,21 @@ final class AppDependency: VisionDependency {
         )
         self.recordSynchronizer = RecordSynchronizer(syncDependencies)
         
-        self.countryService = CountryProvider()
         self.recorder = RecordCoordinator()
         
         self.platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: recorder,
             eventsManager: eventsManager
         ))
-        self.core = Core(platform: platform)
-        self.coreUpdater = CoreUpdater(core: core)
+        
+        self.native = VisionManagerNative()
+        native.initialize(withPlatform: platform)
         
         self.metaInfoManager = MetaInfoManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
-        
-        self.core.setCountry(self.countryService.currentCountry)
-        self.handlerDisposable = self.countryService.subscribe(handler: core.setCountry)
     }
     
     func set(platformDelegate: PlatformDelegate?) {
         platform.delegate = platformDelegate
-    }
-    
-    deinit {
-        self.countryService.unsubscribe(handlerDisposable)
     }
 }
