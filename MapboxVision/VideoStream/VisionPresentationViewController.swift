@@ -332,7 +332,7 @@ extension VisionPresentationViewController {
     
         segmentationView.isHidden = false
         
-        segmentationView.drawableSize = segmentation.frame.size.cgSize
+        segmentationView.drawableSize = segmentation.frame.image.size.cgSize
         segmentationDrawer?.set(segmentation)
         segmentationView.draw()
     }
@@ -340,10 +340,10 @@ extension VisionPresentationViewController {
     public func present(detections: FrameDetections) {
         guard
             frameVisualizationMode == .detection,
-            let image = detections.frame.getUIImage()
+            let image = detections.frame.image.getUIImage()
         else { return }
         
-        let imageSize = detections.frame.size.cgSize
+        let imageSize = detections.frame.image.size.cgSize
         
         let values = detections.detections.map { detection -> BasicDetection in
             let rect = detection.boundingBox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)

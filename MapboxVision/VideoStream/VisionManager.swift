@@ -16,57 +16,17 @@ import MapboxVisionCore
 
 public final class VisionManager {
     
-    /**
-        Shared instance of VisionManager.
-    */
-    
-    public static let shared = VisionManager()
-    
-    /**
-        The delegate receiving events from SDK. This is a custom object that user of the SDK provides.
-    */
-    // TODO: move to initialize. don't store in swift
-    public weak var delegate: VisionManagerDelegate!
-    
-    private let dependencies: VisionDependency
-    
-    private var dataProvider: DataProvider?
-    private var backgroundTask = UIBackgroundTaskInvalid
-    private var isStarted: Bool = false
-    private var enableSyncObservation: NSKeyValueObservation?
-    private var syncOverCellularObservation: NSKeyValueObservation?
-    private var hasPendingRecordingRequest = false
-    private var interruptionStartTime: Date?
-    
-    private let sessionManager = SessionManager()
-    
-    private var isSyncAllowedOverCellular: Bool {
-        return UserDefaults.standard.syncOverCellular
-    }
-    
-    private var isSyncEnabled: Bool {
-        return UserDefaults.standard.enableSync
-    }
-    
-    private var isSyncAllowed: Bool {
-        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
-    }
-    
     // MARK: - Public
     // MARK: Lifetime
     
     /**
-        Initialize VisionManger supplying it with required dependencies.
-    */
+        Fabric method for creating VisionManager instance.
+     */
     
-    public func initialize(videoSource: VideoSource, operationMode: OperationMode = .normal) {
-        guard state.isUninitialized else {
-            assertionFailure("VisionManager is already initialized. Call shutdown() to clean its state and reinitialize")
-            return
-        }
-        
-        state = .initialized(videoSource: videoSource)
-        self.operationMode = operationMode
+    public static func create(videoSource: VideoSource, operationMode: OperationMode = .normal) -> VisionManager {
+        let dependencies = AppDependency(operationMode: operationMode)
+        let manager = VisionManager(dependencies: dependencies, videoSource: videoSource, operationMode: operationMode)
+        return manager
     }
     
     /**
@@ -74,7 +34,7 @@ public final class VisionManager {
         VisionManager is required to be initialized before calling this method.
     */
     
-    public func start() {
+    public func start(delegate: VisionManagerDelegate) {
         switch state {
         case .uninitialized:
             assertionFailure("VisionManager should be initialized before starting")
@@ -83,7 +43,7 @@ public final class VisionManager {
             assertionFailure("VisionManager is already started")
             return
         case let .initialized(videoSource), let .stopped(videoSource):
-            state = .started(videoSource: videoSource)
+            state = .started(videoSource: videoSource, delegate: delegate)
         }
         
         resume()
@@ -94,7 +54,7 @@ public final class VisionManager {
     */
     
     public func stop() {
-        guard case let .started(videoSource) = state else {
+        guard case let .started(videoSource, _) = state else {
             assertionFailure("VisionManager is not started")
             return
         }
@@ -108,9 +68,14 @@ public final class VisionManager {
         Cleanup the state and resources of VisionManger.
     */
     
-    public func shutdown() {
+    public func destroy() {
         guard !state.isUninitialized else { return }
         
+        if case .started = state {
+            stop()
+        }
+        
+        dependencies.native.destroy()
         state = .uninitialized
     }
     
@@ -132,14 +97,6 @@ public final class VisionManager {
     // MARK: Utility
     
     /**
-        Returns the size of the frame.
-    */
-    
-    public var frameSize: CGSize {
-        return operationMode.videoSettings.size
-    }
-    
-    /**
         Converts location of the point from screen coordinates to world coordinates.
     */
     
@@ -156,18 +113,6 @@ public final class VisionManager {
     }
     
     /**
-        Operation mode determines whether vision manager works normally or focuses just on gathering data.
-        Default value is normal.
-    */
-    
-    public var operationMode: OperationMode = .normal {
-        didSet {
-            guard operationMode != oldValue else { return }
-            updateOperationMode(operationMode)
-        }
-    }
-    
-    /**
         Determines estimated country where the device is situated.
         For supported values see `CVACountry`.
     */
@@ -179,7 +124,7 @@ public final class VisionManager {
     private enum State {
         case uninitialized
         case initialized(videoSource: VideoSource)
-        case started(videoSource: VideoSource)
+        case started(videoSource: VideoSource, delegate: VisionManagerDelegate)
         case stopped(videoSource: VideoSource)
         
         var isUninitialized: Bool {
@@ -201,14 +146,53 @@ public final class VisionManager {
             guard case .stopped = self else { return false }
             return true
         }
+        
+        var delegate: VisionManagerDelegate? {
+            guard case let .started(_, delegate) = self else { return nil }
+            return delegate
+        }
     }
     
+    private let dependencies: VisionDependency
     private var state: State = .uninitialized
     
-    private var notificationObservers = [Any]()
+    private var interruptionStartTime: Date?
+    private var currentFrame: CVPixelBuffer?
+    private var dataProvider: DataProvider?
     
-    private init() {
-        self.dependencies = AppDependency(operationMode: operationMode)
+    private var backgroundTask = UIBackgroundTaskInvalid
+    private var hasPendingRecordingRequest = false
+    private var notificationObservers = [Any]()
+    private var enableSyncObservation: NSKeyValueObservation?
+    private var syncOverCellularObservation: NSKeyValueObservation?
+    
+    private let sessionManager = SessionManager()
+    
+    private var isSyncAllowedOverCellular: Bool {
+        return UserDefaults.standard.syncOverCellular
+    }
+    
+    private var isSyncEnabled: Bool {
+        return UserDefaults.standard.enableSync
+    }
+    
+    private var isSyncAllowed: Bool {
+        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
+    }
+    
+    private var operationMode: OperationMode = .normal {
+        didSet {
+            guard operationMode != oldValue else { return }
+            updateOperationMode(operationMode)
+        }
+    }
+    
+    private init(dependencies: AppDependency, videoSource: VideoSource, operationMode: OperationMode) {
+        self.dependencies = dependencies
+        self.operationMode = operationMode
+        
+        state = .initialized(videoSource: videoSource)
+        
         // TODO: retrieve initial value from native when algorightm is implemented
         // country = dependencies.native.country
         country = .USA
@@ -262,15 +246,17 @@ public final class VisionManager {
         unsubscribeFromNotifications()
         enableSyncObservation?.invalidate()
         syncOverCellularObservation?.invalidate()
+        
+        destroy()
     }
     
     private func startVideoStream() {
-        guard case let .started(videoSource) = state else { return }
+        guard case let .started(videoSource, _) = state else { return }
         videoSource.add(observer: self)
     }
     
     private func stopVideoStream() {
-        guard case let .started(videoSource) = state else { return }
+        guard case let .started(videoSource, _) = state else { return }
         videoSource.remove(observer: self)
     }
     
@@ -408,41 +394,39 @@ public final class VisionManager {
         guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
         setRecording(at: recordingPath, startTime: 0)
     }
-    
-    private var currentFrame: CVPixelBuffer?
 }
 
 extension VisionManager: VisionDelegate {
     public func onClientUpdate() {
-        delegate.visionManagerDidFinishUpdate(self)
+        state.delegate?.visionManagerDidFinishUpdate(self)
     }
     
     public func onSegmentationUpdated(_ segmentation: FrameSegmentation) {
-        delegate.visionManager(self, didUpdateFrameSegmentation: segmentation)
+        state.delegate?.visionManager(self, didUpdateFrameSegmentation: segmentation)
     }
     
     public func onDetectionUpdated(_ detections: FrameDetections) {
-        delegate.visionManager(self, didUpdateFrameDetections: detections)
+        state.delegate?.visionManager(self, didUpdateFrameDetections: detections)
     }
     
     public func onSignsUpdated(_ signs: FrameSigns) {
-        delegate.visionManager(self, didUpdateFrameSigns: signs)
+        state.delegate?.visionManager(self, didUpdateFrameSigns: signs)
     }
     
     public func onRoadUpdated(_ road: RoadDescription) {
-        delegate.visionManager(self, didUpdateRoadDescription: road)
+        state.delegate?.visionManager(self, didUpdateRoadDescription: road)
     }
     
     public func onWorldUpdated(_ world: WorldDescription) {
-        delegate.visionManager(self, didUpdateWorldDescription: world)
+        state.delegate?.visionManager(self, didUpdateWorldDescription: world)
     }
     
     public func onVehicleLocationUpdated(_ vehicleLocation: VehicleLocation) {
-        delegate.visionManager(self, didUpdateVehicleLocation: vehicleLocation)
+        state.delegate?.visionManager(self, didUpdateVehicleLocation: vehicleLocation)
     }
     
     public func onCameraUpdated(_ camera: Camera) {
-        delegate.visionManager(self, didUpdateCamera: camera)
+        state.delegate?.visionManager(self, didUpdateCamera: camera)
     }
 }
 
