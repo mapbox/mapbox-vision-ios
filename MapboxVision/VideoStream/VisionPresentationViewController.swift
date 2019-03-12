@@ -57,12 +57,12 @@ final class VisionViewController: VisionPresentationViewController {
             let newTopView = view(for: frameVisualizationMode)
             newTopView.isHidden = false
 
+            backgroundView.bringSubview(toFront: newTopView)
             newTopView.translatesAutoresizingMaskIntoConstraints = false
             newTopView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
             newTopView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
             newTopView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             newTopView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            backgroundView.bringSubview(toFront: newTopView)
         }
     }
     
@@ -152,33 +152,32 @@ final class VisionViewController: VisionPresentationViewController {
 
     private func setupLayout() {
 
+        view.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 
-        view.addSubview(backgroundView)
-
         setupContentLayout()
 
+        view.addSubview(debugView)
         debugView.translatesAutoresizingMaskIntoConstraints = false
         debugView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         debugView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         debugView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         debugView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        view.addSubview(debugView)
     }
     
     private func setupContentLayout() {
 
+        view.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         contentView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         contentView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         contentView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 
-        view.addSubview(contentView)
         setupFPSLabels()
     }
     
