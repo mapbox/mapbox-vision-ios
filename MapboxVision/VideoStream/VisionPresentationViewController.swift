@@ -174,12 +174,12 @@ final class VisionViewController: VisionPresentationViewController {
         setupContentLayout()
         
         view.addSubview(logoView)
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: view.topAnchor),
-            view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
+//        NSLayoutConstraint.activate([
+//            view.topAnchor.constraint(equalTo: view.topAnchor),
+//            view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//        ])
     }
     
     private func setupBackgroundView() {
