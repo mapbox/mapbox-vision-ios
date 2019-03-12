@@ -223,6 +223,7 @@ final class VisionViewController: VisionPresentationViewController {
 
     private let videoStreamView: VideoStreamView = {
         let view = VideoStreamView()
+        view.backgroundColor = UIColor.red
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -230,6 +231,7 @@ final class VisionViewController: VisionPresentationViewController {
     private let debugView: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.blue
         view.contentMode = .scaleAspectFill
         return view
     }()
@@ -237,12 +239,14 @@ final class VisionViewController: VisionPresentationViewController {
     private let backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.green
         return view
     }()
     
     private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.yellow
         return view
     }()
 
