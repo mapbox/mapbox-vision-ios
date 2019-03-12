@@ -33,6 +33,11 @@ final class VideoStreamView: UIView {
     var displayLayer: AVSampleBufferDisplayLayer? {
         return layer as? AVSampleBufferDisplayLayer
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.frame = self.bounds
+    }
     
     func enqueue(_ sampleBuffer: CMSampleBuffer) {
         if let attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, false) {
