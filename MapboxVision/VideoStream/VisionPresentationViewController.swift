@@ -148,30 +148,13 @@ final class VisionViewController: VisionPresentationViewController {
     
     private func setupContentView() {
         NSLayoutConstraint.deactivate(contentContainerConstraints)
-        
-        var leadingInset: CGFloat = contentInset
-        var trailingInset: CGFloat = contentInset
-        
-        let uiOrientation = UIApplication.shared.statusBarOrientation
-        if view.safeAreaInsets.right > 0 {
-            // iPhone X in landscape
-            if uiOrientation == .landscapeRight {
-                // ear on the left
-                leadingInset = view.safeAreaInsets.left
-            } else if uiOrientation == .landscapeLeft {
-                // ear on the right
-                trailingInset = view.safeAreaInsets.right
-            }
-        }
-        
-        let topInset = view.safeAreaInsets.top > 0 ? safeAreaContentInset + view.safeAreaInsets.top : contentInset
-        let bottomInset = contentInset
-        
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentContainerConstraints = [
-            contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: topInset),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomInset),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingInset),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingInset),
+            contentView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ]
         
         NSLayoutConstraint.activate(contentContainerConstraints)
@@ -192,8 +175,10 @@ final class VisionViewController: VisionPresentationViewController {
         
         view.addSubview(logoView)
         NSLayoutConstraint.activate([
-            view.safeAreaLayoutGuide.bottomAnchor.constraintEqualToSystemSpacingBelow(logoView.bottomAnchor, multiplier: 1),
-            view.safeAreaLayoutGuide.rightAnchor.constraintEqualToSystemSpacingAfter(logoView.rightAnchor, multiplier: 1),
+            view.topAnchor.constraint(equalTo: view.topAnchor),
+            view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
     
