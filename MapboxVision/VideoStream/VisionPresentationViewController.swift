@@ -59,10 +59,10 @@ final class VisionViewController: VisionPresentationViewController {
 
             backgroundView.bringSubview(toFront: newTopView)
             newTopView.translatesAutoresizingMaskIntoConstraints = false
-            newTopView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-            newTopView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-            newTopView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            newTopView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+            newTopView.widthAnchor.constraint(equalTo: backgroundView.widthAnchor).isActive = true
+            newTopView.heightAnchor.constraint(equalTo: backgroundView.heightAnchor).isActive = true
+            newTopView.topAnchor.constraint(equalTo: backgroundView.topAnchor).isActive = true
+            newTopView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor).isActive = true
         }
     }
     
