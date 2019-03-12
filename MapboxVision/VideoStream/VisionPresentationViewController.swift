@@ -146,74 +146,14 @@ final class VisionViewController: VisionPresentationViewController {
         })
     }
     
-    private func setupContentView() {
-        NSLayoutConstraint.deactivate(contentContainerConstraints)
-
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentContainerConstraints = [
-            contentView.topAnchor.constraint(equalTo: view.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ]
-        
-        NSLayoutConstraint.activate(contentContainerConstraints)
-    }
-    
     private func setupLayout() {
         setupBackgroundView()
         
         view.addSubview(debugView)
-        NSLayoutConstraint.activate([
-            debugView.topAnchor.constraint(equalTo: view.topAnchor),
-            debugView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            debugView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            debugView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        setupContentLayout()
-        
-        view.addSubview(logoView)
-//        NSLayoutConstraint.activate([
-//            view.topAnchor.constraint(equalTo: view.topAnchor),
-//            view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//        ])
     }
     
     private func setupBackgroundView() {
         view.addSubview(backgroundView)
-        NSLayoutConstraint.activate([
-            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        backgroundView.addSubview(videoStreamView)
-        NSLayoutConstraint.activate([
-            videoStreamView.topAnchor.constraint(equalTo: view.topAnchor),
-            videoStreamView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            videoStreamView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            videoStreamView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        backgroundView.addSubview(segmentationView)
-        NSLayoutConstraint.activate([
-            segmentationView.topAnchor.constraint(equalTo: view.topAnchor),
-            segmentationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            segmentationView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            segmentationView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        
-        backgroundView.addSubview(detectionsView)
-        NSLayoutConstraint.activate([
-            detectionsView.topAnchor.constraint(equalTo: view.topAnchor),
-            detectionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            detectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            detectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
     }
     
     private func setupContentLayout() {
@@ -247,14 +187,6 @@ final class VisionViewController: VisionPresentationViewController {
         stack.insertSubview(backgroundView, at: 0)
         
         view.addSubview(stack)
-        NSLayoutConstraint.activate([
-            backgroundView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
-            backgroundView.topAnchor.constraint(equalTo: stack.topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-        ])
     }
     
     private func fpsLabel(text: String? = nil) -> UILabel {
