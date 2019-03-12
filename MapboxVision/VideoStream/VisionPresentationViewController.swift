@@ -145,33 +145,42 @@ final class VisionViewController: VisionPresentationViewController {
 //        })
 //    }
 
+    override func viewDidLayoutSubviews() {
+        backgroundView.frame = view.bounds
+        debugView.frame = view.bounds
+        contentView.frame = view.bounds
+        videoStreamView.frame = view.bounds
+        segmentationView.frame = view.bounds
+        detectionsView.frame = view.bounds
+    }
+
     private func setupLayout() {
 
         view.addSubview(backgroundView)
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+//        backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//        backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 
         setupContentLayout()
 
         view.addSubview(debugView)
-        debugView.translatesAutoresizingMaskIntoConstraints = false
-        debugView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        debugView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        debugView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        debugView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        debugView.translatesAutoresizingMaskIntoConstraints = false
+//        debugView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        debugView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//        debugView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        debugView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
     }
     
     private func setupContentLayout() {
 
         view.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        contentView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        contentView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        contentView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        contentView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//        contentView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        contentView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 
         setupFPSLabels()
     }
@@ -197,7 +206,7 @@ final class VisionViewController: VisionPresentationViewController {
         measurementStack = stack
         
         let backgroundView = UIView()
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+//        backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         stack.insertSubview(backgroundView, at: 0)
         
@@ -206,7 +215,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     private func fpsLabel(text: String? = nil) -> UILabel {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.font = UIFont(name: "Menlo", size: 10)
         label.text = text
@@ -215,7 +224,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     private func fpsStack(views: [UIView]) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: views)
-        stack.translatesAutoresizingMaskIntoConstraints = false
+//        stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = innerRelativeInset
         stack.distribution = .equalCentering
         return stack
@@ -224,13 +233,13 @@ final class VisionViewController: VisionPresentationViewController {
     private let videoStreamView: VideoStreamView = {
         let view = VideoStreamView()
         view.backgroundColor = UIColor.red
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let debugView: UIImageView = {
         let view = UIImageView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.blue
         view.contentMode = .scaleAspectFill
         return view
@@ -238,14 +247,14 @@ final class VisionViewController: VisionPresentationViewController {
     
     private let backgroundView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.green
         return view
     }()
     
     private let contentView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.yellow
         return view
     }()
@@ -253,7 +262,7 @@ final class VisionViewController: VisionPresentationViewController {
     private let segmentationView: MTKView = {
         let view = MTKView()
         view.device = MTLCreateSystemDefaultDevice()
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.colorPixelFormat = .bgra8Unorm
         view.framebufferOnly = false
         view.autoResizeDrawable = false
@@ -266,7 +275,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     private let detectionsView: DetectionsView = {
         let view = DetectionsView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.isUserInteractionEnabled = false
         view.isHidden = true
@@ -275,7 +284,7 @@ final class VisionViewController: VisionPresentationViewController {
     
     private let logoView: UIView = {
         let view = UIImageView(image: VisionImages.logo.image)
-        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0.5
         return view
     }()
