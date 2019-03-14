@@ -119,6 +119,10 @@ public final class VisionManager {
     
     public var country: Country
     
+    public var native: VisionManagerNative {
+        return dependencies.native
+    }
+    
     // MARK: - Private
     
     private enum State {
