@@ -401,6 +401,11 @@ public final class VisionManager {
 }
 
 extension VisionManager: VisionDelegate {
+    
+    public func onAuthorizationStatusChanged(_ status: AuthorizationStatus) {
+        state.delegate?.visionManager(self, didAuthorizationStatusChanged: status)
+    }
+    
     public func onClientUpdate() {
         state.delegate?.visionManagerDidFinishUpdate(self)
     }
