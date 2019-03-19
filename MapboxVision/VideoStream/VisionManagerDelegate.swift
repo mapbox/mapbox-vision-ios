@@ -58,6 +58,11 @@ public protocol VisionManagerDelegate: class {
      Tells the delegate that the current update cycle is finished and all data is in-sync.
      */
     func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void
+    
+    /**
+     Tells the delegate that authorization status has changed.
+    */
+    func visionManager(_ visionManager: VisionManager, didAuthorizationStatusChanged status: AuthorizationStatus) -> Void
 }
 
 public extension VisionManagerDelegate {

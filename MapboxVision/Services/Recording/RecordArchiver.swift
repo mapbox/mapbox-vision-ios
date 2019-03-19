@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Zip
+import ZIPFoundation
 
 protocol Archiver {
     func archive(_ files: [URL], destination: URL) throws
@@ -16,8 +16,8 @@ protocol Archiver {
 final class RecordArchiver: Archiver {
     
     func archive(_ files: [URL], destination: URL) throws {
-        try Zip.zipFiles(paths: files, zipFilePath: destination, password: nil, progress: { (progress) in
-            print("Compressing \(progress)...")
-        })
+        for file in files {
+            try FileManager.default.zipItem(at: file, to: destination)
+        }
     }
 }
