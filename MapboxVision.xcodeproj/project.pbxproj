@@ -76,8 +76,8 @@
 		B51E557E215E313500650DDE /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; };
 		B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B75BA21144B9A001D65AC /* EventsManager.swift */; };
+		B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; };
 		B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AEB46921186CCF00AF198E /* RecordArchiver.swift */; };
-		B5AEB46C211996E800AF198E /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AEB46B211996E800AF198E /* Zip.framework */; };
 		B5BD9F6F211C69FF001EE97F /* RecordingQuota.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +176,7 @@
 		B51E557D215E313500650DDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxMobileEvents.framework; path = Carthage/Build/iOS/MapboxMobileEvents.framework; sourceTree = SOURCE_ROOT; };
 		B53B75BA21144B9A001D65AC /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
+		B583DF822240F55D00D73673 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/iOS/ZIPFoundation.framework; sourceTree = "<group>"; };
 		B5AEB46921186CCF00AF198E /* RecordArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordArchiver.swift; sourceTree = "<group>"; };
 		B5AEB46B211996E800AF198E /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = SOURCE_ROOT; };
 		B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuota.swift; sourceTree = "<group>"; };
@@ -186,8 +187,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5AEB46C211996E800AF198E /* Zip.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
+				B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */,
 				2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +356,7 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B583DF822240F55D00D73673 /* ZIPFoundation.framework */,
 				B5AEB46B211996E800AF198E /* Zip.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
 				2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */,
