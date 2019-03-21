@@ -81,4 +81,6 @@ public extension VisionManagerDelegate {
     func visionManager(_ visionManager: VisionManager, didUpdateCamera camera: Camera) -> Void {}
     
     func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void {}
+    
+    func visionManager(_ visionManager: VisionManager, didAuthorizationStatusChanged status: AuthorizationStatus) -> Void {}
 }
