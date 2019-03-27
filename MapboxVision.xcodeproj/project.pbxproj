@@ -59,6 +59,7 @@
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
 		2EDD8709219EDC0200760C6D /* DeviceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */; };
+		2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */; };
 		2EF31C9021904BB300752D23 /* RecordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
@@ -160,6 +161,7 @@
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProviderTests.swift; sourceTree = "<group>"; };
+		2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSource.swift; sourceTree = "<group>"; };
 		2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorTests.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 		2E4EE23520EFD5BA003431B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9D72AC788D4F1F83614B3374 /* VideoSource */,
 				2E4EE21E20EFD5BA003431B3 /* Reachability */,
 				2E4EE22320EFD5BA003431B3 /* Network */,
 				2E4EE22620EFD5BA003431B3 /* Storage */,
@@ -302,7 +305,6 @@
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
 				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
-				9D72AC788D4F1F83614B3374 /* VideoSource */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -375,8 +377,9 @@
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
 			isa = PBXGroup;
 			children = (
-				9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */,
 				9D72A9D70E54F426D0E8990E /* VideoSource.swift */,
+				2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */,
+				9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */,
 			);
 			path = VideoSource;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */,
 				2EC332A3217E02BA00E041FE /* String.swift in Sources */,
 				2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */,
+				2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */,
 				2E4EE2EF20F0EE6C003431B3 /* RecordPickerViewController.swift in Sources */,
 				2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */,
 				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
