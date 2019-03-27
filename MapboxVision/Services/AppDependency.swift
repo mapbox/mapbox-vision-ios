@@ -17,8 +17,6 @@ protocol VisionDependency {
     var locationManager: LocationManager { get }
     var motionManager: MotionManager { get }
     var deviceInfo: DeviceInfoProvidable { get }
-    
-    func set(platformDelegate: PlatformDelegate?)
 }
 
 final class AppDependency: VisionDependency {
@@ -63,9 +61,5 @@ final class AppDependency: VisionDependency {
         
         self.locationManager = LocationManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
-    }
-    
-    func set(platformDelegate: PlatformDelegate?) {
-        platform.delegate = platformDelegate
     }
 }

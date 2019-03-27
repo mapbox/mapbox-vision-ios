@@ -63,6 +63,10 @@ public protocol VisionManagerDelegate: class {
      Tells the delegate that the current update cycle is finished and all data is in-sync.
      */
     func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void
+    /**
+     Tells the delegte that country which is used in the VisionSDK changed.
+    */
+    func visionManager(_ visionManager: VisionManager, didCountryChanged country: Country) -> Void
 }
 
 public extension VisionManagerDelegate {
@@ -84,5 +88,5 @@ public extension VisionManagerDelegate {
     
     func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void {}
     
-    func visionManager(_ visionManager: VisionManager, didAuthorizationStatusChanged status: AuthorizationStatus) -> Void {}
+    func visionManager(_ visionManager: VisionManager, didCountryChanged country: Country) -> Void {}
 }
