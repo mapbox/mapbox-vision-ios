@@ -1,0 +1,4 @@
+$(SRCROOT)/Carthage/Build/iOS/ZIPFoundation.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxMobileEvents.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxVision.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxVisionCore.framework

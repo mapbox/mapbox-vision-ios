@@ -68,7 +68,5 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 
-MapboxVision.xcworkspace
-*.framework
-*.mp4
-*.resolved
+# generated in dev evnironment
+Samples/scripts/dev-carthage-input.xcfilelist

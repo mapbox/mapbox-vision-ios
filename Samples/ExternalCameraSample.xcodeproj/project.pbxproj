@@ -7,20 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EDFFD68224B8599003BB718 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */; };
+		2EDFFD69224B8599003BB718 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD67224B8599003BB718 /* MapboxVision.framework */; };
 		B51770842242751500A693E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770832242751500A693E6 /* AppDelegate.swift */; };
-		B51770862242751500A693E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770852242751500A693E6 /* ViewController.swift */; };
+		B51770862242751500A693E6 /* ExternalCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770852242751500A693E6 /* ExternalCameraViewController.swift */; };
 		B51770892242751500A693E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51770872242751500A693E6 /* Main.storyboard */; };
 		B517708B2242751700A693E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B517708A2242751700A693E6 /* Assets.xcassets */; };
 		B517708E2242751700A693E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B517708C2242751700A693E6 /* LaunchScreen.storyboard */; };
-		B517709A2242755300A693E6 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51770972242754A00A693E6 /* MapboxVision.framework */; };
-		B517709B2242755300A693E6 /* MapboxVision.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B51770972242754A00A693E6 /* MapboxVision.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B517709C2242755300A693E6 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51770962242754A00A693E6 /* MapboxVisionCore.framework */; };
-		B517709D2242755300A693E6 /* MapboxVisionCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B51770962242754A00A693E6 /* MapboxVisionCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B51770A3224276CC00A693E6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51770A0224276CC00A693E6 /* opencv2.framework */; };
 		B51770A4224276CC00A693E6 /* MapboxMobileEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51770A1224276CC00A693E6 /* MapboxMobileEvents.framework */; };
 		B51770A5224276CC00A693E6 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B51770A2224276CC00A693E6 /* ZIPFoundation.framework */; };
 		B51770A82243849400A693E6 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B51770A72243849400A693E6 /* video.mp4 */; };
-		B5C962172243A2AB002F10DE /* FileVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C962162243A2AB002F10DE /* FileVideoSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,8 +27,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B517709D2242755300A693E6 /* MapboxVisionCore.framework in Embed Frameworks */,
-				B517709B2242755300A693E6 /* MapboxVision.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,20 +34,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = "<group>"; };
+		2EDFFD67224B8599003BB718 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
 		B51770802242751500A693E6 /* ExternalCameraSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExternalCameraSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51770832242751500A693E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B51770852242751500A693E6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B51770852242751500A693E6 /* ExternalCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalCameraViewController.swift; sourceTree = "<group>"; };
 		B51770882242751500A693E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B517708A2242751700A693E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B517708D2242751700A693E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B517708F2242751700A693E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B51770962242754A00A693E6 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MapboxVisionCore.framework; sourceTree = "<group>"; };
-		B51770972242754A00A693E6 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MapboxVision.framework; sourceTree = "<group>"; };
 		B51770A0224276CC00A693E6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = Carthage/Build/iOS/opencv2.framework; sourceTree = "<group>"; };
 		B51770A1224276CC00A693E6 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxMobileEvents.framework; path = Carthage/Build/iOS/MapboxMobileEvents.framework; sourceTree = "<group>"; };
 		B51770A2224276CC00A693E6 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/iOS/ZIPFoundation.framework; sourceTree = "<group>"; };
 		B51770A72243849400A693E6 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
-		B5C962162243A2AB002F10DE /* FileVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVideoSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,21 +54,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EDFFD68224B8599003BB718 /* MapboxVisionCore.framework in Frameworks */,
+				2EDFFD69224B8599003BB718 /* MapboxVision.framework in Frameworks */,
 				B51770A3224276CC00A693E6 /* opencv2.framework in Frameworks */,
 				B51770A4224276CC00A693E6 /* MapboxMobileEvents.framework in Frameworks */,
 				B51770A5224276CC00A693E6 /* ZIPFoundation.framework in Frameworks */,
-				B517709C2242755300A693E6 /* MapboxVisionCore.framework in Frameworks */,
-				B517709A2242755300A693E6 /* MapboxVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2EDFFD70224BA50E003BB718 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				B51770852242751500A693E6 /* ExternalCameraViewController.swift */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		2EDFFD71224BA58F003BB718 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B51770A72243849400A693E6 /* video.mp4 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		B51770772242751500A693E6 = {
 			isa = PBXGroup;
 			children = (
 				B51770822242751500A693E6 /* ExternalCameraSample */,
+				2EDFFD71224BA58F003BB718 /* Resources */,
 				B51770812242751500A693E6 /* Products */,
 				B517709F224276CC00A693E6 /* Frameworks */,
 			);
@@ -91,31 +102,21 @@
 		B51770822242751500A693E6 /* ExternalCameraSample */ = {
 			isa = PBXGroup;
 			children = (
-				B51770952242752200A693E6 /* Frameworks */,
+				2EDFFD70224BA50E003BB718 /* Examples */,
 				B51770832242751500A693E6 /* AppDelegate.swift */,
-				B51770852242751500A693E6 /* ViewController.swift */,
 				B51770872242751500A693E6 /* Main.storyboard */,
 				B517708A2242751700A693E6 /* Assets.xcassets */,
 				B517708C2242751700A693E6 /* LaunchScreen.storyboard */,
-				B51770A72243849400A693E6 /* video.mp4 */,
 				B517708F2242751700A693E6 /* Info.plist */,
-				B5C962162243A2AB002F10DE /* FileVideoSource.swift */,
 			);
 			path = ExternalCameraSample;
-			sourceTree = "<group>";
-		};
-		B51770952242752200A693E6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B51770972242754A00A693E6 /* MapboxVision.framework */,
-				B51770962242754A00A693E6 /* MapboxVisionCore.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		B517709F224276CC00A693E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EDFFD67224B8599003BB718 /* MapboxVision.framework */,
+				2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */,
 				B51770A1224276CC00A693E6 /* MapboxMobileEvents.framework */,
 				B51770A0224276CC00A693E6 /* opencv2.framework */,
 				B51770A2224276CC00A693E6 /* ZIPFoundation.framework */,
@@ -201,18 +202,15 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/MapboxMobileEvents.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ZIPFoundation.framework",
+				"$(SRCROOT)/scripts/carthage-input.xcfilelist",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MapboxMobileEvents.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ZIPFoundation.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "source \"scripts/check_input.sh\"\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -221,8 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B51770862242751500A693E6 /* ViewController.swift in Sources */,
-				B5C962172243A2AB002F10DE /* FileVideoSource.swift in Sources */,
+				B51770862242751500A693E6 /* ExternalCameraViewController.swift in Sources */,
 				B51770842242751500A693E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,7 +370,6 @@
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ExternalCameraSample/Frameworks",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ExternalCameraSample/Info.plist;
@@ -397,7 +393,6 @@
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ExternalCameraSample/Frameworks",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = ExternalCameraSample/Info.plist;
