@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = "<group>"; };
 		2EDFFD67224B8599003BB718 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
-		B51770802242751500A693E6 /* ExternalCameraSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExternalCameraSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B51770802242751500A693E6 /* VisionExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51770832242751500A693E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B51770852242751500A693E6 /* ExternalCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalCameraViewController.swift; sourceTree = "<group>"; };
 		B51770882242751500A693E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		B51770772242751500A693E6 = {
 			isa = PBXGroup;
 			children = (
-				B51770822242751500A693E6 /* ExternalCameraSample */,
+				B51770822242751500A693E6 /* VisionExamples */,
 				2EDFFD71224BA58F003BB718 /* Resources */,
 				B51770812242751500A693E6 /* Products */,
 				B517709F224276CC00A693E6 /* Frameworks */,
@@ -94,12 +94,12 @@
 		B51770812242751500A693E6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B51770802242751500A693E6 /* ExternalCameraSample.app */,
+				B51770802242751500A693E6 /* VisionExamples.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B51770822242751500A693E6 /* ExternalCameraSample */ = {
+		B51770822242751500A693E6 /* VisionExamples */ = {
 			isa = PBXGroup;
 			children = (
 				2EDFFD70224BA50E003BB718 /* Examples */,
@@ -109,7 +109,7 @@
 				B517708C2242751700A693E6 /* LaunchScreen.storyboard */,
 				B517708F2242751700A693E6 /* Info.plist */,
 			);
-			path = ExternalCameraSample;
+			path = VisionExamples;
 			sourceTree = "<group>";
 		};
 		B517709F224276CC00A693E6 /* Frameworks */ = {
@@ -127,9 +127,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B517707F2242751500A693E6 /* ExternalCameraSample */ = {
+		B517707F2242751500A693E6 /* VisionExamples */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B51770922242751700A693E6 /* Build configuration list for PBXNativeTarget "ExternalCameraSample" */;
+			buildConfigurationList = B51770922242751700A693E6 /* Build configuration list for PBXNativeTarget "VisionExamples" */;
 			buildPhases = (
 				B517707C2242751500A693E6 /* Sources */,
 				B517707D2242751500A693E6 /* Frameworks */,
@@ -141,9 +141,9 @@
 			);
 			dependencies = (
 			);
-			name = ExternalCameraSample;
+			name = VisionExamples;
 			productName = ExternalCameraSample;
-			productReference = B51770802242751500A693E6 /* ExternalCameraSample.app */;
+			productReference = B51770802242751500A693E6 /* VisionExamples.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -161,7 +161,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B517707B2242751500A693E6 /* Build configuration list for PBXProject "ExternalCameraSample" */;
+			buildConfigurationList = B517707B2242751500A693E6 /* Build configuration list for PBXProject "VisionExamples" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -174,7 +174,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B517707F2242751500A693E6 /* ExternalCameraSample */,
+				B517707F2242751500A693E6 /* VisionExamples */,
 			);
 		};
 /* End PBXProject section */
@@ -372,13 +372,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ExternalCameraSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/VisionExamples/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ExternalCameraSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.VisionExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -395,13 +395,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = ExternalCameraSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/VisionExamples/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.ExternalCameraSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.VisionExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -411,7 +411,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B517707B2242751500A693E6 /* Build configuration list for PBXProject "ExternalCameraSample" */ = {
+		B517707B2242751500A693E6 /* Build configuration list for PBXProject "VisionExamples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B51770902242751700A693E6 /* Debug */,
@@ -420,7 +420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B51770922242751700A693E6 /* Build configuration list for PBXNativeTarget "ExternalCameraSample" */ = {
+		B51770922242751700A693E6 /* Build configuration list for PBXNativeTarget "VisionExamples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B51770932242751700A693E6 /* Debug */,

@@ -69,4 +69,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 # generated in dev evnironment
-Samples/scripts/dev-carthage-input.xcfilelist
+dev-carthage-input.xcfilelist
