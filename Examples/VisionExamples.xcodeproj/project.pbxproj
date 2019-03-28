@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */; };
+		2E4E90BB224D098F00838DAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BA224D098F00838DAE /* Constants.swift */; };
+		2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */; };
 		2EDFFD68224B8599003BB718 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */; };
 		2EDFFD69224B8599003BB718 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD67224B8599003BB718 /* MapboxVision.framework */; };
 		B51770842242751500A693E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770832242751500A693E6 /* AppDelegate.swift */; };
@@ -34,6 +37,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
+		2E4E90BA224D098F00838DAE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 		2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = "<group>"; };
 		2EDFFD67224B8599003BB718 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
 		B51770802242751500A693E6 /* VisionExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				2EDFFD70224BA50E003BB718 /* Examples */,
+				2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */,
+				2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */,
+				2E4E90BA224D098F00838DAE /* Constants.swift */,
 				B51770832242751500A693E6 /* AppDelegate.swift */,
 				B51770872242751500A693E6 /* Main.storyboard */,
 				B517708A2242751700A693E6 /* Assets.xcassets */,
@@ -135,7 +144,8 @@
 				B517707D2242751500A693E6 /* Frameworks */,
 				B517707E2242751500A693E6 /* Resources */,
 				B517709E2242755300A693E6 /* Embed Frameworks */,
-				B51770A6224276DB00A693E6 /* ShellScript */,
+				B51770A6224276DB00A693E6 /* Carthage */,
+				2E4E90BE224D185200838DAE /* Mapbox token */,
 			);
 			buildRules = (
 			);
@@ -194,7 +204,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B51770A6224276DB00A693E6 /* ShellScript */ = {
+		2E4E90BE224D185200838DAE /* Mapbox token */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Mapbox token";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xml=\"$(plutil -extract MGLMapboxAccessToken xml1 -o - $TARGET_BUILD_DIR/$INFOPLIST_PATH)\"\ntoken=\"$(sed -n \"s/.*<string>\\(.*\\)<\\/string>.*/\\1/p\" <<< $xml)\"\nif [ -z \"$token\" ]; then\ntoken_file=~/.mapbox\ntoken=\"$(cat $token_file 2>/dev/null)\"\nif [ \"$token\" ]; then\nplutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\necho 'warning: Missing Mapbox access token'\nopen 'https://www.mapbox.com/account/access-tokens/'\necho \"warning: Get an access token from <https://www.mapbox.com/account/access-tokens/>, then create a new file at $token_file that contains the access token.\"\nfi\nfi\n";
+		};
+		B51770A6224276DB00A693E6 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -204,6 +233,7 @@
 			inputPaths = (
 				"$(SRCROOT)/scripts/carthage-input.xcfilelist",
 			);
+			name = Carthage;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -219,8 +249,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */,
 				B51770862242751500A693E6 /* ExternalCameraViewController.swift in Sources */,
 				B51770842242751500A693E6 /* AppDelegate.swift in Sources */,
+				2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */,
+				2E4E90BB224D098F00838DAE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
