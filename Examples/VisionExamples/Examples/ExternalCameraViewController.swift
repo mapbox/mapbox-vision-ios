@@ -27,7 +27,9 @@ class FileVideoSource: ObservableVideoSource {
         let videoTrack = asset.tracks(withMediaType: .video).first!
         let output = AVAssetReaderTrackOutput(
             track: videoTrack,
-            outputSettings: [String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)]
+            outputSettings: [
+                String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)
+            ]
         )
         reader.add(output)
     }
@@ -39,6 +41,12 @@ class FileVideoSource: ObservableVideoSource {
         }
     }
     
+    func stop() {
+        queue.async { [unowned self] in
+            self.stopReading()
+        }
+    }
+    
     @objc func update() {
         queue.async { [unowned self] in
             if let buffer = self.reader.outputs.first?.copyNextSampleBuffer() {
@@ -47,10 +55,14 @@ class FileVideoSource: ObservableVideoSource {
                     observer.videoSource(self, didOutput: videoSample)
                 }
             } else {
-                self.timer.invalidate()
-                self.reader.cancelReading()
+                self.stopReading()
             }
         }
+    }
+    
+    private func stopReading() {
+        timer.invalidate()
+        reader.cancelReading()
     }
 }
 
@@ -66,23 +78,28 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
         addVisionView()
         
         fileVideoSource = FileVideoSource(url: Bundle.main.url(forResource: "video", withExtension: "mp4")!)
-        visionManager = VisionManager.create(videoSource: fileVideoSource)
-        
         fileVideoSource.add(observer: self)
-        visionManager.start(delegate: self)
         
+        visionManager = VisionManager.create(videoSource: fileVideoSource)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        visionManager.start(delegate: self)
         fileVideoSource.start()
     }
     
-    func addVisionView() {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        fileVideoSource.stop()
+        visionManager.stop()
+    }
+    
+    private func addVisionView() {
         addChild(visionViewController)
         view.addSubview(visionViewController.view)
-        NSLayoutConstraint.activate([
-            visionViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            visionViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            visionViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            visionViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
         visionViewController.didMove(toParent: self)
     }
 }
