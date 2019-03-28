@@ -16,6 +16,6 @@ protocol Archiver {
 final class RecordArchiver: Archiver {
     
     func archive(_ folder: URL, destination: URL) throws {
-            try FileManager.default.zipItem(at: folder, to: destination)
+        try FileManager.default.zipItem(at: folder, to: destination, shouldKeepParent: false)
     }
 }
