@@ -211,7 +211,7 @@ public final class VisionManager {
         let realtimeDataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: dependencies.native,
             motionManager: dependencies.motionManager,
-            metaInfoManager: dependencies.metaInfoManager
+            locationManager: dependencies.locationManager
         ))
         
         setDataProvider(realtimeDataProvider)
@@ -265,8 +265,6 @@ public final class VisionManager {
     }
     
     private func resume() {
-        dependencies.metaInfoManager.addObserver(self)
-        
         dataProvider?.start()
         startVideoStream()
         dependencies.native.start(self)
@@ -275,8 +273,6 @@ public final class VisionManager {
     }
     
     private func pause() {
-        dependencies.metaInfoManager.removeObserver(self)
-        
         dataProvider?.stop()
         stopVideoStream()
         dependencies.native.stop()
@@ -502,12 +498,6 @@ extension VisionManager: SessionDelegate {
         dependencies.native.stopSavingSession()
         dependencies.recorder.stopRecording()
     }
-}
-
-extension VisionManager: MetaInfoObserver {
-    func location(_ location: CLLocation) {}
-    
-    func heading(_ heading: CLHeading) {}
 }
 
 extension VisionManager: PlatformDelegate {

@@ -14,7 +14,7 @@ protocol VisionDependency {
     var reachability: Reachability { get }
     var recorder: RecordCoordinator { get }
     var native: VisionManagerNative { get }
-    var metaInfoManager: MetaInfoManager { get }
+    var locationManager: LocationManager { get }
     var motionManager: MotionManager { get }
     var deviceInfo: DeviceInfoProvidable { get }
     
@@ -26,7 +26,7 @@ final class AppDependency: VisionDependency {
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var native: VisionManagerNative
     private(set) var recorder: RecordCoordinator
-    private(set) var metaInfoManager: MetaInfoManager
+    private(set) var metaInfoManager: LocationManager
     private(set) var motionManager: MotionManager
     private(set) var deviceInfo: DeviceInfoProvidable
     private let eventsManager = EventsManager()
@@ -61,7 +61,7 @@ final class AppDependency: VisionDependency {
         
         self.native = VisionManagerNative.create(withPlatform: platform)
         
-        self.metaInfoManager = MetaInfoManager()
+        self.locationManager = LocationManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
     }
     
