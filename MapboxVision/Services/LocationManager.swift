@@ -1,5 +1,5 @@
 //
-//  MetaInfoManager.swift
+//  LocationManager.swift
 //  cv-assist-ios
 //
 //  Created by Maksim on 1/15/18.
@@ -9,26 +9,10 @@
 import Foundation
 import CoreLocation
 
-protocol MetaInfoObserver: class {
-    func location(_ location: CLLocation)
-    func heading(_ heading: CLHeading)
-}
-
-final class MetaInfoManager: NSObject, CLLocationManagerDelegate {
+final class LocationManager: NSObject, CLLocationManagerDelegate {
     
-    private struct MetaInfoObserverBox: Hashable {
-        let hashValue: Int
-        let observer: MetaInfoObserver
-        
-        init(_ observer: MetaInfoObserver) {
-            self.observer = observer
-            hashValue = ObjectIdentifier(observer).hashValue
-        }
-        
-        static func == (lhs: MetaInfoManager.MetaInfoObserverBox, rhs: MetaInfoManager.MetaInfoObserverBox) -> Bool {
-            return lhs.hashValue == rhs.hashValue
-        }
-    }
+    var locationHandler: ((CLLocation) -> Void)?
+    var headingHandler: ((CLHeading) -> Void)?
     
     private let locationManager = CLLocationManager()
     private var isReady = false
@@ -49,7 +33,7 @@ final class MetaInfoManager: NSObject, CLLocationManagerDelegate {
             isReady = true
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateOrientation), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrientation), name: .UIDeviceOrientationDidChange, object: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -66,17 +50,12 @@ final class MetaInfoManager: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locations.forEach { location in
-            observers.forEach { box in
-                box.observer.location(location)
-            }
-        }
+        guard let handler = locationHandler else { return }
+        locations.forEach(handler)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        observers.forEach { box in
-            box.observer.heading(newHeading)
-        }
+        headingHandler?(newHeading)
     }
     
     func start() {
@@ -90,16 +69,6 @@ final class MetaInfoManager: NSObject, CLLocationManagerDelegate {
         isStarted = false
         self.locationManager.stopUpdatingLocation()
         self.locationManager.stopUpdatingHeading()
-    }
-    
-    private var observers: Set<MetaInfoObserverBox> = []
-    
-    func addObserver(_ observer: MetaInfoObserver) {
-        observers.insert(MetaInfoObserverBox(observer))
-    }
-    
-    func removeObserver(_ observer: MetaInfoObserver) {
-        observers.remove(MetaInfoObserverBox(observer))
     }
     
     @objc private func updateOrientation() {

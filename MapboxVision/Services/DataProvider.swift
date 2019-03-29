@@ -52,7 +52,7 @@ final class RealtimeDataProvider: DataProvider {
     struct Dependencies {
         let native: VisionManagerNative
         let motionManager: MotionManager
-        let metaInfoManager: MetaInfoManager
+        let locationManager: LocationManager
     }
     
     private let dependencies: Dependencies
@@ -60,30 +60,20 @@ final class RealtimeDataProvider: DataProvider {
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         dependencies.motionManager.handler = dependencies.native.setDeviceMotion
+        dependencies.locationManager.locationHandler = dependencies.native.setGPS
+        dependencies.locationManager.headingHandler = dependencies.native.setHeading
     }
     
     func start() {
-        dependencies.metaInfoManager.addObserver(self)
-        dependencies.metaInfoManager.start()
+        dependencies.locationManager.start()
         dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
     func update() {}
     
     func stop() {
-        dependencies.metaInfoManager.removeObserver(self)
-        dependencies.metaInfoManager.stop()
+        dependencies.locationManager.stop()
         dependencies.motionManager.stop()
-    }
-}
-
-extension RealtimeDataProvider: MetaInfoObserver {
-    func location(_ location: CLLocation) {
-        dependencies.native.setGPS(location)
-    }
-    
-    func heading(_ heading: CLHeading) {
-        dependencies.native.setHeading(heading)
     }
 }
 
