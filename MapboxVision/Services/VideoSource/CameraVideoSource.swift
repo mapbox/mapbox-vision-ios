@@ -12,7 +12,7 @@ import MapboxVisionCore
 
 private let imageOutputFormat = Image.Format.BGRA
 
-open class CameraVideoSource: NSObject {
+open class CameraVideoSource: ObservableVideoSource {
     
     public let cameraSession: AVCaptureSession
     
@@ -21,6 +21,8 @@ open class CameraVideoSource: NSObject {
         self.camera = AVCaptureDevice.default(for: .video)
         
         super.init()
+        
+        isExternal = false
         
         configureSession(preset: preset)
         
@@ -41,14 +43,8 @@ open class CameraVideoSource: NSObject {
     
     // MARK: - Private
     
-    private struct Observation {
-        weak var observer: VideoSourceObserver?
-    }
-    
     private let camera: AVCaptureDevice?
     private var dataOutput: AVCaptureVideoDataOutput?
-    
-    private var observations = [ObjectIdentifier : Observation]()
     
     private func configureSession(preset: AVCaptureSession.Preset) {
         
@@ -111,16 +107,6 @@ open class CameraVideoSource: NSObject {
         return CameraParameters(width: width, height: height, focalXPixels: focalPixelX, focalYPixels: focalPixelY)
     }
     
-    private func notify(closure: (VideoSourceObserver) -> Void) {
-        observations.forEach { (id, observation) in
-            guard let observer = observation.observer else {
-                observations.removeValue(forKey: id)
-                return
-            }
-            closure(observer)
-        }
-    }
-    
     private var formatFieldOfView: Float? {
         guard let fov = camera?.activeFormat.videoFieldOfView else { return nil }
         return fov > 0 ? fov : nil
@@ -135,22 +121,6 @@ open class CameraVideoSource: NSObject {
     
     @objc private func orientationChanged() {
         dataOutput?.connection(with: .video)?.set(deviceOrientation: UIDevice.current.orientation)
-    }
-}
-
-extension CameraVideoSource: VideoSource {
-    public func add(observer: VideoSourceObserver) {
-        let id = ObjectIdentifier(observer)
-        observations[id] = Observation(observer: observer)
-    }
-    
-    public func remove(observer: VideoSourceObserver) {
-        let id = ObjectIdentifier(observer)
-        observations.removeValue(forKey: id)
-    }
-    
-    public var isExternal: Bool {
-        return false
     }
 }
 

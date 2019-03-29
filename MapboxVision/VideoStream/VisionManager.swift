@@ -399,7 +399,7 @@ public final class VisionManager {
 extension VisionManager: VisionDelegate {
     
     public func onAuthorizationStatusChanged(_ status: AuthorizationStatus) {
-        state.delegate?.visionManager(self, didAuthorizationStatusChanged: status)
+        state.delegate?.visionManager(self, didChangeAuthorizationStatus: status)
     }
     
     public func onClientUpdate() {
