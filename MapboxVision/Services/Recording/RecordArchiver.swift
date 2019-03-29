@@ -10,12 +10,22 @@ import Foundation
 import ZIPFoundation
 
 protocol Archiver {
-    func archive(_ folder: URL, destination: URL) throws
+    func archive(_ files: [URL], destination: URL) throws
 }
 
 final class RecordArchiver: Archiver {
     
-    func archive(_ folder: URL, destination: URL) throws {
-        try FileManager.default.zipItem(at: folder, to: destination, shouldKeepParent: false)
+    enum RecordArchiverError: Error {
+        case cantCreateArchive(URL)
+    }
+    
+    func archive(_ files: [URL], destination: URL) throws {
+        guard let archive = Archive(url: destination, accessMode: .create) else {
+            throw RecordArchiverError.cantCreateArchive(destination)
+        }
+        
+        for file in files {
+            try archive.addEntry(with: file.lastPathComponent, relativeTo: file.deletingLastPathComponent())
+        }
     }
 }

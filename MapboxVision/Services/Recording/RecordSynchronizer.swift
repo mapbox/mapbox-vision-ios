@@ -139,8 +139,9 @@ final class RecordSynchronizer {
                     if let subPath = subPath {
                         sourceDir.appendPathComponent(subPath, isDirectory: true)
                     }
-                    try dependencies.archiver.archive(sourceDir, destination: destination)
-                    dependencies.dataSource.removeFile(at: sourceDir)
+                    let files = try getFiles(sourceDir, types: types)
+                    try dependencies.archiver.archive(files, destination: destination)
+                    files.forEach(dependencies.dataSource.removeFile)
                 }
             
                 try self.quota.reserve(memory: dependencies.fileManager.fileSize(at: destination))
