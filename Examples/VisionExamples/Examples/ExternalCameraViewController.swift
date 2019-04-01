@@ -106,8 +106,8 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
 
 extension ExternalCameraViewController: VideoSourceObserver {
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
-        DispatchQueue.main.async { [unowned self] in
-            self.visionViewController.present(sampleBuffer: videoSample.buffer)
+        DispatchQueue.main.async { [weak self] in
+            self?.visionViewController.present(sampleBuffer: videoSample.buffer)
         }
     }
 }

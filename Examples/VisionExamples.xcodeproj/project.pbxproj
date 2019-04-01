@@ -10,8 +10,11 @@
 		2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */; };
 		2E4E90BB224D098F00838DAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BA224D098F00838DAE /* Constants.swift */; };
 		2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */; };
+		2E4E90C0224E1CCC00838DAE /* MapboxVisionSafety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4E90BF224E1CCC00838DAE /* MapboxVisionSafety.framework */; };
+		2E4E90C2224E1CCC00838DAE /* MapboxVisionSafetyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4E90C1224E1CCC00838DAE /* MapboxVisionSafetyCore.framework */; };
 		2EDFFD68224B8599003BB718 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */; };
 		2EDFFD69224B8599003BB718 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDFFD67224B8599003BB718 /* MapboxVision.framework */; };
+		9D72A3BAFC38783F3E9B80D8 /* OverSpeedingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */; };
 		B51770842242751500A693E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770832242751500A693E6 /* AppDelegate.swift */; };
 		B51770862242751500A693E6 /* ExternalCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770852242751500A693E6 /* ExternalCameraViewController.swift */; };
 		B51770892242751500A693E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B51770872242751500A693E6 /* Main.storyboard */; };
@@ -40,8 +43,11 @@
 		2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		2E4E90BA224D098F00838DAE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
+		2E4E90BF224E1CCC00838DAE /* MapboxVisionSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4E90C1224E1CCC00838DAE /* MapboxVisionSafetyCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafetyCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = "<group>"; };
 		2EDFFD67224B8599003BB718 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../../../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
+		9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverSpeedingViewController.swift; sourceTree = "<group>"; };
 		B51770802242751500A693E6 /* VisionExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51770832242751500A693E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B51770852242751500A693E6 /* ExternalCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalCameraViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E4E90C0224E1CCC00838DAE /* MapboxVisionSafety.framework in Frameworks */,
+				2E4E90C2224E1CCC00838DAE /* MapboxVisionSafetyCore.framework in Frameworks */,
 				2EDFFD68224B8599003BB718 /* MapboxVisionCore.framework in Frameworks */,
 				2EDFFD69224B8599003BB718 /* MapboxVision.framework in Frameworks */,
 				B51770A3224276CC00A693E6 /* opencv2.framework in Frameworks */,
@@ -75,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				B51770852242751500A693E6 /* ExternalCameraViewController.swift */,
+				9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -124,6 +133,8 @@
 		B517709F224276CC00A693E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E4E90BF224E1CCC00838DAE /* MapboxVisionSafety.framework */,
+				2E4E90C1224E1CCC00838DAE /* MapboxVisionSafetyCore.framework */,
 				2EDFFD67224B8599003BB718 /* MapboxVision.framework */,
 				2EDFFD66224B8599003BB718 /* MapboxVisionCore.framework */,
 				B51770A1224276CC00A693E6 /* MapboxMobileEvents.framework */,
@@ -254,6 +265,7 @@
 				B51770842242751500A693E6 /* AppDelegate.swift in Sources */,
 				2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */,
 				2E4E90BB224D098F00838DAE /* Constants.swift in Sources */,
+				9D72A3BAFC38783F3E9B80D8 /* OverSpeedingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

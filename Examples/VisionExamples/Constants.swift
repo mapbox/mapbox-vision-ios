@@ -19,5 +19,10 @@ let listOfExamples: [NamedController] = [
         name: "External video source",
         description: "Demonstrates how to provide custom implementation of video source to VisionManager.",
         controllerType: ExternalCameraViewController.self
+    ),
+    (
+        name: "Over speeding detection",
+        description: "Demonstrates how to combine VisionSafety events with position.",
+        controllerType: OverSpeedingViewController.self
     )
 ]
