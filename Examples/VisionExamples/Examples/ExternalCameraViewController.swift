@@ -7,6 +7,7 @@
 
 import UIKit
 import MapboxVision
+import AVFoundation
 
 class FileVideoSource: ObservableVideoSource {
     

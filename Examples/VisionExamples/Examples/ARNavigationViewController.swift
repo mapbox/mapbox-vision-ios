@@ -78,8 +78,7 @@ extension ARNavigationViewController: VisionARDelegate {
 extension ARNavigationViewController: VideoSourceObserver {
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         DispatchQueue.main.async { [weak self] in
-            guard let frame = CMSampleBufferGetImageBuffer(videoSample.buffer) else { return }
-            self?.visionARViewController.present(frame: frame)
+            self?.visionARViewController.present(sampleBuffer: videoSample.buffer)
         }
     }
 }

@@ -26,7 +26,7 @@ open class CameraVideoSource: ObservableVideoSource {
         
         configureSession(preset: preset)
         
-        orientationChanged()
+        set(orientation: UIApplication.shared.statusBarOrientation.deviceOrientation)
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged),
                                                name: .UIDeviceOrientationDidChange, object: nil)
     }
@@ -37,8 +37,8 @@ open class CameraVideoSource: ObservableVideoSource {
     }
     
     public func stop() {
-        guard !cameraSession.isRunning else { return }
-        cameraSession.startRunning()
+        guard cameraSession.isRunning else { return }
+        cameraSession.stopRunning()
     }
     
     // MARK: - Private
@@ -117,10 +117,14 @@ open class CameraVideoSource: ObservableVideoSource {
         return (Float(dimension) / 2) / tan(Float(measurement.converted(to: .radians).value) / 2)
     }
     
+    private func set(orientation: UIDeviceOrientation) {
+        dataOutput?.connection(with: .video)?.set(deviceOrientation: orientation)
+    }
+    
     // MARK: - Observations
     
     @objc private func orientationChanged() {
-        dataOutput?.connection(with: .video)?.set(deviceOrientation: UIDevice.current.orientation)
+        set(orientation: UIDevice.current.orientation)
     }
 }
 
@@ -140,6 +144,23 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         var mode: CMAttachmentMode = 0
         guard let reason = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_DroppedFrameReason, &mode) else { return }
         print("Sample buffer was dropped. Reason: \(reason)")
+    }
+}
+
+extension UIInterfaceOrientation {
+    var deviceOrientation: UIDeviceOrientation {
+        switch self {
+        case .unknown:
+            return .unknown
+        case .portrait:
+            return .portrait
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        case .landscapeLeft:
+            return .landscapeRight
+        case .landscapeRight:
+            return .landscapeLeft
+        }
     }
 }
 

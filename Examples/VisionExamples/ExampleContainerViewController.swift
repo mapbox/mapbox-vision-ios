@@ -17,7 +17,6 @@ final class ExampleContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         guard let exampleClass = exampleClass  else {
             assertionFailure("Example class should be specified")
             return
@@ -25,15 +24,6 @@ final class ExampleContainerViewController: UIViewController {
         
         let controller = exampleClass.init()
         embed(controller: controller)
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     private func embed(controller: UIViewController) {
