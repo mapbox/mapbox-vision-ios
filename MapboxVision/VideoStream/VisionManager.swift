@@ -386,11 +386,11 @@ public final class VisionManager {
 extension VisionManager: VisionDelegate {
     
     public func onCountryChanged(_ country: Country) {
-        state.delegate?.visionManager(self, didCountryChanged: country)
+        state.delegate?.visionManager(self, didUpdateCountry: country)
     }
     
     public func onAuthorizationStatusChanged(_ status: AuthorizationStatus) {
-        state.delegate?.visionManager(self, didChangeAuthorizationStatus: status)
+        state.delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
     }
     
     public func onClientUpdate() {
