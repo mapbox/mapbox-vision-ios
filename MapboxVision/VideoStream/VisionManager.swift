@@ -491,18 +491,6 @@ extension VisionManager: SessionDelegate {
     }
 }
 
-extension VisionManager: PlatformDelegate {
-    func countryChanged(_ country: Country) {
-        self.country = country
-    }
-}
-
-extension VisionManager: MetaInfoObserver {
-    func location(_ location: CLLocation) {}
-    
-    func heading(_ heading: CLHeading) {}
-}
-
 fileprivate extension VideoSettings {
     var size: CGSize {
         return CGSize(width: width, height: height)

@@ -24,7 +24,7 @@ final class AppDependency: VisionDependency {
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var native: VisionManagerNative
     private(set) var recorder: RecordCoordinator
-    private(set) var metaInfoManager: LocationManager
+    private(set) var locationManager: LocationManager
     private(set) var motionManager: MotionManager
     private(set) var deviceInfo: DeviceInfoProvidable
     private let eventsManager = EventsManager()

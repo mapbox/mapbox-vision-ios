@@ -16,7 +16,7 @@ import MapboxVisionCore
 public protocol VisionManagerDelegate: class {
     
     /**
-     Tells the delegate that authorization status has changed.
+     Tells the delegate that authorization status has changed. VisionManager does not emit events unless it has successfully authorized.
      */
     func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus status: AuthorizationStatus) -> Void
     
@@ -24,11 +24,6 @@ public protocol VisionManagerDelegate: class {
      Tells the delegte that country which is used in the VisionSDK changed.
      */
     func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void
-    
-    /**
-     Tells the delegate that authorization status has changed. VisionManager does not emit events unless it has successfully authorized.
-     */
-    func visionManager(_ visionManager: VisionManager, didChangeAuthorizationStatus status: AuthorizationStatus) -> Void
     
     /**
      Tells the delegate that new segmentation is available.
