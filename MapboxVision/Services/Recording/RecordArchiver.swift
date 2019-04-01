@@ -15,9 +15,17 @@ protocol Archiver {
 
 final class RecordArchiver: Archiver {
     
+    enum RecordArchiverError: Error {
+        case cantCreateArchive(URL)
+    }
+    
     func archive(_ files: [URL], destination: URL) throws {
+        guard let archive = Archive(url: destination, accessMode: .create) else {
+            throw RecordArchiverError.cantCreateArchive(destination)
+        }
+        
         for file in files {
-            try FileManager.default.zipItem(at: file, to: destination)
+            try archive.addEntry(with: file.lastPathComponent, relativeTo: file.deletingLastPathComponent())
         }
     }
 }
