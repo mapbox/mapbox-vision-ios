@@ -34,7 +34,7 @@ public final class VisionManager {
         VisionManager is required to be initialized before calling this method.
     */
     
-    public func start(delegate: VisionManagerDelegate) {
+    public func start(delegate: VisionManagerDelegate? = nil) {
         switch state {
         case .uninitialized:
             assertionFailure("VisionManager should be initialized before starting")
@@ -121,7 +121,7 @@ public final class VisionManager {
     private enum State {
         case uninitialized
         case initialized(videoSource: VideoSource)
-        case started(videoSource: VideoSource, delegate: VisionManagerDelegate)
+        case started(videoSource: VideoSource, delegate: VisionManagerDelegate?)
         case stopped(videoSource: VideoSource)
         
         var isUninitialized: Bool {

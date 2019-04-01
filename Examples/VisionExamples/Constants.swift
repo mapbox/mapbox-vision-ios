@@ -24,5 +24,10 @@ let listOfExamples: [NamedController] = [
         name: "Over speeding detection",
         description: "Demonstrates how to combine VisionSafety events with position.",
         controllerType: OverSpeedingViewController.self
+    ),
+    (
+        name: "AR navigation",
+        description: "Demonstrates how to setup VisionAR and display default AR route.",
+        controllerType: ARNavigationViewController.self
     )
 ]
