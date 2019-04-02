@@ -10,18 +10,12 @@ import Foundation
 import MapboxVisionCore
 import CoreMotion
 
-protocol PlatformDelegate: class {
-    func countryChanged(_ country: Country)
-}
-
 final class Platform: NSObject, PlatformInterface {
 
     struct Dependencies {
         let recordCoordinator: RecordCoordinator
         let eventsManager: EventsManager
     }
-    
-    weak var delegate: PlatformDelegate?
     
     private let dependencies: Dependencies
     
@@ -48,9 +42,5 @@ final class Platform: NSObject, PlatformInterface {
     
     func save(image: Image, path: String) {
         dependencies.recordCoordinator.saveImage(image: image, path: path)
-    }
-    
-    func update(_ country: Country) {
-        delegate?.countryChanged(country)
     }
 }

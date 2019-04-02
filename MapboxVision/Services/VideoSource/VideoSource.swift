@@ -5,6 +5,7 @@
 
 import Foundation
 import MapboxVisionCore
+import CoreMedia
 
 public struct VideoSample {
     public let buffer: CMSampleBuffer

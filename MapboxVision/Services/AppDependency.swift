@@ -17,8 +17,6 @@ protocol VisionDependency {
     var locationManager: LocationManager { get }
     var motionManager: MotionManager { get }
     var deviceInfo: DeviceInfoProvidable { get }
-    
-    func set(platformDelegate: PlatformDelegate?)
 }
 
 final class AppDependency: VisionDependency {
@@ -26,7 +24,7 @@ final class AppDependency: VisionDependency {
     private(set) var recordSynchronizer: RecordSynchronizer
     private(set) var native: VisionManagerNative
     private(set) var recorder: RecordCoordinator
-    private(set) var metaInfoManager: LocationManager
+    private(set) var locationManager: LocationManager
     private(set) var motionManager: MotionManager
     private(set) var deviceInfo: DeviceInfoProvidable
     private let eventsManager = EventsManager()
@@ -63,9 +61,5 @@ final class AppDependency: VisionDependency {
         
         self.locationManager = LocationManager()
         self.motionManager = MotionManager(with: platform.getMotionReferenceFrame())
-    }
-    
-    func set(platformDelegate: PlatformDelegate?) {
-        platform.delegate = platformDelegate
     }
 }

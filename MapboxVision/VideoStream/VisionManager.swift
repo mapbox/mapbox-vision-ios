@@ -112,13 +112,6 @@ public final class VisionManager {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
     
-    /**
-        Determines estimated country where the device is situated.
-        For supported values see `CVACountry`.
-    */
-    
-    public var country: Country
-    
     public var native: VisionManagerNative {
         return dependencies.native
     }
@@ -197,10 +190,6 @@ public final class VisionManager {
         
         state = .initialized(videoSource: videoSource)
         
-        // TODO: retrieve initial value from native when algorightm is implemented
-        // country = dependencies.native.country
-        country = .USA
-        
         dependencies.native.config = .basic
 
         updateModelPerformanceConfig(modelPerformanceConfig)
@@ -215,8 +204,6 @@ public final class VisionManager {
         ))
         
         setDataProvider(realtimeDataProvider)
-        
-        dependencies.set(platformDelegate: self)
         
         dependencies.recordSynchronizer.delegate = self
         dependencies.recorder.delegate = self
@@ -398,8 +385,12 @@ public final class VisionManager {
 
 extension VisionManager: VisionDelegate {
     
+    public func onCountryChanged(_ country: Country) {
+        state.delegate?.visionManager(self, didUpdateCountry: country)
+    }
+    
     public func onAuthorizationStatusChanged(_ status: AuthorizationStatus) {
-        state.delegate?.visionManager(self, didChangeAuthorizationStatus: status)
+        state.delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
     }
     
     public func onClientUpdate() {
@@ -497,12 +488,6 @@ extension VisionManager: SessionDelegate {
     func sessionStopped() {
         dependencies.native.stopSavingSession()
         dependencies.recorder.stopRecording()
-    }
-}
-
-extension VisionManager: PlatformDelegate {
-    func countryChanged(_ country: Country) {
-        self.country = country
     }
 }
 
