@@ -112,6 +112,22 @@ public final class VisionManager {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
     
+    /**
+        Converts any geo coordinates to a world position (meters).
+    */
+    
+    public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate {
+        return dependencies.native.geo(toWorld: geoCoordinate)
+    }
+    
+    /**
+        Converts world point into geo coordinates.
+    */
+    
+    public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate {
+        return dependencies.native.world(toGeo: worldCoordinates)
+    }
+    
     public var native: VisionManagerNative {
         return dependencies.native
     }
