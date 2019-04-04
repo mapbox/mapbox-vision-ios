@@ -400,45 +400,44 @@ public final class VisionManager {
 }
 
 extension VisionManager: VisionDelegate {
-    
-    public func onCountryChanged(_ country: Country) {
-        state.delegate?.visionManager(self, didUpdateCountry: country)
-    }
-    
-    public func onAuthorizationStatusChanged(_ status: AuthorizationStatus) {
+    public func onAuthorizationStatusUpdated(_ status: AuthorizationStatus) {
         state.delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
     }
     
-    public func onClientUpdate() {
-        state.delegate?.visionManagerDidFinishUpdate(self)
-    }
-    
-    public func onSegmentationUpdated(_ segmentation: FrameSegmentation) {
+    public func onFrameSegmentationUpdated(_ segmentation: FrameSegmentation) {
         state.delegate?.visionManager(self, didUpdateFrameSegmentation: segmentation)
     }
     
-    public func onDetectionUpdated(_ detections: FrameDetections) {
+    public func onFrameDetectionsUpdated(_ detections: FrameDetections) {
         state.delegate?.visionManager(self, didUpdateFrameDetections: detections)
     }
     
-    public func onSignsUpdated(_ signs: FrameSigns) {
-        state.delegate?.visionManager(self, didUpdateFrameSigns: signs)
+    public func onFrameSignClassificationsUpdated(_ signClassifications: FrameSignClassifications) {
+        state.delegate?.visionManager(self, didUpdateFrameSignClassifications: signClassifications)
     }
     
-    public func onRoadUpdated(_ road: RoadDescription) {
+    public func onRoadDescriptionUpdated(_ road: RoadDescription) {
         state.delegate?.visionManager(self, didUpdateRoadDescription: road)
     }
     
-    public func onWorldUpdated(_ world: WorldDescription) {
+    public func onWorldDescriptionUpdated(_ world: WorldDescription) {
         state.delegate?.visionManager(self, didUpdateWorldDescription: world)
     }
     
-    public func onVehicleLocationUpdated(_ vehicleLocation: VehicleLocation) {
-        state.delegate?.visionManager(self, didUpdateVehicleLocation: vehicleLocation)
+    public func onVehicleStateUpdated(_ vehicleState: VehicleState) {
+        state.delegate?.visionManager(self, didUpdateVehicleState: vehicleState)
     }
     
     public func onCameraUpdated(_ camera: Camera) {
         state.delegate?.visionManager(self, didUpdateCamera: camera)
+    }
+    
+    public func onCountryUpdated(_ country: Country) {
+        state.delegate?.visionManager(self, didUpdateCountry: country)
+    }
+    
+    public func onUpdateCompleted() {
+        state.delegate?.visionManagerDidCompleteUpdate(self)
     }
 }
 
