@@ -61,16 +61,16 @@ class ARNavigationViewController: UIViewController {
     }
 }
 
-extension ARNavigationViewController: VisionARDelegate {
-    func visionARManager(visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {
+extension ARNavigationViewController: VisionARManagerDelegate {
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {
         DispatchQueue.main.async { [weak self] in
-            self?.visionARViewController.present(lane: lane)
+            self?.visionARViewController.present(camera: camera)
         }
     }
     
-    func visionARManager(visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {
         DispatchQueue.main.async { [weak self] in
-            self?.visionARViewController.present(camera: camera)
+            self?.visionARViewController.present(lane: lane)
         }
     }
 }

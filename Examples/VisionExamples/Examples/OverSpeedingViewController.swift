@@ -16,7 +16,7 @@ class OverSpeedingViewController: UIViewController {
     private let visionViewController = VisionPresentationViewController()
     private var alertView: UIView!
     
-    private var location: VehicleLocation?
+    private var vehicleState: VehicleState?
     private var restrictions: RoadRestrictions?
     
     override func viewDidLoad() {
@@ -65,24 +65,24 @@ class OverSpeedingViewController: UIViewController {
     }
 }
 
-extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyDelegate {
-    func visionManager(_ visionManager: VisionManager, didUpdateVehicleLocation vehicleLocation: VehicleLocation) {
+extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManagerDelegate {
+    func visionManager(_ visionManager: VisionManager, didUpdateVehicleState vehicleState: VehicleState) {
         DispatchQueue.main.async { [weak self] in
-            self?.location = vehicleLocation
+            self?.vehicleState = vehicleState
         }
     }
     
-    func onRoadRestrictionsUpdated(manager: VisionSafetyManager, roadRestrictions: RoadRestrictions) {
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
         DispatchQueue.main.async { [weak self] in
             self?.restrictions = roadRestrictions
         }
     }
     
-    func visionManagerDidFinishUpdate(_ visionManager: VisionManager) {
+    func visionManagerDidCompleteUpdate(_ visionManager: VisionManager) {
         DispatchQueue.main.async { [weak self] in
-            guard let location = self?.location, let restrictions = self?.restrictions else { return }
+            guard let state = self?.vehicleState, let restrictions = self?.restrictions else { return }
             
-            let isOverSpeeding = location.speed > restrictions.speedLimits.speedLimitRange.max
+            let isOverSpeeding = state.speed > restrictions.speedLimits.speedLimitRange.max
             self?.alertView.isHidden = !isOverSpeeding
         }
     }
