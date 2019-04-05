@@ -18,12 +18,7 @@ public protocol VisionManagerDelegate: class {
     /**
      Tells the delegate that authorization status has changed. VisionManager does not emit events unless it has successfully authorized.
      */
-    func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus status: AuthorizationStatus) -> Void
-    
-    /**
-     Tells the delegte that country which is used in the VisionSDK changed.
-     */
-    func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void
+    func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus authorizationStatus: AuthorizationStatus) -> Void
     
     /**
      Tells the delegate that new segmentation is available.
@@ -41,7 +36,7 @@ public protocol VisionManagerDelegate: class {
      Tells the delegate that new sign classification is available.
      Requires at least low performance for detection.
      */
-    func visionManager(_ visionManager: VisionManager, didUpdateFrameSigns frameSigns: FrameSigns) -> Void
+    func visionManager(_ visionManager: VisionManager, didUpdateFrameSignClassifications frameSignClassifications: FrameSignClassifications) -> Void
     
     /**
      Tells the delegate that new processed road description is available. These are smoothed and more stable values.
@@ -58,7 +53,12 @@ public protocol VisionManagerDelegate: class {
     /**
      Tells the delegate that newly estimated position is calculated.
      */
-    func visionManager(_ visionManager: VisionManager, didUpdateVehicleLocation vehicleLocation: VehicleLocation) -> Void
+    func visionManager(_ visionManager: VisionManager, didUpdateVehicleState vehicleState: VehicleState) -> Void
+    
+    /**
+     Tells the delegate that country which is used in the VisionSDK changed.
+     */
+    func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void
     
     /**
      Tells the delegate about the progress of camera pose estimation (calibration).
@@ -68,27 +68,27 @@ public protocol VisionManagerDelegate: class {
     /**
      Tells the delegate that the current update cycle is finished and all data is in-sync.
      */
-    func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void
+    func visionManagerDidCompleteUpdate(_ visionManager: VisionManager) -> Void
 }
 
 public extension VisionManagerDelegate {
-    func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus status: AuthorizationStatus) -> Void {}
-    
-    func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void {}
+    func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus authorizationStatus: AuthorizationStatus) -> Void {}
     
     func visionManager(_ visionManager: VisionManager, didUpdateFrameSegmentation frameSegmentation: FrameSegmentation) -> Void {}
     
     func visionManager(_ visionManager: VisionManager, didUpdateFrameDetections frameDetections: FrameDetections) -> Void {}
     
-    func visionManager(_ visionManager: VisionManager, didUpdateFrameSigns signs: FrameSigns) -> Void {}
+    func visionManager(_ visionManager: VisionManager, didUpdateFrameSignClassifications frameSignClassifications: FrameSignClassifications) -> Void {}
     
     func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription) -> Void {}
     
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription) -> Void {}
     
-    func visionManager(_ visionManager: VisionManager, didUpdateVehicleLocation vehicleLocation: VehicleLocation) -> Void {}
+    func visionManager(_ visionManager: VisionManager, didUpdateVehicleState vehicleState: VehicleState) -> Void {}
     
     func visionManager(_ visionManager: VisionManager, didUpdateCamera camera: Camera) -> Void {}
     
-    func visionManagerDidFinishUpdate(_ visionManager: VisionManager) -> Void {}
+    func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void {}
+    
+    func visionManagerDidCompleteUpdate(_ visionManager: VisionManager) -> Void {}
 }
