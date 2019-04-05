@@ -21,7 +21,6 @@
 		2E071A4E2257887F00345FA8 /* MapboxVisionAR.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A3F2257887E00345FA8 /* VisionARViewController.swift */; };
 		2E071A502257887F00345FA8 /* NavigationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A402257887E00345FA8 /* NavigationProvider.swift */; };
-		2E071A512257887F00345FA8 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A422257887E00345FA8 /* Images.swift */; };
 		2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; };
 		2E071A5622578A3F00345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A5422578A3E00345FA8 /* MapboxVision.framework */; };
 		2E071A762257AD3800345FA8 /* MapboxVisionARCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A752257AD3800345FA8 /* MapboxVisionARCore.framework */; };
@@ -32,6 +31,7 @@
 		2E071A832257AE0A00345FA8 /* MapboxVisionSafety.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E071A842257AE0A00345FA8 /* VisionSafetyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */; };
 		2E071A862257AE0A00345FA8 /* VisionSafetyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A822257AE0A00345FA8 /* VisionSafetyDelegate.swift */; };
+		2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
@@ -145,7 +145,6 @@
 		2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxVisionAR.h; sourceTree = "<group>"; };
 		2E071A3F2257887E00345FA8 /* VisionARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARViewController.swift; sourceTree = "<group>"; };
 		2E071A402257887E00345FA8 /* NavigationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationProvider.swift; sourceTree = "<group>"; };
-		2E071A422257887E00345FA8 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		2E071A432257887E00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxCoreNavigation.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxCoreNavigation.framework"; sourceTree = "<group>"; };
 		2E071A5422578A3E00345FA8 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
@@ -289,7 +288,6 @@
 				2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */,
 				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
 				2E071A402257887E00345FA8 /* NavigationProvider.swift */,
-				2E071A412257887E00345FA8 /* Helpers */,
 				2E071A432257887E00345FA8 /* Info.plist */,
 			);
 			path = MapboxVisionAR;
@@ -303,14 +301,6 @@
 				2E071A3C2257887E00345FA8 /* nav-arrow.obj */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		2E071A412257887E00345FA8 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				2E071A422257887E00345FA8 /* Images.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */ = {
@@ -466,7 +456,6 @@
 				2E4EE2C720F06980003431B3 /* Debouncer.swift */,
 				2E4EE2B820F05ACB003431B3 /* Result.swift */,
 				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
-				2E6033532142900C0050EDB3 /* Images.swift */,
 				2EC332A2217E02BA00E041FE /* String.swift */,
 				2EDD8706219ED89E00760C6D /* Constants.swift */,
 				9D72A773F7BCE045156649B6 /* DateFormatter.swift */,
@@ -495,6 +484,7 @@
 		2E4EE2E020F0CC63003431B3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2E6033532142900C0050EDB3 /* Images.swift */,
 				2E4EE2E220F0CC63003431B3 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -718,11 +708,11 @@
 				2E071A502257887F00345FA8 /* NavigationProvider.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
+				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
 				2E071A442257887F00345FA8 /* ARRoute+DirectionsRoute.swift in Sources */,
 				2E071A472257887F00345FA8 /* ARScene.swift in Sources */,
 				2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */,
 				2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */,
-				2E071A512257887F00345FA8 /* Images.swift in Sources */,
 				2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */,
 				2E071A452257887F00345FA8 /* VisionARDelegate.swift in Sources */,
 			);
