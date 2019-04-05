@@ -89,7 +89,6 @@
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72AB0D4BB86199CF051DC2 /* CVPixelBuffer+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */; };
 		9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */; };
-		B50CFBA62162658100C9C5A5 /* Zip.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5AEB46B211996E800AF198E /* Zip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBA92163C89D00C9C5A5 /* FileManager.swift */; };
 		B50CFBAD2163C91500C9C5A5 /* MockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBAC2163C91500C9C5A5 /* MockNetworkClient.swift */; };
@@ -123,7 +122,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */,
-				B50CFBA62162658100C9C5A5 /* Zip.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +225,6 @@
 		B53B75BA21144B9A001D65AC /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
 		B583DF822240F55D00D73673 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/iOS/ZIPFoundation.framework; sourceTree = "<group>"; };
 		B5AEB46921186CCF00AF198E /* RecordArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordArchiver.swift; sourceTree = "<group>"; };
-		B5AEB46B211996E800AF198E /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = SOURCE_ROOT; };
 		B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuota.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -474,7 +471,6 @@
 				2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */,
 				2E071A5422578A3E00345FA8 /* MapboxVision.framework */,
 				B583DF822240F55D00D73673 /* ZIPFoundation.framework */,
-				B5AEB46B211996E800AF198E /* Zip.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
 				2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */,
 			);
