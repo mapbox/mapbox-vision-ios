@@ -1,5 +1,5 @@
 //
-//  VisionSafetyDelegate.swift
+//  VisionSafetyManagerDelegate.swift
 //  MapboxVisionSafety
 //
 //  Created by Maksim on 3/15/19.

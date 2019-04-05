@@ -1,5 +1,5 @@
 //
-//  VisionARDelegate.swift
+//  VisionARManagerDelegate.swift
 //  MapboxVisionAR
 //
 //  Created by Maksim on 3/15/19.

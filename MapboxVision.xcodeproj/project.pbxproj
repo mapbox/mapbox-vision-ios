@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E071A312257883900345FA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
 		2E071A442257887F00345FA8 /* ARRoute+DirectionsRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A332257887E00345FA8 /* ARRoute+DirectionsRoute.swift */; };
-		2E071A452257887F00345FA8 /* VisionARDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A342257887E00345FA8 /* VisionARDelegate.swift */; };
+		2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */; };
 		2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A352257887E00345FA8 /* ARRenderer.swift */; };
 		2E071A472257887F00345FA8 /* ARScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A362257887E00345FA8 /* ARScene.swift */; };
 		2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A372257887E00345FA8 /* VisionARManager.swift */; };
@@ -22,16 +22,17 @@
 		2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A3F2257887E00345FA8 /* VisionARViewController.swift */; };
 		2E071A502257887F00345FA8 /* NavigationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A402257887E00345FA8 /* NavigationProvider.swift */; };
 		2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; };
-		2E071A5622578A3F00345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A5422578A3E00345FA8 /* MapboxVision.framework */; };
-		2E071A762257AD3800345FA8 /* MapboxVisionARCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A752257AD3800345FA8 /* MapboxVisionARCore.framework */; };
-		2E071A782257AD6100345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A772257AD6100345FA8 /* MapboxVisionCore.framework */; };
-		2E071A7A2257ADD200345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A792257ADD200345FA8 /* MapboxVisionCore.framework */; };
-		2E071A7C2257ADD200345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A7B2257ADD200345FA8 /* MapboxVisionSafetyCore.framework */; };
-		2E071A7D2257ADD200345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		2E071A832257AE0A00345FA8 /* MapboxVisionSafety.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E071A842257AE0A00345FA8 /* VisionSafetyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */; };
-		2E071A862257AE0A00345FA8 /* VisionSafetyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A822257AE0A00345FA8 /* VisionSafetyDelegate.swift */; };
+		2E071A862257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */; };
 		2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
+		2E071A992257CC6F00345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
+		2E071A9A2257CC7800345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
+		2E071A9C2257CCB700345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
+		2E071A9D2257CCBD00345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
+		2E071A9E2257CCBF00345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
+		2E071AA02257CCDB00345FA8 /* MapboxVisionARCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */; };
+		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
@@ -55,13 +56,10 @@
 		2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22920EFD5BA003431B3 /* ImageRecorder.swift */; };
 		2E4EE27F20F05661003431B3 /* RecordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22A20EFD5BA003431B3 /* RecordCoordinator.swift */; };
 		2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */; };
-		2E4EE28120F05661003431B3 /* BinaryRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22C20EFD5BA003431B3 /* BinaryRecorder.swift */; };
 		2E4EE28220F05661003431B3 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22D20EFD5BA003431B3 /* RecordSynchronizer.swift */; };
 		2E4EE28320F05665003431B3 /* DeviceInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */; };
 		2E4EE28420F05665003431B3 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23020EFD5BA003431B3 /* AppDependency.swift */; };
-		2E4EE28620F05665003431B3 /* AlertPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */; };
 		2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23420EFD5BA003431B3 /* DataProvider.swift */; };
-		2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */; };
 		2E4EE29420F05844003431B3 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29220F05843003431B3 /* URL.swift */; };
 		2E4EE2A020F058B9003431B3 /* UserDefaults+DefaultValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */; };
 		2E4EE2A120F058B9003431B3 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */; };
@@ -69,14 +67,11 @@
 		2E4EE2AA20F0590F003431B3 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2A520F0590B003431B3 /* MotionManager.swift */; };
 		2E4EE2AC20F0590F003431B3 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2A720F0590D003431B3 /* LocationManager.swift */; };
 		2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2B820F05ACB003431B3 /* Result.swift */; };
-		2E4EE2C820F06980003431B3 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2C720F06980003431B3 /* Debouncer.swift */; };
 		2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */; };
 		2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
 		2E4EE2EB20F0D1BC003431B3 /* VisionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */; };
-		2E4EE2EF20F0EE6C003431B3 /* RecordPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2EE20F0EE6C003431B3 /* RecordPickerViewController.swift */; };
 		2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E539DE8210F00190058D9B2 /* SessionManager.swift */; };
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
-		2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
@@ -131,7 +126,7 @@
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E071A332257887E00345FA8 /* ARRoute+DirectionsRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARRoute+DirectionsRoute.swift"; sourceTree = "<group>"; };
-		2E071A342257887E00345FA8 /* VisionARDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARDelegate.swift; sourceTree = "<group>"; };
+		2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARManagerDelegate.swift; sourceTree = "<group>"; };
 		2E071A352257887E00345FA8 /* ARRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARRenderer.swift; sourceTree = "<group>"; };
 		2E071A362257887E00345FA8 /* ARScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARScene.swift; sourceTree = "<group>"; };
 		2E071A372257887E00345FA8 /* VisionARManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARManager.swift; sourceTree = "<group>"; };
@@ -144,16 +139,14 @@
 		2E071A3F2257887E00345FA8 /* VisionARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARViewController.swift; sourceTree = "<group>"; };
 		2E071A402257887E00345FA8 /* NavigationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationProvider.swift; sourceTree = "<group>"; };
 		2E071A432257887E00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxCoreNavigation.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxCoreNavigation.framework"; sourceTree = "<group>"; };
-		2E071A5422578A3E00345FA8 /* MapboxVision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxVision.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVision.framework"; sourceTree = "<group>"; };
-		2E071A752257AD3800345FA8 /* MapboxVisionARCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E071A772257AD6100345FA8 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E071A792257ADD200345FA8 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E071A7B2257ADD200345FA8 /* MapboxVisionSafetyCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafetyCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxCoreNavigation.framework; path = Carthage/Build/iOS/MapboxCoreNavigation.framework; sourceTree = "<group>"; };
 		2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxVisionSafety.h; sourceTree = "<group>"; };
 		2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManager.swift; sourceTree = "<group>"; };
 		2E071A812257AE0A00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E071A822257AE0A00345FA8 /* VisionSafetyDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyDelegate.swift; sourceTree = "<group>"; };
+		2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManagerDelegate.swift; sourceTree = "<group>"; };
+		2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafetyCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
@@ -170,11 +163,9 @@
 		2E4EE22920EFD5BA003431B3 /* ImageRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRecorder.swift; sourceTree = "<group>"; };
 		2E4EE22A20EFD5BA003431B3 /* RecordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinator.swift; sourceTree = "<group>"; };
 		2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPath.swift; sourceTree = "<group>"; };
-		2E4EE22C20EFD5BA003431B3 /* BinaryRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryRecorder.swift; sourceTree = "<group>"; };
 		2E4EE22D20EFD5BA003431B3 /* RecordSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSynchronizer.swift; sourceTree = "<group>"; };
 		2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProvider.swift; sourceTree = "<group>"; };
 		2E4EE23020EFD5BA003431B3 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
-		2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPlayer.swift; sourceTree = "<group>"; };
 		2E4EE23420EFD5BA003431B3 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		2E4EE23820EFD5BB003431B3 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreConfig.swift; sourceTree = "<group>"; };
@@ -185,7 +176,6 @@
 		2E4EE24320EFD651003431B3 /* blend.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = blend.metal; sourceTree = "<group>"; };
 		2E4EE24420EFD651003431B3 /* DetectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsView.swift; sourceTree = "<group>"; };
 		2E4EE25420F05370003431B3 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
-		2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "../cv-assist/cv-assist-ios/Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = SOURCE_ROOT; };
 		2E4EE29220F05843003431B3 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+DefaultValue.swift"; sourceTree = "<group>"; };
 		2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
@@ -193,14 +183,11 @@
 		2E4EE2A520F0590B003431B3 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		2E4EE2A720F0590D003431B3 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		2E4EE2B820F05ACB003431B3 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		2E4EE2C720F06980003431B3 /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Convert.swift"; sourceTree = "<group>"; };
 		2E4EE2E220F0CC63003431B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionSettings.swift; sourceTree = "<group>"; };
-		2E4EE2EE20F0EE6C003431B3 /* RecordPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPickerViewController.swift; sourceTree = "<group>"; };
 		2E539DE8210F00190058D9B2 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
-		2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManeuverLocation.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -233,9 +220,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A782257AD6100345FA8 /* MapboxVisionCore.framework in Frameworks */,
-				2E071A762257AD3800345FA8 /* MapboxVisionARCore.framework in Frameworks */,
-				2E071A5622578A3F00345FA8 /* MapboxVision.framework in Frameworks */,
+				2E071AA02257CCDB00345FA8 /* MapboxVisionARCore.framework in Frameworks */,
+				2E071A9D2257CCBD00345FA8 /* MapboxVisionCore.framework in Frameworks */,
+				2E071A992257CC6F00345FA8 /* MapboxVision.framework in Frameworks */,
 				2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,9 +231,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A7A2257ADD200345FA8 /* MapboxVisionCore.framework in Frameworks */,
-				2E071A7C2257ADD200345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */,
-				2E071A7D2257ADD200345FA8 /* MapboxVision.framework in Frameworks */,
+				2E071A9E2257CCBF00345FA8 /* MapboxVisionCore.framework in Frameworks */,
+				2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */,
+				2E071A9A2257CC7800345FA8 /* MapboxVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,9 +241,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E071A9C2257CCB700345FA8 /* MapboxVisionCore.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
 				B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */,
-				2E4EE29120F0579F003431B3 /* MapboxVisionCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,17 +261,11 @@
 		2E071A322257887E00345FA8 /* MapboxVisionAR */ = {
 			isa = PBXGroup;
 			children = (
-				2E071A332257887E00345FA8 /* ARRoute+DirectionsRoute.swift */,
-				2E071A342257887E00345FA8 /* VisionARDelegate.swift */,
-				2E071A352257887E00345FA8 /* ARRenderer.swift */,
-				2E071A362257887E00345FA8 /* ARScene.swift */,
-				2E071A372257887E00345FA8 /* VisionARManager.swift */,
-				2E071A382257887E00345FA8 /* Shaders.metal */,
 				2E071A392257887E00345FA8 /* Models */,
-				2E071A3D2257887E00345FA8 /* ARMath.swift */,
+				2E071A932257C8B800345FA8 /* Navigation */,
+				2E071A912257C83300345FA8 /* Render */,
+				2E071A922257C89B00345FA8 /* VIsionARManager */,
 				2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */,
-				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
-				2E071A402257887E00345FA8 /* NavigationProvider.swift */,
 				2E071A432257887E00345FA8 /* Info.plist */,
 			);
 			path = MapboxVisionAR;
@@ -303,12 +284,60 @@
 		2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */ = {
 			isa = PBXGroup;
 			children = (
+				2E071A942257C99C00345FA8 /* VisionSafetyManager */,
 				2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */,
-				2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */,
 				2E071A812257AE0A00345FA8 /* Info.plist */,
-				2E071A822257AE0A00345FA8 /* VisionSafetyDelegate.swift */,
 			);
 			path = MapboxVisionSafety;
+			sourceTree = "<group>";
+		};
+		2E071A902257C42100345FA8 /* VisionManager */ = {
+			isa = PBXGroup;
+			children = (
+				2E245B1B215A57D2008F57D1 /* OperationMode.swift */,
+				2E4EE23E20EFD651003431B3 /* VisionManager.swift */,
+				2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */,
+			);
+			path = VisionManager;
+			sourceTree = "<group>";
+		};
+		2E071A912257C83300345FA8 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
+				2E071A382257887E00345FA8 /* Shaders.metal */,
+				2E071A3D2257887E00345FA8 /* ARMath.swift */,
+				2E071A352257887E00345FA8 /* ARRenderer.swift */,
+				2E071A362257887E00345FA8 /* ARScene.swift */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
+		2E071A922257C89B00345FA8 /* VIsionARManager */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A372257887E00345FA8 /* VisionARManager.swift */,
+				2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */,
+			);
+			path = VIsionARManager;
+			sourceTree = "<group>";
+		};
+		2E071A932257C8B800345FA8 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A332257887E00345FA8 /* ARRoute+DirectionsRoute.swift */,
+				2E071A402257887E00345FA8 /* NavigationProvider.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		2E071A942257C99C00345FA8 /* VisionSafetyManager */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */,
+				2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */,
+			);
+			path = VisionSafetyManager;
 			sourceTree = "<group>";
 		};
 		2E4EE20820EFD378003431B3 = {
@@ -338,13 +367,13 @@
 		2E4EE21420EFD378003431B3 /* MapboxVision */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE24520EFD651003431B3 /* VideoStream */,
 				2E4EE23A20EFD5BB003431B3 /* Core */,
-				2E4EE23520EFD5BA003431B3 /* Services */,
 				2E4EE26F20F055B8003431B3 /* Helpers */,
+				2E4EE23520EFD5BA003431B3 /* Services */,
+				2E4EE24520EFD651003431B3 /* View */,
+				2E071A902257C42100345FA8 /* VisionManager */,
 				2E4EE21520EFD378003431B3 /* MapboxVision.h */,
 				2E4EE21620EFD378003431B3 /* Info.plist */,
-				2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */,
 			);
 			path = MapboxVision;
 			sourceTree = "<group>";
@@ -361,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */,
+				2E4EE22D20EFD5BA003431B3 /* RecordSynchronizer.swift */,
 				2E4EE22120EFD5BA003431B3 /* Path.swift */,
 			);
 			path = Network;
@@ -383,8 +413,6 @@
 				2E4EE22920EFD5BA003431B3 /* ImageRecorder.swift */,
 				2E4EE22A20EFD5BA003431B3 /* RecordCoordinator.swift */,
 				2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */,
-				2E4EE22C20EFD5BA003431B3 /* BinaryRecorder.swift */,
-				2E4EE22D20EFD5BA003431B3 /* RecordSynchronizer.swift */,
 				2E22F1982108870B0093F043 /* VideoBuffer.swift */,
 				2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */,
 				B5AEB46921186CCF00AF198E /* RecordArchiver.swift */,
@@ -397,21 +425,22 @@
 		2E4EE23520EFD5BA003431B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				9D72AC788D4F1F83614B3374 /* VideoSource */,
-				2E4EE21E20EFD5BA003431B3 /* Reachability */,
 				2E4EE22320EFD5BA003431B3 /* Network */,
-				2E4EE22620EFD5BA003431B3 /* Storage */,
+				2E4EE21E20EFD5BA003431B3 /* Reachability */,
 				2E4EE22E20EFD5BA003431B3 /* Recording */,
-				2E4EE25420F05370003431B3 /* VideoSettings.swift */,
-				2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */,
+				2E4EE22620EFD5BA003431B3 /* Storage */,
+				9D72AC788D4F1F83614B3374 /* VideoSource */,
 				2E4EE23020EFD5BA003431B3 /* AppDependency.swift */,
-				2E4EE23220EFD5BA003431B3 /* AlertPlayer.swift */,
+				2EDD8706219ED89E00760C6D /* Constants.swift */,
 				2E4EE23420EFD5BA003431B3 /* DataProvider.swift */,
+				2E4EE22F20EFD5BA003431B3 /* DeviceInfoProvider.swift */,
+				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E4EE2A720F0590D003431B3 /* LocationManager.swift */,
+				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
-				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
-				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
+				2E4EE25420F05370003431B3 /* VideoSettings.swift */,
+				2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -419,44 +448,37 @@
 		2E4EE23A20EFD5BB003431B3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE23820EFD5BB003431B3 /* Platform.swift */,
 				2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */,
+				2E4EE23820EFD5BB003431B3 /* Platform.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
 		};
-		2E4EE24520EFD651003431B3 /* VideoStream */ = {
+		2E4EE24520EFD651003431B3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE2EE20F0EE6C003431B3 /* RecordPickerViewController.swift */,
-				2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */,
-				2E4EE23E20EFD651003431B3 /* VisionManager.swift */,
-				2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */,
-				2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */,
-				2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */,
 				2E4EE24320EFD651003431B3 /* blend.metal */,
 				2E4EE24420EFD651003431B3 /* DetectionsView.swift */,
-				2E7C85FC213E87240095B6A8 /* ManeuverLocation.swift */,
-				2E245B1B215A57D2008F57D1 /* OperationMode.swift */,
+				2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */,
+				2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */,
+				2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */,
 			);
-			path = VideoStream;
+			path = View;
 			sourceTree = "<group>";
 		};
 		2E4EE26F20F055B8003431B3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */,
-				2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */,
 				2E4EE29B20F058B7003431B3 /* AVCaptureConnection+Orientation.swift */,
-				2E4EE29220F05843003431B3 /* URL.swift */,
 				2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */,
-				2E4EE2C720F06980003431B3 /* Debouncer.swift */,
-				2E4EE2B820F05ACB003431B3 /* Result.swift */,
-				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
-				2EC332A2217E02BA00E041FE /* String.swift */,
-				2EDD8706219ED89E00760C6D /* Constants.swift */,
-				9D72A773F7BCE045156649B6 /* DateFormatter.swift */,
+				2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */,
 				9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */,
+				9D72A773F7BCE045156649B6 /* DateFormatter.swift */,
+				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
+				2E4EE2B820F05ACB003431B3 /* Result.swift */,
+				2EC332A2217E02BA00E041FE /* String.swift */,
+				2E4EE29220F05843003431B3 /* URL.swift */,
+				2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -464,15 +486,12 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2E071A792257ADD200345FA8 /* MapboxVisionCore.framework */,
-				2E071A7B2257ADD200345FA8 /* MapboxVisionSafetyCore.framework */,
-				2E071A772257AD6100345FA8 /* MapboxVisionCore.framework */,
-				2E071A752257AD3800345FA8 /* MapboxVisionARCore.framework */,
+				2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */,
+				2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */,
+				2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */,
 				2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */,
-				2E071A5422578A3E00345FA8 /* MapboxVision.framework */,
-				B583DF822240F55D00D73673 /* ZIPFoundation.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
-				2E4EE29020F0579F003431B3 /* MapboxVisionCore.framework */,
+				B583DF822240F55D00D73673 /* ZIPFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -710,7 +729,7 @@
 				2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */,
 				2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */,
 				2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */,
-				2E071A452257887F00345FA8 /* VisionARDelegate.swift in Sources */,
+				2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A862257AE0A00345FA8 /* VisionSafetyDelegate.swift in Sources */,
+				2E071A862257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift in Sources */,
 				2E071A842257AE0A00345FA8 /* VisionSafetyManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -748,13 +767,11 @@
 				2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */,
 				2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */,
 				2EDD8707219ED89E00760C6D /* Constants.swift in Sources */,
-				2E4EE28120F05661003431B3 /* BinaryRecorder.swift in Sources */,
 				2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */,
 				2E4EE25320F05045003431B3 /* DetectionsView.swift in Sources */,
 				2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */,
 				2E4EE28320F05665003431B3 /* DeviceInfoProvider.swift in Sources */,
 				B5BD9F6F211C69FF001EE97F /* RecordingQuota.swift in Sources */,
-				2E4EE2C820F06980003431B3 /* Debouncer.swift in Sources */,
 				2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */,
 				2E4EE2A120F058B9003431B3 /* Collection+Safe.swift in Sources */,
 				2E6033542142900C0050EDB3 /* Images.swift in Sources */,
@@ -771,14 +788,11 @@
 				2E4EE27F20F05661003431B3 /* RecordCoordinator.swift in Sources */,
 				2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */,
 				2EC332A3217E02BA00E041FE /* String.swift in Sources */,
-				2E7C85FD213E87240095B6A8 /* ManeuverLocation.swift in Sources */,
 				2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */,
-				2E4EE2EF20F0EE6C003431B3 /* RecordPickerViewController.swift in Sources */,
 				2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */,
 				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
 				2E4EE27520F05655003431B3 /* Reachability.swift in Sources */,
 				2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */,
-				2E4EE28620F05665003431B3 /* AlertPlayer.swift in Sources */,
 				9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */,
 				9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */,
 				9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */,
