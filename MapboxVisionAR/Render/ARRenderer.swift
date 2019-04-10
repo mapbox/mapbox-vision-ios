@@ -61,7 +61,7 @@ private let textureMappingVertices: [Float] = [
     -1.0,  1.0, 0.0,    0.0, 0.0
 ]
 
-/* Coordinate system:
+/* Render coordinate system:
  *      Y
  *      ^
  *      |
@@ -69,6 +69,14 @@ private let textureMappingVertices: [Float] = [
  *     /
  *    /
  *   Z
+ */
+
+/* World coordinate system:
+ *       Z
+ *       ^  X
+ *       | /
+ *       |/
+ * Y <-- 0
  */
 
 class ARRenderer: NSObject, MTKViewDelegate {
@@ -318,6 +326,10 @@ class ARRenderer: NSObject, MTKViewDelegate {
         return device.makeDepthStencilState(descriptor: depthStencil)!
     }
     
+    static func processPoint(_ wc: WorldCoordinate) -> float3 {
+        return float3(Float(-wc.y), Float(wc.z), Float(-wc.x))
+    }
+    
     func update(_ view: MTKView) {
         dt = 1 / Float(view.preferredFramesPerSecond)
         time += dt
@@ -362,13 +374,11 @@ class ARRenderer: NSObject, MTKViewDelegate {
                         return
                     }
 
-                    let (p0, p1, p2, p3) = (points[0], points[1], points[2], points[3])
-                    
                     let arrowControlPoints = [
-                        float3(Float(p0.x), Float(p0.z), Float(-p0.y)),
-                        float3(Float(p1.x), Float(p1.z), Float(-p1.y)),
-                        float3(Float(p2.x), Float(p2.z), Float(-p2.y)),
-                        float3(Float(p3.x), Float(p3.z), Float(-p3.y))
+                        ARRenderer.processPoint(points[0]),
+                        ARRenderer.processPoint(points[1]),
+                        ARRenderer.processPoint(points[2]),
+                        ARRenderer.processPoint(points[3]),
                     ]
                     
                     var vertexUniforms = ArrowVertexUniforms(
