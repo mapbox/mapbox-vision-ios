@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import MapboxVisionCore
+import MapboxVisionNative
 
 /**
     The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.

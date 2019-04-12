@@ -8,7 +8,7 @@ import UIKit
 import MetalKit
 import MapboxVision
 import MapboxCoreNavigation
-import MapboxVisionARCore
+import MapboxVisionARNative
 import CoreMedia
 
 /**

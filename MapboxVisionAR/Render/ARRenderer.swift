@@ -8,7 +8,7 @@
 
 import MetalKit
 import MapboxVision
-import MapboxVisionARCore
+import MapboxVisionARNative
 
 // design
 let kArrowColor = float4(0.2745, 0.4117, 0.949, 0.99)

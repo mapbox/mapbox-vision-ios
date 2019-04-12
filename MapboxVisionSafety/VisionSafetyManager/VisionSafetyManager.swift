@@ -8,7 +8,7 @@
 
 import Foundation
 import MapboxVision
-import MapboxVisionSafetyCore
+import MapboxVisionSafetyNative
 
 public final class VisionSafetyManager {
     

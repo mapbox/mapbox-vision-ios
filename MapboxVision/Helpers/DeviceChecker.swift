@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import MapboxVisionCore
+import MapboxVisionNative
 
 private let iPhoneName = "iPhone"
 private let iPhoneMinModel = 10 // meaning iPhone 8/8Plus/X

@@ -8,7 +8,7 @@
 
 import Foundation
 import MapboxMobileEvents
-import MapboxVisionCore
+import MapboxVisionNative
 
 final class EventsManager {
     

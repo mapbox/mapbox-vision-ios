@@ -28,11 +28,11 @@
 		2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E071A992257CC6F00345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		2E071A9A2257CC7800345FA8 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
-		2E071A9C2257CCB700345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
-		2E071A9D2257CCBD00345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
-		2E071A9E2257CCBF00345FA8 /* MapboxVisionCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */; };
-		2E071AA02257CCDB00345FA8 /* MapboxVisionARCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */; };
-		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */; };
+		2E071A9C2257CCB700345FA8 /* MapboxVisionNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */; };
+		2E071A9D2257CCBD00345FA8 /* MapboxVisionNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */; };
+		2E071A9E2257CCBF00345FA8 /* MapboxVisionNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */; };
+		2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */; };
+		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
@@ -144,9 +144,9 @@
 		2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManager.swift; sourceTree = "<group>"; };
 		2E071A812257AE0A00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManagerDelegate.swift; sourceTree = "<group>"; };
-		2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionCore.framework; path = "Carthage/Build/iOS/MapboxVisionCore.framework"; sourceTree = "<group>"; };
-		2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARCore.framework; path = "Carthage/Build/iOS/MapboxVisionARCore.framework"; sourceTree = "<group>"; };
-		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyCore.framework; path = "Carthage/Build/iOS/MapboxVisionSafetyCore.framework"; sourceTree = "<group>"; };
+		2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionNative.framework; path = "Carthage/Build/iOS/MapboxVisionNative.framework"; sourceTree = "<group>"; };
+		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = "Carthage/Build/iOS/MapboxVisionARNative.framework"; sourceTree = "<group>"; };
+		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = "Carthage/Build/iOS/MapboxVisionSafetyNative.framework"; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
@@ -220,8 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071AA02257CCDB00345FA8 /* MapboxVisionARCore.framework in Frameworks */,
-				2E071A9D2257CCBD00345FA8 /* MapboxVisionCore.framework in Frameworks */,
+				2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */,
+				2E071A9D2257CCBD00345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				2E071A992257CC6F00345FA8 /* MapboxVision.framework in Frameworks */,
 				2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */,
 			);
@@ -231,8 +231,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A9E2257CCBF00345FA8 /* MapboxVisionCore.framework in Frameworks */,
-				2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyCore.framework in Frameworks */,
+				2E071A9E2257CCBF00345FA8 /* MapboxVisionNative.framework in Frameworks */,
+				2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */,
 				2E071A9A2257CC7800345FA8 /* MapboxVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,7 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A9C2257CCB700345FA8 /* MapboxVisionCore.framework in Frameworks */,
+				2E071A9C2257CCB700345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
 				B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */,
 			);
@@ -486,9 +486,9 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2E071A9B2257CCB700345FA8 /* MapboxVisionCore.framework */,
-				2E071A9F2257CCDB00345FA8 /* MapboxVisionARCore.framework */,
-				2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyCore.framework */,
+				2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */,
+				2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */,
+				2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */,
 				2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */,
 				B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */,
 				B583DF822240F55D00D73673 /* ZIPFoundation.framework */,

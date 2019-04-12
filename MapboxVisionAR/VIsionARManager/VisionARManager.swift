@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import MapboxVisionCore
-import MapboxVisionARCore
+import MapboxVisionNative
+import MapboxVisionARNative
 import MapboxVision
 
 public final class VisionARManager {

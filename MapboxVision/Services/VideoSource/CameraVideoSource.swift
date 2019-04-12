@@ -8,7 +8,7 @@
 
 import Foundation
 import AVFoundation
-import MapboxVisionCore
+import MapboxVisionNative
 
 private let imageOutputFormat = Image.Format.BGRA
 

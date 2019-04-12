@@ -8,9 +8,9 @@
 
 import Foundation
 import MapboxDirections
-import MapboxVisionARCore
+import MapboxVisionARNative
 
-public extension MapboxVisionARCore.Route {
+public extension MapboxVisionARNative.Route {
     public convenience init(route: MapboxDirections.Route) {
         var points = Array<RoutePoint>()
         

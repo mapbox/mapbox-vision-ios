@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MapboxVisionCore
+import MapboxVisionNative
 import CoreMotion
 
 final class Platform: NSObject, PlatformInterface {
