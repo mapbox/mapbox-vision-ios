@@ -325,8 +325,8 @@ public final class VisionManager {
     
     private func registerDefaults() {
         let defaults = UserDefaults.standard
-        defaults.setDefaultValue(false, forKey: VisionSettings.enableSync)
-        defaults.setDefaultValue(false, forKey: VisionSettings.syncOverCellular)
+        defaults.setValue(false, forKey: VisionSettings.enableSync)
+        defaults.setValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
     private var isStoppedForBackground = false
