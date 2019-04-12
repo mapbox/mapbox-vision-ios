@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MapboxVisionCore
+import MapboxVisionNative
 
 protocol DataProvider: AnyObject {
     func start()

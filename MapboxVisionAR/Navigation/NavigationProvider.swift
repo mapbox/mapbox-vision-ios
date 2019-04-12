@@ -9,7 +9,7 @@
 import Foundation
 import MapboxCoreNavigation
 import MapboxVision
-import MapboxVisionARCore
+import MapboxVisionARNative
 
 public protocol NavigationManagerDelegate: class {
     func navigationManager(_ navigationManager: NavigationManager, didUpdate route: Route)

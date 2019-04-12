@@ -1,9 +1,9 @@
 $(SRCROOT)/Carthage/Build/iOS/ZIPFoundation.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxMobileEvents.framework
-$(SRCROOT)/Carthage/Build/iOS/MapboxVisionCore.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxVisionNative.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxVision.framework
 
-$(SRCROOT)/Carthage/Build/iOS/MapboxVisionSafetyCore.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxVisionSafetyNative.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxVisionSafety.framework
 
 $(SRCROOT)/Carthage/Build/iOS/MapboxDirections.framework
@@ -11,5 +11,5 @@ $(SRCROOT)/Carthage/Build/iOS/Polyline.framework
 $(SRCROOT)/Carthage/Build/iOS/Turf.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxNavigationNative.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxCoreNavigation.framework
-$(SRCROOT)/Carthage/Build/iOS/MapboxVisionARCore.framework
+$(SRCROOT)/Carthage/Build/iOS/MapboxVisionARNative.framework
 $(SRCROOT)/Carthage/Build/iOS/MapboxVisionAR.framework

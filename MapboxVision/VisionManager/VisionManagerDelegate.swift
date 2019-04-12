@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MapboxVisionCore
+import MapboxVisionNative
 
 /**
  The interface that user’s custom object should conform to in order to receive events from SDK.

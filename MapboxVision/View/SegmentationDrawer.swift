@@ -9,7 +9,7 @@
 import Foundation
 import Metal
 import MetalKit
-import MapboxVisionCore
+import MapboxVisionNative
 
 final class SegmentationDrawer: NSObject, MTKViewDelegate {
     

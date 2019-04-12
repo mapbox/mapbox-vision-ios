@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import MapboxVisionCore
+import MapboxVisionNative
 import CoreMedia
 
 public struct VideoSample {
