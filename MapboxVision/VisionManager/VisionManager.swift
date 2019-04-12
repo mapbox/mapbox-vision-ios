@@ -271,6 +271,8 @@ public final class VisionManager {
         dataProvider?.start()
         startVideoStream()
         dependencies.native.start(self)
+        
+        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     }
     
     private func pause() {
