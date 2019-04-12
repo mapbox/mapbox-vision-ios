@@ -271,8 +271,6 @@ public final class VisionManager {
         dataProvider?.start()
         startVideoStream()
         dependencies.native.start(self)
-        
-        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
     }
     
     private func pause() {
@@ -325,7 +323,7 @@ public final class VisionManager {
     
     private func registerDefaults() {
         let defaults = UserDefaults.standard
-        defaults.setDefaultValue(true, forKey: VisionSettings.enableSync)
+        defaults.setDefaultValue(false, forKey: VisionSettings.enableSync)
         defaults.setDefaultValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
@@ -440,15 +438,15 @@ extension VisionManager: VisionDelegate {
     private func configureSync(_ country: Country) {
         switch country {
         case .USA, .other:
+            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
             UserDefaults.standard.enableSync = true
         case .china:
-            dependencies.recorder.stopRecording(abort: true)
-            stopSync()
+            sessionManager.stopSession(abort: true)
             UserDefaults.standard.enableSync = false
             let data = SyncRecordDataSource()
             data.recordDirectories.forEach(data.removeFile)
         case .unknown:
-            stopSync()
+            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
             UserDefaults.standard.enableSync = false
         }
     }
@@ -517,9 +515,9 @@ extension VisionManager: SessionDelegate {
         }
     }
     
-    func sessionStopped() {
+    func sessionStopped(abort: Bool) {
         dependencies.native.stopSavingSession()
-        dependencies.recorder.stopRecording()
+        dependencies.recorder.stopRecording(abort: abort)
     }
 }
 
