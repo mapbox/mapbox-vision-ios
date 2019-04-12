@@ -84,6 +84,10 @@ struct RecordingPath {
         return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
     }
     
+    func delete() throws {
+        try FileManager.default.removeItem(atPath: self.basePath.path)
+    }
+    
     private func createStructure() {
         do {
             try FileManager.default.createDirectory(atPath: imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)

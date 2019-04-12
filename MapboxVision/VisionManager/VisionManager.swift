@@ -434,6 +434,23 @@ extension VisionManager: VisionDelegate {
     
     public func onCountryUpdated(_ country: Country) {
         state.delegate?.visionManager(self, didUpdateCountry: country)
+        configureSync(country)
+    }
+    
+    private func configureSync(_ country: Country) {
+        switch country {
+        case .USA, .other:
+            UserDefaults.standard.enableSync = true
+        case .china:
+            dependencies.recorder.stopRecording(abort: true)
+            stopSync()
+            UserDefaults.standard.enableSync = false
+            let data = SyncRecordDataSource()
+            data.recordDirectories.forEach(data.removeFile)
+        case .unknown:
+            stopSync()
+            UserDefaults.standard.enableSync = false
+        }
     }
     
     public func onUpdateCompleted() {
