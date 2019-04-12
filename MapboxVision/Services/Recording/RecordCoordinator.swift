@@ -45,6 +45,7 @@ final class RecordCoordinator {
     
     private(set) var isRecording: Bool = false
     private var isReady: Bool = true
+    private var abortRecording: Bool = false
     weak var delegate: RecordCoordinatorDelegate?
     
     private let videoRecorder: VideoBuffer
@@ -100,9 +101,10 @@ final class RecordCoordinator {
         delegate?.recordingStarted(path: recordingPath.recordingPath)
     }
     
-    func stopRecording() {
+    func stopRecording(abort: Bool = false) {
         guard isRecording else { return }
         
+        abortRecording = abort
         isRecording = false
         isReady = false
         currentEndTime = DispatchTime.now()
@@ -207,9 +209,13 @@ final class RecordCoordinator {
         
         if let path = currentRecordingPath {
             do {
-                try path.move(to: .recordings)
+                if abortRecording {
+                    try path.delete()
+                } else {
+                    try path.move(to: .recordings)
+                }
             } catch {
-                print("RecordCoordinator: moving current recording to \(path) failed. Error: \(error)")
+                print("RecordCoordinator: moving/deleting current recording to \(path) failed. Error: \(error)")
             }
         }
         
@@ -217,6 +223,7 @@ final class RecordCoordinator {
         currentVideoSettings = nil
         endBackgroundTask()
         isReady = true
+        abortRecording = false
         
         delegate?.recordingStopped()
     }

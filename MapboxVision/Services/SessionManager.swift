@@ -10,7 +10,7 @@ import Foundation
 
 protocol SessionDelegate: class {
     func sessionStarted()
-    func sessionStopped()
+    func sessionStopped(abort: Bool)
 }
 
 final class SessionManager {
@@ -20,7 +20,12 @@ final class SessionManager {
     private var interruptionInterval: TimeInterval = 0
     private var interruptionTimer: Timer?
     
+    private var isStarted = false
+    
     func startSession(interruptionInterval: TimeInterval) {
+        guard !isStarted else { return }
+        isStarted.toggle()
+        
         notificationObservers.append(
             NotificationCenter.default.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: .main) { [weak self] _ in
             self?.stopSession()
@@ -35,17 +40,20 @@ final class SessionManager {
         startInterval()
     }
     
-    func stopSession() {
+    func stopSession(abort: Bool = false) {
+        guard isStarted else { return }
+        isStarted.toggle()
+        
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
         interruptionTimer?.invalidate()
-        stopInterval()
+        stopInterval(abort: abort)
     }
     
     private func startInterval() {
         listener?.sessionStarted()
     }
     
-    private func stopInterval() {
-        listener?.sessionStopped()
+    private func stopInterval(abort: Bool = false) {
+        listener?.sessionStopped(abort: abort)
     }
 }

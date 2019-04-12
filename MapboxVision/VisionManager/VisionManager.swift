@@ -325,8 +325,8 @@ public final class VisionManager {
     
     private func registerDefaults() {
         let defaults = UserDefaults.standard
-        defaults.setDefaultValue(true, forKey: VisionSettings.enableSync)
-        defaults.setDefaultValue(false, forKey: VisionSettings.syncOverCellular)
+        defaults.setValue(false, forKey: VisionSettings.enableSync)
+        defaults.setValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
     private var isStoppedForBackground = false
@@ -434,6 +434,23 @@ extension VisionManager: VisionDelegate {
     
     public func onCountryUpdated(_ country: Country) {
         state.delegate?.visionManager(self, didUpdateCountry: country)
+        configureSync(country)
+    }
+    
+    private func configureSync(_ country: Country) {
+        switch country {
+        case .USA, .other:
+            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+            UserDefaults.standard.enableSync = true
+        case .china:
+            sessionManager.stopSession(abort: true)
+            UserDefaults.standard.enableSync = false
+            let data = SyncRecordDataSource()
+            data.recordDirectories.forEach(data.removeFile)
+        case .unknown:
+            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+            UserDefaults.standard.enableSync = false
+        }
     }
     
     public func onUpdateCompleted() {
@@ -500,9 +517,9 @@ extension VisionManager: SessionDelegate {
         }
     }
     
-    func sessionStopped() {
+    func sessionStopped(abort: Bool) {
         dependencies.native.stopSavingSession()
-        dependencies.recorder.stopRecording()
+        dependencies.recorder.stopRecording(abort: abort)
     }
 }
 
