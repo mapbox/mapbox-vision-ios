@@ -1,4 +1,4 @@
 binary "https://www.mapbox.com/ios-sdk/opencv.json" ~> 2.4.13
-binary "https://www.mapbox.com/ios-sdk/MapboxVisionCore.json" == 0.2.0
+binary "https://www.mapbox.com/ios-sdk/MapboxVisionCore.json" ~> 0.2.1
 github "marmelroy/Zip" ~> 1.1.0
 github "mapbox/mapbox-events-ios" ~> 0.8.1
