@@ -26,6 +26,6 @@ Pod::Spec.new do |s|
 
   s.dependency "MapboxVisionNativeAll/AR", "~> 0.3.0"
   s.dependency "MapboxVision", "~> 0.3.0"
-  s.dependency "MapboxCoreNavigation", "~> 0.29.0"
+  s.dependency "MapboxCoreNavigation", "~> 0.31.0"
 
 end

@@ -1,10 +1,8 @@
-MapboxVision
+MapboxVision, MapboxVisionAR, MapboxVisionSafety
 
-Copyright © 2018 Mapbox, Inc.
+Copyright © 2019 Mapbox, Inc., all rights reserved.
 
-Governed by Mapbox Inc. Vision SDK Evaluation Agreement
-
-Sign up at https://vision.mapbox.com/#application
+Download, installation, and use governed by the Mapbox Terms of Service: www.mapbox.com/tos
 
 ---
 
@@ -34,11 +32,11 @@ THE SOFTWARE.
 
 ---
 
-Zip
+ZipFoundation
 
-The MIT License (MIT)
+MIT License
 
-Copyright (c) 2015 Roy Marmelstein
+Copyright (c) 2017 Thomas Zoechling
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
