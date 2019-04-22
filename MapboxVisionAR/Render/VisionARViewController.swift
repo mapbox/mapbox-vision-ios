@@ -12,21 +12,18 @@ import MapboxVisionARNative
 import CoreMedia
 
 /**
- Class that represents visual component that renders video stream from the camera and AR navigation route on top of that. It may be presented in a host application in a typical for the platform way.
+    Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
 */
-
 public class VisionARViewController: UIViewController {
     
     /**
         The delegate object to receive navigation events.
     */
-    
     public weak var navigationDelegate: NavigationManagerDelegate?
     
     /**
         Control the visibility of the Mapbox logo.
     */
-    
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -42,7 +39,6 @@ public class VisionARViewController: UIViewController {
     /**
         Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
     */
-    
     public init(navigationService: NavigationService? = nil) {
         
         super.init(nibName: nil, bundle: nil)
@@ -68,10 +64,7 @@ public class VisionARViewController: UIViewController {
         }
     }
     
-    /**
-     :nodoc:
-    */
-    
+    /// :nodoc:
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -79,22 +72,30 @@ public class VisionARViewController: UIViewController {
     /**
         NavigationService from MapboxCoreNavigation framework
     */
-    
     public var navigationService: NavigationService? {
         didSet {
             setNavigationService(navigationService)
         }
     }
     
+    /**
+        Display sample buffer (e.g. taken from `VideoSource`).
+    */
     public func present(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         renderer?.frame = pixelBuffer
     }
     
+    /**
+        Set AR camera.
+    */
     public func present(camera: ARCamera) {
         renderer?.camera = camera
     }
     
+    /**
+        Display AR lane.
+    */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
     }
@@ -108,10 +109,7 @@ public class VisionARViewController: UIViewController {
         }
     }
     
-    /**
-     :nodoc:
-    */
-    
+    /// :nodoc:
     override public func viewDidLoad() {
         super.viewDidLoad()
         addChildView(arView)

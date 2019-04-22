@@ -10,35 +10,41 @@ import Foundation
 import UIKit
 
 /**
- Enumeration which determines whether SDK should adapt its performance to environmental changes (acceleration/deceleration, standing time) or stay fixed.
+    Enumeration which determines whether SDK should adapt its performance to environmental changes (acceleration/deceleration, standing time) or stay fixed.
 */
 public enum ModelPerformanceMode {
+    
     /**
-        Fixed.
+        Fixed mode.
     */
     case fixed
+    
     /**
-        Dynamic. It depends on speed. Variable from ModelPerformanceRate.low (0 km/h) to VisionManager's performance property (90 km/h).
+        Dynamic mode. Performance depends on speed.
     */
     case dynamic
 }
 
 /**
- Enumeration which determines performance rate of the specific model. These are high-level settings that translates into adjustment of FPS for ML model inference.
+    Enumeration which determines performance rate of the specific model. These are high-level settings that translates into adjustment of FPS for ML model inference.
 */
 public enum ModelPerformanceRate {
+    
     /**
         Identifies that output of particular model is not required.
     */
     case off
+    
     /**
         Low.
     */
     case low
+    
     /**
         Medium.
     */
     case medium
+    
     /**
         High.
     */
@@ -46,15 +52,11 @@ public enum ModelPerformanceRate {
 }
 
 /**
- Enumeration representing configuration for ML models
+    Enumeration representing configuration for ML models
 */
-
 public enum ModelPerformanceConfig: Equatable {
     
-    /**
-     :nodoc:
-     */
-    
+    /// :nodoc:
     public static func == (lhs: ModelPerformanceConfig, rhs: ModelPerformanceConfig) -> Bool {
         switch (lhs, rhs) {
         case let (.merged(rhsPerformance), .merged(lhsPerformance)):
@@ -74,6 +76,7 @@ public enum ModelPerformanceConfig: Equatable {
         Works more efficiently in a workflow requiring comparable performance for detection and segmentation.
      */
     case merged(performance: ModelPerformance)
+    
     /**
         Segmentation and detection are produced by separate models.
         May perform better when segmentation and detection are required to produce output with different frequencies.
@@ -82,7 +85,7 @@ public enum ModelPerformanceConfig: Equatable {
 }
 
 /**
- Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
+    Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
 */
 public struct ModelPerformance: Equatable {
     
@@ -90,13 +93,14 @@ public struct ModelPerformance: Equatable {
         Performance Mode.
     */
     public let mode: ModelPerformanceMode
+    
     /**
-        Performance Rate
+        Performance Rate.
     */
     public let rate: ModelPerformanceRate
 
     /**
-        Initializer.
+        Creates an instance of model performance with mode and rate.
     */
     public init(mode: ModelPerformanceMode, rate: ModelPerformanceRate) {
         self.mode = mode

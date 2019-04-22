@@ -10,64 +10,72 @@ import Foundation
 import MapboxVisionNative
 
 /**
- The interface that user’s custom object should conform to in order to receive events from SDK.
- */
-
+    Interface that user’s custom object should conform to in order to receive events from `VisionManager`.
+    Delegate methods are called one by one followed by `visionManagerDidCompleteUpdate` call, which denotes the end of the iteration.
+ 
+    - NOTE: All delegate methods are called on a background thread.
+*/
 public protocol VisionManagerDelegate: class {
     
     /**
-     Tells the delegate that authorization status has changed. VisionManager does not emit events unless it has successfully authorized.
-     */
+        Tells the delegate that authorization status was updated.
+        `VisionManager` may not emit events unless it has successfully authorized.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateAuthorizationStatus authorizationStatus: AuthorizationStatus) -> Void
     
     /**
-     Tells the delegate that new segmentation is available.
-     Requires at least low performance for segmentation.
-     */
+        Tells the delegate that segmentation mask was updated.
+        Requires at least low performance for segmentation.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateFrameSegmentation frameSegmentation: FrameSegmentation) -> Void
     
     /**
-     Tells the delegate that new detections are available.
-     Requires at least low performance for detection.
-     */
+        Tells the delegate that detections were updated.
+        Requires at least low performance for detection.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateFrameDetections frameDetections: FrameDetections) -> Void
     
     /**
-     Tells the delegate that new sign classification is available.
-     Requires at least low performance for detection.
-     */
+        Tells the delegate that classified signs were updated.
+        Requires at least low performance for detection.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateFrameSignClassifications frameSignClassifications: FrameSignClassifications) -> Void
     
     /**
-     Tells the delegate that new processed road description is available. These are smoothed and more stable values.
-     Requires at least low performance for segmentation.
-     */
+        Tells the delegate that road description was updated.
+        Road description parameters reach maximum accuracy when `Camera` is calibrated.
+        Requires at least low performance for segmentation.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateRoadDescription roadDescription: RoadDescription) -> Void
     
     /**
-     Tells the delegate that description of the situation on the road is updated (see [WorldDescription](https://www.mapbox.com/ios-sdk/vision/data-types/Classes/WorldDescription.html) documentation for available properties). This event won't be emitted until calibration progress reaches isCalibrated state.
-     Requires at least low performance for segmentation and detection.
-     */
+        Tells the delegate that world description was updated.
+        World description parameters reach maximum accuracy when `Camera` is calibrated.
+        Requires at least low performance for detection.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateWorldDescription worldDescription: WorldDescription) -> Void
     
     /**
-     Tells the delegate that newly estimated position is calculated.
-     */
+        Tells the delegate that vehicle state was updated.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateVehicleState vehicleState: VehicleState) -> Void
     
     /**
-     Tells the delegate that country which is used in the VisionSDK changed.
-     */
+        Tells the delegate that country which is used in the VisionSDK changed.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateCountry country: Country) -> Void
     
     /**
-     Tells the delegate about the progress of camera pose estimation (calibration).
-     */
+        Tells the delegate that camera state was updated.
+    */
     func visionManager(_ visionManager: VisionManager, didUpdateCamera camera: Camera) -> Void
     
     /**
-     Tells the delegate that the current update cycle is finished and all data is in-sync.
-     */
+        This method is called after the whole update iteration is completed. This means that all the data which came from delegate methods is in sync.
+        This method is an appropriate place to work with different values emitted from `VisionManager`.
+        
+        - NOTE: Performance of this function is critical since `VisionManager` blocks until the method execution is finished.
+    */
     func visionManagerDidCompleteUpdate(_ visionManager: VisionManager) -> Void
 }
 
