@@ -1,7 +1,7 @@
 import Foundation
-import MapboxVisionNative
-import MapboxVisionARNative
 import MapboxVision
+import MapboxVisionARNative
+import MapboxVisionNative
 
 /**
     `VisionARManager` is an entry point to the high-level framework `MapboxVisionAR` focused on AR related tasks.

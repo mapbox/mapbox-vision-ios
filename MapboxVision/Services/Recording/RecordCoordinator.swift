@@ -1,7 +1,7 @@
-import Foundation
 import AVFoundation
-import UIKit
+import Foundation
 import MapboxVisionNative
+import UIKit
 
 protocol RecordCoordinatorDelegate: class {
     func recordingStarted(path: String)

@@ -1,6 +1,6 @@
-import Foundation
-import CoreVideo
 import CoreMedia
+import CoreVideo
+import Foundation
 
 extension CMSampleBuffer {
     var pixelBuffer: CVPixelBuffer? {

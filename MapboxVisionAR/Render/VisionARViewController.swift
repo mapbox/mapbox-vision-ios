@@ -1,10 +1,10 @@
-import Foundation
-import UIKit
-import MetalKit
-import MapboxVision
-import MapboxCoreNavigation
-import MapboxVisionARNative
 import CoreMedia
+import Foundation
+import MapboxCoreNavigation
+import MapboxVision
+import MapboxVisionARNative
+import MetalKit
+import UIKit
 
 /**
     Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.

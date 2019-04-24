@@ -1,6 +1,6 @@
 import Foundation
-import UIKit
 import MapboxVisionNative
+import UIKit
 
 enum VisionManagerError: LocalizedError {
     case startRecordingBeforeStart

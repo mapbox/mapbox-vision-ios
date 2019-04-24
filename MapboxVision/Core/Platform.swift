@@ -1,6 +1,6 @@
+import CoreMotion
 import Foundation
 import MapboxVisionNative
-import CoreMotion
 
 final class Platform: NSObject, PlatformInterface {
 

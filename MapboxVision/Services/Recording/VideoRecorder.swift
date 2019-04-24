@@ -1,5 +1,5 @@
-import Foundation
 import AVFoundation
+import Foundation
 
 enum VideoRecorderError: LocalizedError {
     case notRecording

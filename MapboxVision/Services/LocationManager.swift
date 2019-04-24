@@ -1,5 +1,5 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 final class LocationManager: NSObject, CLLocationManagerDelegate {
 

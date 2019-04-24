@@ -1,6 +1,6 @@
-import Foundation
-import CoreMotion
 import CoreLocation
+import CoreMotion
+import Foundation
 
 final class MotionManager {
     private let motion: CMMotionManager = CMMotionManager()

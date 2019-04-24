@@ -1,7 +1,7 @@
 import Foundation
-import UIKit
 import MapboxVision
 import MapboxVisionSafety
+import UIKit
 
 /**
  * "Over speeding" example demonstrates how to utilize events from MapboxVisionSafetyManager to alert a user about exceeding allowed speed limit.

@@ -1,9 +1,9 @@
-import Foundation
-import UIKit
 import AVFoundation
-import MetalKit
 import AVKit
+import Foundation
 import MapboxVisionNative
+import MetalKit
+import UIKit
 
 private let contentInset: CGFloat = 16
 private let safeAreaContentInset: CGFloat = 2

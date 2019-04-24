@@ -1,7 +1,7 @@
 import Foundation
+import MapboxVisionNative
 import Metal
 import MetalKit
-import MapboxVisionNative
 
 final class SegmentationDrawer: NSObject, MTKViewDelegate {
 

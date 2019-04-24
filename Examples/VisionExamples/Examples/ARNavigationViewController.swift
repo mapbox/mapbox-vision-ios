@@ -1,8 +1,6 @@
-import UIKit
 import MapboxVision
 import MapboxVisionAR
-import MapboxDirections
-import MapboxCoreNavigation
+import UIKit
 
 /**
  * "AR Navigation" example demonstrates how to display navigation route projected on the surface of the road.

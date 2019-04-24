@@ -1,6 +1,6 @@
+import CoreMedia
 import Foundation
 import MapboxVisionNative
-import CoreMedia
 
 /**
     Structure that encapsulates image buffer and its format.

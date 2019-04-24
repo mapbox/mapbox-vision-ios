@@ -1,6 +1,6 @@
+import AVFoundation
 import Foundation
 import UIKit
-import AVFoundation
 
 final class VideoStreamView: UIView {
 

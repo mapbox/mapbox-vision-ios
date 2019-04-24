@@ -1,6 +1,6 @@
-import UIKit
-import MapboxVision
 import AVFoundation
+import MapboxVision
+import UIKit
 
 /**
  * "External camera" example demonstrates how to create a custom source of video stream and pass it to `VisionManager`.
