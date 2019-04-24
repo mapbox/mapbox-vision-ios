@@ -22,12 +22,7 @@ enum DocumentsLocation: String {
 
 struct RecordingPath {
     static func generateDirectoryName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        let currentDateString = dateFormatter.string(from: Date())
-        
-        return currentDateString
+        return DateFormatter.createRecordingFormatter().string(from: Date())
     }
     
     static func clear(basePath: DocumentsLocation) {
@@ -67,6 +62,10 @@ struct RecordingPath {
         return recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
     }
     
+    func videoClipPath(start: Float, end: Float) -> String {
+        return recordingPath.appendingPathComponent("\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(settings.fileExtension)")
+    }
+    
     var videosLogPath: String {
         return recordingPath.appendingPathComponent("videos.json")
     }
@@ -83,6 +82,10 @@ struct RecordingPath {
         
         let directory = recordingPath.lastPathComponent
         return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
+    }
+    
+    func delete() throws {
+        try FileManager.default.removeItem(atPath: self.basePath.path)
     }
     
     private func createStructure() {

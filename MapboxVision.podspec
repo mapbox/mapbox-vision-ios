@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVision"
-  s.version      = "0.2.2"
+  s.version      = "0.3.0"
   s.summary      = "ML empowered vision framework"
 
   s.homepage     = 'https://www.mapbox.com/vision/'
@@ -17,15 +17,15 @@ Pod::Spec.new do |s|
 
   s.source        = { :git => "https://github.com/mapbox/mapbox-vision-ios.git", :tag => "v#{s.version}" }
 
-  s.source_files  = "MapboxVision/**/*.{swift,h,metal}"
+  s.source_files  = "MapboxVision/**/*.{swift,h,metal}", "Resources/**/*.swift"
   s.resource      = "Resources/Assets.xcassets"
 
   s.requires_arc = true
 
   s.swift_version = '4.1'
 
-  s.dependency "MapboxVisionCore", "~> 0.2.1"
-  s.dependency "Zip", "~> 1.1.0"
+  s.dependency "MapboxVisionNativeAll/Vision", "~> 0.3.0"
   s.dependency "MapboxMobileEvents", "~> 0.8.1"
+  s.dependency "ZIPFoundation", "~> 0.9.9"
 
 end

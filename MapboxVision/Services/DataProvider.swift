@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MapboxVisionCore
+import MapboxVisionNative
 
 protocol DataProvider: AnyObject {
     func start()
@@ -17,7 +17,6 @@ protocol DataProvider: AnyObject {
 
 final class RecordedDataProvider: DataProvider {
     struct Dependencies {
-        let core: Core
         let recordingPath: RecordingPath
         let startTime: UInt
     }
@@ -35,15 +34,15 @@ final class RecordedDataProvider: DataProvider {
     
     func start() {
         startTime = DispatchTime.now().uptimeMilliseconds
+        telemetryPlayer.scrollData(dependencies.startTime)
     }
     
     func update() {
         let settings = dependencies.recordingPath.settings
-        let frameSize = Point2I(x: settings.width, y: settings.height)
+        let frameSize = CGSize(width: settings.width, height: settings.height)
         let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
         telemetryPlayer.setCurrentTime(currentTimeMS)
-        telemetryPlayer.updateData(dependencies.core, frameSize: frameSize, srcSize: frameSize)
-        telemetryPlayer.moveNextFrame()
+        telemetryPlayer.updateData(withFrameSize: frameSize, srcSize: frameSize)
     }
     
     func stop() {}
@@ -51,40 +50,30 @@ final class RecordedDataProvider: DataProvider {
 
 final class RealtimeDataProvider: DataProvider {
     struct Dependencies {
-        let core: Core
+        let native: VisionManagerNative
         let motionManager: MotionManager
-        let metaInfoManager: MetaInfoManager
+        let locationManager: LocationManager
     }
     
     private let dependencies: Dependencies
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        dependencies.motionManager.handler = dependencies.core.setDeviceMotion
+        dependencies.motionManager.handler = dependencies.native.setDeviceMotion
+        dependencies.locationManager.locationHandler = dependencies.native.setGPS
+        dependencies.locationManager.headingHandler = dependencies.native.setHeading
     }
     
     func start() {
-        dependencies.metaInfoManager.addObserver(self)
-        dependencies.metaInfoManager.start()
+        dependencies.locationManager.start()
         dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
     func update() {}
     
     func stop() {
-        dependencies.metaInfoManager.removeObserver(self)
-        dependencies.metaInfoManager.stop()
+        dependencies.locationManager.stop()
         dependencies.motionManager.stop()
-    }
-}
-
-extension RealtimeDataProvider: MetaInfoObserver {
-    func location(_ location: CLLocation) {
-        dependencies.core.setGPSData(location)
-    }
-    
-    func heading(_ heading: CLHeading) {
-        dependencies.core.setHeadingData(heading)
     }
 }
 

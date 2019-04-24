@@ -19,13 +19,7 @@ final class VideoTrimmer {
     typealias TrimCompletion = (Error?) -> ()
     typealias TrimPoints = (startTime: CMTime, endTime: CMTime)
     
-    private let videoSettings: VideoSettings
-    
-    init(videoSettings: VideoSettings) {
-        self.videoSettings = videoSettings
-    }
-    
-    func trimVideo(sourceURL: URL, destinationURL: URL, from start: TimeInterval, to end: TimeInterval, completion: TrimCompletion?) {
+    func trimVideo(sourceURL: URL, destinationURL: URL, from start: TimeInterval, to end: TimeInterval, settings: VideoSettings, completion: TrimCompletion?) {
         print("log_t: trim source: \(sourceURL.path), dest: \(destinationURL.path) from \(start) to \(end)")
         let startTime = CMTime(seconds: start, preferredTimescale: timeScale)
         let endTime = CMTime(seconds: end, preferredTimescale: timeScale)
@@ -68,7 +62,7 @@ final class VideoTrimmer {
         guard let exportSession = AVAssetExportSession(asset: composition, presetName: preferredPreset) else { return }
         
         exportSession.outputURL = destinationURL
-        exportSession.outputFileType = videoSettings.fileType
+        exportSession.outputFileType = settings.fileType
         exportSession.shouldOptimizeForNetworkUse = true
         
         exportSession.exportAsynchronously {

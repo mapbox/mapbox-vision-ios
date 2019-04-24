@@ -22,21 +22,20 @@ final class VideoBuffer {
     
     var chunkLimit: Int
     
-    private let settings: VideoSettings
-    private let recorder: VideoRecorder
-    
+    private let recorder = VideoRecorder()
     private var chunkCounter: Int = 0
     private var currentTimer: Timer?
     private var currentBasePath: String?
     
-    init(chunkLength: Float, chunkLimit: Int, settings: VideoSettings) {
+    private var settings: VideoSettings?
+    
+    init(chunkLength: Float, chunkLimit: Int) {
         self.chunkLength = chunkLength
         self.chunkLimit = chunkLimit
-        self.settings = settings
-        recorder = VideoRecorder(settings: settings)
     }
     
-    func startRecording(to path: String) {
+    func startRecording(to path: String, settings: VideoSettings) {
+        self.settings = settings
         isRecording = true
         chunkCounter = 0
         currentBasePath = path
@@ -52,6 +51,7 @@ final class VideoBuffer {
         currentTimer?.invalidate()
         isRecording = false
         cutChunk(false)
+        settings = nil
     }
     
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
@@ -75,9 +75,9 @@ final class VideoBuffer {
     }
     
     private func startChunk() {
-        if isRecording, let basePath = currentBasePath {
+        if isRecording, let basePath = currentBasePath, let settings = settings {
             cleanupBuffer()
-            recorder.startRecording(to: "\(basePath)/\(chunkCounter).\(settings.fileExtension)")
+            recorder.startRecording(to: "\(basePath)/\(chunkCounter).\(settings.fileExtension)", settings: settings)
         }
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 import UIKit
-import MapboxVisionCore
+import MapboxVisionNative
 
 protocol RecordCoordinatorDelegate: class {
     func recordingStarted(path: String)
@@ -45,16 +45,17 @@ final class RecordCoordinator {
     
     private(set) var isRecording: Bool = false
     private var isReady: Bool = true
+    private var abortRecording: Bool = false
     weak var delegate: RecordCoordinatorDelegate?
     
     private let videoRecorder: VideoBuffer
-    private let videoTrimmer: VideoTrimmer
-    private let videoSettings: VideoSettings
+    private let videoTrimmer = VideoTrimmer()
 
     private var jsonWriter: FileRecorder?
     private var imageWriter: ImageRecorder = ImageRecorder()
     private let processingQueue = DispatchQueue(label: "com.mapbox.RecordCoordinator.Processing")
     
+    private var currentVideoSettings: VideoSettings?
     private var currentReferenceTime: Float?
     private var currentRecordingPath: RecordingPath?
     private var currentStartTime: DispatchTime?
@@ -65,18 +66,18 @@ final class RecordCoordinator {
     // determines if the source video is saved
     var savesSourceVideo: Bool = false
     
-    init(settings: VideoSettings) {
-        self.videoSettings = settings
-        self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit, settings: settings)
-        self.videoTrimmer = VideoTrimmer(videoSettings: settings)
+    init() {
+        self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit)
         videoRecorder.delegate = self
         
         createFolder(path: DocumentsLocation.recordings.path)
     }
     
-    func startRecording(referenceTime: Float) throws {
+    func startRecording(referenceTime: Float, videoSettings: VideoSettings) throws {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
+        
+        currentVideoSettings = videoSettings
         
         isRecording = true
         currentReferenceTime = referenceTime
@@ -95,14 +96,15 @@ final class RecordCoordinator {
         
         videoRecorder.chunkLength = savesSourceVideo ? 0 : defaultChunkLength
         videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
-        videoRecorder.startRecording(to: cachePath)
+        videoRecorder.startRecording(to: cachePath, settings: videoSettings)
         
         delegate?.recordingStarted(path: recordingPath.recordingPath)
     }
     
-    func stopRecording() {
+    func stopRecording(abort: Bool = false) {
         guard isRecording else { return }
         
+        abortRecording = abort
         isRecording = false
         isReady = false
         currentEndTime = DispatchTime.now()
@@ -119,7 +121,8 @@ final class RecordCoordinator {
     func makeClip(from startTime: Float, to endTime: Float) {
         guard
             let referenceTime = currentReferenceTime,
-            let recordingPath = currentRecordingPath?.recordingPath
+            let recordingPath = currentRecordingPath,
+            let videoSettings = currentVideoSettings
         else { return }
         
         let relativeStart = startTime - referenceTime
@@ -135,11 +138,12 @@ final class RecordCoordinator {
         if startChunk != endChunk {
             // trim start clip
             let startJointTime = Float(startChunk + 1) * chunkLength
-            let startName = destinationPath(basePath: recordingPath, relativeStart, startJointTime)
-            let startLog = VideoLog(name: (startName as NSString).lastPathComponent,
+            let startSourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
+            let startName = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
+            let startLog = VideoLog(name: startName.lastPathComponent,
                                     start: startTime,
                                     end: referenceTime + startJointTime)
-            let trimRequest = VideoTrimRequest(sourcePath: chunkPath(for: startChunk),
+            let trimRequest = VideoTrimRequest(sourcePath: startSourcePath,
                                                destinationPath: startName,
                                                clipStart: clipStartTime,
                                                clipEnd: chunkLength,
@@ -155,22 +159,24 @@ final class RecordCoordinator {
             
             // trim end clip
             let endJointTime = Float(endChunk) * chunkLength
-            let endName = destinationPath(basePath: recordingPath, endJointTime, relativeEnd)
-            let endLog = VideoLog(name: (endName as NSString).lastPathComponent,
+            let endSourcePath = chunkPath(for: endChunk, fileExtension: videoSettings.fileExtension)
+            let endName = recordingPath.videoClipPath(start: endJointTime, end: relativeEnd)
+            let endLog = VideoLog(name: endName.lastPathComponent,
                                   start: referenceTime + endJointTime,
                                   end: endTime)
-            let endTrimRequest = VideoTrimRequest(sourcePath: chunkPath(for: endChunk),
+            let endTrimRequest = VideoTrimRequest(sourcePath: endSourcePath,
                                                   destinationPath: endName,
                                                   clipStart: 0,
                                                   clipEnd: clipEndTime,
                                                   log: endLog)
             trimClip(chunk: endChunk, request: endTrimRequest)
         } else {
-            let path = destinationPath(basePath: recordingPath, relativeStart, relativeEnd)
-            let log = VideoLog(name: (path as NSString).lastPathComponent,
+            let sourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
+            let path = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
+            let log = VideoLog(name: path.lastPathComponent,
                                start: startTime,
                                end: endTime)
-            let trimRequest = VideoTrimRequest(sourcePath: chunkPath(for: startChunk),
+            let trimRequest = VideoTrimRequest(sourcePath: sourcePath,
                                                destinationPath: path,
                                                clipStart: clipStartTime,
                                                clipEnd: clipEndTime,
@@ -203,28 +209,36 @@ final class RecordCoordinator {
         
         if let path = currentRecordingPath {
             do {
-                try path.move(to: .recordings)
+                if abortRecording {
+                    try path.delete()
+                } else {
+                    try path.move(to: .recordings)
+                }
             } catch {
-                print("RecordCoordinator: moving current recording to \(path) failed. Error: \(error)")
+                print("RecordCoordinator: moving/deleting current recording to \(path) failed. Error: \(error)")
             }
         }
         
         currentRecordingPath = nil
+        currentVideoSettings = nil
         endBackgroundTask()
         isReady = true
+        abortRecording = false
         
         delegate?.recordingStopped()
     }
     
     private func trimClip(chunk: Int, request: VideoTrimRequest, completion: (() -> Void)? = nil) {
         guard FileManager.default.fileExists(atPath: request.sourcePath) else { return }
+        guard let settings = currentVideoSettings else { return }
         
         let sourceURL = URL(fileURLWithPath: request.sourcePath)
         let destinationURL = URL(fileURLWithPath: request.destinationPath)
         videoTrimmer.trimVideo(sourceURL: sourceURL,
                                destinationURL: destinationURL,
                                from: TimeInterval(request.clipStart),
-                               to: TimeInterval(request.clipEnd)) { [jsonWriter, weak self] error in
+                               to: TimeInterval(request.clipEnd),
+                               settings: settings) { [jsonWriter, weak self] error in
             
             guard let `self` = self else { return }
             if let trimError = (error as? VideoTrimmerError), case VideoTrimmerError.sourceIsNotExportable = trimError {
@@ -248,12 +262,16 @@ final class RecordCoordinator {
     private func copyClip(chunk: Int, clipStart: Float, clipEnd: Float) {
         guard
             let referenceTime = currentReferenceTime,
-            let recordingPath = currentRecordingPath
+            let recordingPath = currentRecordingPath,
+            let videoSettings = currentVideoSettings
         else { return }
         
-        let sourcePath = chunkPath(for: chunk)
-        let destinationPath = self.destinationPath(basePath: recordingPath.recordingPath, clipStart, clipEnd)
-        let log = VideoLog(name: (destinationPath as NSString).lastPathComponent,
+        let sourcePath = chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
+        let destinationPath = savesSourceVideo
+            ? recordingPath.videoPath
+            : recordingPath.videoClipPath(start: clipStart, end: clipEnd)
+        
+        let log = VideoLog(name: destinationPath.lastPathComponent,
                            start: referenceTime + clipStart,
                            end: referenceTime + clipEnd)
         
@@ -267,12 +285,8 @@ final class RecordCoordinator {
         }
     }
     
-    private func destinationPath(basePath: String, _ start: Float, _ end: Float) -> String {
-        return "\(basePath)\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(self.videoSettings.fileExtension)"
-    }
-    
-    private func chunkPath(for number: Int) -> String {
-        return "\(DocumentsLocation.cache.path)/\(number).\(videoSettings.fileExtension)"
+    private func chunkPath(for number: Int, fileExtension: String) -> String {
+        return "\(DocumentsLocation.cache.path)/\(number).\(fileExtension)"
     }
     
     private func recreateFolder(path: String) {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Zip
+import ZIPFoundation
 
 protocol Archiver {
     func archive(_ files: [URL], destination: URL) throws
@@ -15,9 +15,17 @@ protocol Archiver {
 
 final class RecordArchiver: Archiver {
     
+    enum RecordArchiverError: Error {
+        case cantCreateArchive(URL)
+    }
+    
     func archive(_ files: [URL], destination: URL) throws {
-        try Zip.zipFiles(paths: files, zipFilePath: destination, password: nil, progress: { (progress) in
-            print("Compressing \(progress)...")
-        })
+        guard let archive = Archive(url: destination, accessMode: .create) else {
+            throw RecordArchiverError.cantCreateArchive(destination)
+        }
+        
+        for file in files {
+            try archive.addEntry(with: file.lastPathComponent, relativeTo: file.deletingLastPathComponent())
+        }
     }
 }
