@@ -1,52 +1,3 @@
-# Disable rules from the default enabled set
-disabled_rules:
- - collection_alignment # All elements in a collection literal should be vertically aligned
- - conditional_returns_on_newline # Conditional statements should always return on the next line
- - deployment_target # Availability checks or attributes shouldn't be using older versions that are satisfied by the deployment target.
- - discouraged_optional_boolean # Prefer non-optional booleans over optional booleans.
- - discouraged_optional_collection # Prefer empty collection over optional collection.
- - explicit_acl # All declarations should specify Access Control Level keywords explicitly.
- - explicit_enum_raw_value # Enums should be explicitly assigned their raw values.
- - explicit_init # Explicitly calling .init() should be avoided.
- - explicit_top_level_acl # Top-level declarations should specify Access Control Level keywords explicitly.
- - explicit_type_interface # Properties should have a type interface
- - extension_access_modifier # Prefer to use extension access modifiers
- - fallthrough # Fallthrough should be avoided.
- - file_types_order # Specifies how the types within a file should be ordered.
- - function_parameter_count # Number of function parameters should be low.
- - line_length # Lines should not span too many characters.
- - missing_docs # Declarations should be documented.
- - multiline_arguments # Arguments should be either on the same line, or one per line.
- - multiline_arguments_brackets # Multiline arguments should have their surrounding brackets in a new line.
- - multiline_parameters # Functions and methods parameters should be either on the same line, or one per line.
- - nesting # Types should be nested at most 1 level deep, and statements should be nested at most 5 levels deep.
- - no_extension_access_modifier # Prefer not to use extension access modifiers
- - no_fallthrough_only # Fallthroughs can only be used if the case contains at least one other statement.
- - no_grouping_extension # Extensions shouldn't be used to group code within the same source file.
- - override_in_extension # Extensions shouldn't override declarations.
- - prefixed_toplevel_constant # Top-level constants should be prefixed by k.
- - private_action # IBActions should be private.
- - prohibited_interface_builder # Creating views using Interface Builder should be avoided.
- - quick_discouraged_call # Discouraged call inside 'describe' and/or 'context' block.
- - quick_discouraged_focused_test # Discouraged focused test. Other tests won't run while this one is focused.
- - quick_discouraged_pending_test # Discouraged pending test. This test won't run while it's marked as pending.
- - redundant_type_annotation # Variables should not have redundant type annotation
- - required_deinit # Classes should have an explicit deinit method.
- - required_enum_case # Enums conforming to a specified protocol must implement a specific case(s).
- - static_operator # Operators should be declared as static functions, not free functions.
- - switch_case_on_newline # Cases inside a switch should always be on a newline
- - type_contents_order # Specifies the order of subtypes, properties, methods & more within a type.
- - unavailable_function # Unimplemented functions should be marked as unavailable.
- - unowned_variable_capture # Prefer capturing references as weak to avoid potential crashes.
- - vertical_parameter_alignment_on_call # Function parameters should be aligned vertically if they're in multiple lines in a method call.
- - vertical_whitespace # Limit vertical whitespace to a single empty line.
- - vertical_whitespace_between_cases # Include a single empty line between switch cases.
- - vertical_whitespace_opening_braces # Don't include vertical whitespace (empty line) after opening braces.
- - yoda_condition # The variable should be placed on the left, the constant on the right of a comparison operator.
-
-# Enable rules not from the default set.
-opt_in_rules:
-
 # Acts as a whitelist, only the rules specified in this list will be enabled. Can not be specified alongside disabled_rules or opt_in_rules.
 whitelist_rules:
  - anyobject_protocol # Prefer using AnyObject over class for class-only protocols.
@@ -183,7 +134,54 @@ analyzer_rules:
  - unused_private_declaration # Private declarations should be referenced in that file.
  - unused_import # All imported modules should be required to make the file compile.
  - explicit_self # Instance variables and functions should be explicitly accessed with 'self.'.
-   
+
+# Disable rules from the default enabled set
+#disabled_rules:
+# - collection_alignment # All elements in a collection literal should be vertically aligned
+# - conditional_returns_on_newline # Conditional statements should always return on the next line
+# - deployment_target # Availability checks or attributes shouldn't be using older versions that are satisfied by the deployment target.
+# - discouraged_optional_boolean # Prefer non-optional booleans over optional booleans.
+# - discouraged_optional_collection # Prefer empty collection over optional collection.
+# - explicit_acl # All declarations should specify Access Control Level keywords explicitly.
+# - explicit_enum_raw_value # Enums should be explicitly assigned their raw values.
+# - explicit_init # Explicitly calling .init() should be avoided.
+# - explicit_top_level_acl # Top-level declarations should specify Access Control Level keywords explicitly.
+# - explicit_type_interface # Properties should have a type interface
+# - extension_access_modifier # Prefer to use extension access modifiers
+# - fallthrough # Fallthrough should be avoided.
+# - file_types_order # Specifies how the types within a file should be ordered.
+# - function_parameter_count # Number of function parameters should be low.
+# - line_length # Lines should not span too many characters.
+# - missing_docs # Declarations should be documented.
+# - multiline_arguments # Arguments should be either on the same line, or one per line.
+# - multiline_arguments_brackets # Multiline arguments should have their surrounding brackets in a new line.
+# - multiline_parameters # Functions and methods parameters should be either on the same line, or one per line.
+# - nesting # Types should be nested at most 1 level deep, and statements should be nested at most 5 levels deep.
+# - no_extension_access_modifier # Prefer not to use extension access modifiers
+# - no_fallthrough_only # Fallthroughs can only be used if the case contains at least one other statement.
+# - no_grouping_extension # Extensions shouldn't be used to group code within the same source file.
+# - override_in_extension # Extensions shouldn't override declarations.
+# - prefixed_toplevel_constant # Top-level constants should be prefixed by k.
+# - private_action # IBActions should be private.
+# - prohibited_interface_builder # Creating views using Interface Builder should be avoided.
+# - quick_discouraged_call # Discouraged call inside 'describe' and/or 'context' block.
+# - quick_discouraged_focused_test # Discouraged focused test. Other tests won't run while this one is focused.
+# - quick_discouraged_pending_test # Discouraged pending test. This test won't run while it's marked as pending.
+# - redundant_type_annotation # Variables should not have redundant type annotation
+# - required_deinit # Classes should have an explicit deinit method.
+# - required_enum_case # Enums conforming to a specified protocol must implement a specific case(s).
+# - static_operator # Operators should be declared as static functions, not free functions.
+# - switch_case_on_newline # Cases inside a switch should always be on a newline
+# - type_contents_order # Specifies the order of subtypes, properties, methods & more within a type.
+# - unavailable_function # Unimplemented functions should be marked as unavailable.
+# - unowned_variable_capture # Prefer capturing references as weak to avoid potential crashes.
+# - vertical_parameter_alignment_on_call # Function parameters should be aligned vertically if they're in multiple lines in a method call.
+# - vertical_whitespace # Limit vertical whitespace to a single empty line.
+# - vertical_whitespace_between_cases # Include a single empty line between switch cases.
+# - vertical_whitespace_opening_braces # Don't include vertical whitespace (empty line) after opening braces.
+# - yoda_condition # The variable should be placed on the left, the constant on the right of a comparison operator.
+
+
 #included: # paths to include during linting. `--path` is ignored if present.
 #  - ThaliCore
 #  - ThaliCoreTests
