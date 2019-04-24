@@ -9,6 +9,11 @@ import UIKit
 import MapboxVision
 import AVFoundation
 
+/**
+ * "External camera" example demonstrates how to create a custom source of video stream and pass it to `VisionManager`.
+ */
+
+// Example of custom video source is a simple video file reader
 class FileVideoSource: ObservableVideoSource {
     
     private let reader: AVAssetReader
@@ -51,7 +56,9 @@ class FileVideoSource: ObservableVideoSource {
     @objc func update() {
         queue.async { [unowned self] in
             if let buffer = self.reader.outputs.first?.copyNextSampleBuffer() {
+                // notify all abservers about new sample buffer availability
                 self.notify { observer in
+                    // construct `VideoSample` specifying the format of image contained in a sample buffer
                     let videoSample = VideoSample(buffer: buffer, format: .BGRA)
                     observer.videoSource(self, didOutput: videoSample)
                 }
@@ -78,9 +85,11 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
         
         addVisionView()
         
+        // create a custom video source and subscribe to receiving new video samples
         fileVideoSource = FileVideoSource(url: Bundle.main.url(forResource: "video", withExtension: "mp4")!)
         fileVideoSource.add(observer: self)
         
+        // create VisionManager with a custom video source
         visionManager = VisionManager.create(videoSource: fileVideoSource)
     }
     
@@ -108,6 +117,7 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
 extension ExternalCameraViewController: VideoSourceObserver {
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         DispatchQueue.main.async { [weak self] in
+            // display received sample buffer by passing it to presentation controller
             self?.visionViewController.present(sampleBuffer: videoSample.buffer)
         }
     }

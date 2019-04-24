@@ -18,18 +18,20 @@ private let safeAreaContentInset: CGFloat = 2
 private let innerRelativeInset: CGFloat = 10
 
 /**
-    Mode that determines which type of events is currently being visualized
+    Mode that determines which type of events is currently being visualized.
 */
-
 public enum VisualizationMode {
+    
     /**
-        Show a raw frame from the camera
+        Show a raw frame from a video source
     */
     case clear
+    
     /**
-        Show segmentation mask above video stream
+        Show segmentation mask blended with a video frame
     */
     case segmentation
+    
     /**
         Show detected objects with bounding boxes
     */
@@ -37,14 +39,13 @@ public enum VisualizationMode {
 }
 
 /**
-    An object that is capable of presenting objects emitted with VisionManager events
+    Object that is capable of presenting objects emitted from `VisionManager`.
 */
-
 public final class VisionPresentationViewController: UIViewController {
     
     /**
-        Set visualization mode which can be either original frame, original frame with segmentation as an overlay or original frame with detections as an overlay.
-     */
+        Set visualization mode.
+    */
     public var frameVisualizationMode: VisualizationMode = .clear {
         didSet {
             let oldTopView = view(for: oldValue)
@@ -57,7 +58,7 @@ public final class VisionPresentationViewController: UIViewController {
     
     /**
         Control the visibility of the Mapbox logo.
-     */
+    */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -88,21 +89,25 @@ public final class VisionPresentationViewController: UIViewController {
         return SegmentationDrawer(device: device)
     }()
     
+    /// :nodoc:
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
     }
     
+    /// :nodoc:
     public override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         setupContentView()
     }
     
+    /// :nodoc:
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupContentView()
     }
     
+    /// :nodoc:
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -302,6 +307,10 @@ public final class VisionPresentationViewController: UIViewController {
 }
 
 extension VisionPresentationViewController {
+    
+    /**
+        Display sample buffer (e.g. taken from `VideoSource`).
+    */
     public func present(sampleBuffer: CMSampleBuffer) {
         guard frameVisualizationMode == .clear else { return }
         
@@ -313,6 +322,7 @@ extension VisionPresentationViewController {
         }
     }
     
+    /// :nodoc:
     public func present(fps: FPSValue?) {
         measurementStack.isHidden = fps == nil
         guard let fps = fps else { return }
@@ -322,7 +332,10 @@ extension VisionPresentationViewController {
         roadConfidenceFPSLabel.text = String(format: "%.2f", fps.roadConfidence)
         coreUpdateFPSLabel.text = String(format: "%.2f", fps.coreUpdate)
     }
-
+    
+    /**
+        Display frame segmentation.
+    */
     public func present(segmentation: FrameSegmentation) {
         guard frameVisualizationMode == .segmentation else { return }
         
@@ -337,6 +350,9 @@ extension VisionPresentationViewController {
         segmentationView.draw()
     }
     
+    /**
+        Display frame detections.
+    */
     public func present(detections: FrameDetections) {
         guard
             frameVisualizationMode == .detection,

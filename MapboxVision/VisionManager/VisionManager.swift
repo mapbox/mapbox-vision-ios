@@ -11,18 +11,25 @@ import UIKit
 import MapboxVisionNative
 
 /**
-    The main object for registering for events from the library, starting and stopping their delivery. It also provides some useful function for performance configuration and data conversion.
+    The main object for registering for events from the SDK, starting and stopping their delivery.
+    It also provides some useful functions for performance configuration and data conversion.
 */
-
 public final class VisionManager {
     
     // MARK: - Public
     // MARK: Lifetime
     
     /**
-        Fabric method for creating VisionManager instance.
-     */
-    
+        Fabric method for creating a `VisionManager` instance.
+        
+        It's only allowed to have one living instance of `VisionManager`.
+        To create `VisionManager` with different configuration call `destroy` on existing instance or release all references to it.
+        
+        - Parameter videoSource: Video source which will be utilized by created instance of `VisionManager`.
+        - Parameter operationMode: Mode in which created instance of `VisionManager` will operate.
+        
+        - Returns: Instance of `VisionManager` configured with video source and operation mode.
+    */
     public static func create(videoSource: VideoSource, operationMode: OperationMode = .normal) -> VisionManager {
         let dependencies = AppDependency(operationMode: operationMode)
         let manager = VisionManager(dependencies: dependencies, videoSource: videoSource, operationMode: operationMode)
@@ -30,10 +37,10 @@ public final class VisionManager {
     }
     
     /**
-        Start delivering events from VisionManager.
-        VisionManager is required to be initialized before calling this method.
+        Start delivering events from `VisionManager`.
+        
+        - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
     */
-    
     public func start(delegate: VisionManagerDelegate? = nil) {
         switch state {
         case .uninitialized:
@@ -50,9 +57,8 @@ public final class VisionManager {
     }
     
     /**
-        Stop delivering events from SDK.
+        Stop delivering events from `VisionManager`.
     */
-    
     public func stop() {
         guard case let .started(videoSource, _) = state else {
             assertionFailure("VisionManager is not started")
@@ -65,9 +71,8 @@ public final class VisionManager {
     }
     
     /**
-        Cleanup the state and resources of VisionManger.
+        Cleanup the state and resources of `VisionManger`.
     */
-    
     public func destroy() {
         guard !state.isUninitialized else { return }
         
@@ -85,7 +90,6 @@ public final class VisionManager {
         Performance configuration for machine learning models.
         Default value is merged with dynamic performance mode and high rate.
     */
-    
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
         didSet {
@@ -97,37 +101,42 @@ public final class VisionManager {
     // MARK: Utility
     
     /**
-        Converts location of the point from screen coordinates to world coordinates.
+        Converts location of the point from a screen coordinate to a world coordinate.
+        
+        - Parameter screenCoordinate: Screen coordinate expressed in pixels
     */
-    
     public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
         return dependencies.native.pixel(toWorld: screenCoordinate)
     }
     
     /**
-        Converts location of the point from world coordinates to screen coordinates.
+        Converts location of the point from a world coordinate to a screen coordinate.
+        
+        - Parameter worldCoordinate: Point in world coordinate
     */
-    
     public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
     
     /**
-        Converts any geo coordinates to a world position (meters).
+        Converts location of the point from a geo coordinate to a world coordinate.
+        
+        - Parameter geoCoordinate: Geographical coordinate of the point
     */
-    
     public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate {
         return dependencies.native.geo(toWorld: geoCoordinate)
     }
     
     /**
-        Converts world point into geo coordinates.
+        Converts location of the point in a world coordinate to a geographical coordinate.
+        
+        - Parameter worldCoordinate: World coordinate of the point
     */
-    
     public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate {
         return dependencies.native.world(toGeo: worldCoordinates)
     }
     
+    /// :nodoc:
     public var native: VisionManagerNative {
         return dependencies.native
     }
@@ -399,6 +408,7 @@ public final class VisionManager {
     }
 }
 
+/// :nodoc:
 extension VisionManager: VisionDelegate {
     public func onAuthorizationStatusUpdated(_ status: AuthorizationStatus) {
         state.delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
@@ -458,6 +468,7 @@ extension VisionManager: VisionDelegate {
     }
 }
 
+/// :nodoc:
 extension VisionManager: VideoSourceObserver {
     public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
