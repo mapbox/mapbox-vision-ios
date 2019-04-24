@@ -6,19 +6,19 @@ final class RecordingQuota {
         static let recordingMemoryQuotaKey = "recordingMemoryQuota"
         static let lastResetTimeKey = "lastResetTimeKey"
     }
-    
+
     private enum RecordingQuotaError: LocalizedError {
         case memoryLimitOverflowed
     }
-    
+
     private let memoryLimit: Int64
     private let updatingInterval: TimeInterval
-    
+
     init(memoryLimit: Int64, updatingInterval: TimeInterval) {
         self.memoryLimit = memoryLimit
         self.updatingInterval = updatingInterval
     }
-    
+
     func reserve(memory: Int64) throws {
         var quota = currentQuota
         let now = Date()
@@ -26,12 +26,12 @@ final class RecordingQuota {
             quota = memoryLimit
             lastResetTime = now
         }
-        
+
         let reminder = quota - memory
         guard reminder >= 0 else { throw RecordingQuotaError.memoryLimitOverflowed }
         currentQuota = reminder
     }
-    
+
     private var lastResetTime: Date {
         get {
             let defaults = UserDefaults.standard
@@ -47,7 +47,7 @@ final class RecordingQuota {
             UserDefaults.standard.set(newValue, forKey: Keys.lastResetTimeKey)
         }
     }
-    
+
     private var currentQuota: Int64 {
         get {
             let defaults = UserDefaults.standard

@@ -7,20 +7,20 @@ import Foundation
      NOTE: All delegate methods are called on a background thread.
 */
 public protocol VisionSafetyManagerDelegate: class {
-    
+
     /**
         Tells the delegate that current road restrictions were updated.
     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions: RoadRestrictions)
-    
+
     /**
         Tells the delegate that new probable collisions were detected.
     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject])
 }
-    
+
 public extension VisionSafetyManagerDelegate {
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions: RoadRestrictions) {}
-    
+
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject]) {}
 }

@@ -7,7 +7,7 @@ struct VideoSettings {
     let fileType: AVFileType
     let fileExtension: String
     let bitRate: Int
-    
+
     var sessionPreset: AVCaptureSession.Preset? {
         switch (width, height) {
         case (640, 480):
@@ -22,7 +22,7 @@ struct VideoSettings {
             return nil
         }
     }
-    
+
     static let lowQuality = VideoSettings(
         width: 960,
         height: 540,
@@ -31,7 +31,7 @@ struct VideoSettings {
         fileExtension: "mp4",
         bitRate: 6_000_000
     )
-    
+
     static let highQuality = VideoSettings(
         width: 1920,
         height: 1080,

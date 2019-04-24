@@ -24,14 +24,14 @@ final class VideoRecorder {
     private(set) var isRecording = false
     private var startTime: CMTime?
     private var currentTime: CMTime?
-    
+
     private let writerQueue = DispatchQueue(label: "com.mapbox.VideoRecorder")
-    
+
     func startRecording(to path: String, settings: VideoSettings) {
         let assetWriterInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings.outputSettings)
         currentAssetWriterInput = assetWriterInput
         assetWriterInput.expectsMediaDataInRealTime = true
-        
+
         writerQueue.async {
             let outputURL = URL(fileURLWithPath: path)
             let assetWriter: AVAssetWriter
@@ -41,14 +41,14 @@ final class VideoRecorder {
                 assertionFailure(error.localizedDescription)
                 return
             }
-            
+
             assetWriter.add(assetWriterInput)
-            
+
             self.currentAssetWriter = assetWriter
             self.isRecording = true
         }
     }
-    
+
     func stopRecording(completion: (() -> Void)?) {
         writerQueue.async { [weak self] in
             let cleanup = {
@@ -61,12 +61,12 @@ final class VideoRecorder {
                 cleanup()
                 return
             }
-            
+
             guard
                 let `self` = self,
                 let assetWriterInput = self.currentAssetWriterInput
             else { return }
-            
+
             assetWriterInput.markAsFinished()
             if let currentTime = self.currentTime {
                 writer.endSession(atSourceTime: currentTime)
@@ -78,7 +78,7 @@ final class VideoRecorder {
     func handleFrame(_ sampleBuffer: CMSampleBuffer, completion: @escaping ((Result<Float64, VideoRecorderError>) -> Void)) {
         writerQueue.async { [weak self] in
             guard let `self` = self else { return }
-            
+
             guard self.isRecording, let writer = self.currentAssetWriter else {
                 completion(.error(.notRecording))
                 return
@@ -90,7 +90,7 @@ final class VideoRecorder {
                 writer.startWriting()
                 writer.startSession(atSourceTime: lastSampleTime)
                 self.startTime = lastSampleTime
-                
+
                 self.append(sampleBuffer, completion: completion)
             case .writing:
                 self.append(sampleBuffer, completion: completion)
@@ -102,16 +102,16 @@ final class VideoRecorder {
             }
         }
     }
-    
+
     private func append(_ sampleBuffer: CMSampleBuffer, completion: @escaping ((Result<Float64, VideoRecorderError>) -> Void)) {
         guard let assetWriterInput = currentAssetWriterInput, assetWriterInput.isReadyForMoreMediaData else {
             completion(.error(.notReadyForData))
             return
         }
         assetWriterInput.append(sampleBuffer)
-        
+
         self.currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        
+
         guard let startTime = self.startTime else {
             assertionFailure("VideoRecorder: start up time should has been already stored")
             completion(.error(.recordingFailed))

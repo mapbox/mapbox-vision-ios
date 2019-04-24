@@ -7,10 +7,10 @@ import MapboxVisionSafetyNative
     Depends on `VisionManager`.
 */
 public final class VisionSafetyManager {
-    
+
     private var native: VisionSafetyManagerNative?
     private var delegate: VisionSafetyManagerDelegate?
-    
+
     /**
         Fabric method for creating a `VisionSafetyManager` instance.
         
@@ -25,7 +25,7 @@ public final class VisionSafetyManager {
         manager.delegate = delegate
         return manager
     }
-    
+
     /**
         Cleanup the state and resources of `VisionSafetyManger`.
     */
@@ -35,7 +35,7 @@ public final class VisionSafetyManager {
         native = nil
         delegate = nil
     }
-    
+
     /**
         Set sensitivity thresholds in seconds for collision with vehicles.
         
@@ -45,7 +45,7 @@ public final class VisionSafetyManager {
     public func setTimeToCollisionWithVehicle(warningTime: Float, criticalTime: Float) {
         native?.setTimeToCollisionWithVehicle(warningTime, criticalTime: criticalTime)
     }
-    
+
     /**
         Set minimal speed when collision system activates. Expressed in meters per second.
     */
@@ -59,7 +59,7 @@ extension VisionSafetyManager: VisionSafetyDelegate {
     public func onRoadRestrictionsUpdated(_ roadRestrictions: RoadRestrictions) {
         delegate?.visionSafetyManager(self, didUpdateRoadRestrictions: roadRestrictions)
     }
-    
+
     public func onCollisionsUpdated(_ collisions: [CollisionObject]) {
         delegate?.visionSafetyManager(self, didUpdateCollisions: collisions)
     }

@@ -10,25 +10,25 @@ final class MotionManager {
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
-    
+
     var handler: ((CMDeviceMotion) -> Void)?
-    
+
     init(with referenceFrame: CMAttitudeReferenceFrame) {
         self.referenceFrame = referenceFrame
     }
-    
+
     func start(updateInterval: Double) {
         guard motion.isDeviceMotionAvailable else { return }
-        
+
         motion.deviceMotionUpdateInterval = updateInterval
         motion.showsDeviceMovementDisplay = true
-        
+
         motion.startDeviceMotionUpdates(using: referenceFrame, to: queue) { [weak self] (data, error) in
             guard let data = data else { return }
             self?.handler?(data)
         }
     }
-    
+
     func stop() {
         guard motion.isDeviceMotionActive else { return }
         motion.stopDeviceMotionUpdates()

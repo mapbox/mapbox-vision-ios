@@ -7,24 +7,24 @@ struct BasicDetection {
 }
 
 final class DetectionsView: UIImageView {
-    
+
     private static let labelHeight = CGFloat(18)
     private static let labelSidePadding = CGFloat(5)
-    
+
     func present(detections: [BasicDetection], at image: UIImage) {
-        
+
         self.subviews.forEach { $0.removeFromSuperview() }
-        
+
         self.image = image
         self.contentMode = .scaleAspectFill
-        
+
         detections.forEach {
             let view = UIView(frame: $0.boundingBox)
             view.backgroundColor = .clear
             view.layer.borderWidth = 3
-            
+
             let color = $0.objectType.color
-            
+
             let title = $0.objectType.title.uppercased() as NSString
             let font = UIFont(name: "AvenirNextCondensed-Bold", size: 11)!
             let size: CGSize = title.size(withAttributes: [NSAttributedString.Key.font: font])
@@ -40,19 +40,19 @@ final class DetectionsView: UIImageView {
             label.textColor = color
             label.backgroundColor = UIColor.black.withAlphaComponent(0.53)
             self.addSubview(label)
-            
+
             self.layer.masksToBounds = false
-    
+
             view.layer.borderColor = color.cgColor
             self.addSubview(view)
         }
-        
+
         self.setNeedsDisplay()
     }
 }
 
 private extension DetectionClass {
-    
+
     var color: UIColor {
         switch self {
         case .trafficLight:
@@ -67,7 +67,7 @@ private extension DetectionClass {
             return UIColor(red: 0, green: 165.0/255.0, blue: 1.0, alpha: 1.0)
         }
     }
-    
+
     var title: String {
         switch self {
         case .trafficLight:

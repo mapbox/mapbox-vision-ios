@@ -7,12 +7,12 @@ import Foundation
      - NOTE: All delegate methods are called on a background thread.
 */
 public protocol VisionARManagerDelegate: class {
-    
+
     /**
         Tells the delegate that AR camera was updated.
     */
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera)
-    
+
     /**
         Tells the delegate that AR lane was updated.
     */
@@ -21,6 +21,6 @@ public protocol VisionARManagerDelegate: class {
 
 public extension VisionARManagerDelegate {
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {}
-    
+
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {}
 }

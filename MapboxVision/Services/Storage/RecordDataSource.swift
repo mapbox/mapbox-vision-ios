@@ -10,7 +10,7 @@ extension RecordDataSource {
     var recordDirectories: [URL] {
         return baseURL.subDirectories
     }
-    
+
     func removeFile(at url: URL) {
         try? FileManager.default.removeItem(at: url)
     }
@@ -30,18 +30,18 @@ final class ShowcaseRecordDataSource: RecordDataSource {
 
 final class CachedRecordDataSource: RecordDataSource {
     let dataSource: RecordDataSource
-    
+
     init(dataSource: RecordDataSource) {
         self.dataSource = dataSource
     }
-    
+
     private lazy var cachedBaseURL: URL = {
         return dataSource.baseURL
     }()
     var baseURL: URL {
         return cachedBaseURL
     }
-    
+
     private lazy var cachedRecordDirectories: [URL] = {
         return dataSource.recordDirectories
     }()

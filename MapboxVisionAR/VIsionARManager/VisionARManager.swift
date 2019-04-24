@@ -8,10 +8,10 @@ import MapboxVision
     Depends on `VisionManager`.
 */
 public final class VisionARManager {
-    
+
     private var native: VisionARManagerNative?
     private var delegate: VisionARManagerDelegate?
-    
+
     /**
         Fabric method for creating a `VisionARManager` instance.
         
@@ -45,7 +45,7 @@ public final class VisionARManager {
         native = nil
         delegate = nil
     }
-    
+
     /**
         Set route to AR. Should be called on every reroute.
     */
@@ -59,7 +59,7 @@ extension VisionARManager: VisionARDelegate {
     public func onARCameraUpdated(_ camera: ARCamera) {
         delegate?.visionARManager(self, didUpdateARCamera: camera)
     }
-    
+
     public func onARLaneUpdated(_ lane: ARLane?) {
         delegate?.visionARManager(self, didUpdateARLane: lane)
     }
