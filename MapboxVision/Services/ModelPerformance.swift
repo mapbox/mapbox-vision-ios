@@ -105,7 +105,7 @@ enum CoreModelPerformance {
     case dynamic(minFps: Float, maxFps: Float)
 }
 
-struct ModelPerformanceResolver {
+enum ModelPerformanceResolver {
     private struct PerformanceEntry {
         let off: Float
         let low: Float

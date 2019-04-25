@@ -1,7 +1,7 @@
 import Foundation
 
 final class RecordingQuota {
-    private struct Keys {
+    private enum Keys {
         static let hasStoredRecordingQuotaKey = "hasStoredRecordingQuota"
         static let recordingMemoryQuotaKey = "recordingMemoryQuota"
         static let lastResetTimeKey = "lastResetTimeKey"
