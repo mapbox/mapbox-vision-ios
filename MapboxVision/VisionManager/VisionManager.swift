@@ -185,7 +185,7 @@ public final class VisionManager: BaseVisionManager {
         dependencies.dataProvider.stop()
         stopVideoStream()
         dependencies.native.stop()
-        
+
         dependencies.recorder.stop()
     }
 
