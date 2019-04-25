@@ -7,7 +7,7 @@ extension URL {
 
     var subDirectories: [URL] {
         guard isDirectory else { return [] }
-        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter{ $0.isDirectory }) ?? []
+        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter { $0.isDirectory }) ?? []
     }
 
     var creationDate: Date? {
