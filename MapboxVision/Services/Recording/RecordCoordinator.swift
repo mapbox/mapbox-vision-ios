@@ -144,7 +144,7 @@ final class RecordCoordinator {
             trimClip(chunk: startChunk, request: trimRequest)
             
             // copy all in-between clips
-            for chunk in (startChunk + 1) ..< endChunk {
+            for chunk in (startChunk + 1)..<endChunk {
                 let clipStart = Float(chunk) * chunkLength
                 let clipEnd = Float(chunk + 1) * chunkLength
                 copyClip(chunk: chunk, clipStart: clipStart, clipEnd: clipEnd)
