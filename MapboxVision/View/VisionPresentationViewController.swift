@@ -80,25 +80,25 @@ public final class VisionPresentationViewController: UIViewController {
     }()
 
     /// :nodoc:
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
     }
 
     /// :nodoc:
-    public override func viewSafeAreaInsetsDidChange() {
+    override public func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         setupContentView()
     }
 
     /// :nodoc:
-    public override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupContentView()
     }
 
     /// :nodoc:
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: { [weak self] _ in
