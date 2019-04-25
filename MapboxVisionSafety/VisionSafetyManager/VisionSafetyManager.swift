@@ -8,7 +8,7 @@ import MapboxVisionSafetyNative
 */
 public final class VisionSafetyManager {
     private var native: VisionSafetyManagerNative?
-    private var delegate: VisionSafetyManagerDelegate?
+    private weak var delegate: VisionSafetyManagerDelegate?
 
     /**
         Fabric method for creating a `VisionSafetyManager` instance.

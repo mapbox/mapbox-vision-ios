@@ -9,7 +9,7 @@ import MapboxVisionNative
 */
 public final class VisionARManager {
     private var native: VisionARManagerNative?
-    private var delegate: VisionARManagerDelegate?
+    private weak var delegate: VisionARManagerDelegate?
 
     /**
         Fabric method for creating a `VisionARManager` instance.
