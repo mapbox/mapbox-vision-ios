@@ -127,11 +127,11 @@ struct ModelPerformanceResolver {
 
     private static let isTopDevice = UIDevice.current.isTopDevice
 
-    private static let segmentationHighEnd   = PerformanceEntry(off: 1, low: 2, high: 7)
-    private static let detectionHighEnd      = PerformanceEntry(off: 3, low: 4, high: 12)
+    private static let segmentationHighEnd = PerformanceEntry(off: 1, low: 2, high: 7)
+    private static let    detectionHighEnd = PerformanceEntry(off: 3, low: 4, high: 12)
 
-    private static let segmentationLowEnd    = PerformanceEntry(off: 1, low: 2, high: 5)
-    private static let detectionLowEnd       = PerformanceEntry(off: 3, low: 4, high: 11)
+    private static let  segmentationLowEnd = PerformanceEntry(off: 1, low: 2, high: 5)
+    private static let     detectionLowEnd = PerformanceEntry(off: 3, low: 4, high: 11)
 
     private static func performanceEntry(for model: ModelType) -> PerformanceEntry {
         switch model {
