@@ -101,6 +101,7 @@ public final class VisionPresentationViewController: UIViewController {
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
+        // swiftlint:disable:next trailing_closure
         coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.setupContentView()
         })

@@ -1,4 +1,4 @@
-// swiftlint:disable identifier_name
+// swiftlint:disable comma identifier_name operator_usage_whitespace
 
 import simd
 
