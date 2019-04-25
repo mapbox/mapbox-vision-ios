@@ -392,8 +392,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
                         modelMatrix: modelMatrix,
                         normalMatrix: normalMatrix(mat: modelMatrix))
                     commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<DefaultVertexUniforms>.size, index: 1)
-
-
                 }
 
                 let light = material.light ?? defaultLight

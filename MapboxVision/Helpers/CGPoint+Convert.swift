@@ -34,7 +34,6 @@ public extension CGPoint {
             let offset = (width - to.width) / 2
 
             return CGPoint(x: Int((x * scaleFactor) - offset), y: Int(y * scaleFactor))
-
         } else if fromAspect < toAspect {
 
             /*
@@ -56,7 +55,6 @@ public extension CGPoint {
             let offset = (height - to.height) / 2
 
             return CGPoint(x: Int(x * scaleFactor), y: Int((y * scaleFactor) - offset))
-
         } else {
 
             /*

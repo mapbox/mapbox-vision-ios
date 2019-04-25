@@ -98,7 +98,5 @@ extension EventsManager: NetworkClient {
         manager.postMetadata([metadata], filePaths: [file.path], completionHandler: completion)
     }
 
-    func cancel() {
-
-    }
+    func cancel() {}
 }
