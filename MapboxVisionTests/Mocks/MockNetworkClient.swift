@@ -3,7 +3,7 @@ import Foundation
 
 final class MockNetworkClient: NetworkClient {
 
-    var error: Error? = nil
+    var error: Error?
     var uploaded: [URL: String] = [:]
 
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {
