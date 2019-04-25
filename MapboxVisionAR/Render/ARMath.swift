@@ -1,3 +1,5 @@
+// swiftlint:disable identifier_name
+
 import simd
 
 extension float4 {
