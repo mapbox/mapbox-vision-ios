@@ -10,5 +10,5 @@ final class MockNetworkClient: NetworkClient {
         completion(error)
     }
 
-    func cancel() { }
+    func cancel() {}
 }
