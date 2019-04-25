@@ -133,4 +133,3 @@ class ARScene {
     var rootNode = ARNode(name: "root")
     var camera = ARCameraNode()
 }
-
