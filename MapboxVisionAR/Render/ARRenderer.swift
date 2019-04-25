@@ -152,7 +152,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
                                                                 colorPixelFormat: colorPixelFormat,
                                                                 depthStencilPixelFormat: depthStencilPixelFormat)
 
-
         renderPipelineBackground = try ARRenderer.makeRenderBackgroundPipeline(device: device,
                                                                                vertexDescriptor: ARRenderer.makeTextureMappingVertexDescriptor(),
                                                                                vertexFunction: backgroundVertexFunction,

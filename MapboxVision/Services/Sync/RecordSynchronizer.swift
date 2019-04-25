@@ -161,8 +161,7 @@ final class RecordSynchronizer: Synchronizable {
         let sorted = dependencies.dataSource.recordDirectories
             .flatMap { (try? self.getFiles($0, types: [.video])) ?? [] }
             .sorted { fileSize($0) < fileSize($1) }
-            
-            
+
         for file in sorted {
             group.enter()
             

@@ -67,7 +67,6 @@ class FileVideoSource: ObservableVideoSource {
     }
 }
 
-
 class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
     private var fileVideoSource: FileVideoSource!
     private var visionManager: VisionManager!

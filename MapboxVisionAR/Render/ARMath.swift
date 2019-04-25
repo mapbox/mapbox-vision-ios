@@ -49,7 +49,6 @@ extension simd_quatf {
     }
 }
 
-
 func makeTransformMatrix(trans: float3, rot: simd_quatf, scale: float3) -> float4x4 {
     let rot3x3 = rot.rotMatrix
 
