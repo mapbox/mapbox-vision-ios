@@ -66,10 +66,10 @@ class ARNode {
     }
 
     func worldTransform() -> float4x4 {
-        if (needTransformUpdate) {
+        if needTransformUpdate {
             let localTransform = makeTransformMatrix(trans: position, rot: rotation, scale: scale)
 
-            if (parent != nil) {
+            if parent != nil {
                 cachedTransformMatrix = parent!.worldTransform() * localTransform
             } else {
                 cachedTransformMatrix = localTransform
@@ -120,7 +120,7 @@ class ARCameraNode: ARNode {
     }
 
     func projectionMatrix() -> float4x4 {
-        if (needProjectionUpdate) {
+        if needProjectionUpdate {
             needProjectionUpdate = false
             cachedProjectionMatrix = makePerpectiveProjectionMatrix(fovRadians: fovRadians, aspectRatio: aspectRatio, nearZ: nearClipPlane, farZ: farClipPlane)
         }
