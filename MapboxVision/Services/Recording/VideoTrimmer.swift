@@ -46,8 +46,7 @@ final class VideoTrimmer {
 
         do {
             try videoTrack.insertTimeRange(timeRangeForCurrentSlice, of: videoAssetTrack, at: CMTime())
-        }
-        catch {
+        } catch {
             completion?(error)
         }
 
