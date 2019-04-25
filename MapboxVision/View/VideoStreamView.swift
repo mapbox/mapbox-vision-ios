@@ -3,7 +3,6 @@ import Foundation
 import UIKit
 
 final class VideoStreamView: UIView {
-
     override class var layerClass: AnyClass {
         return AVSampleBufferDisplayLayer.self
     }

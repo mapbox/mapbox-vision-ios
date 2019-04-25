@@ -3,7 +3,6 @@ import XCTest
 @testable import MapboxVision
 
 class RecordSynchronizerTests: XCTestCase, SyncDelegate {
-
     var networkClient: MockNetworkClient!
     var dataSource: MockRecordDataSource!
     var archiver: MockArchiver!
@@ -38,7 +37,6 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
     }
 
     func testPositiveScenario() {
-
         typealias File = MockFileManager.File
 
         let data = [
@@ -79,7 +77,6 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
     }
 
     func syncStopped() {
-
         let archives = [
             URL(fileURLWithPath: "/1/telemetry.zip"),
             URL(fileURLWithPath: "/2/telemetry.zip"),

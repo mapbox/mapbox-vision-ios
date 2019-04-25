@@ -19,7 +19,6 @@ public struct VideoSample {
     Protocol which represents the source of video stream along with meta-information to its observers.
 */
 public protocol VideoSource: AnyObject {
-
     /// Determines whether video stream is coming from a camera attached to the device or represented by a separate module.
     var isExternal: Bool { get }
 

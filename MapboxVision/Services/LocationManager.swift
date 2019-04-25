@@ -2,7 +2,6 @@ import CoreLocation
 import Foundation
 
 final class LocationManager: NSObject, CLLocationManagerDelegate {
-
     var locationHandler: ((CLLocation) -> Void)?
     var headingHandler: ((CLHeading) -> Void)?
 

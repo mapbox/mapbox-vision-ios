@@ -16,7 +16,6 @@ extension URL {
 }
 
 extension Array where Element == URL {
-
     var sortedByCreationDate: [URL] {
         return self.sorted { url1, url2 in
             switch (url1.creationDate, url2.creationDate) {

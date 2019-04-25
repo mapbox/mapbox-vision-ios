@@ -19,7 +19,6 @@ extension FileManagerProtocol {
 }
 
 extension FileManager: FileManagerProtocol {
-
     func createFile(atPath path: String, contents: Data?) -> Bool {
         return createFile(atPath: path, contents: contents, attributes: nil)
     }

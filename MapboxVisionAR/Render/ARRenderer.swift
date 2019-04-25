@@ -72,7 +72,6 @@ private let textureMappingVertices: [Float] = [
  */
 
 class ARRenderer: NSObject, MTKViewDelegate {
-
     private let device: MTLDevice
     #if !targetEnvironment(simulator)
     private var textureCache: CVMetalTextureCache?
@@ -211,7 +210,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
     }
 
     static func makeVertexDescriptor() -> MDLVertexDescriptor {
-
         let vertexDescriptor = MDLVertexDescriptor()
         vertexDescriptor.attributes[0] = MDLVertexAttribute(
             name: MDLVertexAttributePosition,
@@ -255,7 +253,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
                                    fragmentFunction: MTLFunction,
                                    colorPixelFormat: MTLPixelFormat,
                                    depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
-
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -274,7 +271,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
                                    fragmentFunction: MTLFunction,
                                    colorPixelFormat: MTLPixelFormat,
                                    depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
-
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -296,7 +292,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
     }
 
     static func makeDefaultSamplerState(device: MTLDevice) -> MTLSamplerState {
-
         let sampler = MTLSamplerDescriptor()
 
         sampler.minFilter = .linear
@@ -308,7 +303,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
     }
 
     static func makeDefaultDepthStencilState(device: MTLDevice) -> MTLDepthStencilState {
-
         let depthStencil = MTLDepthStencilDescriptor()
 
         depthStencil.isDepthWriteEnabled = true
@@ -334,7 +328,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
     }
 
     func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
-
         commandEncoder.setFrontFacing(.counterClockwise)
         commandEncoder.setCullMode(.back)
         commandEncoder.setDepthStencilState(depthStencilStateDefault)
@@ -347,7 +340,6 @@ class ARRenderer: NSObject, MTKViewDelegate {
         // TODO: reorder for less pixeloverdraw
         scene.rootNode.childs.forEach { (node) in
             if let entity = node.entity, let mesh = entity.mesh {
-
                 if let pipeline = entity.renderPipeline {
                     commandEncoder.setRenderPipelineState(pipeline)
                 } else {

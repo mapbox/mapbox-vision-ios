@@ -3,7 +3,6 @@ import MapboxMobileEvents
 import MapboxVisionNative
 
 final class EventsManager {
-
     private let manager = MMEEventsManager()
 
     private lazy var accessToken: String = {
@@ -48,9 +47,7 @@ final class EventsManager {
 }
 
 extension EventsManager: NetworkClient {
-
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {
-
         let contentType: String
         switch file.pathExtension {
         case "zip": contentType = "zip"

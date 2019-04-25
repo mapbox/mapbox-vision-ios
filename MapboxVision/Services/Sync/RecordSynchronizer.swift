@@ -5,7 +5,6 @@ private let networkingMemoryLimit: Int64 = 30 * 1024 * 1024
 private let updatingInterval: TimeInterval = 60 * 60
 
 final class RecordSynchronizer: Synchronizable {
-    
     enum RecordSynchronizerError: LocalizedError {
         case syncFileCreationFail(URL)
         case noRequestedFiles([RecordFileType], URL)

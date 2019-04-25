@@ -8,7 +8,6 @@ protocol DeviceInfoProvidable {
 }
 
 final class DeviceInfoProvider: DeviceInfoProvidable {
-
     lazy var id: String = DeviceInfoProvider.generateID()
     let platformName: String = UIDevice.current.systemName
 

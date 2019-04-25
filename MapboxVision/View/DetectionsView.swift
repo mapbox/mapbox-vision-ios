@@ -7,12 +7,10 @@ struct BasicDetection {
 }
 
 final class DetectionsView: UIImageView {
-
     private static let labelHeight = CGFloat(18)
     private static let labelSidePadding = CGFloat(5)
 
     func present(detections: [BasicDetection], at image: UIImage) {
-
         self.subviews.forEach { $0.removeFromSuperview() }
 
         self.image = image
@@ -52,7 +50,6 @@ final class DetectionsView: UIImageView {
 }
 
 private extension DetectionClass {
-
     var color: UIColor {
         switch self {
         case .trafficLight:

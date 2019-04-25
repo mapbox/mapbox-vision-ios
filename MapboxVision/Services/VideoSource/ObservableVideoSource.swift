@@ -6,7 +6,6 @@ import Foundation
     You may inherit your video source from this class or agregate it to avoid handling observers yourself.
 */
 open class ObservableVideoSource: NSObject, VideoSource {
-
     /// Provides default value of `isExternal` parameter.
     /// Override if your video source is represented by a module separate from the device.
     open var isExternal = true

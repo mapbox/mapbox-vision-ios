@@ -4,7 +4,6 @@ import Metal
 import MetalKit
 
 final class SegmentationDrawer: NSObject, MTKViewDelegate {
-
     private let device: MTLDevice
 
     private var source: MTLTexture?

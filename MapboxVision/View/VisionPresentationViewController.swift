@@ -13,7 +13,6 @@ private let innerRelativeInset: CGFloat = 10
     Mode that determines which type of events is currently being visualized.
 */
 public enum VisualizationMode {
-
     /**
         Show a raw frame from a video source
     */
@@ -34,7 +33,6 @@ public enum VisualizationMode {
     Object that is capable of presenting objects emitted from `VisionManager`.
 */
 public final class VisionPresentationViewController: UIViewController {
-
     /**
         Set visualization mode.
     */
@@ -299,7 +297,6 @@ public final class VisionPresentationViewController: UIViewController {
 }
 
 extension VisionPresentationViewController {
-
     /**
         Display sample buffer (e.g. taken from `VideoSource`).
     */

@@ -1,7 +1,6 @@
 import Foundation
 
 final class FileRecorder {
-
     private let stream: OutputStream
     private var firstChunk = true
 
@@ -13,7 +12,6 @@ final class FileRecorder {
     }
 
     func record<T: Encodable>(_ info: T) {
-
         if firstChunk {
             firstChunk = false
         } else {

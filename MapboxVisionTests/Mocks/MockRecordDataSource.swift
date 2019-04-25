@@ -2,7 +2,6 @@ import Foundation
 @testable import MapboxVision
 
 final class MockRecordDataSource: RecordDataSource {
-
     var removedFiles: [URL] = []
 
     var baseURL: URL {

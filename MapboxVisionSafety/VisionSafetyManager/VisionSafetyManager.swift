@@ -7,7 +7,6 @@ import MapboxVisionSafetyNative
     Depends on `VisionManager`.
 */
 public final class VisionSafetyManager {
-
     private var native: VisionSafetyManagerNative?
     private var delegate: VisionSafetyManagerDelegate?
 

@@ -2,7 +2,6 @@ import Foundation
 import UIKit
 
 final class ExampleContainerViewController: UIViewController {
-
     @IBOutlet weak var closeButton: UIButton!
 
     var exampleClass: UIViewController.Type?

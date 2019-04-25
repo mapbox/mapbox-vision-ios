@@ -8,7 +8,6 @@ private let imageOutputFormat = Image.Format.BGRA
     Object encapsulating work with camera device.
 */
 open class CameraVideoSource: ObservableVideoSource {
-
     /// Capture session utilized by camera.
     public let cameraSession: AVCaptureSession
 
@@ -54,7 +53,6 @@ open class CameraVideoSource: ObservableVideoSource {
     private var dataOutput: AVCaptureVideoDataOutput?
 
     private func configureSession(preset: AVCaptureSession.Preset) {
-
         guard let captureDevice = camera
             else { return }
 

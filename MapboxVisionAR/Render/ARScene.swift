@@ -82,7 +82,6 @@ class ARNode {
 }
 
 class ARCameraNode: ARNode {
-
     var needProjectionUpdate = Bool(true)
     var nearClipPlane = Float(0.01) {
         didSet {

@@ -3,7 +3,6 @@ import Foundation
 import MapboxVisionNative
 
 final class Platform: NSObject, PlatformInterface {
-
     struct Dependencies {
         let recordCoordinator: RecordCoordinator?
         let eventsManager: EventsManager

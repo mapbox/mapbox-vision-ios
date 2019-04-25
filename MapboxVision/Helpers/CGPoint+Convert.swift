@@ -2,7 +2,6 @@ import CoreGraphics
 import Foundation
 
 public extension CGPoint {
-
     /**
         Convert point with respect of aspect ratio
      
@@ -12,12 +11,10 @@ public extension CGPoint {
     */
 
     func convertForAspectRatioFill(from: CGSize, to: CGSize) -> CGPoint {
-
         let fromAspect = from.width / from.height
         let toAspect = to.width / to.height
 
         if fromAspect > toAspect {
-
             /*
              horizontal offset (scale with height)
              
@@ -35,7 +32,6 @@ public extension CGPoint {
 
             return CGPoint(x: Int((x * scaleFactor) - offset), y: Int(y * scaleFactor))
         } else if fromAspect < toAspect {
-
             /*
             vertical offset (scale with width)
              
@@ -56,7 +52,6 @@ public extension CGPoint {
 
             return CGPoint(x: Int(x * scaleFactor), y: Int((y * scaleFactor) - offset))
         } else {
-
             /*
             proportional scale
  

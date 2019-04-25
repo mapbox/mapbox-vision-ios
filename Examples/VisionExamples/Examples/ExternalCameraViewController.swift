@@ -8,7 +8,6 @@ import UIKit
 
 // Example of custom video source is a simple video file reader
 class FileVideoSource: ObservableVideoSource {
-
     private let reader: AVAssetReader
     private let queue = DispatchQueue(label: "FileVideoSourceQueue")
     private lazy var timer: CADisplayLink = {

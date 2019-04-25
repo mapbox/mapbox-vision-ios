@@ -2,7 +2,6 @@ import Foundation
 @testable import MapboxVision
 
 final class MockNetworkClient: NetworkClient {
-
     var error: Error?
     var uploaded: [URL: String] = [:]
 

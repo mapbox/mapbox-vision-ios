@@ -3,7 +3,6 @@ import MapboxDirections
 import MapboxVisionARNative
 
 public extension MapboxVisionARNative.Route {
-
     /**
         Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
     */
@@ -11,7 +10,6 @@ public extension MapboxVisionARNative.Route {
         var points = [RoutePoint]()
 
         route.legs.forEach { $0.steps.forEach { step in
-
             let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
             points.append(maneuver)
 

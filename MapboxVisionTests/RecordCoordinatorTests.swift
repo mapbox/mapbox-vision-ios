@@ -12,7 +12,6 @@ final class RecordingStartedTestExpectation: XCTestExpectation {
 }
 
 final class RecordCoordinatorTests: XCTestCase {
-
     let videoSettings = VideoSettings(width: 960, height: 540, codec: .h264, fileType: .mp4, fileExtension: "mp4", bitRate: 6_000_000)
     var coordinator: RecordCoordinator!
 

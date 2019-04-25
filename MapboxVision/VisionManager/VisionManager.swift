@@ -11,7 +11,6 @@ enum VisionManagerError: LocalizedError {
     It also provides some useful functions for performance configuration and data conversion.
 */
 public final class VisionManager: BaseVisionManager {
-    
     // MARK: - Public
     // MARK: Lifetime
     

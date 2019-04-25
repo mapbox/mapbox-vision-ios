@@ -2,7 +2,6 @@ import Foundation
 @testable import MapboxVision
 
 final class MockFileManager: FileManagerProtocol {
-
     struct File {
         let url: URL
         let size: Int64

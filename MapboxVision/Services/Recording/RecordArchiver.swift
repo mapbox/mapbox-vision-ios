@@ -6,7 +6,6 @@ protocol Archiver {
 }
 
 final class RecordArchiver: Archiver {
-
     enum RecordArchiverError: Error {
         case cantCreateArchive(URL)
     }

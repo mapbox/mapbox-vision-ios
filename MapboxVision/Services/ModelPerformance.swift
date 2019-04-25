@@ -5,7 +5,6 @@ import UIKit
     Enumeration which determines whether SDK should adapt its performance to environmental changes (acceleration/deceleration, standing time) or stay fixed.
 */
 public enum ModelPerformanceMode {
-
     /**
         Fixed mode.
     */
@@ -21,7 +20,6 @@ public enum ModelPerformanceMode {
     Enumeration which determines performance rate of the specific model. These are high-level settings that translates into adjustment of FPS for ML model inference.
 */
 public enum ModelPerformanceRate {
-
     /**
         Identifies that output of particular model is not required.
     */
@@ -47,7 +45,6 @@ public enum ModelPerformanceRate {
     Enumeration representing configuration for ML models
 */
 public enum ModelPerformanceConfig: Equatable {
-
     /// :nodoc:
     public static func == (lhs: ModelPerformanceConfig, rhs: ModelPerformanceConfig) -> Bool {
         switch (lhs, rhs) {
@@ -80,7 +77,6 @@ public enum ModelPerformanceConfig: Equatable {
     Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
 */
 public struct ModelPerformance: Equatable {
-
     /**
         Performance Mode.
     */

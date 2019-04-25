@@ -18,7 +18,6 @@ private let defaultChunkLimit = 3
 private let videoLogFile = "videos.json"
 
 final class RecordCoordinator {
-    
     private struct VideoTrimRequest {
         let sourcePath: String
         let destinationPath: String
@@ -235,7 +234,6 @@ final class RecordCoordinator {
                                from: TimeInterval(request.clipStart),
                                to: TimeInterval(request.clipEnd),
                                settings: settings) { [jsonWriter, weak self] error in
-            
             guard let `self` = self else { return }
             if let trimError = (error as? VideoTrimmerError), case VideoTrimmerError.sourceIsNotExportable = trimError {
                 if self.trimRequestCache[chunk] != nil {

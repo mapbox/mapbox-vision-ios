@@ -10,7 +10,6 @@ import UIKit
     Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
 */
 public class VisionARViewController: UIViewController {
-
     /**
         The delegate object to receive navigation events.
     */
@@ -35,7 +34,6 @@ public class VisionARViewController: UIViewController {
         Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
     */
     public init(navigationService: NavigationService? = nil) {
-
         super.init(nibName: nil, bundle: nil)
 
         self.navigationService = navigationService
