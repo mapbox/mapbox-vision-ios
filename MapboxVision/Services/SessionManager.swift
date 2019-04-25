@@ -17,12 +17,15 @@ final class SessionManager {
     func startSession(interruptionInterval: TimeInterval) {
         guard !isStarted else { return }
         isStarted.toggle()
-        
-        notificationObservers.append(
-            NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { [weak self] _ in
+
+        let observer = NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification,
+                                                              object: nil,
+                                                              queue: .main
+        ) { [weak self] _ in
             self?.stopSession()
-        })
-        
+        }
+        notificationObservers.append(observer)
+
         if interruptionInterval > 0 {
             interruptionTimer = Timer.scheduledTimer(withTimeInterval: interruptionInterval, repeats: true) { [weak self] _ in
                 self?.stopInterval()
