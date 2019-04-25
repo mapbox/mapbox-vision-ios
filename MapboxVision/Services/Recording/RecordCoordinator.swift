@@ -233,7 +233,7 @@ final class RecordCoordinator {
                                from: TimeInterval(request.clipStart),
                                to: TimeInterval(request.clipEnd),
                                settings: settings) { [jsonWriter, weak self] error in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             if let trimError = (error as? VideoTrimmerError), case VideoTrimmerError.sourceIsNotExportable = trimError {
                 if self.trimRequestCache[chunk] != nil {
                     self.trimRequestCache[chunk]?.append(request)
@@ -332,7 +332,7 @@ extension RecordCoordinator: VideoBufferDelegate {
         }
         
         group.notify(queue: processingQueue) { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             if finished {
                 self.recordingStopped()
             }

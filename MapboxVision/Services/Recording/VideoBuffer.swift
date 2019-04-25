@@ -50,7 +50,7 @@ final class VideoBuffer {
         guard isRecording, recorder.isRecording else { return }
 
         recorder.handleFrame(sampleBuffer) { [weak self] result in
-            guard let `self` = self, self.isRecording, self.recorder.isRecording else { return }
+            guard let self = self, self.isRecording, self.recorder.isRecording else { return }
 
             switch result {
             case .value:
@@ -77,7 +77,7 @@ final class VideoBuffer {
         let isCurrentlyRecording = isRecording
 
         recorder.stopRecording { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 self.delegate?.chunkCut(number: self.chunkCounter, finished: !isCurrentlyRecording)
                 if shouldContinue {

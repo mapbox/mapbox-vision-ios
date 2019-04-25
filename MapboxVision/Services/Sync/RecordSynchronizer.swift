@@ -49,8 +49,8 @@ final class RecordSynchronizer: Synchronizable {
     
     func sync() {
         queue.async { [weak self] in
-            guard let `self` = self else { return }
-            
+            guard let self = self else { return }
+
             if self.isSyncing {
                 self.hasPendingRequest = true
                 return

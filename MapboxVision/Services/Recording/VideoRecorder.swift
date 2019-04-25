@@ -63,7 +63,7 @@ final class VideoRecorder {
             }
 
             guard
-                let `self` = self,
+                let self = self,
                 let assetWriterInput = self.currentAssetWriterInput
             else { return }
 
@@ -77,7 +77,7 @@ final class VideoRecorder {
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer, completion: @escaping ((Result<Float64, VideoRecorderError>) -> Void)) {
         writerQueue.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else { return }
 
             guard self.isRecording, let writer = self.currentAssetWriter else {
                 completion(.error(.notRecording))
