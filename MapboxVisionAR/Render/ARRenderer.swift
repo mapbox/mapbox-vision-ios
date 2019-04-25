@@ -311,8 +311,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
         return device.makeDepthStencilState(descriptor: depthStencil)!
     }
 
-    static func processPoint(_ wc: WorldCoordinate) -> float3 {
-        return float3(Float(-wc.y), Float(wc.z), Float(-wc.x))
+    static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
+        return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
     }
 
     func update(_ view: MTKView) {

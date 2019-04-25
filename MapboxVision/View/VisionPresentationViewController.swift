@@ -362,9 +362,9 @@ extension VisionPresentationViewController {
 }
 
 private extension CGRect {
-    func convertedForAspectRatioFill(from: CGSize, to: CGSize) -> CGRect {
-        let leftTop = origin.convertForAspectRatioFill(from: from, to: to)
-        let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: from, to: to)
+    func convertForAspectRatioFill(from original: CGSize, to destination: CGSize) -> CGRect {
+        let leftTop = origin.convertForAspectRatioFill(from: original, to: destination)
+        let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: original, to: destination)
         return CGRect(x: leftTop.x, y: leftTop.y, width: rightBottom.x - leftTop.x, height: rightBottom.y - leftTop.y)
     }
 

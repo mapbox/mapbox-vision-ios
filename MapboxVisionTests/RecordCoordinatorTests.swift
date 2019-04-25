@@ -21,8 +21,8 @@ final class RecordCoordinatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let d: [DocumentsLocation] = [.cache, .currentRecording, .recordings]
-        d.map { $0.path }.forEach(removeDirectory)
+        let docLocations: [DocumentsLocation] = [.cache, .currentRecording, .recordings]
+        docLocations.map { $0.path }.forEach(removeDirectory)
 
         coordinator = RecordCoordinator(settings: videoSettings)
         coordinator.delegate = self
