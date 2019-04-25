@@ -196,8 +196,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
             let arrowEntity = AREntity(mesh: arrowMesh)
             arrowEntity.material.diffuseColor = kArrowColor
             arrowEntity.material.specularPower = 100
-            arrowEntity.material.specularColor = float3(1, 1, 1) //kArrowColor.xyz
-            arrowEntity.material.ambientLightColor = kArrowColor.xyz //float3(0.5, 0.5, 0.5)
+            arrowEntity.material.specularColor = float3(1, 1, 1) // kArrowColor.xyz
+            arrowEntity.material.ambientLightColor = kArrowColor.xyz // float3(0.5, 0.5, 0.5)
             arrowEntity.renderPipeline = renderPipelineArrow
 
             arrowNode.entity = arrowEntity
