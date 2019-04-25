@@ -69,8 +69,8 @@ class ARNode {
         if needTransformUpdate {
             let localTransform = makeTransformMatrix(trans: position, rot: rotation, scale: scale)
 
-            if parent != nil {
-                cachedTransformMatrix = parent!.worldTransform() * localTransform
+            if let parent = parent {
+                cachedTransformMatrix = parent.worldTransform() * localTransform
             } else {
                 cachedTransformMatrix = localTransform
             }
