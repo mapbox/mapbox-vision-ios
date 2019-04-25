@@ -1,4 +1,5 @@
 // swiftlint:disable comma identifier_name operator_usage_whitespace
+// swiftformat:disable indent spaceInsideParens
 
 import simd
 
