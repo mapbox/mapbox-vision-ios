@@ -81,7 +81,7 @@
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
-		2EDD8709219EDC0200760C6D /* DeviceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */; };
+		2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */; };
 		2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */; };
 		2EF31C9021904BB300752D23 /* RecordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
@@ -203,7 +203,7 @@
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProviderTests.swift; sourceTree = "<group>"; };
+		2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProviderTests.swift; sourceTree = "<group>"; };
 		2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSource.swift; sourceTree = "<group>"; };
 		2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorTests.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
@@ -558,7 +558,7 @@
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				B51E557B215E313500650DDE /* RecordSynchronizerTests.swift */,
 				2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */,
-				2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */,
+				2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
 			);
 			path = MapboxVisionTests;
@@ -902,7 +902,7 @@
 				B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */,
 				B50CFBB12163C9AC00C9C5A5 /* MockArchiver.swift in Sources */,
 				B50CFBB32163C9C500C9C5A5 /* MockFileManager.swift in Sources */,
-				2EDD8709219EDC0200760C6D /* DeviceProviderTests.swift in Sources */,
+				2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
