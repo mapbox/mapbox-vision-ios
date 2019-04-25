@@ -8,7 +8,7 @@ enum VideoTrimmerError: LocalizedError {
 }
 
 final class VideoTrimmer {
-    typealias TrimCompletion = (Error?) -> ()
+    typealias TrimCompletion = (Error?) -> Void
     typealias TrimPoints = (startTime: CMTime, endTime: CMTime)
 
     func trimVideo(sourceURL: URL, destinationURL: URL, from start: TimeInterval, to end: TimeInterval, settings: VideoSettings, completion: TrimCompletion?) {
