@@ -452,13 +452,21 @@ class ARRenderer: NSObject, MTKViewDelegate {
 
     private func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
         #if !targetEnvironment(simulator)
-        var imageTexture: CVMetalTexture?
-        guard let textureCache = textureCache,
-        CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, buffer, nil, .bgra8Unorm, CVPixelBufferGetWidth(buffer), CVPixelBufferGetHeight(buffer), 0, &imageTexture) == kCVReturnSuccess
-        else { return nil }
-        return CVMetalTextureGetTexture(imageTexture!)
+            var imageTexture: CVMetalTexture?
+            guard let textureCache = textureCache,
+                CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                          textureCache,
+                                                          buffer,
+                                                          nil,
+                                                          .bgra8Unorm,
+                                                          CVPixelBufferGetWidth(buffer),
+                                                          CVPixelBufferGetHeight(buffer),
+                                                          0,
+                                                          &imageTexture) == kCVReturnSuccess
+            else { return nil }
+            return CVMetalTextureGetTexture(imageTexture!)
         #else
-        return nil
+            return nil
         #endif
     }
 }
