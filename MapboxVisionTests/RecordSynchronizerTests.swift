@@ -109,7 +109,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
             URL(fileURLWithPath: "/1/3.mp4"),
             URL(fileURLWithPath: "/2/1.mp4"),
             URL(fileURLWithPath: "/2/2.mp4"),
-            URL(fileURLWithPath: "/2/3.mp4")
+            URL(fileURLWithPath: "/2/3.mp4"),
         ]
 
         files.forEach { file in
