@@ -98,8 +98,8 @@ open class CameraVideoSource: ObservableVideoSource {
 
         if let attachment = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) as? Data {
             let matrix: matrix_float3x3 = attachment.withUnsafeBytes { $0.pointee }
-            focalPixelX = matrix[0,0]
-            focalPixelY = matrix[1,1]
+            focalPixelX = matrix[0, 0]
+            focalPixelY = matrix[1, 1]
         } else if let fov = formatFieldOfView {
             let pixel = CameraVideoSource.focalPixel(fov: fov, dimension: width)
             focalPixelX = pixel
