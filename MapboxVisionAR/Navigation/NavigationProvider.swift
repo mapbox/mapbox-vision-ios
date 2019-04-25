@@ -27,7 +27,8 @@ public final class NavigationManager {
         NotificationCenter.default.addObserver(self, selector: #selector(didReroute), name: .routeControllerDidReroute, object: navigationService.router)
     }
 
-    @objc private func progressDidChange(_ notification: NSNotification) {
+    @objc
+    private func progressDidChange(_ notification: NSNotification) {
         guard let routeProgress = notification.userInfo?[RouteControllerNotificationUserInfoKey.routeProgressKey] as? RouteProgress else { return }
 
         if routeHasChanged {
@@ -41,7 +42,8 @@ public final class NavigationManager {
         }
     }
 
-    @objc private func didReroute(_ notification: NSNotification) {
+    @objc
+    private func didReroute(_ notification: NSNotification) {
         routeHasChanged = true
     }
 }

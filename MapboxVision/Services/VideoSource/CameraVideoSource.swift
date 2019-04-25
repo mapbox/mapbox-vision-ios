@@ -130,7 +130,8 @@ open class CameraVideoSource: ObservableVideoSource {
 
     // MARK: - Observations
 
-    @objc private func orientationChanged() {
+    @objc
+    private func orientationChanged() {
         set(orientation: UIDevice.current.orientation)
     }
 }

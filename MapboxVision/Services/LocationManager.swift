@@ -63,7 +63,8 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager.stopUpdatingHeading()
     }
 
-    @objc private func updateOrientation() {
+    @objc
+    private func updateOrientation() {
         locationManager.headingOrientation = UIDevice.current.orientation.clDeviceOrientation
     }
 }

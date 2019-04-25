@@ -46,7 +46,8 @@ class FileVideoSource: ObservableVideoSource {
         }
     }
 
-    @objc func update() {
+    @objc
+    func update() {
         queue.async { [unowned self] in
             if let buffer = self.reader.outputs.first?.copyNextSampleBuffer() {
                 // notify all abservers about new sample buffer availability
