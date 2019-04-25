@@ -107,8 +107,8 @@ final class RecordCoordinator {
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
         videoRecorder.stopRecording()
     }
-    
-    func handleFrame(_ sampleBuffer: CMSampleBuffer) -> Void {
+
+    func handleFrame(_ sampleBuffer: CMSampleBuffer) {
         guard isRecording else { return }
         videoRecorder.handleFrame(sampleBuffer)
     }

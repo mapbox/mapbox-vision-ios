@@ -110,7 +110,7 @@ class ARCameraNode: ARNode {
         super.init(name: "Camera")
     }
 
-    func frameSize(size: float2) -> Void {
+    func frameSize(size: float2) {
         assert(size.y > 0)
         aspectRatio = size.x / size.y
     }
