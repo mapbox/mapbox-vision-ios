@@ -43,7 +43,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         typealias File = MockFileManager.File
 
         let data = [
-            URL(fileURLWithPath: "/1", isDirectory: true) : [
+            URL(fileURLWithPath: "/1", isDirectory: true): [
                 File(url: URL(fileURLWithPath: "/1/gps.bin"), size: 20),
                 File(url: URL(fileURLWithPath: "/1/videos.json"), size: 3),
                 File(url: URL(fileURLWithPath: "/1/1.mp4"), size: 1),
@@ -53,7 +53,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
                 File(url: URL(fileURLWithPath: "/1/images/2.jpg"), size: 1),
                 File(url: URL(fileURLWithPath: "/1/images/3.jpg"), size: 1)
             ],
-            URL(fileURLWithPath: "/2", isDirectory: true) : [
+            URL(fileURLWithPath: "/2", isDirectory: true): [
                 File(url: URL(fileURLWithPath: "/2/gps.bin"), size: 15),
                 File(url: URL(fileURLWithPath: "/2/videos.json"), size: 1),
                 File(url: URL(fileURLWithPath: "/2/1.mp4"), size: 1),
@@ -63,7 +63,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
                 File(url: URL(fileURLWithPath: "/2/images/2.jpg"), size: 1),
                 File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1)
             ],
-            URL(fileURLWithPath: "/3", isDirectory: true) : [
+            URL(fileURLWithPath: "/3", isDirectory: true): [
                 File(url: URL(fileURLWithPath: "/3/.synced"), size: 0)
             ]
         ]

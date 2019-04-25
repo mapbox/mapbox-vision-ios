@@ -31,9 +31,8 @@ final class RecordCoordinator {
         let start: Float
         let end: Float
     }
-    
-    private var trimRequestCache = [Int : [VideoTrimRequest]]()
-    
+
+    private var trimRequestCache = [Int: [VideoTrimRequest]]()
     private(set) var isRecording: Bool = false
     private var isReady: Bool = true
     private var abortRecording: Bool = false

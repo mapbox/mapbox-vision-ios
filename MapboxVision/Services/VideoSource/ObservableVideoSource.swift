@@ -37,5 +37,5 @@ open class ObservableVideoSource: NSObject, VideoSource {
         weak var observer: VideoSourceObserver?
     }
 
-    private var observations = [ObjectIdentifier : Observation]()
+    private var observations = [ObjectIdentifier: Observation]()
 }
