@@ -62,14 +62,14 @@ class ARNavigationViewController: UIViewController {
 }
 
 extension ARNavigationViewController: VisionARManagerDelegate {
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {
+    func visionARManager(_: VisionARManager, didUpdateARCamera camera: ARCamera) {
         DispatchQueue.main.async { [weak self] in
             // pass the camera parameters for projection calculation
             self?.visionARViewController.present(camera: camera)
         }
     }
 
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {
+    func visionARManager(_: VisionARManager, didUpdateARLane lane: ARLane?) {
         DispatchQueue.main.async { [weak self] in
             // display AR lane representing navigation route
             self?.visionARViewController.present(lane: lane)
@@ -78,7 +78,7 @@ extension ARNavigationViewController: VisionARManagerDelegate {
 }
 
 extension ARNavigationViewController: VideoSourceObserver {
-    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+    func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
         DispatchQueue.main.async { [weak self] in
             // display received sample buffer by passing it to ar view controller
             self?.visionARViewController.present(sampleBuffer: videoSample.buffer)

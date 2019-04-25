@@ -19,7 +19,7 @@ public protocol VisionSafetyManagerDelegate: AnyObject {
 }
 
 public extension VisionSafetyManagerDelegate {
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions: RoadRestrictions) {}
+    func visionSafetyManager(_: VisionSafetyManager, didUpdateRoadRestrictions _: RoadRestrictions) {}
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject]) {}
+    func visionSafetyManager(_: VisionSafetyManager, didUpdateCollisions _: [CollisionObject]) {}
 }

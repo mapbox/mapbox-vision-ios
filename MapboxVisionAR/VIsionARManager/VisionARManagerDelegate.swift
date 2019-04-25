@@ -19,7 +19,7 @@ public protocol VisionARManagerDelegate: AnyObject {
 }
 
 public extension VisionARManagerDelegate {
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {}
+    func visionARManager(_: VisionARManager, didUpdateARCamera _: ARCamera) {}
 
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {}
+    func visionARManager(_: VisionARManager, didUpdateARLane _: ARLane?) {}
 }

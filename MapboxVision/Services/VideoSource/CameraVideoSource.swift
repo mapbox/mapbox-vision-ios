@@ -137,7 +137,7 @@ open class CameraVideoSource: ObservableVideoSource {
 
 /// :nodoc:
 extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
-    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    public func captureOutput(_: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
         notify { observer in
             let sample = VideoSample(buffer: sampleBuffer, format: imageOutputFormat)
             observer.videoSource(self, didOutput: sample)
@@ -148,7 +148,7 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
 
-    public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    public func captureOutput(_: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from _: AVCaptureConnection) {
         var mode: CMAttachmentMode = 0
         guard let reason = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_DroppedFrameReason, attachmentModeOut: &mode) else { return }
         print("Sample buffer was dropped. Reason: \(reason)")

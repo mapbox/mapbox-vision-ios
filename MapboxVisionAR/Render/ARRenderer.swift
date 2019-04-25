@@ -421,7 +421,7 @@ class ARRenderer: NSObject, MTKViewDelegate {
         }
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    func mtkView(_: MTKView, drawableSizeWillChange _: CGSize) {
         // TODO: update camera
     }
 
