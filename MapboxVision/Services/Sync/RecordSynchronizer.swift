@@ -215,7 +215,7 @@ final class RecordSynchronizer: Synchronizable {
             dir.lastPathComponent,
             Locale.current.identifier,
             dependencies.deviceInfo.id,
-            dependencies.deviceInfo.platformName
+            dependencies.deviceInfo.platformName,
         ]).components.joined(separator: "_")
     }
     

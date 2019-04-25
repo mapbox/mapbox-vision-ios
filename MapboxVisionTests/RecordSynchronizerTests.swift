@@ -64,8 +64,8 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
                 File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1),
             ],
             URL(fileURLWithPath: "/3", isDirectory: true): [
-                File(url: URL(fileURLWithPath: "/3/.synced"), size: 0)
-            ]
+                File(url: URL(fileURLWithPath: "/3/.synced"), size: 0),
+            ],
         ]
 
         fileManager.data = data.values.flatMap { $0 }

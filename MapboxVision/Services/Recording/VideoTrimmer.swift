@@ -17,7 +17,7 @@ final class VideoTrimmer {
         let endTime = CMTime(seconds: end, preferredTimescale: timeScale)
 
         let options = [
-            AVURLAssetPreferPreciseDurationAndTimingKey: true
+            AVURLAssetPreferPreciseDurationAndTimingKey: true,
         ]
 
         let asset = AVURLAsset(url: sourceURL, options: options)

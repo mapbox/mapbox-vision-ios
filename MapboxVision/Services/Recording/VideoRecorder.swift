@@ -13,7 +13,7 @@ private extension VideoSettings {
             AVVideoWidthKey: width,
             AVVideoHeightKey: height,
             AVVideoCodecKey: codec,
-            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: bitRate]
+            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: bitRate],
         ]
     }
 }
