@@ -24,7 +24,7 @@ open class ObservableVideoSource: NSObject, VideoSource {
 
     /// Use this method to notify all observers about newly available `VideoSample` or `CameraParameters`.
     public func notify(_ closure: (VideoSourceObserver) -> Void) {
-        observations.forEach { (id, observation) in
+        observations.forEach { id, observation in
             guard let observer = observation.observer else {
                 observations.removeValue(forKey: id)
                 return

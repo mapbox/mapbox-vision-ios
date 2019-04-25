@@ -338,7 +338,7 @@ class ARRenderer: NSObject, MTKViewDelegate {
         viewProjectionMatrix = scene.camera.projectionMatrix() * viewMatrix
 
         // TODO: reorder for less pixeloverdraw
-        scene.rootNode.childs.forEach { (node) in
+        scene.rootNode.childs.forEach { node in
             if let entity = node.entity, let mesh = entity.mesh {
                 if let pipeline = entity.renderPipeline {
                     commandEncoder.setRenderPipelineState(pipeline)

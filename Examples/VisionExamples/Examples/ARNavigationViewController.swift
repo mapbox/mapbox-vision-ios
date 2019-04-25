@@ -32,7 +32,7 @@ class ARNavigationViewController: UIViewController {
         let options = NavigationRouteOptions(coordinates: [origin, destination], profileIdentifier: .automobile)
 
         // query a navigation route between location coordinates and pass it to VisionARManager
-        Directions.shared.calculate(options) { [weak self] (_, routes, _) in
+        Directions.shared.calculate(options) { [weak self] _, routes, _ in
             guard let route = routes?.first else { return }
             self?.visionARManager.set(route: Route(route: route))
         }

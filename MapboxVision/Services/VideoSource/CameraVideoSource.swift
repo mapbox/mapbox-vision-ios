@@ -137,7 +137,7 @@ open class CameraVideoSource: ObservableVideoSource {
 /// :nodoc:
 extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        notify { (observer) in
+        notify { observer in
             let sample = VideoSample(buffer: sampleBuffer, format: imageOutputFormat)
             observer.videoSource(self, didOutput: sample)
 

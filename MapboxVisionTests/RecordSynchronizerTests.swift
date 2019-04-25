@@ -89,7 +89,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
 
         XCTAssert(archiver.archives.count == archives.count, "Archiver should create \(archives.count) archives")
 
-        archives.forEach { (archive) in
+        archives.forEach { archive in
             XCTAssertNotNil(archiver.archives[archive], "Archiver should create archive with right path")
             let uploadDir = networkClient.uploaded[archive]
             let dir = "\(archive.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
@@ -112,7 +112,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
             URL(fileURLWithPath: "/2/3.mp4")
         ]
 
-        files.forEach { (file) in
+        files.forEach { file in
             let uploadDir = networkClient.uploaded[file]
             let dir = "\(file.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
             XCTAssert(uploadDir == dir, "\(file) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
