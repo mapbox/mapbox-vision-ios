@@ -42,7 +42,7 @@ final class RecordCoordinator {
     private let videoTrimmer = VideoTrimmer()
 
     private var jsonWriter: FileRecorder?
-    private var imageWriter: ImageRecorder = ImageRecorder()
+    private var imageWriter = ImageRecorder()
     private let processingQueue = DispatchQueue(label: "com.mapbox.RecordCoordinator.Processing")
     
     private var currentVideoSettings: VideoSettings?

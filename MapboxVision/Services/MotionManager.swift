@@ -3,7 +3,7 @@ import CoreMotion
 import Foundation
 
 final class MotionManager {
-    private let motion: CMMotionManager = CMMotionManager()
+    private let motion = CMMotionManager()
     private let referenceFrame: CMAttitudeReferenceFrame
     private let queue: OperationQueue = {
         let queue = OperationQueue()
