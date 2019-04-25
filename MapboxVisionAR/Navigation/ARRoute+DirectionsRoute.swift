@@ -9,16 +9,18 @@ public extension MapboxVisionARNative.Route {
     public convenience init(route: MapboxDirections.Route) {
         var points = [RoutePoint]()
 
-        route.legs.forEach { $0.steps.forEach { step in
-            let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
-            points.append(maneuver)
+        route.legs.forEach { $0.steps
+            .forEach { step in
+                let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
+                points.append(maneuver)
 
-            guard let coords = step.coordinates else { return }
-            let routePoints = coords.map {
-                RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+                guard let coords = step.coordinates else { return }
+                let routePoints = coords.map {
+                    RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+                }
+                points.append(contentsOf: routePoints)
             }
-            points.append(contentsOf: routePoints)
-        } }
+        }
 
         self.init(points: points,
                   eta: Float(route.expectedTravelTime),

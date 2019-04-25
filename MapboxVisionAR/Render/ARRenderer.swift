@@ -1,3 +1,5 @@
+// swiftlint:disable comma operator_usage_whitespace
+
 import MapboxVision
 import MapboxVisionARNative
 import MetalKit
@@ -247,12 +249,14 @@ class ARRenderer: NSObject, MTKViewDelegate {
         return vertexDescriptor
     }
 
-    static func makeRenderBackgroundPipeline(device: MTLDevice,
-                                   vertexDescriptor: MTLVertexDescriptor,
-                                   vertexFunction: MTLFunction,
-                                   fragmentFunction: MTLFunction,
-                                   colorPixelFormat: MTLPixelFormat,
-                                   depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+    static func makeRenderBackgroundPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MTLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -265,12 +269,14 @@ class ARRenderer: NSObject, MTKViewDelegate {
         return try device.makeRenderPipelineState(descriptor: pipeline)
     }
 
-    static func makeRenderPipeline(device: MTLDevice,
-                                   vertexDescriptor: MDLVertexDescriptor,
-                                   vertexFunction: MTLFunction,
-                                   fragmentFunction: MTLFunction,
-                                   colorPixelFormat: MTLPixelFormat,
-                                   depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
+    static func makeRenderPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MDLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
