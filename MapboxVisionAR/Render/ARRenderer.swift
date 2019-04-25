@@ -217,17 +217,20 @@ class ARRenderer: NSObject, MTKViewDelegate {
             name: MDLVertexAttributePosition,
             format: .float3,
             offset: 0,
-            bufferIndex: 0)
+            bufferIndex: 0
+        )
         vertexDescriptor.attributes[1] = MDLVertexAttribute(
             name: MDLVertexAttributeNormal,
             format: .float3,
             offset: MemoryLayout<Float>.size * 3,
-            bufferIndex: 0)
+            bufferIndex: 0
+        )
         vertexDescriptor.attributes[2] = MDLVertexAttribute(
             name: MDLVertexAttributeTextureCoordinate,
             format: .float2,
             offset: MemoryLayout<Float>.size * 6,
-            bufferIndex: 0)
+            bufferIndex: 0
+        )
         vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: MemoryLayout<Float>.size * 8)
         return vertexDescriptor
     }
@@ -377,7 +380,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
                         p0: arrowControlPoints[0],
                         p1: arrowControlPoints[1],
                         p2: arrowControlPoints[2],
-                        p3: arrowControlPoints[3])
+                        p3: arrowControlPoints[3]
+                    )
                     commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
 
 //                    var fragmentUniforms = LaneFragmentUniforms(baseColor: material.diffuseColor)
@@ -387,7 +391,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
                     var vertexUniforms = DefaultVertexUniforms(
                         viewProjectionMatrix: viewProjectionMatrix,
                         modelMatrix: modelMatrix,
-                        normalMatrix: normalMatrix(mat: modelMatrix))
+                        normalMatrix: normalMatrix(mat: modelMatrix)
+                    )
                     commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<DefaultVertexUniforms>.size, index: 1)
                 }
 

@@ -20,8 +20,7 @@ final class SessionManager {
 
         let observer = NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification,
                                                               object: nil,
-                                                              queue: .main
-        ) { [weak self] _ in
+                                                              queue: .main) { [weak self] _ in
             self?.stopSession()
         }
         notificationObservers.append(observer)
