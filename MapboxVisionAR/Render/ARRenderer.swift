@@ -110,9 +110,9 @@ class ARRenderer: NSObject, MTKViewDelegate {
         case cantFindFunctions
     }
 
-    public var frame: CVPixelBuffer?
-    public var camera: ARCamera?
-    public var lane: ARLane?
+    var frame: CVPixelBuffer?
+    var camera: ARCamera?
+    var lane: ARLane?
 
     init(device: MTLDevice, colorPixelFormat: MTLPixelFormat, depthStencilPixelFormat: MTLPixelFormat) throws {
         self.device = device
