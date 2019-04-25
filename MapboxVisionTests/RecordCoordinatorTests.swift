@@ -19,6 +19,8 @@ final class RecordCoordinatorTests: XCTestCase {
     let recordingStoppedExpectation = XCTestExpectation(description: "Recording has been stopped")
 
     override func setUp() {
+        super.setUp()
+
         let d: [DocumentsLocation] = [.cache, .currentRecording, .recordings]
         d.map { $0.path }.forEach(removeDirectory)
 
@@ -29,6 +31,7 @@ final class RecordCoordinatorTests: XCTestCase {
     override func tearDown() {
         recordingStartedExpectation.recordingPath = nil
         coordinator = nil
+        super.tearDown()
     }
 
     func testRecordingCreation() {

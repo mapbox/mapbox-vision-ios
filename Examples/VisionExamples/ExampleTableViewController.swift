@@ -3,6 +3,7 @@ import UIKit
 
 final class ExampleTableViewController: UITableViewController {
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = false
     }
 

@@ -13,6 +13,8 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
     let positiveScenarioExpectation = XCTestExpectation(description: "Positive scenario")
 
     override func setUp() {
+        super.setUp()
+
         networkClient = MockNetworkClient()
         dataSource = MockRecordDataSource()
         archiver = MockArchiver()
@@ -34,6 +36,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         archiver = nil
         recordSynchronizer = nil
         fileManager = nil
+        super.tearDown()
     }
 
     func testPositiveScenario() {
