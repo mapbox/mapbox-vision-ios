@@ -122,7 +122,7 @@ final class VideoRecorder {
     }
 }
 
-fileprivate extension CMTime {
+private extension CMTime {
     func millis(since: CMTime) -> Float64 {
         let passed = CMTimeSubtract(self, since)
         return CMTimeGetSeconds(passed) * 1000

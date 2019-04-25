@@ -68,7 +68,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 }
 
-fileprivate extension UIDeviceOrientation {
+private extension UIDeviceOrientation {
     var clDeviceOrientation: CLDeviceOrientation {
         switch self {
         case .unknown:            return .unknown
