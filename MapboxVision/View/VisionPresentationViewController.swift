@@ -132,7 +132,7 @@ public final class VisionPresentationViewController: UIViewController {
             contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: topInset),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomInset),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingInset),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingInset)
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingInset),
         ]
 
         NSLayoutConstraint.activate(contentContainerConstraints)
@@ -156,7 +156,7 @@ public final class VisionPresentationViewController: UIViewController {
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
         backgroundView.addSubview(videoStreamView)
@@ -164,7 +164,7 @@ public final class VisionPresentationViewController: UIViewController {
             videoStreamView.topAnchor.constraint(equalTo: view.topAnchor),
             videoStreamView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             videoStreamView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            videoStreamView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            videoStreamView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
         backgroundView.addSubview(segmentationView)
@@ -172,7 +172,7 @@ public final class VisionPresentationViewController: UIViewController {
             segmentationView.topAnchor.constraint(equalTo: view.topAnchor),
             segmentationView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             segmentationView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            segmentationView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            segmentationView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
 
         backgroundView.addSubview(detectionsView)
@@ -180,7 +180,7 @@ public final class VisionPresentationViewController: UIViewController {
             detectionsView.topAnchor.constraint(equalTo: view.topAnchor),
             detectionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             detectionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            detectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            detectionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
 
@@ -190,7 +190,7 @@ public final class VisionPresentationViewController: UIViewController {
         contentView.addSubview(measurementStack)
         NSLayoutConstraint.activate([
             measurementStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            measurementStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+            measurementStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
         ])
     }
 
@@ -272,7 +272,7 @@ public final class VisionPresentationViewController: UIViewController {
             fpsStack(views: [fpsLabel(text: "Detection:"), detectionFPSLabel]),
             fpsStack(views: [fpsLabel(text: "Merged S+D:"), mergedSegDetectFPSLabel]),
             fpsStack(views: [fpsLabel(text: "Road conf:"), roadConfidenceFPSLabel]),
-            fpsStack(views: [fpsLabel(text: "Core update:"), coreUpdateFPSLabel])
+            fpsStack(views: [fpsLabel(text: "Core update:"), coreUpdateFPSLabel]),
         ])
 
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -290,7 +290,7 @@ public final class VisionPresentationViewController: UIViewController {
             backgroundView.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
             backgroundView.topAnchor.constraint(equalTo: stack.topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: stack.bottomAnchor)
+            backgroundView.bottomAnchor.constraint(equalTo: stack.bottomAnchor),
         ])
 
         return stack

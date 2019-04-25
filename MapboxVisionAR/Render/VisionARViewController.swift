@@ -122,7 +122,7 @@ public class VisionARViewController: UIViewController {
             childView.topAnchor.constraint(equalTo: view.topAnchor),
             childView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             childView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            childView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            childView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
 
