@@ -39,11 +39,13 @@ class ARNode {
             requireTranformUpdate()
         }
     }
+
     var rotation = simd_quatf() {
         didSet {
             requireTranformUpdate()
         }
     }
+
     var scale = float3(1, 1, 1) {
         didSet {
             requireTranformUpdate()
@@ -88,21 +90,25 @@ class ARCameraNode: ARNode {
             requestProjectionUpdate()
         }
     }
+
     var farClipPlane = Float(1000) {
         didSet {
             requestProjectionUpdate()
         }
     }
+
     var fovRadians = degreesToRadians(60) {
         didSet {
             requestProjectionUpdate()
         }
     }
+
     var aspectRatio = Float(1.333) {
         didSet {
             requestProjectionUpdate()
         }
     }
+
     private var cachedProjectionMatrix = float4x4()
 
     init() {
