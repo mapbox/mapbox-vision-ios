@@ -37,14 +37,14 @@ final class CachedRecordDataSource: RecordDataSource {
     }
 
     private lazy var cachedBaseURL: URL = {
-        return dataSource.baseURL
+        dataSource.baseURL
     }()
     var baseURL: URL {
         return cachedBaseURL
     }
 
     private lazy var cachedRecordDirectories: [URL] = {
-        return dataSource.recordDirectories
+        dataSource.recordDirectories
     }()
     var recordDirectories: [URL] {
         return cachedRecordDirectories
