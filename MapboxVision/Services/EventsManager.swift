@@ -72,7 +72,7 @@ extension EventsManager: NetworkClient {
             "sessionId": folderName,
             "format": file.pathExtension,
             "created": created,
-            "type": contentType,
+            "type": contentType
         ]
 
         if contentType == "video" {

@@ -50,7 +50,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
                 File(url: URL(fileURLWithPath: "/1/3.mp4"), size: 1),
                 File(url: URL(fileURLWithPath: "/1/images/1.jpg"), size: 1),
                 File(url: URL(fileURLWithPath: "/1/images/2.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/images/3.jpg"), size: 1),
+                File(url: URL(fileURLWithPath: "/1/images/3.jpg"), size: 1)
             ],
             URL(fileURLWithPath: "/2", isDirectory: true) : [
                 File(url: URL(fileURLWithPath: "/2/gps.bin"), size: 15),
@@ -60,7 +60,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
                 File(url: URL(fileURLWithPath: "/2/3.mp4"), size: 1),
                 File(url: URL(fileURLWithPath: "/2/images/1.jpg"), size: 1),
                 File(url: URL(fileURLWithPath: "/2/images/2.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1),
+                File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1)
             ],
             URL(fileURLWithPath: "/3", isDirectory: true) : [
                 File(url: URL(fileURLWithPath: "/3/.synced"), size: 0)
@@ -84,7 +84,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
             URL(fileURLWithPath: "/1/telemetry.zip"),
             URL(fileURLWithPath: "/2/telemetry.zip"),
             URL(fileURLWithPath: "/1/images.zip"),
-            URL(fileURLWithPath: "/2/images.zip"),
+            URL(fileURLWithPath: "/2/images.zip")
         ]
 
         XCTAssert(archiver.archives.count == archives.count, "Archiver should create \(archives.count) archives")

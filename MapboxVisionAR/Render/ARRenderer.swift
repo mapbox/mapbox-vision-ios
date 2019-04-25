@@ -370,7 +370,7 @@ class ARRenderer: NSObject, MTKViewDelegate {
                         ARRenderer.processPoint(points[0]),
                         ARRenderer.processPoint(points[1]),
                         ARRenderer.processPoint(points[2]),
-                        ARRenderer.processPoint(points[3]),
+                        ARRenderer.processPoint(points[3])
                     ]
 
                     var vertexUniforms = ArrowVertexUniforms(
