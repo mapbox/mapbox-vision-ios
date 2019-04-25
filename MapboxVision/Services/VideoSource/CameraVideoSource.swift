@@ -68,7 +68,8 @@ open class CameraVideoSource: ObservableVideoSource {
         }
 
         let dataOutput = AVCaptureVideoDataOutput()
-        dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String): NSNumber(value: imageOutputFormat.pixelFormatType)]
+        let pixelFormatTypeKey = kCVPixelBufferPixelFormatTypeKey as String
+        dataOutput.videoSettings = [pixelFormatTypeKey: NSNumber(value: imageOutputFormat.pixelFormatType)]
         dataOutput.alwaysDiscardsLateVideoFrames = true
 
         if cameraSession.canAddOutput(dataOutput) {
