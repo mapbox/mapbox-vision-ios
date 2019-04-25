@@ -12,6 +12,7 @@ enum VisionManagerError: LocalizedError {
 */
 public final class VisionManager: BaseVisionManager {
     // MARK: - Public
+
     // MARK: Lifetime
     
     /**
