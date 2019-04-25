@@ -193,7 +193,7 @@ final class RecordSynchronizer: Synchronizable {
         dependencies.dataSource.recordDirectories
             .sortedByCreationDate
             .filter(isMarkAsSynced)
-            .reduce((Array<URL>(), 0.0)) { base, url in
+            .reduce(([URL](), 0.0)) { base, url in
                 let dirSize = Double(dependencies.fileManager.sizeOfDirectory(at: url)) / 1024.0 / 1024.0
 
                 let size = base.1 + dirSize
