@@ -5,17 +5,17 @@ import MapboxVisionNative
 private let imageOutputFormat = Image.Format.BGRA
 
 /**
-    Object encapsulating work with camera device.
-*/
+ Object encapsulating work with camera device.
+ */
 open class CameraVideoSource: ObservableVideoSource {
     /// Capture session utilized by camera.
     public let cameraSession: AVCaptureSession
 
     /**
-        Create camera video source.
-        
-        - Parameter preset: Preset for camera session.
-    */
+     Create camera video source.
+
+     - Parameter preset: Preset for camera session.
+     */
     public init(preset: AVCaptureSession.Preset = .iFrame960x540) {
         self.cameraSession = AVCaptureSession()
         self.camera = AVCaptureDevice.default(for: .video)
@@ -32,16 +32,16 @@ open class CameraVideoSource: ObservableVideoSource {
     }
 
     /**
-        Start running camera video source.
-    */
+     Start running camera video source.
+     */
     public func start() {
         guard !cameraSession.isRunning else { return }
         cameraSession.startRunning()
     }
 
     /**
-        Stop running camera video source.
-    */
+     Stop running camera video source.
+     */
     public func stop() {
         guard cameraSession.isRunning else { return }
         cameraSession.stopRunning()
@@ -54,10 +54,10 @@ open class CameraVideoSource: ObservableVideoSource {
 
     private func configureSession(preset: AVCaptureSession.Preset) {
         guard let captureDevice = camera
-            else { return }
+        else { return }
 
         guard let deviceInput = try? AVCaptureDeviceInput(device: captureDevice)
-            else { return }
+        else { return }
 
         cameraSession.beginConfiguration()
 

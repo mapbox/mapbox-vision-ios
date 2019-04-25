@@ -131,12 +131,12 @@ class ARRenderer: NSObject, MTKViewDelegate {
         let library = try device.makeDefaultLibrary(bundle: bundle)
 
         guard
-        let defaultVertexFunction = library.makeFunction(name: "default_vertex_main"),
-        let arrowVertexFunction = library.makeFunction(name: "arrow_vertex_main"),
-        let backgroundVertexFunction = library.makeFunction(name: "map_texture_vertex"),
-        let defaultFragmentFunction = library.makeFunction(name: "default_fragment_main"),
-        let arrowFragmentFunction = library.makeFunction(name: "lane_fragment_main"),
-        let backgroundFragmentFunction = library.makeFunction(name: "display_texture_fragment")
+            let defaultVertexFunction = library.makeFunction(name: "default_vertex_main"),
+            let arrowVertexFunction = library.makeFunction(name: "arrow_vertex_main"),
+            let backgroundVertexFunction = library.makeFunction(name: "map_texture_vertex"),
+            let defaultFragmentFunction = library.makeFunction(name: "default_fragment_main"),
+            let arrowFragmentFunction = library.makeFunction(name: "lane_fragment_main"),
+            let backgroundFragmentFunction = library.makeFunction(name: "display_texture_fragment")
         else { throw ARRendererError.cantFindFunctions }
 
         renderPipelineDefault = try ARRenderer.makeRenderPipeline(device: device,

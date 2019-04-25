@@ -19,10 +19,10 @@ final class FileRecorder {
         }
 
         guard let encoded = try? JSONEncoder().encode(info)
-            else { assertionFailure("Can't encode metainfo record to json data"); return }
+        else { assertionFailure("Can't encode metainfo record to json data"); return }
 
         guard let jsonObject = try? JSONSerialization.jsonObject(with: encoded, options: [])
-            else { assertionFailure("Can't convert encoded data to json object"); return }
+        else { assertionFailure("Can't convert encoded data to json object"); return }
 
         var error: NSError?
         JSONSerialization.writeJSONObject(jsonObject, to: self.stream, options: JSONSerialization.WritingOptions.prettyPrinted, error: &error)

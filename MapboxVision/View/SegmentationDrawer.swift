@@ -38,22 +38,22 @@ final class SegmentationDrawer: NSObject, MTKViewDelegate {
 
     func draw(in view: MTKView) {
         #if !targetEnvironment(simulator)
-        guard
-            let drawable = view.currentDrawable,
-            let source = source,
-            let mask = mask,
-            let commandBuffer = commandQueue.makeCommandBuffer(),
-            let encoder = commandBuffer.makeComputeCommandEncoder()
-        else { return }
+            guard
+                let drawable = view.currentDrawable,
+                let source = source,
+                let mask = mask,
+                let commandBuffer = commandQueue.makeCommandBuffer(),
+                let encoder = commandBuffer.makeComputeCommandEncoder()
+            else { return }
 
-        encoder.setTexture(source, index: 0)
-        encoder.setTexture(mask, index: 1)
-        encoder.setTexture(drawable.texture, index: 2)
-        ComputeDispatcher.dispathPipeline(pipelineState, encoder: encoder, texture: drawable.texture)
-        encoder.endEncoding()
+            encoder.setTexture(source, index: 0)
+            encoder.setTexture(mask, index: 1)
+            encoder.setTexture(drawable.texture, index: 2)
+            ComputeDispatcher.dispathPipeline(pipelineState, encoder: encoder, texture: drawable.texture)
+            encoder.endEncoding()
 
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
         #endif
     }
 }

@@ -10,32 +10,32 @@ private let safeAreaContentInset: CGFloat = 2
 private let innerRelativeInset: CGFloat = 10
 
 /**
-    Mode that determines which type of events is currently being visualized.
-*/
+ Mode that determines which type of events is currently being visualized.
+ */
 public enum VisualizationMode {
     /**
-        Show a raw frame from a video source
-    */
+     Show a raw frame from a video source
+     */
     case clear
 
     /**
-        Show segmentation mask blended with a video frame
-    */
+     Show segmentation mask blended with a video frame
+     */
     case segmentation
 
     /**
-        Show detected objects with bounding boxes
-    */
+     Show detected objects with bounding boxes
+     */
     case detection
 }
 
 /**
-    Object that is capable of presenting objects emitted from `VisionManager`.
-*/
+ Object that is capable of presenting objects emitted from `VisionManager`.
+ */
 public final class VisionPresentationViewController: UIViewController {
     /**
-        Set visualization mode.
-    */
+     Set visualization mode.
+     */
     public var frameVisualizationMode: VisualizationMode = .clear {
         didSet {
             let oldTopView = view(for: oldValue)
@@ -47,8 +47,8 @@ public final class VisionPresentationViewController: UIViewController {
     }
 
     /**
-        Control the visibility of the Mapbox logo.
-    */
+     Control the visibility of the Mapbox logo.
+     */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -299,8 +299,8 @@ public final class VisionPresentationViewController: UIViewController {
 
 extension VisionPresentationViewController {
     /**
-        Display sample buffer (e.g. taken from `VideoSource`).
-    */
+     Display sample buffer (e.g. taken from `VideoSource`).
+     */
     public func present(sampleBuffer: CMSampleBuffer) {
         guard frameVisualizationMode == .clear else { return }
 
@@ -324,8 +324,8 @@ extension VisionPresentationViewController {
     }
 
     /**
-        Display frame segmentation.
-    */
+     Display frame segmentation.
+     */
     public func present(segmentation: FrameSegmentation) {
         guard frameVisualizationMode == .segmentation else { return }
 
@@ -341,8 +341,8 @@ extension VisionPresentationViewController {
     }
 
     /**
-        Display frame detections.
-    */
+     Display frame detections.
+     */
     public func present(detections: FrameDetections) {
         guard
             frameVisualizationMode == .detection,

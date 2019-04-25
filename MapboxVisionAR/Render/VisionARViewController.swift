@@ -7,17 +7,17 @@ import MetalKit
 import UIKit
 
 /**
-    Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
-*/
+ Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
+ */
 public class VisionARViewController: UIViewController {
     /**
-        The delegate object to receive navigation events.
-    */
+     The delegate object to receive navigation events.
+     */
     public weak var navigationDelegate: NavigationManagerDelegate?
 
     /**
-        Control the visibility of the Mapbox logo.
-    */
+     Control the visibility of the Mapbox logo.
+     */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -31,8 +31,8 @@ public class VisionARViewController: UIViewController {
     private var navigationManager: NavigationManager?
 
     /**
-        Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
-    */
+     Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
+     */
     public init(navigationService: NavigationService? = nil) {
         super.init(nibName: nil, bundle: nil)
 
@@ -63,8 +63,8 @@ public class VisionARViewController: UIViewController {
     }
 
     /**
-        NavigationService from MapboxCoreNavigation framework
-    */
+     NavigationService from MapboxCoreNavigation framework
+     */
     public var navigationService: NavigationService? {
         didSet {
             setNavigationService(navigationService)
@@ -72,23 +72,23 @@ public class VisionARViewController: UIViewController {
     }
 
     /**
-        Display sample buffer (e.g. taken from `VideoSource`).
-    */
+     Display sample buffer (e.g. taken from `VideoSource`).
+     */
     public func present(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         renderer?.frame = pixelBuffer
     }
 
     /**
-        Set AR camera.
-    */
+     Set AR camera.
+     */
     public func present(camera: ARCamera) {
         renderer?.camera = camera
     }
 
     /**
-        Display AR lane.
-    */
+     Display AR lane.
+     */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
     }

@@ -1,8 +1,8 @@
 import Foundation
 
 /**
-    Operation mode determines whether `VisionManager` works normally or focuses just on gathering data.
-*/
+ Operation mode determines whether `VisionManager` works normally or focuses just on gathering data.
+ */
 public enum OperationMode {
     /// Utilizes machine learning models and uploads gathered telemetry
     case normal

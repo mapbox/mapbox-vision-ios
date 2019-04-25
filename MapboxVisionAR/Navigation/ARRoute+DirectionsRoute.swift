@@ -4,8 +4,8 @@ import MapboxVisionARNative
 
 public extension MapboxVisionARNative.Route {
     /**
-        Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
-    */
+     Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
+     */
     public convenience init(route: MapboxDirections.Route) {
         var points = [RoutePoint]()
 

@@ -7,24 +7,24 @@ enum VisionManagerError: LocalizedError {
 }
 
 /**
-    The main object for registering for events from the SDK, starting and stopping their delivery.
-    It also provides some useful functions for performance configuration and data conversion.
-*/
+ The main object for registering for events from the SDK, starting and stopping their delivery.
+ It also provides some useful functions for performance configuration and data conversion.
+ */
 public final class VisionManager: BaseVisionManager {
     // MARK: - Public
 
     // MARK: Lifetime
     
     /**
-        Fabric method for creating a `VisionManager` instance.
-        
-        It's only allowed to have one living instance of `VisionManager`.
-        To create `VisionManager` with different configuration call `destroy` on existing instance or release all references to it.
-        
-        - Parameter videoSource: Video source which will be utilized by created instance of `VisionManager`.
+     Fabric method for creating a `VisionManager` instance.
 
-        - Returns: Instance of `VisionManager` configured with video source.
-    */
+     It's only allowed to have one living instance of `VisionManager`.
+     To create `VisionManager` with different configuration call `destroy` on existing instance or release all references to it.
+
+     - Parameter videoSource: Video source which will be utilized by created instance of `VisionManager`.
+
+     - Returns: Instance of `VisionManager` configured with video source.
+     */
     public static func create(videoSource: VideoSource) -> VisionManager {
         let dependencies = VisionDependencies.default()
         let manager = VisionManager(dependencies: dependencies, videoSource: videoSource)
@@ -32,10 +32,10 @@ public final class VisionManager: BaseVisionManager {
     }
     
     /**
-        Start delivering events from `VisionManager`.
-        
-        - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
-    */
+     Start delivering events from `VisionManager`.
+
+     - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
+     */
     public func start(delegate: VisionManagerDelegate? = nil) {
         switch state {
         case .uninitialized:
@@ -53,9 +53,9 @@ public final class VisionManager: BaseVisionManager {
     }
     
     /**
-        Stop delivering events from `VisionManager`.
-        This method also stops recording session if it was started.
-    */
+     Stop delivering events from `VisionManager`.
+     This method also stops recording session if it was started.
+     */
     public func stop() {
         guard case let .started(videoSource, _) = state else {
             assertionFailure("VisionManager is not started")
@@ -69,13 +69,13 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-        Start recording session. During the session full telemetry and video are recorded to specified path.
-        You may use resulted folder to replay recorded session with `VisionRecordManager`.
-        This method should only be called after `VisionManager` is started.
+     Start recording session. During the session full telemetry and video are recorded to specified path.
+     You may use resulted folder to replay recorded session with `VisionRecordManager`.
+     This method should only be called after `VisionManager` is started.
 
-        - Parameter path: Path to directory where you'd like session to be recorded.
+     - Parameter path: Path to directory where you'd like session to be recorded.
 
-        - Throws: `VisionManagerError.startRecordingBeforeStart` if method is called when `VisionManager` hasn't been started.
+     - Throws: `VisionManagerError.startRecordingBeforeStart` if method is called when `VisionManager` hasn't been started.
     */
     public func startRecording(to path: String) throws {
         guard case .started = state else {
