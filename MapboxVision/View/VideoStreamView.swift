@@ -35,7 +35,7 @@ final class VideoStreamView: UIView {
     }
     
     func enqueue(_ sampleBuffer: CMSampleBuffer) {
-        if let attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, false) {
+        if let attachments = CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, createIfNecessary: false) {
             let dict = unsafeBitCast(CFArrayGetValueAtIndex(attachments, 0), to: CFMutableDictionary.self)
             let doNotDisplayKey = Unmanaged.passUnretained(kCMSampleAttachmentKey_DoNotDisplay).toOpaque()
             let doNotDisplayValue = Unmanaged.passUnretained(kCFBooleanFalse).toOpaque()

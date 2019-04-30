@@ -27,7 +27,7 @@ final class SessionManager {
         isStarted.toggle()
         
         notificationObservers.append(
-            NotificationCenter.default.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: .main) { [weak self] _ in
+            NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { [weak self] _ in
             self?.stopSession()
         })
         

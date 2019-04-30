@@ -144,9 +144,9 @@
 		2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManager.swift; sourceTree = "<group>"; };
 		2E071A812257AE0A00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionSafetyManagerDelegate.swift; sourceTree = "<group>"; };
-		2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionNative.framework; path = "Carthage/Build/iOS/MapboxVisionNative.framework"; sourceTree = "<group>"; };
-		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = "Carthage/Build/iOS/MapboxVisionARNative.framework"; sourceTree = "<group>"; };
-		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = "Carthage/Build/iOS/MapboxVisionSafetyNative.framework"; sourceTree = "<group>"; };
+		2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionNative.framework; path = Carthage/Build/iOS/MapboxVisionNative.framework; sourceTree = "<group>"; };
+		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = Carthage/Build/iOS/MapboxVisionARNative.framework; sourceTree = "<group>"; };
+		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = Carthage/Build/iOS/MapboxVisionSafetyNative.framework; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
@@ -1078,7 +1078,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdhocRelease;
@@ -1236,7 +1236,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1264,7 +1264,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

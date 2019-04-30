@@ -13,7 +13,7 @@ import UIKit
 extension AVCaptureConnection {
     func set(deviceOrientation: UIDeviceOrientation) {
         if isVideoOrientationSupported,
-            UIDeviceOrientationIsLandscape(deviceOrientation),
+            deviceOrientation.isLandscape,
             let videoOrientation = AVCaptureVideoOrientation(rawValue: deviceOrientation.rawValue),
             self.videoOrientation != videoOrientation {
             self.videoOrientation = videoOrientation

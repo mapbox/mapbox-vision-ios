@@ -11,7 +11,7 @@ import UIKit
 
 final class ImageRecorder {
     func record(image: UIImage, to path: String) {
-        guard let data = UIImageJPEGRepresentation(image, 1.0) else {
+        guard let data = image.jpegData(compressionQuality: 1.0) else {
             assertionFailure("ERROR: Unable to obtain data representation of UIImage")
             return
         }
