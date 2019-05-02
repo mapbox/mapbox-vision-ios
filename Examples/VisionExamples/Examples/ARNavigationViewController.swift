@@ -1,7 +1,5 @@
 //
-//  ViewController.swift
-//  VisionARSample
-//
+//  Created by Alexander Pristavko on 4/01/19.
 //  Copyright © 2019 Mapbox. All rights reserved.
 //
 

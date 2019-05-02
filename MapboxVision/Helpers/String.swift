@@ -1,7 +1,4 @@
 //
-//  String.swift
-//  MapboxVision
-//
 //  Created by Alexander Pristavko on 10/22/18.
 //  Copyright © 2018 Mapbox. All rights reserved.
 //

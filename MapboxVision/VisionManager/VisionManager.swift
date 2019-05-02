@@ -1,7 +1,4 @@
 //
-//  VisionManager.swift
-//  cv-assist-ios
-//
 //  Created by Alexander Pristavko on 1/20/18.
 //  Copyright © 2018 Mapbox. All rights reserved.
 //

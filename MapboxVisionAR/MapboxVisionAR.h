@@ -1,7 +1,4 @@
 //
-//  MapboxVisionAR.h
-//  MapboxVisionAR
-//
 //  Created by Alexander Pristavko on 9/8/18.
 //  Copyright © 2018 Mapbox. All rights reserved.
 //

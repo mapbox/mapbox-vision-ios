@@ -1,7 +1,5 @@
 //
-//  AppDelegate.swift
-//  ExternalCameraSample
-//
+//  Created by Alexander Pristavko on 3/21/19.
 //  Copyright © 2019 Mapbox. All rights reserved.
 //
 

@@ -1,7 +1,4 @@
 //
-//  CameraVideoSource.swift
-//  cv-assist-ios
-//
 //  Created by Maksim on 12/11/17.
 //  Copyright © 2017 Mapbox. All rights reserved.
 //
