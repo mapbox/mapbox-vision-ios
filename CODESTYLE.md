@@ -1,8 +1,7 @@
 # Coding style guide
-===
+
 
 ## Objective-C
-
 We follow the [Google Objective-C Style Guide](https://google.github.io/styleguide/objcguide.html).
 Make sure your code is also follows [Cocoa Coding Guidelines](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html).
 
@@ -26,7 +25,6 @@ There're following items that can differ a bit from Style Guide above:
 We use automation tools to enforce formatting (see `Enforcing formatting and linting` section below).
 
 # Enforcing formatting and linting
-===
 
 ## Tooling
 
@@ -35,14 +33,13 @@ We use automation tools to enforce formatting (see `Enforcing formatting and lin
 Rules for `SwiftFormat` are configured in `.swiftformat` file.
 You can find an updated list of rules and more information about regarding all available rules in [Rules.md](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md).
 
-
 - [Swift Lint](https://github.com/realm/SwiftLint) to enforce Swift style and perfrorm some lint checks.
 
 All rules for `SwiftLint` are configured in `.swiftlint.yml` file. Additionally `SwiftLint` has some custom rules. 
 You can find an updated list of rules and more information about regarding all available rules in [Rules.md](https://github.com/realm/SwiftLint/blob/master/Rules.md).
 You can also check [Source/SwiftLintFramework/Rules directory](https://github.com/realm/SwiftLint/blob/master/Source/SwiftLintFramework/Rules) to see their implementation.
 
-- We use [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) to handle formatting for Obj-C/Obj-C++ code (`.h`/`.m`/`.mm` file extensions).
+- [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) to handle formatting for Obj-C/Obj-C++ code (`.h`/`.m`/`.mm` file extensions).
 
 ## Installation and usage
 
@@ -61,7 +58,7 @@ brew install swiftlint
 
 2. Using a pre-built package:
 
-Install SwiftLint by downloading SwiftLint.pkg from the [latest GitHub release](https://github.com/realm/SwiftLint/releases/) and running it.
+Install SwiftLint by downloading `SwiftLint.pkg` from the [latest GitHub release](https://github.com/realm/SwiftLint/releases/) and running it.
 
 3. Compiling from source:
 
@@ -70,7 +67,7 @@ You can also build from source by cloning [Swiftlint project](https://github.com
 git submodule update --init --recursive; make install
 ```
 
-## How to use Swiftlint:
+### How to use Swiftlint:
 
 - Xcode
 
@@ -107,7 +104,7 @@ swift build -c release
 ```
 You can find more details at [Swiftformat page](https://github.com/nicklockwood/SwiftFormat#command-line-tool)
 
-## How to use Swiftformat:
+### How to use Swiftformat:
 
 - Xcode
 
@@ -115,7 +112,7 @@ Swiftlint is integrated into an Xcode build phase, so you'll get warnings displa
 
 - Running manually as a command-line tool
 
-You can now just run:
+You can just run:
 ```
 swiftformat .
 ```
