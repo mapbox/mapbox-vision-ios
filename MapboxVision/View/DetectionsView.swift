@@ -35,7 +35,7 @@ final class DetectionsView: UIImageView {
             
             let title = $0.objectType.title.uppercased() as NSString
             let font = UIFont(name: "AvenirNextCondensed-Bold", size: 11)!
-            let size: CGSize = title.size(withAttributes: [NSAttributedStringKey.font: font])
+            let size: CGSize = title.size(withAttributes: [NSAttributedString.Key.font: font])
             let label = UILabel(frame: CGRect(
                 x: view.frame.origin.x,
                 y: view.frame.origin.y - DetectionsView.labelHeight,

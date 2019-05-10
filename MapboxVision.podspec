@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.swift_version = '4.1'
+  s.swift_version = '4.2'
 
   s.dependency "MapboxVisionNativeAll/Vision", "~> 0.3.0"
   s.dependency "MapboxMobileEvents", "~> 0.8.1"

@@ -61,7 +61,7 @@ final class RecordCoordinator {
     private var currentStartTime: DispatchTime?
     private var currentEndTime: DispatchTime?
     
-    private var stopRecordingInBackgroundTask = UIBackgroundTaskInvalid
+    private var stopRecordingInBackgroundTask = UIBackgroundTaskIdentifier.invalid
     
     // determines if the source video is saved
     var savesSourceVideo: Bool = false
@@ -348,6 +348,6 @@ extension RecordCoordinator: VideoBufferDelegate {
     
     private func endBackgroundTask() {
         UIApplication.shared.endBackgroundTask(stopRecordingInBackgroundTask)
-        stopRecordingInBackgroundTask = UIBackgroundTaskInvalid
+        stopRecordingInBackgroundTask = UIBackgroundTaskIdentifier.invalid
     }
 }

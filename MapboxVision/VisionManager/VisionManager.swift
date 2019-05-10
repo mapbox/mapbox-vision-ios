@@ -182,7 +182,7 @@ public final class VisionManager {
     private var currentFrame: CVPixelBuffer?
     private var dataProvider: DataProvider?
     
-    private var backgroundTask = UIBackgroundTaskInvalid
+    private var backgroundTask = UIBackgroundTaskIdentifier.invalid
     private var hasPendingRecordingRequest = false
     private var notificationObservers = [Any]()
     private var enableSyncObservation: NSKeyValueObservation?
@@ -341,14 +341,14 @@ public final class VisionManager {
     private var isStoppedForBackground = false
     private func subscribeToNotifications() {
         let center = NotificationCenter.default
-        notificationObservers.append(center.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [weak self] _ in
+        notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
             self?.stopInterruption()
             guard let `self` = self, self.isStoppedForBackground else { return }
             self.isStoppedForBackground = false
             self.resume()
         })
     
-        notificationObservers.append(center.addObserver(forName: .UIApplicationDidEnterBackground, object: nil, queue: .main) { [weak self] _ in
+        notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
             self?.interruptionStartTime = Date()
             guard let `self` = self, self.state.isStarted else { return }
             self.isStoppedForBackground = true

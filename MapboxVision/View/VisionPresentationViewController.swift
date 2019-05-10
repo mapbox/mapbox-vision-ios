@@ -52,7 +52,7 @@ public final class VisionPresentationViewController: UIViewController {
             oldTopView.isHidden = true
             
             let newTopView = view(for: frameVisualizationMode)
-            backgroundView.bringSubview(toFront: newTopView)
+            backgroundView.bringSubviewToFront(newTopView)
         }
     }
     
@@ -154,8 +154,8 @@ public final class VisionPresentationViewController: UIViewController {
         
         view.addSubview(logoView)
         NSLayoutConstraint.activate([
-            view.safeAreaLayoutGuide.bottomAnchor.constraintEqualToSystemSpacingBelow(logoView.bottomAnchor, multiplier: 1),
-            view.safeAreaLayoutGuide.rightAnchor.constraintEqualToSystemSpacingAfter(logoView.rightAnchor, multiplier: 1),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: logoView.bottomAnchor, multiplier: 1),
+            view.safeAreaLayoutGuide.rightAnchor.constraint(equalToSystemSpacingAfter: logoView.rightAnchor, multiplier: 1),
         ])
     }
     
