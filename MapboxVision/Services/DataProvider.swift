@@ -59,9 +59,9 @@ final class RealtimeDataProvider: DataProvider {
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        dependencies.motionManager.handler = dependencies.native.setDeviceMotion
-        dependencies.locationManager.locationHandler = dependencies.native.setGPS
-        dependencies.locationManager.headingHandler = dependencies.native.setHeading
+        dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
+        dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
+        dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
     }
     
     func start() {

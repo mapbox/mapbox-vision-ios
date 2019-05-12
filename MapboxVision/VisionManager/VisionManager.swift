@@ -482,11 +482,11 @@ extension VisionManager: VideoSourceObserver {
         
         dependencies.recorder.handleFrame(videoSample.buffer)
         
-        dependencies.native.setImage(pixelBuffer)
+        dependencies.native.sensors.setImage(pixelBuffer)
     }
     
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
-        dependencies.native.setCameraParameters(cameraParameters)
+        dependencies.native.sensors.setCameraParameters(cameraParameters)
     }
 }
 
