@@ -181,25 +181,15 @@ public final class VisionManager {
     private var interruptionStartTime: Date?
     private var currentFrame: CVPixelBuffer?
     private var dataProvider: DataProvider?
+    private var currentCountry = Country.unknown
     
-    private var backgroundTask = UIBackgroundTaskIdentifier.invalid
-    private var hasPendingRecordingRequest = false
     private var notificationObservers = [Any]()
-    private var enableSyncObservation: NSKeyValueObservation?
-    private var syncOverCellularObservation: NSKeyValueObservation?
-    
-    private let sessionManager = SessionManager()
-    
-    private var isSyncAllowedOverCellular: Bool {
-        return UserDefaults.standard.syncOverCellular
-    }
-    
-    private var isSyncEnabled: Bool {
-        return UserDefaults.standard.enableSync
-    }
     
     private var isSyncAllowed: Bool {
-        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
+        switch currentCountry {
+        case .unknown, .china: return false
+        case .USA, .other: return true
+        }
     }
     
     private var operationMode: OperationMode = .normal {
@@ -220,8 +210,6 @@ public final class VisionManager {
         updateModelPerformanceConfig(modelPerformanceConfig)
         updateOperationMode(operationMode)
         
-        registerDefaults()
-        
         let realtimeDataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: dependencies.native,
             motionManager: dependencies.motionManager,
@@ -230,39 +218,13 @@ public final class VisionManager {
         
         setDataProvider(realtimeDataProvider)
         
-        dependencies.recordSynchronizer.delegate = self
         dependencies.recorder.delegate = self
         
-        dependencies.reachability.whenReachable = { [weak self] _ in
-            guard let `self` = self else { return }
-            self.isSyncAllowed ? self.startSync() : self.stopSync()
-        }
-        dependencies.reachability.whenUnreachable = { [weak self] _ in
-            print("Network is unreachable")
-            self?.stopSync()
-        }
-        
-        try? dependencies.reachability.startNotifier()
-        
-        let defaults = UserDefaults.standard
-        let settingHandler = { [weak self] (defaults: UserDefaults, change: NSKeyValueObservedChange<Bool>) in
-            guard let `self` = self else { return }
-            self.isSyncAllowed ? self.startSync() : self.stopSync()
-        }
-        
-        enableSyncObservation = defaults.observe(\.enableSync, changeHandler: settingHandler)
-        syncOverCellularObservation = defaults.observe(\.syncOverCellular, changeHandler: settingHandler)
-        
-        sessionManager.listener = self
-    
         subscribeToNotifications()
     }
     
     deinit {
         unsubscribeFromNotifications()
-        enableSyncObservation?.invalidate()
-        syncOverCellularObservation?.invalidate()
-        
         destroy()
     }
     
@@ -281,7 +243,7 @@ public final class VisionManager {
         startVideoStream()
         dependencies.native.start(self)
         
-        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+        dependencies.recorder.start()
     }
     
     private func pause() {
@@ -289,7 +251,7 @@ public final class VisionManager {
         stopVideoStream()
         dependencies.native.stop()
         
-        sessionManager.stopSession()
+        dependencies.recorder.stop()
     }
     
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
@@ -326,16 +288,6 @@ public final class VisionManager {
     private func updateOperationMode(_ operationMode: OperationMode) {
         dependencies.native.config.useSegmentation = operationMode.usesSegmentation
         dependencies.native.config.useDetection = operationMode.usesDetection
-        
-        dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
-        
-        UserDefaults.standard.enableSync = operationMode.isSyncEnabled
-    }
-    
-    private func registerDefaults() {
-        let defaults = UserDefaults.standard
-        defaults.setValue(false, forKey: VisionSettings.enableSync)
-        defaults.setValue(false, forKey: VisionSettings.syncOverCellular)
     }
     
     private var isStoppedForBackground = false
@@ -358,15 +310,6 @@ public final class VisionManager {
     
     private func unsubscribeFromNotifications() {
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
-    }
-    
-    private func startSync() {
-        guard isSyncAllowed else { return }
-        dependencies.recordSynchronizer.sync()
-    }
-    
-    private func stopSync() {
-        dependencies.recordSynchronizer.stopSync()
     }
     
     // TODO: refactor to setting data provider on initialization
@@ -443,6 +386,7 @@ extension VisionManager: VisionDelegate {
     }
     
     public func onCountryUpdated(_ country: Country) {
+        currentCountry = country
         state.delegate?.visionManager(self, didUpdateCountry: country)
         configureSync(country)
     }
@@ -450,16 +394,16 @@ extension VisionManager: VisionDelegate {
     private func configureSync(_ country: Country) {
         switch country {
         case .USA, .other:
-            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-            UserDefaults.standard.enableSync = true
+            dependencies.recorder.start()
+            dependencies.synchronizer.sync()
         case .china:
-            sessionManager.stopSession(abort: true)
-            UserDefaults.standard.enableSync = false
+            dependencies.recorder.stop(abort: true)
+            dependencies.synchronizer.stopSync()
             let data = SyncRecordDataSource()
             data.recordDirectories.forEach(data.removeFile)
         case .unknown:
-            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-            UserDefaults.standard.enableSync = false
+            dependencies.recorder.start()
+            dependencies.synchronizer.stopSync()
         }
     }
     
@@ -490,67 +434,12 @@ extension VisionManager: VideoSourceObserver {
     }
 }
 
-extension VisionManager: SyncDelegate {
-    func syncStarted() {
-        backgroundTask = UIApplication.shared.beginBackgroundTask()
-    }
-    
-    func syncStopped() {
-        UIApplication.shared.endBackgroundTask(backgroundTask)
-    }
-}
-
 extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {
-        dependencies.native.startSavingSession(path)
-    }
+    func recordingStarted(path: String) {}
     
     func recordingStopped() {
-        startSync()
-        
-        if hasPendingRecordingRequest {
-            hasPendingRecordingRequest = false
-            try? dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
-                                                      videoSettings: operationMode.videoSettings)
+        if isSyncAllowed {
+            dependencies.synchronizer.sync()
         }
-    }
-}
-
-extension VisionManager: SessionDelegate {
-    func sessionStarted() {
-        do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
-                                                     videoSettings: operationMode.videoSettings)
-        } catch RecordCoordinatorError.cantStartNotReady {
-            hasPendingRecordingRequest = true
-        } catch {
-            print(error)
-        }
-    }
-    
-    func sessionStopped(abort: Bool) {
-        dependencies.native.stopSavingSession()
-        dependencies.recorder.stopRecording(abort: abort)
-    }
-}
-
-fileprivate extension VideoSettings {
-    var size: CGSize {
-        return CGSize(width: width, height: height)
-    }
-}
-
-private extension UserDefaults {
-    @objc dynamic var enableSync: Bool {
-        get {
-            return bool(forKey: VisionSettings.enableSync)
-        }
-        set {
-            set(newValue, forKey: VisionSettings.enableSync)
-        }
-    }
-    
-    @objc dynamic var syncOverCellular: Bool {
-        return bool(forKey: VisionSettings.syncOverCellular)
     }
 }

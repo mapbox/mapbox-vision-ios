@@ -68,10 +68,11 @@
 		2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2B820F05ACB003431B3 /* Result.swift */; };
 		2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */; };
 		2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
-		2E4EE2EB20F0D1BC003431B3 /* VisionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */; };
 		2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E539DE8210F00190058D9B2 /* SessionManager.swift */; };
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14E922896C5700BAF585 /* Synchronizable.swift */; };
+		2E7F14EC22896D0600BAF585 /* ManagedSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14EB22896D0600BAF585 /* ManagedSynchronizer.swift */; };
+		2E7F14EE22898EF200BAF585 /* SessionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
@@ -185,10 +186,11 @@
 		2E4EE2B820F05ACB003431B3 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Convert.swift"; sourceTree = "<group>"; };
 		2E4EE2E220F0CC63003431B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionSettings.swift; sourceTree = "<group>"; };
 		2E539DE8210F00190058D9B2 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		2E7F14E922896C5700BAF585 /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
+		2E7F14EB22896D0600BAF585 /* ManagedSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedSynchronizer.swift; sourceTree = "<group>"; };
+		2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecorder.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				B5AEB46921186CCF00AF198E /* RecordArchiver.swift */,
 				B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */,
 				B50CFBA92163C89D00C9C5A5 /* FileManager.swift */,
+				2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */,
 			);
 			path = Recording;
 			sourceTree = "<group>";
@@ -442,7 +445,6 @@
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
 				2E4EE25420F05370003431B3 /* VideoSettings.swift */,
-				2E4EE2EA20F0D1BC003431B3 /* VisionSettings.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -522,6 +524,7 @@
 			children = (
 				9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */,
 				2E7F14E922896C5700BAF585 /* Synchronizable.swift */,
+				2E7F14EB22896D0600BAF585 /* ManagedSynchronizer.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -773,7 +776,6 @@
 				2E4EE2A020F058B9003431B3 /* UserDefaults+DefaultValue.swift in Sources */,
 				2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */,
 				2E4EE29420F05844003431B3 /* URL.swift in Sources */,
-				2E4EE2EB20F0D1BC003431B3 /* VisionSettings.swift in Sources */,
 				2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */,
 				2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */,
 				2EDD8707219ED89E00760C6D /* Constants.swift in Sources */,
@@ -790,6 +792,7 @@
 				2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */,
 				2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */,
 				2E4EE25120F05045003431B3 /* SegmentationDrawer.swift in Sources */,
+				2E7F14EC22896D0600BAF585 /* ManagedSynchronizer.swift in Sources */,
 				2E4EE2AA20F0590F003431B3 /* MotionManager.swift in Sources */,
 				2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */,
 				B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */,
@@ -801,6 +804,7 @@
 				2EC332A3217E02BA00E041FE /* String.swift in Sources */,
 				2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */,
 				2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */,
+				2E7F14EE22898EF200BAF585 /* SessionRecorder.swift in Sources */,
 				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
 				2E4EE27520F05655003431B3 /* Reachability.swift in Sources */,
 				2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */,
