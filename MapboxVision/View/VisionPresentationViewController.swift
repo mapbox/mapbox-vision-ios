@@ -377,4 +377,11 @@ private extension CGRect {
         let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: from, to: to)
         return CGRect(x: leftTop.x, y: leftTop.y, width: rightBottom.x - leftTop.x, height: rightBottom.y - leftTop.y)
     }
+
+    func convertedToAbsoluteCoordinates(from relativeCoordinates: CGRect, relativeTo frameSize: CGSize) -> CGRect {
+        return CGRect(x: frameSize.width * relativeCoordinates.origin.x,
+                      y: frameSize.height * relativeCoordinates.origin.y,
+                      width: frameSize.width * relativeCoordinates.size.width,
+                      height: frameSize.height * relativeCoordinates.size.height)
+    }
 }
