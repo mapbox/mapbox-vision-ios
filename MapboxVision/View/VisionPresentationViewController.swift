@@ -362,7 +362,8 @@ extension VisionPresentationViewController {
         let imageSize = detections.frame.image.size.cgSize
         
         let values = detections.detections.map { detection -> BasicDetection in
-            let rect = detection.boundingBox.convertForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
+            let rect = detection.boundingBox.convertedToAbsoluteCoordinates(from:detection.boundingBox, relativeTo:imageSize)
+                                            .convertedForAspectRatioFill(from:imageSize, to:detectionsView.bounds.size)
             return BasicDetection(boundingBox: rect, objectType: detection.detectionClass)
         }
         
