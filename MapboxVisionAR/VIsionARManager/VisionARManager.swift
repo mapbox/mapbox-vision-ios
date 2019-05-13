@@ -34,7 +34,16 @@ public final class VisionARManager {
         manager.delegate = delegate
         return manager
     }
-    
+
+    /**
+        Setup length of AR lane.
+
+        - Parameter laneLength: length of AR lane in meters.
+    */
+    func set(laneLength: Double) {
+        native?.setLaneLength(laneLength)
+    }
+
     /**
         Cleanup the state and resources of `VisionARManger`.
     */
