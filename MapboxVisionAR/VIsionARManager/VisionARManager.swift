@@ -27,10 +27,10 @@ public final class VisionARManager {
     }
 
     /**
-        Setup length of AR lane.
+     Setup length of AR lane.
 
-        - Parameter laneLength: Length of AR lane in meters.
-    */
+     - Parameter laneLength: Length of AR lane in meters.
+     */
     func set(laneLength: Double) {
         native?.setLaneLength(laneLength)
     }
