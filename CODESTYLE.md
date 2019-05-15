@@ -71,7 +71,7 @@ git submodule update --init --recursive; make install
 
 - Xcode
 
-Swiftlint is integrated into an Xcode build phase, so you'll get warnings and errors displayed in the IDE each time you hit `Cmd + B`  or `Cmd + R`.
+In our projects we integrated Swiftlint into an Xcode build phase, so you'll get warnings and errors displayed in the IDE each time you hit `Cmd + B`  or `Cmd + R`.
 
 - AppCode
 
@@ -108,7 +108,7 @@ You can find more details at [Swiftformat page](https://github.com/nicklockwood/
 
 - Xcode
 
-Swiftlint is integrated into an Xcode build phase, so you'll get warnings displayed in the IDE each time you hit `Cmd + B`  or `Cmd + R`.
+In our projects we integrated Swiftformat into an Xcode build phase, so you'll get warnings displayed in the IDE each time you hit `Cmd + B`  or `Cmd + R`.
 
 - Running manually as a command-line tool
 
