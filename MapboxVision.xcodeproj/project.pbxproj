@@ -20,8 +20,6 @@
 		2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A3D2257887E00345FA8 /* ARMath.swift */; };
 		2E071A4E2257887F00345FA8 /* MapboxVisionAR.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A3F2257887E00345FA8 /* VisionARViewController.swift */; };
-		2E071A502257887F00345FA8 /* NavigationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A402257887E00345FA8 /* NavigationProvider.swift */; };
-		2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; };
 		2E071A832257AE0A00345FA8 /* MapboxVisionSafety.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E071A842257AE0A00345FA8 /* VisionSafetyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A802257AE0A00345FA8 /* VisionSafetyManager.swift */; };
 		2E071A862257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A822257AE0A00345FA8 /* VisionSafetyManagerDelegate.swift */; };
@@ -143,7 +141,6 @@
 		2E071A3D2257887E00345FA8 /* ARMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARMath.swift; sourceTree = "<group>"; };
 		2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxVisionAR.h; sourceTree = "<group>"; };
 		2E071A3F2257887E00345FA8 /* VisionARViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARViewController.swift; sourceTree = "<group>"; };
-		2E071A402257887E00345FA8 /* NavigationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationProvider.swift; sourceTree = "<group>"; };
 		2E071A432257887E00345FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxCoreNavigation.framework; path = Carthage/Build/iOS/MapboxCoreNavigation.framework; sourceTree = "<group>"; };
 		2E071A7F2257AE0A00345FA8 /* MapboxVisionSafety.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapboxVisionSafety.h; sourceTree = "<group>"; };
@@ -235,7 +232,6 @@
 				2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */,
 				2E071A9D2257CCBD00345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				2E071A992257CC6F00345FA8 /* MapboxVision.framework in Frameworks */,
-				2E071A5522578A3F00345FA8 /* MapboxCoreNavigation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +338,6 @@
 			isa = PBXGroup;
 			children = (
 				2E071A332257887E00345FA8 /* ARRoute+DirectionsRoute.swift */,
-				2E071A402257887E00345FA8 /* NavigationProvider.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -746,7 +741,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E071A502257887F00345FA8 /* NavigationProvider.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
