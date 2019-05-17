@@ -1,8 +1,6 @@
 // swiftlint:disable comma operator_usage_whitespace
 // swiftformat:disable indent wrapArguments
 
-import MapboxVision
-import MapboxVisionARNative
 import MetalKit
 
 // design

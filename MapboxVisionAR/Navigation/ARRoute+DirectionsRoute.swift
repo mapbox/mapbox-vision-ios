@@ -1,3 +1,4 @@
+#if canImport(MapboxDirections)
 import Foundation
 import MapboxDirections
 import MapboxVisionARNative
@@ -28,3 +29,10 @@ public extension MapboxVisionARNative.Route {
                   destinationStreetName: route.legs.last?.destination.name ?? "")
     }
 }
+
+public extension VisionARManager {
+    func set(route: MapboxDirections.Route) {
+        set(route: MapboxVisionARNative.Route(route: route))
+    }
+}
+#endif

@@ -1,6 +1,5 @@
 import CoreMedia
 import Foundation
-import MapboxCoreNavigation
 import MapboxVision
 import MapboxVisionARNative
 import MetalKit
@@ -10,11 +9,6 @@ import UIKit
  Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
  */
 public class VisionARViewController: UIViewController {
-    /**
-     The delegate object to receive navigation events.
-     */
-    public weak var navigationDelegate: NavigationManagerDelegate?
-
     /**
      Control the visibility of the Mapbox logo.
      */
@@ -28,17 +22,13 @@ public class VisionARViewController: UIViewController {
     }
 
     private var renderer: ARRenderer?
-    private var navigationManager: NavigationManager?
-
+    
     /**
      Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
      */
-    public init(navigationService: NavigationService? = nil) {
+    public init() {
         super.init(nibName: nil, bundle: nil)
-
-        self.navigationService = navigationService
-        setNavigationService(navigationService)
-
+        
         guard let device = MTLCreateSystemDefaultDevice() else {
             assertionFailure("Can't create Metal device")
             return
@@ -63,15 +53,6 @@ public class VisionARViewController: UIViewController {
     }
 
     /**
-     NavigationService from MapboxCoreNavigation framework
-     */
-    public var navigationService: NavigationService? {
-        didSet {
-            setNavigationService(navigationService)
-        }
-    }
-
-    /**
      Display sample buffer (e.g. taken from `VideoSource`).
      */
     public func present(sampleBuffer: CMSampleBuffer) {
@@ -91,15 +72,6 @@ public class VisionARViewController: UIViewController {
      */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
-    }
-
-    private func setNavigationService(_ navigationService: NavigationService?) {
-        if let navigationService = navigationService {
-            navigationManager = NavigationManager(navigationService: navigationService)
-            navigationManager?.delegate = navigationDelegate
-        } else {
-            navigationManager = nil
-        }
     }
 
     /// :nodoc:
