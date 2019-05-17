@@ -21,10 +21,6 @@ protocol VideoPlayerDelegate: AnyObject {
     func playbackDidFinish()
 }
 
-enum VideoPlayerError: LocalizedError {
-    case noSuchFile
-}
-
 private enum PlaybackConstants {
     static let frameDuration: TimeInterval = 0.03
 }
@@ -44,7 +40,7 @@ final class VideoPlayer: NSObject, VideoPlayable {
 
     init(path: String) throws {
         guard FileManager.default.fileExists(atPath: path) else {
-            throw VideoPlayerError.noSuchFile
+            throw CocoaError(.fileNoSuchFile)
         }
 
         let url = URL(fileURLWithPath: path)

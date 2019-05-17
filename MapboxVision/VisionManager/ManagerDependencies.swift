@@ -9,7 +9,6 @@
 import Foundation
 import MapboxVisionNative
 
-private let visionSessionInterval: TimeInterval = 5 * 60
 private let visionVideoSettings: VideoSettings = .lowQuality
 
 struct BaseDependencies {
@@ -62,7 +61,6 @@ struct VisionDependencies {
             recorder: recordCoordinator,
             sessionManager: SessionManager(),
             videoSettings: visionVideoSettings,
-            sessionInterval: visionSessionInterval,
             getSeconds: native.getSeconds,
             startSavingSession: native.startSavingSession,
             stopSavingSession: native.stopSavingSession
@@ -119,7 +117,9 @@ struct ReplayDependencies {
 
         let native = ReplayVisionManagerNative.create(withPlatform: platform, recordPath: recordPath)
 
-        let videoPath = "\(recordPath)/video.mp4"
+        guard let videoPath = RecordingPath(existing: recordPath, settings: .lowQuality)?.videoPath else {
+            throw CocoaError(.fileNoSuchFile)
+        }
         let player = try VideoPlayer(path: videoPath)
 
         return ReplayDependencies(native: native, synchronizer: synchronizer, player: player)

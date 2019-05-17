@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import MapboxVisionNative
 
+enum VisionManagerError: LocalizedError {
+    case startRecordingBeforeStart
+}
+
 /**
     The main object for registering for events from the SDK, starting and stopping their delivery.
     It also provides some useful functions for performance configuration and data conversion.
@@ -70,7 +74,24 @@ public final class VisionManager: BaseVisionManager {
         state = .stopped(videoSource: videoSource)
         self.delegate = nil
     }
-    
+
+    public func startRecording(at path: String) throws {
+        guard case .started = state else {
+            throw VisionManagerError.startRecordingBeforeStart
+        }
+        dependencies.recorder.stop()
+        dependencies.recorder.start(mode: .external(path: path))
+    }
+
+    public func stopRecording() {
+        guard case .started = state else {
+            assertionFailure("VisionManager should be started and recording")
+            return
+        }
+        dependencies.recorder.stop()
+        dependencies.recorder.start()
+    }
+
     /**
         Cleanup the state and resources of `VisionManger`.
     */
