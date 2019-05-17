@@ -76,6 +76,7 @@
 		2E7F14FB228E2D1400BAF585 /* BaseVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */; };
 		2E7F14FD228E92D900BAF585 /* ReplayVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FC228E92D900BAF585 /* ReplayVisionManager.swift */; };
 		2E7F14FF228E982D00BAF585 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FE228E982D00BAF585 /* VideoPlayer.swift */; };
+		2E7F1501228F0E0B00BAF585 /* VisionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
@@ -197,6 +198,7 @@
 		2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVisionManager.swift; sourceTree = "<group>"; };
 		2E7F14FC228E92D900BAF585 /* ReplayVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayVisionManager.swift; sourceTree = "<group>"; };
 		2E7F14FE228E982D00BAF585 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
+		2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerProtocol.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -304,12 +306,13 @@
 		2E071A902257C42100345FA8 /* VisionManager */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */,
 				2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */,
+				2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */,
 				2E245B1B215A57D2008F57D1 /* OperationMode.swift */,
+				2E7F14FC228E92D900BAF585 /* ReplayVisionManager.swift */,
 				2E4EE23E20EFD651003431B3 /* VisionManager.swift */,
 				2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */,
-				2E7F14FC228E92D900BAF585 /* ReplayVisionManager.swift */,
+				2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */,
 			);
 			path = VisionManager;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */,
 				B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */,
 				2E4EE27C20F05661003431B3 /* FileRecorder.swift in Sources */,
+				2E7F1501228F0E0B00BAF585 /* VisionManagerProtocol.swift in Sources */,
 				B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */,
 				2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */,
 				2E4EE27F20F05661003431B3 /* RecordCoordinator.swift in Sources */,

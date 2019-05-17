@@ -87,7 +87,7 @@ struct ReplayDependencies {
     let synchronizer: Synchronizable
     let player: VideoPlayable
 
-    static func `default`(recordPath: String) -> ReplayDependencies {
+    static func `default`(recordPath: String) throws -> ReplayDependencies {
         guard let reachability = Reachability() else {
             fatalError("Reachability failed to initialize")
         }
@@ -119,7 +119,8 @@ struct ReplayDependencies {
 
         let native = ReplayVisionManagerNative.create(withPlatform: platform, recordPath: recordPath)
 
-        let player = VideoPlayer(path: recordPath)
+        let videoPath = "\(recordPath)/video.mp4"
+        let player = try VideoPlayer(path: videoPath)
 
         return ReplayDependencies(native: native, synchronizer: synchronizer, player: player)
     }

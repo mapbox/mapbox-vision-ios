@@ -27,7 +27,7 @@ public final class VisionSafetyManager {
         
         - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
     */
-    public static func create(visionManager: VisionManager, delegate: VisionSafetyManagerDelegate? = nil) -> VisionSafetyManager {
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionSafetyManagerDelegate? = nil) -> VisionSafetyManager {
         let manager = VisionSafetyManager()
         manager.native = VisionSafetyManagerNative.create(visionManager: visionManager.native, delegate: manager)
         manager.delegate = delegate
