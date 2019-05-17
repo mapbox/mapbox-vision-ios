@@ -9,21 +9,54 @@
 import Foundation
 import CoreMedia
 
+private let internalSessionInterval: TimeInterval = 5 * 60
+private let externalSessionInterval: TimeInterval = 0
+
 final class SessionRecorder {
     struct Dependencies {
         let recorder: RecordCoordinator
         let sessionManager: SessionManager
         let videoSettings: VideoSettings
-        let sessionInterval: TimeInterval
         let getSeconds: () -> Float
         let startSavingSession: (String) -> Void
         let stopSavingSession: () -> Void
+    }
+
+    enum Mode {
+        case `internal`
+        case external(path: String)
+
+        var sessionInterval: TimeInterval {
+            switch self {
+            case .internal:
+                return internalSessionInterval
+            case .external:
+                return externalSessionInterval
+            }
+        }
+
+        var savesSourceVideo: Bool {
+            switch self {
+            case .internal:
+                return false
+            case .external:
+                return true
+            }
+        }
+
+        var path: String? {
+            if case let .external(path) = self {
+                return path
+            }
+            return nil
+        }
     }
     
     weak var delegate: RecordCoordinatorDelegate?
     
     private let dependencies: Dependencies
     private var hasPendingRecordingRequest = false
+    private var currentMode: Mode = .internal
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
@@ -32,8 +65,10 @@ final class SessionRecorder {
         dependencies.recorder.delegate = self
     }
     
-    func start() {
-        dependencies.sessionManager.startSession(interruptionInterval: dependencies.sessionInterval)
+    func start(mode: Mode = .internal) {
+        currentMode = mode
+        dependencies.recorder.savesSourceVideo = mode.savesSourceVideo
+        dependencies.sessionManager.startSession(interruptionInterval: mode.sessionInterval)
     }
     
     func stop(abort: Bool = false) {
@@ -47,6 +82,7 @@ final class SessionRecorder {
     private func record() {
         do {
             try dependencies.recorder.startRecording(referenceTime: dependencies.getSeconds(),
+                                                     directory: currentMode.path,
                                                      videoSettings: dependencies.videoSettings)
         } catch RecordCoordinatorError.cantStartNotReady {
             hasPendingRecordingRequest = true

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol VisionManagerProtocol {
+public protocol VisionManagerProtocol: AnyObject {
 
     /**
      Performance configuration for machine learning models.

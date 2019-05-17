@@ -13,6 +13,7 @@ enum DocumentsLocation: String {
     case recordings = "Recordings"
     case showcase = "Showcase"
     case cache = "Cache"
+    case custom = ""
     
     var path: String {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -37,20 +38,23 @@ struct RecordingPath {
     let recordingPath: String
     let settings: VideoSettings
     
-    private let basePath: DocumentsLocation
+    let basePath: DocumentsLocation
     
     init(basePath: DocumentsLocation = DocumentsLocation.recordings, directory: String? = nil, settings: VideoSettings) {
         self.settings = settings
         self.basePath = basePath
         let dir = directory ?? RecordingPath.generateDirectoryName()
-        recordingPath = basePath.path.appendingPathComponent(dir, isDirectory: true)
+        if basePath == .custom {
+            recordingPath = "\(dir)/"
+        } else {
+            recordingPath = basePath.path.appendingPathComponent(dir, isDirectory: true)
+        }
         
         createStructure()
     }
-    
+
     init?(existing path: String, settings: VideoSettings) {
-        guard let basePath = DocumentsLocation(rawValue: path.deletingLastPathComponent.lastPathComponent) else { return nil }
-        self.basePath = basePath
+        self.basePath = .custom
         
         self.settings = settings
         self.recordingPath = path
@@ -83,13 +87,16 @@ struct RecordingPath {
         let directory = recordingPath.lastPathComponent
         return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
     }
-    
+
     func delete() throws {
-        try FileManager.default.removeItem(atPath: self.basePath.path)
+        if exists {
+            try FileManager.default.removeItem(atPath: recordingPath)
+        }
     }
     
     private func createStructure() {
         do {
+            try delete()
             try FileManager.default.createDirectory(atPath: imagesDirectoryPath, withIntermediateDirectories: true, attributes: nil)
         } catch {
             print("ERROR: failure during creating structure. Error: \(error)")
