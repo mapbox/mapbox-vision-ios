@@ -73,6 +73,7 @@
 		2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14E922896C5700BAF585 /* Synchronizable.swift */; };
 		2E7F14EC22896D0600BAF585 /* ManagedSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14EB22896D0600BAF585 /* ManagedSynchronizer.swift */; };
 		2E7F14EE22898EF200BAF585 /* SessionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */; };
+		2E7F14FB228E2D1400BAF585 /* BaseVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
@@ -191,6 +192,7 @@
 		2E7F14E922896C5700BAF585 /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
 		2E7F14EB22896D0600BAF585 /* ManagedSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedSynchronizer.swift; sourceTree = "<group>"; };
 		2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecorder.swift; sourceTree = "<group>"; };
+		2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVisionManager.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 		2E071A902257C42100345FA8 /* VisionManager */ = {
 			isa = PBXGroup;
 			children = (
+				2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */,
 				2E245B1B215A57D2008F57D1 /* OperationMode.swift */,
 				2E4EE23E20EFD651003431B3 /* VisionManager.swift */,
 				2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */,
@@ -794,6 +797,7 @@
 				2E4EE25120F05045003431B3 /* SegmentationDrawer.swift in Sources */,
 				2E7F14EC22896D0600BAF585 /* ManagedSynchronizer.swift in Sources */,
 				2E4EE2AA20F0590F003431B3 /* MotionManager.swift in Sources */,
+				2E7F14FB228E2D1400BAF585 /* BaseVisionManager.swift in Sources */,
 				2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */,
 				B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */,
 				2E4EE27C20F05661003431B3 /* FileRecorder.swift in Sources */,
