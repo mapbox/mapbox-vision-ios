@@ -11,7 +11,7 @@ import Foundation
 /**
     Helper class handling observers: storing, releasing, notifying.
     Observers are held weakly by the instance of the class.
-    You may inherit your video source from this class to avoid handling observers yourself.
+    You may inherit your video source from this class or agregate it to avoid handling observers yourself.
 */
 open class ObservableVideoSource: NSObject, VideoSource {
     

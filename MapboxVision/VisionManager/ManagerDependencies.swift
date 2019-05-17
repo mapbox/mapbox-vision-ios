@@ -81,3 +81,46 @@ struct VisionDependencies {
                                   deviceInfo: deviceInfo)
     }
 }
+
+struct ReplayDependencies {
+    let native: ReplayVisionManagerNative
+    let synchronizer: Synchronizable
+    let player: VideoPlayable
+
+    static func `default`(recordPath: String) -> ReplayDependencies {
+        guard let reachability = Reachability() else {
+            fatalError("Reachability failed to initialize")
+        }
+
+        let eventsManager = EventsManager()
+        let deviceInfo = DeviceInfoProvider()
+
+        let dataSource = SyncRecordDataSource()
+        let recordArchiver = RecordArchiver()
+        let recordSyncDependencies = RecordSynchronizer.Dependencies(
+            networkClient: eventsManager,
+            dataSource: dataSource,
+            deviceInfo: deviceInfo,
+            archiver: recordArchiver,
+            fileManager: FileManager.default
+        )
+        let recordSynchronizer = RecordSynchronizer(recordSyncDependencies)
+
+        let syncDependencies = ManagedSynchronizer.Dependencies(
+            base: recordSynchronizer,
+            reachability: reachability
+        )
+        let synchronizer = ManagedSynchronizer(dependencies: syncDependencies)
+
+        let platform = Platform(dependencies: Platform.Dependencies(
+            recordCoordinator: nil,
+            eventsManager: eventsManager
+        ))
+
+        let native = ReplayVisionManagerNative.create(withPlatform: platform, recordPath: recordPath)
+
+        let player = VideoPlayer(path: recordPath)
+
+        return ReplayDependencies(native: native, synchronizer: synchronizer, player: player)
+    }
+}
