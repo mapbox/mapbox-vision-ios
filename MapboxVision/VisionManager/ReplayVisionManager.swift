@@ -9,10 +9,10 @@
 import Foundation
 import CoreMedia
 
-final class ReplayVisionManager: BaseVisionManager {
+public final class ReplayVisionManager: BaseVisionManager {
 
-    public static func create(recordPath: String) -> ReplayVisionManager {
-        return ReplayVisionManager(dependencies: ReplayDependencies.default(recordPath: recordPath))
+    public static func create(recordPath: String) throws -> ReplayVisionManager {
+        return ReplayVisionManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
     }
 
     public var videoSource: VideoSource {
@@ -79,6 +79,9 @@ final class ReplayVisionManager: BaseVisionManager {
         super.init(dependencies: BaseDependencies(native: dependencies.native, synchronizer: dependencies.synchronizer))
 
         dependencies.player.add(observer: self)
+        dependencies.player.delegate = self
+
+        state = .initialized
     }
 
     deinit {
@@ -126,7 +129,7 @@ final class ReplayVisionManager: BaseVisionManager {
 }
 
 extension ReplayVisionManager: VideoSourceObserver {
-    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         var timingInfo = CMSampleTimingInfo.invalid
         let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
 
@@ -138,5 +141,13 @@ extension ReplayVisionManager: VideoSourceObserver {
         let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * 1000)
 
         dependencies.native.sensors.setFrame(pixelBuffer, timestamp: timeStamp)
+    }
+}
+
+extension ReplayVisionManager: VideoPlayerDelegate {
+    func playbackDidStart() {}
+
+    func playbackDidFinish() {
+        stop()
     }
 }

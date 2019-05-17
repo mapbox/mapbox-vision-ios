@@ -8,14 +8,10 @@
 
 import Foundation
 
-public class BaseVisionManager {
+public class BaseVisionManager: VisionManagerProtocol {
 
     // MARK: Performance control
 
-    /**
-     Performance configuration for machine learning models.
-     Default value is merged with dynamic performance mode and high rate.
-     */
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
         didSet {
@@ -26,43 +22,22 @@ public class BaseVisionManager {
 
     // MARK: Utility
 
-    /**
-     Converts location of the point from a screen coordinate to a world coordinate.
-
-     - Parameter screenCoordinate: Screen coordinate expressed in pixels
-     */
     public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
         return dependencies.native.pixel(toWorld: screenCoordinate)
     }
 
-    /**
-     Converts location of the point from a world coordinate to a screen coordinate.
-
-     - Parameter worldCoordinate: Point in world coordinate
-     */
     public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
 
-    /**
-     Converts location of the point from a geo coordinate to a world coordinate.
-
-     - Parameter geoCoordinate: Geographical coordinate of the point
-     */
     public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate {
         return dependencies.native.geo(toWorld: geoCoordinate)
     }
 
-    /**
-     Converts location of the point in a world coordinate to a geographical coordinate.
-
-     - Parameter worldCoordinate: World coordinate of the point
-     */
     public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate {
         return dependencies.native.world(toGeo: worldCoordinates)
     }
 
-    /// :nodoc:
     public var native: VisionManagerBaseNative {
         return dependencies.native
     }

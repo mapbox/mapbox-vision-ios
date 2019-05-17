@@ -11,65 +11,123 @@ import CoreMedia
 import AVFoundation
 
 protocol VideoPlayable: VideoSource {
+    var delegate: VideoPlayerDelegate? { get set }
+
     func start()
     func stop()
 }
 
-final class VideoPlayer: VideoPlayable {
+protocol VideoPlayerDelegate: AnyObject {
+    func playbackDidFinish()
+}
+
+enum VideoPlayerError: LocalizedError {
+    case noSuchFile
+}
+
+private enum PlaybackConstants {
+    static let frameDuration: TimeInterval = 0.03
+}
+
+final class VideoPlayer: NSObject, VideoPlayable {
+    weak var delegate: VideoPlayerDelegate?
+
+    private var isPlaying = false
+    private let player: AVPlayer
+    private let videoOutput: AVPlayerItemVideoOutput
+    private var displayLink: CADisplayLink!
+
     private let observers = ObservableVideoSource()
-    private var playerItemVideoOutput: AVPlayerItemVideoOutput?
+    private var notificationToken: NSObjectProtocol?
 
-    init(path: String) {
+    private let queue = DispatchQueue(label: "com.mapbox.VideoPlayer")
 
-    }
+    init(path: String) throws {
+        guard FileManager.default.fileExists(atPath: path) else {
+            throw VideoPlayerError.noSuchFile
+        }
 
-    func start() {
+        let url = URL(fileURLWithPath: path)
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
 
-    }
+        player = AVPlayer(playerItem: playerItem)
+        player.actionAtItemEnd = .none
 
-    func stop() {
+        let attributes = [String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA)]
+        videoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
 
-    }
+        super.init()
 
+        videoOutput.setDelegate(self, queue: queue)
+        playerItem.add(videoOutput)
 
-    private func sampleBuffer(from pixelBuffer: CVPixelBuffer, timestamp: CMTime) -> CMSampleBuffer {
-        var info = CMSampleTimingInfo()
-        info.presentationTimeStamp = CMTime.zero
-        info.duration = CMTime.invalid
-        info.decodeTimeStamp = timestamp
+        self.displayLink = CADisplayLink(target: self, selector: #selector(updateOnDisplayLink))
+        displayLink.add(to: RunLoop.current, forMode: RunLoop.Mode.default)
+        displayLink.isPaused = true
 
-        var formatDesc: CMFormatDescription? = nil
-        CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault,
-                                                     imageBuffer: pixelBuffer,
-                                                     formatDescriptionOut: &formatDesc)
-
-        var sampleBuffer: CMSampleBuffer? = nil
-
-        CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
-                                                 imageBuffer: pixelBuffer,
-                                                 formatDescription: formatDesc!,
-                                                 sampleTiming: &info,
-                                                 sampleBufferOut: &sampleBuffer)
-
-        return sampleBuffer!
-    }
-
-    @objc func updateOnDisplayLink(displaylink: CADisplayLink) {
-        if let playerItemVideoOutput = playerItemVideoOutput {
-            var currentTime = CMTime.invalid
-            let nextVSync = displaylink.timestamp + displaylink.duration
-            currentTime = playerItemVideoOutput.itemTime(forHostTime: nextVSync)
-
-            if playerItemVideoOutput.hasNewPixelBuffer(forItemTime: currentTime), let pixelBuffer = playerItemVideoOutput.copyPixelBuffer(forItemTime: currentTime, itemTimeForDisplay: nil) {
-                let nextSampleBuffer = sampleBuffer(from: pixelBuffer, timestamp: currentTime)
-
-                observers.notify { (observer) in
-                    observer.videoSource(self, didOutput: VideoSample(buffer: nextSampleBuffer, format: .BGRA))
-                }
-            }
+        notificationToken = NotificationCenter.default.addObserver(
+            forName: Notification.Name.AVPlayerItemDidPlayToEndTime,
+            object: playerItem,
+            queue: .main
+        ) { [weak self] _ in
+            self?.stop()
+            self?.delegate?.playbackDidFinish()
         }
     }
 
+    func start() {
+        guard !isPlaying else { return }
+        videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: PlaybackConstants.frameDuration)
+        player.play()
+        isPlaying = true
+    }
+
+    func stop() {
+        guard isPlaying else { return }
+        isPlaying = false
+
+        player.pause()
+        displayLink?.isPaused = true
+
+        player.currentItem?.seek(to: .zero, completionHandler: nil)
+    }
+
+    private func sampleBuffer(from pixelBuffer: CVPixelBuffer, timestamp: CMTime) -> CMSampleBuffer? {
+        var info = CMSampleTimingInfo(duration: .invalid, presentationTimeStamp: .zero, decodeTimeStamp: timestamp)
+
+        var formatDescription: CMFormatDescription?
+        let status = CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault,
+                                                                  imageBuffer: pixelBuffer,
+                                                                  formatDescriptionOut: &formatDescription)
+
+        guard status == noErr, let format = formatDescription else { return nil }
+
+        var sampleBuffer: CMSampleBuffer?
+        CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
+                                                 imageBuffer: pixelBuffer,
+                                                 formatDescription: format,
+                                                 sampleTiming: &info,
+                                                 sampleBufferOut: &sampleBuffer)
+
+        return sampleBuffer
+    }
+
+    @objc
+    private func updateOnDisplayLink(displaylink: CADisplayLink) {
+        let nextVSync = displaylink.timestamp + displaylink.duration
+        let time = videoOutput.itemTime(forHostTime: nextVSync)
+
+        guard
+            videoOutput.hasNewPixelBuffer(forItemTime: time),
+            let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil),
+            let sampleBuffer = sampleBuffer(from: pixelBuffer, timestamp: time)
+        else { return }
+
+        observers.notify { (observer) in
+            observer.videoSource(self, didOutput: VideoSample(buffer: sampleBuffer, format: .BGRA))
+        }
+    }
 }
 
 extension VideoPlayer: VideoSource {
@@ -85,3 +143,10 @@ extension VideoPlayer: VideoSource {
         observers.remove(observer: observer)
     }
 }
+
+extension VideoPlayer: AVPlayerItemOutputPullDelegate {
+    func outputMediaDataWillChange(_ sender: AVPlayerItemOutput) {
+        displayLink.isPaused = false
+    }
+}
+
