@@ -81,7 +81,7 @@ struct VisionDependencies {
 }
 
 struct ReplayDependencies {
-    let native: ReplayVisionManagerNative
+    let native: VisionReplayManagerNative
     let synchronizer: Synchronizable
     let player: VideoPlayable
 
@@ -115,7 +115,7 @@ struct ReplayDependencies {
             eventsManager: eventsManager
         ))
 
-        let native = ReplayVisionManagerNative.create(withPlatform: platform, recordPath: recordPath)
+        let native = VisionReplayManagerNative.create(withPlatform: platform, recordPath: recordPath)
 
         guard let videoPath = RecordingPath(existing: recordPath, settings: .lowQuality)?.videoPath else {
             throw CocoaError(.fileNoSuchFile)

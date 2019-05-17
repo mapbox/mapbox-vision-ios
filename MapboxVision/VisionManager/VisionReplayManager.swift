@@ -1,5 +1,5 @@
 //
-//  ReplayVisionManager.swift
+//  VisionReplayManager.swift
 //  MapboxVision
 //
 //  Created by Alexander Pristavko on 5/17/19.
@@ -9,10 +9,10 @@
 import Foundation
 import CoreMedia
 
-public final class ReplayVisionManager: BaseVisionManager {
+public final class VisionReplayManager: BaseVisionManager {
 
-    public static func create(recordPath: String) throws -> ReplayVisionManager {
-        return ReplayVisionManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
+    public static func create(recordPath: String) throws -> VisionReplayManager {
+        return VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
     }
 
     public var videoSource: VideoSource {
@@ -128,7 +128,7 @@ public final class ReplayVisionManager: BaseVisionManager {
     }
 }
 
-extension ReplayVisionManager: VideoSourceObserver {
+extension VisionReplayManager: VideoSourceObserver {
     public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         var timingInfo = CMSampleTimingInfo.invalid
         let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
@@ -144,7 +144,7 @@ extension ReplayVisionManager: VideoSourceObserver {
     }
 }
 
-extension ReplayVisionManager: VideoPlayerDelegate {
+extension VisionReplayManager: VideoPlayerDelegate {
     func playbackDidStart() {}
 
     func playbackDidFinish() {
