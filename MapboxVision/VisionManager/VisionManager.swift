@@ -62,6 +62,7 @@ public final class VisionManager: BaseVisionManager {
     
     /**
         Stop delivering events from `VisionManager`.
+        This method also stops recording session if it was started.
     */
     public func stop() {
         guard case let .started(videoSource, _) = state else {
@@ -75,7 +76,16 @@ public final class VisionManager: BaseVisionManager {
         self.delegate = nil
     }
 
-    public func startRecording(at path: String) throws {
+    /**
+        Start recording session. During the session full telemetry and video are recorded to specified path.
+        You may use resulted folder to replay recorded session with `VisionRecordManager`.
+        This method should only be called after `VisionManager` is started.
+
+        - Parameter path: Path to directory where you'd like session to be recorded.
+
+        - Throws: `VisionManagerError.startRecordingBeforeStart` if method is called when `VisionManager` hasn't been started.
+    */
+    public func startRecording(to path: String) throws {
         guard case .started = state else {
             throw VisionManagerError.startRecordingBeforeStart
         }
@@ -83,6 +93,9 @@ public final class VisionManager: BaseVisionManager {
         dependencies.recorder.start(mode: .external(path: path))
     }
 
+    /**
+        Stop recording session.
+    */
     public func stopRecording() {
         guard case .started = state else {
             assertionFailure("VisionManager should be started and recording")

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Protocol that provides an ability to use `VisionManager` and `VisionReplayManager` interchangeably by abstracting common functionality.
+ */
 public protocol VisionManagerProtocol: AnyObject {
 
     /**
