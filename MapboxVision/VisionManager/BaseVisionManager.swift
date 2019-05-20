@@ -43,9 +43,9 @@ public class BaseVisionManager: VisionManagerProtocol {
     }
 
     var delegate: VisionManagerDelegate?
+    private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies
-    private var currentCountry = Country.unknown
     private var isStoppedForBackground = false
     private var notificationObservers = [Any]()
 

@@ -90,7 +90,7 @@ public final class VisionManager: BaseVisionManager {
             throw VisionManagerError.startRecordingBeforeStart
         }
         dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .external(path: path))
+        tryRecording(mode: .external(path: path))
     }
 
     /**
@@ -102,7 +102,7 @@ public final class VisionManager: BaseVisionManager {
             return
         }
         dependencies.recorder.stop()
-        dependencies.recorder.start()
+        tryRecording(mode: .internal)
     }
 
     /**
@@ -186,8 +186,8 @@ public final class VisionManager: BaseVisionManager {
         dependencies.dataProvider.start()
         startVideoStream()
         dependencies.native.start(self)
-        
-        dependencies.recorder.start()
+
+        tryRecording(mode: .internal)
     }
     
     private func pause() {
@@ -220,15 +220,19 @@ public final class VisionManager: BaseVisionManager {
             dependencies.deviceInfo.reset()
         }
     }
+
+    private func tryRecording(mode: SessionRecorder.Mode) {
+        guard mode.isExternal || currentCountry.allowsRecording else { return }
+        dependencies.recorder.start(mode: mode)
+    }
     
     public override func onCountryUpdated(_ country: Country) {
-        switch country {
-        case .USA, .other, .unknown:
-            dependencies.recorder.start()
-        case .china:
-            dependencies.recorder.stop(abort: true)
-        }
         super.onCountryUpdated(country)
+        if country.allowsRecording {
+            tryRecording(mode: .internal)
+        } else if dependencies.recorder.currentMode.isInternal {
+            dependencies.recorder.stop()
+        }
     }
 }
 
@@ -258,5 +262,16 @@ extension VisionManager: RecordCoordinatorDelegate {
     
     func recordingStopped() {
         trySync()
+    }
+}
+
+private extension Country {
+    var allowsRecording: Bool {
+        switch self {
+        case .USA, .other, .unknown:
+            return true
+        case .china:
+            return false
+        }
     }
 }
