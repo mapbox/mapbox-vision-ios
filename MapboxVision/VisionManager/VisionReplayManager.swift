@@ -9,20 +9,39 @@
 import Foundation
 import CoreMedia
 
-public final class VisionReplayManager: BaseVisionManager {
+/**
+    `VisionReplayManager` is a counterpart of `VisionManager` that uses recorded video and telemetry instead of realtime data.
+    Use it in the same workflow as you use `VisionManager` after creating it with specific recorded session.
+*/
 
+public final class VisionReplayManager: BaseVisionManager {
+    
+    /**
+        Fabric method for creating a `VisionReplayManager` instance.
+        
+        It's only allowed to have one living instance of `VisionManager` or `VisionReplayManager`.
+        To create `VisionReplayManager` with different configuration call `destroy` on existing instance or release all references to it.
+        
+        - Parameter recordPath: Path to a folder with recorded session. You typically record such sessions using `startRecording` / `stopRecording` on `VisionManager`.
+
+        - Returns: Instance of `VisionRecordManager` configured to use data from specified session.
+    */
     public static func create(recordPath: String) throws -> VisionReplayManager {
         return VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
     }
 
+    /**
+        Video source that provides frames from recorded video.
+    */
     public var videoSource: VideoSource {
         return dependencies.player
     }
 
     /**
      Start delivering events from `VisionManager`.
+     Calling `start` on already started or destroyed instance is considered a mistake.
 
-     - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
+     - Parameter delegate: Delegate for `VisionRecordManager`. Delegate is held as a strong reference until `stop` is called.
      */
     public func start(delegate: VisionManagerDelegate? = nil) {
         switch state {
@@ -42,6 +61,7 @@ public final class VisionReplayManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionManager`.
+     Calling `stop` on a not started or destroyed instance is considered a mistake.
      */
     public func stop() {
         guard state == .started else {
@@ -69,9 +89,6 @@ public final class VisionReplayManager: BaseVisionManager {
         state = .uninitialized
     }
 
-    private let dependencies: ReplayDependencies
-    private var state: State = .uninitialized
-
     // MARK: Initialization
 
     init(dependencies: ReplayDependencies) {
@@ -89,6 +106,9 @@ public final class VisionReplayManager: BaseVisionManager {
     }
 
     // MARK: Private
+    
+    private let dependencies: ReplayDependencies
+    private var state: State = .uninitialized
 
     private enum State {
         case uninitialized
@@ -138,7 +158,7 @@ extension VisionReplayManager: VideoSourceObserver {
             status == 0
         else { return }
 
-        let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * 1000)
+        let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * Constants.millisecondsInSecond)
 
         dependencies.native.sensors.setFrame(pixelBuffer, timestamp: timeStamp)
     }

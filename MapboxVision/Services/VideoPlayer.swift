@@ -21,11 +21,7 @@ protocol VideoPlayerDelegate: AnyObject {
     func playbackDidFinish()
 }
 
-private enum PlaybackConstants {
-    static let frameDuration: TimeInterval = 0.03
-}
-
-final class VideoPlayer: NSObject, VideoPlayable {
+final class VideoPlayer: NSObject {
     weak var delegate: VideoPlayerDelegate?
 
     private var isPlaying = false
@@ -34,7 +30,7 @@ final class VideoPlayer: NSObject, VideoPlayable {
     private var displayLink: CADisplayLink!
 
     private let observers = ObservableVideoSource()
-    private var notificationToken: NSObjectProtocol?
+    private var notificationToken: NSObjectProtocol!
 
     private let queue = DispatchQueue(label: "com.mapbox.VideoPlayer")
 
@@ -72,41 +68,8 @@ final class VideoPlayer: NSObject, VideoPlayable {
         }
     }
 
-    func start() {
-        guard !isPlaying else { return }
-        videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: PlaybackConstants.frameDuration)
-        player.play()
-        isPlaying = true
-    }
-
-    func stop() {
-        guard isPlaying else { return }
-        isPlaying = false
-
-        player.pause()
-        displayLink?.isPaused = true
-
-        player.currentItem?.seek(to: .zero, completionHandler: nil)
-    }
-
-    private func sampleBuffer(from pixelBuffer: CVPixelBuffer, timestamp: CMTime) -> CMSampleBuffer? {
-        var info = CMSampleTimingInfo(duration: .invalid, presentationTimeStamp: .zero, decodeTimeStamp: timestamp)
-
-        var formatDescription: CMFormatDescription?
-        let status = CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault,
-                                                                  imageBuffer: pixelBuffer,
-                                                                  formatDescriptionOut: &formatDescription)
-
-        guard status == noErr, let format = formatDescription else { return nil }
-
-        var sampleBuffer: CMSampleBuffer?
-        CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
-                                                 imageBuffer: pixelBuffer,
-                                                 formatDescription: format,
-                                                 sampleTiming: &info,
-                                                 sampleBufferOut: &sampleBuffer)
-
-        return sampleBuffer
+    deinit {
+        NotificationCenter.default.removeObserver(notificationToken)
     }
 
     @objc
@@ -117,12 +80,31 @@ final class VideoPlayer: NSObject, VideoPlayable {
         guard
             videoOutput.hasNewPixelBuffer(forItemTime: time),
             let pixelBuffer = videoOutput.copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil),
-            let sampleBuffer = sampleBuffer(from: pixelBuffer, timestamp: time)
+            let sampleBuffer = CMSampleBuffer.sampleBuffer(from: pixelBuffer, timeStamp: time)
         else { return }
 
         observers.notify { (observer) in
             observer.videoSource(self, didOutput: VideoSample(buffer: sampleBuffer, format: .BGRA))
         }
+    }
+}
+
+extension VideoPlayer: VideoPlayable {
+    func start() {
+        guard !isPlaying else { return }
+        videoOutput.requestNotificationOfMediaDataChange(withAdvanceInterval: Constants.frameDuration)
+        player.play()
+        isPlaying = true
+    }
+    
+    func stop() {
+        guard isPlaying else { return }
+        isPlaying = false
+        
+        player.pause()
+        displayLink?.isPaused = true
+        
+        player.currentItem?.seek(to: .zero, completionHandler: nil)
     }
 }
 
@@ -146,3 +128,24 @@ extension VideoPlayer: AVPlayerItemOutputPullDelegate {
     }
 }
 
+private extension CMSampleBuffer {
+    static func sampleBuffer(from pixelBuffer: CVPixelBuffer, timeStamp: CMTime) -> CMSampleBuffer? {
+        var info = CMSampleTimingInfo(duration: .invalid, presentationTimeStamp: .zero, decodeTimeStamp: timeStamp)
+    
+        var formatDescription: CMFormatDescription?
+        let status = CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault,
+                                                                  imageBuffer: pixelBuffer,
+                                                                  formatDescriptionOut: &formatDescription)
+    
+        guard status == noErr, let format = formatDescription else { return nil }
+    
+        var sampleBuffer: CMSampleBuffer?
+        CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
+                                                 imageBuffer: pixelBuffer,
+                                                 formatDescription: format,
+                                                 sampleTiming: &info,
+                                                 sampleBufferOut: &sampleBuffer)
+    
+        return sampleBuffer
+    }
+}
