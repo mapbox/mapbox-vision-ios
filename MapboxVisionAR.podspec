@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionAR"
-  s.version      = "0.3.0"
+  s.version      = "0.4.0"
   s.summary      = "Easy to use AR Navigation"
 
   s.homepage     = 'https://www.mapbox.com/vision/'
@@ -24,8 +24,8 @@ Pod::Spec.new do |s|
 
   s.swift_version = '4.2'
 
-  s.dependency "MapboxVisionNativeAll/AR", "~> 0.3.0"
-  s.dependency "MapboxVision", "~> 0.3.0"
+  s.dependency "MapboxVisionNativeAll/AR", "#{s.version}"
+  s.dependency "MapboxVision", "#{s.version}"
   s.dependency "MapboxCoreNavigation", "~> 0.33.0"
 
 end
