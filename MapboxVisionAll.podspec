@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionAll"
-  s.version      = "0.3.0"
+  s.version      = "0.4.0"
   s.summary      = "ML empowered vision framework"
 
   s.homepage     = 'https://www.mapbox.com/vision/'
@@ -24,15 +24,15 @@ Pod::Spec.new do |s|
   s.default_subspec = "Vision", "AR", "Safety"
 
   s.subspec 'Vision' do |vision|
-      vision.dependency "MapboxVision", "~> 0.3.0"
+      vision.dependency "MapboxVision", "#{s.version}"
   end
 
   s.subspec 'AR' do |ar|
-      ar.dependency "MapboxVisionAR", "~> 0.3.0"
+      ar.dependency "MapboxVisionAR", "#{s.version}"
   end
 
   s.subspec 'Safety' do |safety|
-      safety.dependency "MapboxVisionSafety", "~> 0.3.0"
+      safety.dependency "MapboxVisionSafety", "#{s.version}"
   end
 
 end
