@@ -1,8 +1,3 @@
-//
-//  Created by Alexander Pristavko on 1/22/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 private let memoryLimit = 300.0 // mb

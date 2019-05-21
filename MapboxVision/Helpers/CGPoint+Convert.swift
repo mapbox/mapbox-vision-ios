@@ -1,8 +1,3 @@
-//
-//  Created by Maksim on 4/2/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import CoreGraphics
 

@@ -1,11 +1,3 @@
-//
-//  ManagedSynchronizer.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 5/13/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 final class ManagedSynchronizer: Synchronizable {

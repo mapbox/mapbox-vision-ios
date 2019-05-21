@@ -1,8 +1,3 @@
-//
-//  Created by Maksim on 12/14/17.
-//  Copyright © 2017 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import AVFoundation

@@ -1,8 +1,3 @@
-//
-//  Created by Maksim on 5/16/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import Metal
 import MetalKit

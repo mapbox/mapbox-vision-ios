@@ -1,8 +1,3 @@
-//
-//  Created by Alexander Pristavko on 7/30/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 protocol SessionDelegate: class {
