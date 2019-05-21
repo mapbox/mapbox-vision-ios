@@ -13,7 +13,7 @@ import CoreMotion
 final class Platform: NSObject, PlatformInterface {
 
     struct Dependencies {
-        let recordCoordinator: RecordCoordinator
+        let recordCoordinator: RecordCoordinator?
         let eventsManager: EventsManager
     }
     
@@ -28,7 +28,7 @@ final class Platform: NSObject, PlatformInterface {
     }
     
     func makeVideoClip(_ startTime: Float, end endTime: Float) {
-        dependencies.recordCoordinator.makeClip(from: startTime, to: endTime)
+        dependencies.recordCoordinator?.makeClip(from: startTime, to: endTime)
     }
     
     func sendTelemetry(_ name: String, entries: [TelemetryEntry]) {
@@ -41,6 +41,6 @@ final class Platform: NSObject, PlatformInterface {
     }
     
     func save(image: Image, path: String) {
-        dependencies.recordCoordinator.saveImage(image: image, path: path)
+        dependencies.recordCoordinator?.saveImage(image: image, path: path)
     }
 }

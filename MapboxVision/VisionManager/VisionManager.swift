@@ -10,11 +10,15 @@ import Foundation
 import UIKit
 import MapboxVisionNative
 
+enum VisionManagerError: LocalizedError {
+    case startRecordingBeforeStart
+}
+
 /**
     The main object for registering for events from the SDK, starting and stopping their delivery.
     It also provides some useful functions for performance configuration and data conversion.
 */
-public final class VisionManager {
+public final class VisionManager: BaseVisionManager {
     
     // MARK: - Public
     // MARK: Lifetime
@@ -26,13 +30,12 @@ public final class VisionManager {
         To create `VisionManager` with different configuration call `destroy` on existing instance or release all references to it.
         
         - Parameter videoSource: Video source which will be utilized by created instance of `VisionManager`.
-        - Parameter operationMode: Mode in which created instance of `VisionManager` will operate.
-        
-        - Returns: Instance of `VisionManager` configured with video source and operation mode.
+
+        - Returns: Instance of `VisionManager` configured with video source.
     */
-    public static func create(videoSource: VideoSource, operationMode: OperationMode = .normal) -> VisionManager {
-        let dependencies = AppDependency(operationMode: operationMode)
-        let manager = VisionManager(dependencies: dependencies, videoSource: videoSource, operationMode: operationMode)
+    public static func create(videoSource: VideoSource) -> VisionManager {
+        let dependencies = VisionDependencies.default()
+        let manager = VisionManager(dependencies: dependencies, videoSource: videoSource)
         return manager
     }
     
@@ -50,6 +53,7 @@ public final class VisionManager {
             assertionFailure("VisionManager is already started")
             return
         case let .initialized(videoSource), let .stopped(videoSource):
+            self.delegate = delegate
             state = .started(videoSource: videoSource, delegate: delegate)
         }
         
@@ -58,6 +62,7 @@ public final class VisionManager {
     
     /**
         Stop delivering events from `VisionManager`.
+        This method also stops recording session if it was started.
     */
     public func stop() {
         guard case let .started(videoSource, _) = state else {
@@ -68,8 +73,38 @@ public final class VisionManager {
         pause()
         
         state = .stopped(videoSource: videoSource)
+        self.delegate = nil
     }
-    
+
+    /**
+        Start recording session. During the session full telemetry and video are recorded to specified path.
+        You may use resulted folder to replay recorded session with `VisionRecordManager`.
+        This method should only be called after `VisionManager` is started.
+
+        - Parameter path: Path to directory where you'd like session to be recorded.
+
+        - Throws: `VisionManagerError.startRecordingBeforeStart` if method is called when `VisionManager` hasn't been started.
+    */
+    public func startRecording(to path: String) throws {
+        guard case .started = state else {
+            throw VisionManagerError.startRecordingBeforeStart
+        }
+        dependencies.recorder.stop()
+        tryRecording(mode: .external(path: path))
+    }
+
+    /**
+        Stop recording session.
+    */
+    public func stopRecording() {
+        guard case .started = state else {
+            assertionFailure("VisionManager should be started and recording")
+            return
+        }
+        dependencies.recorder.stop()
+        tryRecording(mode: .internal)
+    }
+
     /**
         Cleanup the state and resources of `VisionManger`.
     */
@@ -83,64 +118,7 @@ public final class VisionManager {
         dependencies.native.destroy()
         state = .uninitialized
     }
-    
-    // MARK: Performance control
-    
-    /**
-        Performance configuration for machine learning models.
-        Default value is merged with dynamic performance mode and high rate.
-    */
-    public var modelPerformanceConfig: ModelPerformanceConfig =
-        .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
-        didSet {
-            guard oldValue != modelPerformanceConfig else { return }
-            updateModelPerformanceConfig(modelPerformanceConfig)
-        }
-    }
-    
-    // MARK: Utility
-    
-    /**
-        Converts location of the point from a screen coordinate to a world coordinate.
-        
-        - Parameter screenCoordinate: Screen coordinate expressed in pixels
-    */
-    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
-        return dependencies.native.pixel(toWorld: screenCoordinate)
-    }
-    
-    /**
-        Converts location of the point from a world coordinate to a screen coordinate.
-        
-        - Parameter worldCoordinate: Point in world coordinate
-    */
-    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
-        return dependencies.native.world(toPixel: worldCoordinate)
-    }
-    
-    /**
-        Converts location of the point from a geo coordinate to a world coordinate.
-        
-        - Parameter geoCoordinate: Geographical coordinate of the point
-    */
-    public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate {
-        return dependencies.native.geo(toWorld: geoCoordinate)
-    }
-    
-    /**
-        Converts location of the point in a world coordinate to a geographical coordinate.
-        
-        - Parameter worldCoordinate: World coordinate of the point
-    */
-    public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate {
-        return dependencies.native.world(toGeo: worldCoordinates)
-    }
-    
-    /// :nodoc:
-    public var native: VisionManagerNative {
-        return dependencies.native
-    }
-    
+
     // MARK: - Private
     
     private enum State {
@@ -168,101 +146,29 @@ public final class VisionManager {
             guard case .stopped = self else { return false }
             return true
         }
-        
-        var delegate: VisionManagerDelegate? {
-            guard case let .started(_, delegate) = self else { return nil }
-            return delegate
-        }
     }
     
-    private let dependencies: VisionDependency
+    private let dependencies: VisionDependencies
     private var state: State = .uninitialized
     
     private var interruptionStartTime: Date?
     private var currentFrame: CVPixelBuffer?
-    private var dataProvider: DataProvider?
-    
-    private var backgroundTask = UIBackgroundTaskIdentifier.invalid
-    private var hasPendingRecordingRequest = false
-    private var notificationObservers = [Any]()
-    private var enableSyncObservation: NSKeyValueObservation?
-    private var syncOverCellularObservation: NSKeyValueObservation?
-    
-    private let sessionManager = SessionManager()
-    
-    private var isSyncAllowedOverCellular: Bool {
-        return UserDefaults.standard.syncOverCellular
-    }
-    
-    private var isSyncEnabled: Bool {
-        return UserDefaults.standard.enableSync
-    }
-    
-    private var isSyncAllowed: Bool {
-        return isSyncEnabled && (isSyncAllowedOverCellular || dependencies.reachability.connection == .wifi)
-    }
-    
-    private var operationMode: OperationMode = .normal {
-        didSet {
-            guard operationMode != oldValue else { return }
-            updateOperationMode(operationMode)
-        }
-    }
-    
-    private init(dependencies: AppDependency, videoSource: VideoSource, operationMode: OperationMode) {
+    private var isStoppedForBackground = false
+
+    private init(dependencies: VisionDependencies, videoSource: VideoSource) {
         self.dependencies = dependencies
-        self.operationMode = operationMode
+
+        super.init(dependencies: BaseDependencies(
+            native: dependencies.native,
+            synchronizer: dependencies.synchronizer
+        ))
         
         state = .initialized(videoSource: videoSource)
         
-        dependencies.native.config = .basic
-
-        updateModelPerformanceConfig(modelPerformanceConfig)
-        updateOperationMode(operationMode)
-        
-        registerDefaults()
-        
-        let realtimeDataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
-            native: dependencies.native,
-            motionManager: dependencies.motionManager,
-            locationManager: dependencies.locationManager
-        ))
-        
-        setDataProvider(realtimeDataProvider)
-        
-        dependencies.recordSynchronizer.delegate = self
         dependencies.recorder.delegate = self
-        
-        dependencies.reachability.whenReachable = { [weak self] _ in
-            guard let `self` = self else { return }
-            self.isSyncAllowed ? self.startSync() : self.stopSync()
-        }
-        dependencies.reachability.whenUnreachable = { [weak self] _ in
-            print("Network is unreachable")
-            self?.stopSync()
-        }
-        
-        try? dependencies.reachability.startNotifier()
-        
-        let defaults = UserDefaults.standard
-        let settingHandler = { [weak self] (defaults: UserDefaults, change: NSKeyValueObservedChange<Bool>) in
-            guard let `self` = self else { return }
-            self.isSyncAllowed ? self.startSync() : self.stopSync()
-        }
-        
-        enableSyncObservation = defaults.observe(\.enableSync, changeHandler: settingHandler)
-        syncOverCellularObservation = defaults.observe(\.syncOverCellular, changeHandler: settingHandler)
-        
-        sessionManager.listener = self
-    
-        subscribeToNotifications()
     }
     
     deinit {
-        unsubscribeFromNotifications()
-        enableSyncObservation?.invalidate()
-        syncOverCellularObservation?.invalidate()
-        
         destroy()
     }
     
@@ -277,120 +183,33 @@ public final class VisionManager {
     }
     
     private func resume() {
-        dataProvider?.start()
+        dependencies.dataProvider.start()
         startVideoStream()
         dependencies.native.start(self)
-        
-        sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
+
+        tryRecording(mode: .internal)
     }
     
     private func pause() {
-        dataProvider?.stop()
+        dependencies.dataProvider.stop()
         stopVideoStream()
         dependencies.native.stop()
         
-        sessionManager.stopSession()
+        dependencies.recorder.stop()
     }
-    
-    private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
-        switch config {
-        case let .merged(performance):
-            dependencies.native.config.useMergeMLModelLaunch = true
-            updateSegmentationPerformance(performance)
-            updateDetectionPerformance(performance)
-        case let .separate(segmentationPerformance, detectionPerformance):
-            dependencies.native.config.useMergeMLModelLaunch = false
-            updateSegmentationPerformance(segmentationPerformance)
-            updateDetectionPerformance(detectionPerformance)
-        }
-    }
-    
-    private func updateSegmentationPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
-        case .fixed(let fps):
-            dependencies.native.config.setSegmentationFixedFPS(fps)
-        case .dynamic(let minFps, let maxFps):
-            dependencies.native.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-        }
-    }
-    
-    private func updateDetectionPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
-        case .fixed(let fps):
-            dependencies.native.config.setDetectionFixedFPS(fps)
-        case .dynamic(let minFps, let maxFps):
-            dependencies.native.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-        }
-    }
-    
-    private func updateOperationMode(_ operationMode: OperationMode) {
-        dependencies.native.config.useSegmentation = operationMode.usesSegmentation
-        dependencies.native.config.useDetection = operationMode.usesDetection
-        
-        dependencies.recorder.savesSourceVideo = operationMode.savesSourceVideo
-        
-        UserDefaults.standard.enableSync = operationMode.isSyncEnabled
-    }
-    
-    private func registerDefaults() {
-        let defaults = UserDefaults.standard
-        defaults.setValue(false, forKey: VisionSettings.enableSync)
-        defaults.setValue(false, forKey: VisionSettings.syncOverCellular)
-    }
-    
-    private var isStoppedForBackground = false
-    private func subscribeToNotifications() {
-        let center = NotificationCenter.default
-        notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.stopInterruption()
-            guard let `self` = self, self.isStoppedForBackground else { return }
-            self.isStoppedForBackground = false
-            self.resume()
-        })
-    
-        notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.interruptionStartTime = Date()
-            guard let `self` = self, self.state.isStarted else { return }
-            self.isStoppedForBackground = true
-            self.pause()
-        })
-    }
-    
-    private func unsubscribeFromNotifications() {
-        notificationObservers.forEach(NotificationCenter.default.removeObserver)
-    }
-    
-    private func startSync() {
-        guard isSyncAllowed else { return }
-        dependencies.recordSynchronizer.sync()
-    }
-    
-    private func stopSync() {
-        dependencies.recordSynchronizer.stopSync()
-    }
-    
-    // TODO: refactor to setting data provider on initialization
-    private func setDataProvider(_ dataProvider: DataProvider) {
-        let isActivated = state.isStarted
-        
+
+    override func prepareForBackground() {
+        interruptionStartTime = Date()
+        guard state.isStarted else { return }
+        isStoppedForBackground = true
         pause()
-        
-        self.dataProvider = dataProvider
-        
-        if isActivated {
-            resume()
-        }
     }
-    
-    private func setRecording(at path: RecordingPath, startTime: UInt) {
-        let recordedDataProvider = RecordedDataProvider(dependencies: RecordedDataProvider.Dependencies(
-            recordingPath: path,
-            startTime: startTime
-        ))
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.setDataProvider(recordedDataProvider)
-        }
+
+    override func prepareForForeground() {
+        stopInterruption()
+        guard isStoppedForBackground else { return }
+        isStoppedForBackground = false
+        resume()
     }
     
     private func stopInterruption() {
@@ -401,70 +220,19 @@ public final class VisionManager {
             dependencies.deviceInfo.reset()
         }
     }
-    
-    private func selectRecording(at url: URL) {
-        guard let recordingPath = RecordingPath(existing: url.path, settings: operationMode.videoSettings) else { return }
-        setRecording(at: recordingPath, startTime: 0)
-    }
-}
 
-/// :nodoc:
-extension VisionManager: VisionDelegate {
-    public func onAuthorizationStatusUpdated(_ status: AuthorizationStatus) {
-        state.delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
+    private func tryRecording(mode: SessionRecorder.Mode) {
+        guard mode.isExternal || currentCountry.allowsRecording else { return }
+        dependencies.recorder.start(mode: mode)
     }
     
-    public func onFrameSegmentationUpdated(_ segmentation: FrameSegmentation) {
-        state.delegate?.visionManager(self, didUpdateFrameSegmentation: segmentation)
-    }
-    
-    public func onFrameDetectionsUpdated(_ detections: FrameDetections) {
-        state.delegate?.visionManager(self, didUpdateFrameDetections: detections)
-    }
-    
-    public func onFrameSignClassificationsUpdated(_ signClassifications: FrameSignClassifications) {
-        state.delegate?.visionManager(self, didUpdateFrameSignClassifications: signClassifications)
-    }
-    
-    public func onRoadDescriptionUpdated(_ road: RoadDescription) {
-        state.delegate?.visionManager(self, didUpdateRoadDescription: road)
-    }
-    
-    public func onWorldDescriptionUpdated(_ world: WorldDescription) {
-        state.delegate?.visionManager(self, didUpdateWorldDescription: world)
-    }
-    
-    public func onVehicleStateUpdated(_ vehicleState: VehicleState) {
-        state.delegate?.visionManager(self, didUpdateVehicleState: vehicleState)
-    }
-    
-    public func onCameraUpdated(_ camera: Camera) {
-        state.delegate?.visionManager(self, didUpdateCamera: camera)
-    }
-    
-    public func onCountryUpdated(_ country: Country) {
-        state.delegate?.visionManager(self, didUpdateCountry: country)
-        configureSync(country)
-    }
-    
-    private func configureSync(_ country: Country) {
-        switch country {
-        case .USA, .other:
-            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-            UserDefaults.standard.enableSync = true
-        case .china:
-            sessionManager.stopSession(abort: true)
-            UserDefaults.standard.enableSync = false
-            let data = SyncRecordDataSource()
-            data.recordDirectories.forEach(data.removeFile)
-        case .unknown:
-            sessionManager.startSession(interruptionInterval: operationMode.sessionInterval)
-            UserDefaults.standard.enableSync = false
+    public override func onCountryUpdated(_ country: Country) {
+        super.onCountryUpdated(country)
+        if country.allowsRecording {
+            tryRecording(mode: .internal)
+        } else if dependencies.recorder.currentMode.isInternal {
+            dependencies.recorder.stop()
         }
-    }
-    
-    public func onUpdateCompleted() {
-        state.delegate?.visionManagerDidCompleteUpdate(self)
     }
 }
 
@@ -481,76 +249,29 @@ extension VisionManager: VideoSourceObserver {
         guard state.isStarted else { return }
         
         dependencies.recorder.handleFrame(videoSample.buffer)
-        
-        dependencies.native.setImage(pixelBuffer)
+        dependencies.native.sensors.setImage(pixelBuffer)
     }
     
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
-        dependencies.native.setCameraParameters(cameraParameters)
-    }
-}
-
-extension VisionManager: SyncDelegate {
-    func syncStarted() {
-        backgroundTask = UIApplication.shared.beginBackgroundTask()
-    }
-    
-    func syncStopped() {
-        UIApplication.shared.endBackgroundTask(backgroundTask)
+        dependencies.native.sensors.setCameraParameters(cameraParameters)
     }
 }
 
 extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {
-        dependencies.native.startSavingSession(path)
-    }
+    func recordingStarted(path: String) {}
     
     func recordingStopped() {
-        startSync()
-        
-        if hasPendingRecordingRequest {
-            hasPendingRecordingRequest = false
-            try? dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
-                                                      videoSettings: operationMode.videoSettings)
-        }
+        trySync()
     }
 }
 
-extension VisionManager: SessionDelegate {
-    func sessionStarted() {
-        do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.native.getSeconds(),
-                                                     videoSettings: operationMode.videoSettings)
-        } catch RecordCoordinatorError.cantStartNotReady {
-            hasPendingRecordingRequest = true
-        } catch {
-            print(error)
+private extension Country {
+    var allowsRecording: Bool {
+        switch self {
+        case .USA, .other, .unknown:
+            return true
+        case .china:
+            return false
         }
-    }
-    
-    func sessionStopped(abort: Bool) {
-        dependencies.native.stopSavingSession()
-        dependencies.recorder.stopRecording(abort: abort)
-    }
-}
-
-fileprivate extension VideoSettings {
-    var size: CGSize {
-        return CGSize(width: width, height: height)
-    }
-}
-
-private extension UserDefaults {
-    @objc dynamic var enableSync: Bool {
-        get {
-            return bool(forKey: VisionSettings.enableSync)
-        }
-        set {
-            set(newValue, forKey: VisionSettings.enableSync)
-        }
-    }
-    
-    @objc dynamic var syncOverCellular: Bool {
-        return bool(forKey: VisionSettings.syncOverCellular)
     }
 }

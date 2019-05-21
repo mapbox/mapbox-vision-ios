@@ -60,6 +60,7 @@ final class RecordCoordinator {
     private var currentRecordingPath: RecordingPath?
     private var currentStartTime: DispatchTime?
     private var currentEndTime: DispatchTime?
+    private var currentVideoIsFull = false
     
     private var stopRecordingInBackgroundTask = UIBackgroundTaskIdentifier.invalid
     
@@ -73,7 +74,7 @@ final class RecordCoordinator {
         createFolder(path: DocumentsLocation.recordings.path)
     }
     
-    func startRecording(referenceTime: Float, videoSettings: VideoSettings) throws {
+    func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
         
@@ -81,12 +82,14 @@ final class RecordCoordinator {
         
         isRecording = true
         currentReferenceTime = referenceTime
+        currentVideoIsFull = savesSourceVideo
         
         let cachePath = DocumentsLocation.cache.path
         recreateFolder(path: DocumentsLocation.currentRecording.path)
         recreateFolder(path: cachePath)
-        
-        let recordingPath = RecordingPath(basePath: .currentRecording, settings: videoSettings)
+
+        let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
+        let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
         currentRecordingPath = recordingPath
         
         jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
@@ -129,8 +132,8 @@ final class RecordCoordinator {
         let relativeEnd = endTime - referenceTime
         let chunkLength = videoRecorder.chunkLength
     
-        let startChunk = Int(floor(relativeStart / chunkLength))
-        let endChunk = Int(floor(relativeEnd / chunkLength))
+        let startChunk = chunkLength == 0 ? 0 : Int(floor(relativeStart / chunkLength))
+        let endChunk   = chunkLength == 0 ? 0 : Int(floor(relativeEnd / chunkLength))
         
         let clipStartTime = relativeStart - Float(startChunk) * chunkLength
         let clipEndTime = relativeEnd - Float(endChunk) * chunkLength
@@ -211,7 +214,7 @@ final class RecordCoordinator {
             do {
                 if abortRecording {
                     try path.delete()
-                } else {
+                } else if path.basePath != .custom {
                     try path.move(to: .recordings)
                 }
             } catch {
@@ -221,6 +224,7 @@ final class RecordCoordinator {
         
         currentRecordingPath = nil
         currentVideoSettings = nil
+        currentVideoIsFull = false
         endBackgroundTask()
         isReady = true
         abortRecording = false
@@ -267,7 +271,7 @@ final class RecordCoordinator {
         else { return }
         
         let sourcePath = chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
-        let destinationPath = savesSourceVideo
+        let destinationPath = currentVideoIsFull
             ? recordingPath.videoPath
             : recordingPath.videoClipPath(start: clipStart, end: clipEnd)
         
@@ -314,7 +318,7 @@ final class RecordCoordinator {
 
 extension RecordCoordinator: VideoBufferDelegate {
     func chunkCut(number: Int, finished: Bool) {
-        if savesSourceVideo, let startTime = currentStartTime {
+        if currentVideoIsFull, let startTime = currentStartTime {
             let clipStart = Float(number) * videoRecorder.chunkLength
             let clipEnd: Float
             
