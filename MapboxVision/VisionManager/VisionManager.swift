@@ -69,9 +69,13 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-     Start recording session. During the session full telemetry and video are recorded to specified path.
+     Start recording session.
+
+     During the session full telemetry and video are recorded to specified path.
      You may use resulted folder to replay recorded session with `VisionRecordManager`.
      This method should only be called after `VisionManager` is started.
+
+     - Important: Method serves debugging purposes. Do NOT use session recording in production applications.
 
      - Parameter path: Path to directory where you'd like session to be recorded.
 
@@ -87,6 +91,8 @@ public final class VisionManager: BaseVisionManager {
 
     /**
      Stop recording session.
+
+     - Important: Method serves debugging purposes. Do NOT use session recording in production applications.
      */
     public func stopRecording() {
         guard case .started = state else {
