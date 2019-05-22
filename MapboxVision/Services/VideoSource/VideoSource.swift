@@ -1,8 +1,3 @@
-//
-// Created by Alexander Pristavko on 2019-01-17.
-// Copyright (c) 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 import MapboxVisionNative
 import CoreMedia

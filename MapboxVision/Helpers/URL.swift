@@ -1,11 +1,3 @@
-//
-//  URL.swift
-//  cv-assist-ios
-//
-//  Created by Alexander Pristavko on 1/23/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 extension URL {

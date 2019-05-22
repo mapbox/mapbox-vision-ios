@@ -1,11 +1,3 @@
-//
-//  FileRecorder.swift
-//  cv-assist-ios
-//
-//  Created by Maksim on 1/11/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 final class FileRecorder {

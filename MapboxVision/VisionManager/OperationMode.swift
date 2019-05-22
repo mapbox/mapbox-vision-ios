@@ -1,11 +1,3 @@
-//
-//  OperationMode.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 9/25/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 /**

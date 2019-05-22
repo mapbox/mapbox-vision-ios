@@ -1,11 +1,3 @@
-//
-//  NetworkClientType.swift
-//  cv-assist-ios
-//
-//  Created by Alexander Pristavko on 1/21/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 protocol NetworkClient {

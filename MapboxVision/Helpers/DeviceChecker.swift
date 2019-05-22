@@ -1,11 +1,3 @@
-//
-//  DeviceChecker.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 8/10/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import MapboxVisionNative

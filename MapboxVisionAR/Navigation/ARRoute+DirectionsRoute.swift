@@ -1,11 +1,3 @@
-//
-//  ARRoute+DirectionsRoute.swift
-//  cv-assist-ios
-//
-//  Created by Alexander Pristavko on 3/29/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import MapboxDirections
 import MapboxVisionARNative

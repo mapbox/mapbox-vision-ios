@@ -1,11 +1,3 @@
-//
-//  VisionSafetyManagerDelegate.swift
-//  MapboxVisionSafety
-//
-//  Created by Maksim on 3/15/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 /**

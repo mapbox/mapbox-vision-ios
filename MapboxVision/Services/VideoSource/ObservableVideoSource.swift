@@ -1,11 +1,3 @@
-//
-//  ObservableVideoSource.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 3/27/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 /**

@@ -1,11 +1,3 @@
-//
-//  ARRenderer.swift
-//  VisionSDK
-//
-//  Created by Denis Koronchik on 8/21/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import MetalKit
 import MapboxVision
 import MapboxVisionARNative

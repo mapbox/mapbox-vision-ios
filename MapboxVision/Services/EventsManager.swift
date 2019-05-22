@@ -1,11 +1,3 @@
-//
-//  EventsManager.swift
-//  MapboxVision
-//
-//  Created by Maksim on 8/3/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import MapboxMobileEvents
 import MapboxVisionNative

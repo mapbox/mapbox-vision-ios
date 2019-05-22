@@ -1,11 +1,3 @@
-//
-//  VisionARManager.swift
-//  MapboxVisionAR
-//
-//  Created by Maksim on 3/13/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 import MapboxVisionNative
 import MapboxVisionARNative

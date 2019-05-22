@@ -1,11 +1,3 @@
-//
-//  VideoStreamView.swift
-//  cv-assist-ios
-//
-//  Created by Maksim on 3/16/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import AVFoundation

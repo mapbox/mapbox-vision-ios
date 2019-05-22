@@ -1,10 +1,3 @@
-//
-//  Constants
-//  VisionExample
-//
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 

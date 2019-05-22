@@ -1,11 +1,3 @@
-//
-//  BaseVisionManager.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 5/17/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 public class BaseVisionManager: VisionManagerProtocol {

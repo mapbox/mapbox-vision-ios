@@ -1,11 +1,3 @@
-//
-//  FileManager.swift
-//  MapboxVision
-//
-//  Created by Maksim on 10/2/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 protocol FileManagerProtocol {
