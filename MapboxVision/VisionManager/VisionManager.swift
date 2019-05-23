@@ -14,7 +14,7 @@ public final class VisionManager: BaseVisionManager {
     // MARK: - Public
 
     // MARK: Lifetime
-    
+
     /**
      Fabric method for creating a `VisionManager` instance.
 
@@ -30,7 +30,7 @@ public final class VisionManager: BaseVisionManager {
         let manager = VisionManager(dependencies: dependencies, videoSource: videoSource)
         return manager
     }
-    
+
     /**
      Start delivering events from `VisionManager`.
 
@@ -48,10 +48,10 @@ public final class VisionManager: BaseVisionManager {
             self.delegate = delegate
             state = .started(videoSource: videoSource, delegate: delegate)
         }
-        
+
         resume()
     }
-    
+
     /**
      Stop delivering events from `VisionManager`.
      This method also stops recording session if it was started.
@@ -61,9 +61,9 @@ public final class VisionManager: BaseVisionManager {
             assertionFailure("VisionManager is not started")
             return
         }
-        
+
         pause()
-        
+
         state = .stopped(videoSource: videoSource)
         self.delegate = nil
     }
@@ -102,47 +102,47 @@ public final class VisionManager: BaseVisionManager {
     */
     public func destroy() {
         guard !state.isUninitialized else { return }
-        
+
         if case .started = state {
             stop()
         }
-        
+
         dependencies.native.destroy()
         state = .uninitialized
     }
 
     // MARK: - Private
-    
+
     private enum State {
         case uninitialized
         case initialized(videoSource: VideoSource)
         case started(videoSource: VideoSource, delegate: VisionManagerDelegate?)
         case stopped(videoSource: VideoSource)
-        
+
         var isUninitialized: Bool {
             guard case .uninitialized = self else { return false }
             return true
         }
-        
+
         var isInitialized: Bool {
             guard case .initialized = self else { return false }
             return true
         }
-        
+
         var isStarted: Bool {
             guard case .started = self else { return false }
             return true
         }
-        
+
         var isStopped: Bool {
             guard case .stopped = self else { return false }
             return true
         }
     }
-    
+
     private let dependencies: VisionDependencies
     private var state: State = .uninitialized
-    
+
     private var interruptionStartTime: Date?
     private var currentFrame: CVPixelBuffer?
     private var isStoppedForBackground = false
@@ -154,26 +154,26 @@ public final class VisionManager: BaseVisionManager {
             native: dependencies.native,
             synchronizer: dependencies.synchronizer
         ))
-        
+
         state = .initialized(videoSource: videoSource)
-        
+
         dependencies.recorder.delegate = self
     }
-    
+
     deinit {
         destroy()
     }
-    
+
     private func startVideoStream() {
         guard case let .started(videoSource, _) = state else { return }
         videoSource.add(observer: self)
     }
-    
+
     private func stopVideoStream() {
         guard case let .started(videoSource, _) = state else { return }
         videoSource.remove(observer: self)
     }
-    
+
     private func resume() {
         dependencies.dataProvider.start()
         startVideoStream()
@@ -181,7 +181,7 @@ public final class VisionManager: BaseVisionManager {
 
         tryRecording(mode: .internal)
     }
-    
+
     private func pause() {
         dependencies.dataProvider.stop()
         stopVideoStream()
@@ -203,10 +203,10 @@ public final class VisionManager: BaseVisionManager {
         isStoppedForBackground = false
         resume()
     }
-    
+
     private func stopInterruption() {
         guard let interruptionStartTime = interruptionStartTime else { return }
-        
+
         let elapsedTime = Date().timeIntervalSince(interruptionStartTime)
         if elapsedTime >= Constants.foregroundInterruptionResetThreshold {
             dependencies.deviceInfo.reset()
@@ -217,8 +217,8 @@ public final class VisionManager: BaseVisionManager {
         guard mode.isExternal || currentCountry.allowsRecording else { return }
         dependencies.recorder.start(mode: mode)
     }
-    
-    public override func onCountryUpdated(_ country: Country) {
+
+    override public func onCountryUpdated(_ country: Country) {
         super.onCountryUpdated(country)
         if country.allowsRecording {
             tryRecording(mode: .internal)
@@ -235,15 +235,15 @@ extension VisionManager: VideoSourceObserver {
             assertionFailure("Sample buffer containing pixel buffer is expected here")
             return
         }
-        
+
         currentFrame = pixelBuffer
-        
+
         guard state.isStarted else { return }
-        
+
         dependencies.recorder.handleFrame(videoSample.buffer)
         dependencies.native.sensors.setImage(pixelBuffer)
     }
-    
+
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
         dependencies.native.sensors.setCameraParameters(cameraParameters)
     }
@@ -251,7 +251,7 @@ extension VisionManager: VideoSourceObserver {
 
 extension VisionManager: RecordCoordinatorDelegate {
     func recordingStarted(path: String) {}
-    
+
     func recordingStopped() {
         trySync()
     }

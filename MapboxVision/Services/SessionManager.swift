@@ -7,13 +7,13 @@ protocol SessionDelegate: AnyObject {
 
 final class SessionManager {
     weak var delegate: SessionDelegate?
-    
+
     private var notificationObservers = [Any]()
     private var interruptionInterval: TimeInterval = 0
     private var interruptionTimer: Timer?
-    
+
     private var isStarted = false
-    
+
     func startSession(interruptionInterval: TimeInterval) {
         guard !isStarted else { return }
         isStarted.toggle()
@@ -33,20 +33,20 @@ final class SessionManager {
         }
         startInterval()
     }
-    
+
     func stopSession(abort: Bool = false) {
         guard isStarted else { return }
         isStarted.toggle()
-        
+
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
         interruptionTimer?.invalidate()
         stopInterval(abort: abort)
     }
-    
+
     private func startInterval() {
         delegate?.sessionStarted()
     }
-    
+
     private func stopInterval(abort: Bool = false) {
         delegate?.sessionStopped(abort: abort)
     }

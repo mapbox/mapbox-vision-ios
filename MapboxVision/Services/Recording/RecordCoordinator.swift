@@ -25,7 +25,7 @@ final class RecordCoordinator {
         let clipEnd: Float
         let log: VideoLog
     }
-    
+
     private struct VideoLog: Codable {
         let name: String
         let start: Float
@@ -37,43 +37,43 @@ final class RecordCoordinator {
     private var isReady: Bool = true
     private var abortRecording: Bool = false
     weak var delegate: RecordCoordinatorDelegate?
-    
+
     private let videoRecorder: VideoBuffer
     private let videoTrimmer = VideoTrimmer()
 
     private var jsonWriter: FileRecorder?
     private var imageWriter = ImageRecorder()
     private let processingQueue = DispatchQueue(label: "com.mapbox.RecordCoordinator.Processing")
-    
+
     private var currentVideoSettings: VideoSettings?
     private var currentReferenceTime: Float?
     private var currentRecordingPath: RecordingPath?
     private var currentStartTime: DispatchTime?
     private var currentEndTime: DispatchTime?
     private var currentVideoIsFull = false
-    
+
     private var stopRecordingInBackgroundTask = UIBackgroundTaskIdentifier.invalid
-    
+
     // determines if the source video is saved
     var savesSourceVideo: Bool = false
-    
+
     init() {
         self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit)
         videoRecorder.delegate = self
-        
+
         createFolder(path: DocumentsLocation.recordings.path)
     }
-    
+
     func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
-        
+
         currentVideoSettings = videoSettings
-        
+
         isRecording = true
         currentReferenceTime = referenceTime
         currentVideoIsFull = savesSourceVideo
-        
+
         let cachePath = DocumentsLocation.cache.path
         recreateFolder(path: DocumentsLocation.currentRecording.path)
         recreateFolder(path: cachePath)
@@ -81,27 +81,27 @@ final class RecordCoordinator {
         let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
         let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
         currentRecordingPath = recordingPath
-        
+
         jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
-        
+
         currentStartTime = DispatchTime.now()
         currentEndTime = nil
-        
+
         videoRecorder.chunkLength = savesSourceVideo ? 0 : defaultChunkLength
         videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
         videoRecorder.startRecording(to: cachePath, settings: videoSettings)
-        
+
         delegate?.recordingStarted(path: recordingPath.recordingPath)
     }
-    
+
     func stopRecording(abort: Bool = false) {
         guard isRecording else { return }
-        
+
         abortRecording = abort
         isRecording = false
         isReady = false
         currentEndTime = DispatchTime.now()
-        
+
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
         videoRecorder.stopRecording()
     }
@@ -110,24 +110,24 @@ final class RecordCoordinator {
         guard isRecording else { return }
         videoRecorder.handleFrame(sampleBuffer)
     }
-    
+
     func makeClip(from startTime: Float, to endTime: Float) {
         guard
             let referenceTime = currentReferenceTime,
             let recordingPath = currentRecordingPath,
             let videoSettings = currentVideoSettings
         else { return }
-        
+
         let relativeStart = startTime - referenceTime
         let relativeEnd = endTime - referenceTime
         let chunkLength = videoRecorder.chunkLength
-    
+
         let startChunk = chunkLength == 0 ? 0 : Int(floor(relativeStart / chunkLength))
-        let endChunk   = chunkLength == 0 ? 0 : Int(floor(relativeEnd / chunkLength))
-        
+        let endChunk = chunkLength == 0 ? 0 : Int(floor(relativeEnd / chunkLength))
+
         let clipStartTime = relativeStart - Float(startChunk) * chunkLength
         let clipEndTime = relativeEnd - Float(endChunk) * chunkLength
-        
+
         if startChunk != endChunk {
             // trim start clip
             let startJointTime = Float(startChunk + 1) * chunkLength
@@ -142,14 +142,14 @@ final class RecordCoordinator {
                                                clipEnd: chunkLength,
                                                log: startLog)
             trimClip(chunk: startChunk, request: trimRequest)
-            
+
             // copy all in-between clips
             for chunk in (startChunk + 1)..<endChunk {
                 let clipStart = Float(chunk) * chunkLength
                 let clipEnd = Float(chunk + 1) * chunkLength
                 copyClip(chunk: chunk, clipStart: clipStart, clipEnd: clipEnd)
             }
-            
+
             // trim end clip
             let endJointTime = Float(endChunk) * chunkLength
             let endSourcePath = chunkPath(for: endChunk, fileExtension: videoSettings.fileExtension)
@@ -177,10 +177,10 @@ final class RecordCoordinator {
             trimClip(chunk: startChunk, request: trimRequest)
         }
     }
-    
+
     func saveImage(image: Image, path: String) {
         guard let recordingPath = currentRecordingPath else { return }
-        
+
         guard let uiimage = image.getUIImage() else {
             assertionFailure("ERROR: Unable to convert image to UIImage")
             return
@@ -188,18 +188,18 @@ final class RecordCoordinator {
         let imagePath = recordingPath.imagesDirectoryPath
             .appendingPathComponent(path)
             .appending(".\(RecordFileType.image.fileExtension)")
-        
+
         imageWriter.record(image: uiimage, to: imagePath)
     }
-    
+
     func clearCache() {
         RecordingPath.clear(basePath: .recordings)
     }
-    
+
     private func recordingStopped() {
         trimRequestCache.removeAll()
         jsonWriter = nil
-        
+
         if let path = currentRecordingPath {
             do {
                 if abortRecording {
@@ -211,21 +211,21 @@ final class RecordCoordinator {
                 print("RecordCoordinator: moving/deleting current recording to \(path) failed. Error: \(error)")
             }
         }
-        
+
         currentRecordingPath = nil
         currentVideoSettings = nil
         currentVideoIsFull = false
         endBackgroundTask()
         isReady = true
         abortRecording = false
-        
+
         delegate?.recordingStopped()
     }
-    
+
     private func trimClip(chunk: Int, request: VideoTrimRequest, completion: (() -> Void)? = nil) {
         guard FileManager.default.fileExists(atPath: request.sourcePath) else { return }
         guard let settings = currentVideoSettings else { return }
-        
+
         let sourceURL = URL(fileURLWithPath: request.sourcePath)
         let destinationURL = URL(fileURLWithPath: request.destinationPath)
         videoTrimmer.trimVideo(sourceURL: sourceURL,
@@ -251,23 +251,23 @@ final class RecordCoordinator {
             }
         }
     }
-    
+
     private func copyClip(chunk: Int, clipStart: Float, clipEnd: Float) {
         guard
             let referenceTime = currentReferenceTime,
             let recordingPath = currentRecordingPath,
             let videoSettings = currentVideoSettings
         else { return }
-        
+
         let sourcePath = chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
         let destinationPath = currentVideoIsFull
             ? recordingPath.videoPath
             : recordingPath.videoClipPath(start: clipStart, end: clipEnd)
-        
+
         let log = VideoLog(name: destinationPath.lastPathComponent,
                            start: referenceTime + clipStart,
                            end: referenceTime + clipEnd)
-        
+
         processingQueue.async { [jsonWriter] in
             do {
                 try FileManager.default.copyItem(atPath: sourcePath, toPath: destinationPath)
@@ -277,11 +277,11 @@ final class RecordCoordinator {
             }
         }
     }
-    
+
     private func chunkPath(for number: Int, fileExtension: String) -> String {
         return "\(DocumentsLocation.cache.path)/\(number).\(fileExtension)"
     }
-    
+
     private func recreateFolder(path: String) {
         let fileManager = FileManager.default
         do {
@@ -295,7 +295,7 @@ final class RecordCoordinator {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
         }
     }
-    
+
     private func createFolder(path: String) {
         do {
             try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
@@ -310,17 +310,17 @@ extension RecordCoordinator: VideoBufferDelegate {
         if currentVideoIsFull, let startTime = currentStartTime {
             let clipStart = Float(number) * videoRecorder.chunkLength
             let clipEnd: Float
-            
+
             if finished, let endTime = currentEndTime {
                 let sessionDuration = Float(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
                 clipEnd = sessionDuration - clipStart
             } else {
                 clipEnd = Float(number + 1) * videoRecorder.chunkLength
             }
-            
+
             copyClip(chunk: number, clipStart: clipStart, clipEnd: clipEnd)
         }
-        
+
         let group = DispatchGroup()
         if let requests = trimRequestCache.removeValue(forKey: number) {
             for request in requests {
@@ -330,7 +330,7 @@ extension RecordCoordinator: VideoBufferDelegate {
                 }
             }
         }
-        
+
         group.notify(queue: processingQueue) { [weak self] in
             guard let self = self else { return }
             if finished {
@@ -338,7 +338,7 @@ extension RecordCoordinator: VideoBufferDelegate {
             }
         }
     }
-    
+
     private func endBackgroundTask() {
         UIApplication.shared.endBackgroundTask(stopRecordingInBackgroundTask)
         stopRecordingInBackgroundTask = UIBackgroundTaskIdentifier.invalid

@@ -1,5 +1,5 @@
-import Foundation
 import CoreMedia
+import Foundation
 
 /**
     `VisionReplayManager` is a counterpart of `VisionManager` that uses recorded video and telemetry instead of realtime data.
@@ -7,13 +7,12 @@ import CoreMedia
 */
 
 public final class VisionReplayManager: BaseVisionManager {
-    
     /**
         Fabric method for creating a `VisionReplayManager` instance.
-        
+
         It's only allowed to have one living instance of `VisionManager` or `VisionReplayManager`.
         To create `VisionReplayManager` with different configuration call `destroy` on existing instance or release all references to it.
-        
+
         - Parameter recordPath: Path to a folder with recorded session. You typically record such sessions using `startRecording` / `stopRecording` on `VisionManager`.
 
         - Returns: Instance of `VisionRecordManager` configured to use data from specified session.
@@ -98,7 +97,7 @@ public final class VisionReplayManager: BaseVisionManager {
     }
 
     // MARK: Private
-    
+
     private let dependencies: ReplayDependencies
     private var state: State = .uninitialized
 

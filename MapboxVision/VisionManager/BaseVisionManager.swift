@@ -1,7 +1,6 @@
 import Foundation
 
 public class BaseVisionManager: VisionManagerProtocol {
-
     // MARK: Performance control
 
     public var modelPerformanceConfig: ModelPerformanceConfig =
@@ -34,7 +33,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         return dependencies.native
     }
 
-    var delegate: VisionManagerDelegate?
+    weak var delegate: VisionManagerDelegate?
     private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies

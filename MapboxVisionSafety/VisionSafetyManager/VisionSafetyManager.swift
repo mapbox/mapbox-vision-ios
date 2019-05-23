@@ -12,10 +12,10 @@ public final class VisionSafetyManager {
 
     /**
      Fabric method for creating a `VisionSafetyManager` instance.
-        
+
      - Parameter visionManager: Instance of `VisionManager`.
      - Parameter delegate: Delegate for `VisionSafetyManager`. Delegate is held as a strong reference until `destroy` is called.
-        
+
      - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
      */
     public static func create(visionManager: VisionManagerProtocol, delegate: VisionSafetyManagerDelegate? = nil) -> VisionSafetyManager {
