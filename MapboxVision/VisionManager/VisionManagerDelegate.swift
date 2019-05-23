@@ -71,23 +71,23 @@ public protocol VisionManagerDelegate: AnyObject {
 }
 
 public extension VisionManagerDelegate {
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateAuthorizationStatus authorizationStatus: AuthorizationStatus) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateAuthorizationStatus _: AuthorizationStatus) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameSegmentation frameSegmentation: FrameSegmentation) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateFrameSegmentation _: FrameSegmentation) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameDetections frameDetections: FrameDetections) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateFrameDetections _: FrameDetections) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameSignClassifications frameSignClassifications: FrameSignClassifications) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateFrameSignClassifications _: FrameSignClassifications) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateRoadDescription roadDescription: RoadDescription) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateRoadDescription _: RoadDescription) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateWorldDescription worldDescription: WorldDescription) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateWorldDescription _: WorldDescription) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateVehicleState vehicleState: VehicleState) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateVehicleState _: VehicleState) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCamera camera: Camera) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateCamera _: Camera) {}
 
-    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCountry country: Country) {}
+    func visionManager(_: VisionManagerProtocol, didUpdateCountry _: Country) {}
 
-    func visionManagerDidCompleteUpdate(_ visionManager: VisionManagerProtocol) {}
+    func visionManagerDidCompleteUpdate(_: VisionManagerProtocol) {}
 }

@@ -115,7 +115,7 @@ extension VideoPlayer: VideoSource {
 }
 
 extension VideoPlayer: AVPlayerItemOutputPullDelegate {
-    func outputMediaDataWillChange(_ sender: AVPlayerItemOutput) {
+    func outputMediaDataWillChange(_: AVPlayerItemOutput) {
         displayLink.isPaused = false
     }
 }

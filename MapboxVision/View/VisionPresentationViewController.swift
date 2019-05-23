@@ -352,8 +352,9 @@ extension VisionPresentationViewController {
         let imageSize = detections.frame.image.size.cgSize
 
         let values = detections.detections.map { detection -> BasicDetection in
-            let rect = detection.boundingBox.convertedToAbsoluteCoordinates(relativeTo: imageSize)
-                                            .convertedForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
+            let rect = detection.boundingBox
+                .convertedToAbsoluteCoordinates(relativeTo: imageSize)
+                .convertedForAspectRatioFill(from: imageSize, to: detectionsView.bounds.size)
             return BasicDetection(boundingBox: rect, objectType: detection.detectionClass)
         }
 
@@ -363,7 +364,7 @@ extension VisionPresentationViewController {
 }
 
 private extension CGRect {
-    func convertForAspectRatioFill(from original: CGSize, to destination: CGSize) -> CGRect {
+    func convertedForAspectRatioFill(from original: CGSize, to destination: CGSize) -> CGRect {
         let leftTop = origin.convertForAspectRatioFill(from: original, to: destination)
         let rightBottom = CGPoint(x: maxX, y: maxY).convertForAspectRatioFill(from: original, to: destination)
         return CGRect(x: leftTop.x, y: leftTop.y, width: rightBottom.x - leftTop.x, height: rightBottom.y - leftTop.y)

@@ -76,7 +76,7 @@ public final class VisionManager: BaseVisionManager {
      - Parameter path: Path to directory where you'd like session to be recorded.
 
      - Throws: `VisionManagerError.startRecordingBeforeStart` if method is called when `VisionManager` hasn't been started.
-    */
+     */
     public func startRecording(to path: String) throws {
         guard case .started = state else {
             throw VisionManagerError.startRecordingBeforeStart
@@ -86,8 +86,8 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-        Stop recording session.
-    */
+     Stop recording session.
+     */
     public func stopRecording() {
         guard case .started = state else {
             assertionFailure("VisionManager should be started and recording")
@@ -98,8 +98,8 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-        Cleanup the state and resources of `VisionManger`.
-    */
+     Cleanup the state and resources of `VisionManger`.
+     */
     public func destroy() {
         guard !state.isUninitialized else { return }
 
@@ -244,13 +244,13 @@ extension VisionManager: VideoSourceObserver {
         dependencies.native.sensors.setImage(pixelBuffer)
     }
 
-    public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
+    public func videoSource(_: VideoSource, didOutput cameraParameters: CameraParameters) {
         dependencies.native.sensors.setCameraParameters(cameraParameters)
     }
 }
 
 extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {}
+    func recordingStarted(path _: String) {}
 
     func recordingStopped() {
         trySync()
