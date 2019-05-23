@@ -44,7 +44,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     private var isSyncAllowed: Bool {
         switch currentCountry {
         case .unknown, .china: return false
-        case .USA, .other: return true
+        case .UK, .USA, .other: return true
         }
     }
 
@@ -132,7 +132,7 @@ public class BaseVisionManager: VisionManagerProtocol {
 
     private func configureSync(_ country: Country) {
         switch country {
-        case .USA, .other:
+        case .UK, .USA, .other:
             dependencies.synchronizer.sync()
         case .china:
             dependencies.synchronizer.stopSync()
