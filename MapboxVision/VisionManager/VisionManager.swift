@@ -260,7 +260,7 @@ extension VisionManager: RecordCoordinatorDelegate {
 private extension Country {
     var allowsRecording: Bool {
         switch self {
-        case .USA, .other, .unknown:
+        case .USA, .UK, .other, .unknown:
             return true
         case .china:
             return false
