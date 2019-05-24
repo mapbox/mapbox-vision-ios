@@ -37,7 +37,7 @@ open class CameraVideoSource: ObservableVideoSource {
         
         set(orientation: UIApplication.shared.statusBarOrientation.deviceOrientation)
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged),
-                                               name: .UIDeviceOrientationDidChange, object: nil)
+                                               name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     /**
@@ -106,7 +106,7 @@ open class CameraVideoSource: ObservableVideoSource {
         let focalPixelX: Float
         let focalPixelY: Float
         
-        if let attachment = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, nil) as? Data {
+        if let attachment = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) as? Data {
             let matrix: matrix_float3x3 = attachment.withUnsafeBytes { $0.pointee }
             focalPixelX = matrix[0,0]
             focalPixelY = matrix[1,1]
@@ -158,7 +158,7 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         var mode: CMAttachmentMode = 0
-        guard let reason = CMGetAttachment(sampleBuffer, kCMSampleBufferAttachmentKey_DroppedFrameReason, &mode) else { return }
+        guard let reason = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_DroppedFrameReason, attachmentModeOut: &mode) else { return }
         print("Sample buffer was dropped. Reason: \(reason)")
     }
 }

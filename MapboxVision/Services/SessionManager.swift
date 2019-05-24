@@ -14,7 +14,7 @@ protocol SessionDelegate: class {
 }
 
 final class SessionManager {
-    weak var listener: SessionDelegate?
+    weak var delegate: SessionDelegate?
     
     private var notificationObservers = [Any]()
     private var interruptionInterval: TimeInterval = 0
@@ -27,7 +27,7 @@ final class SessionManager {
         isStarted.toggle()
         
         notificationObservers.append(
-            NotificationCenter.default.addObserver(forName: .UIApplicationWillTerminate, object: nil, queue: .main) { [weak self] _ in
+            NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { [weak self] _ in
             self?.stopSession()
         })
         
@@ -50,10 +50,10 @@ final class SessionManager {
     }
     
     private func startInterval() {
-        listener?.sessionStarted()
+        delegate?.sessionStarted()
     }
     
     private func stopInterval(abort: Bool = false) {
-        listener?.sessionStopped(abort: abort)
+        delegate?.sessionStopped(abort: abort)
     }
 }

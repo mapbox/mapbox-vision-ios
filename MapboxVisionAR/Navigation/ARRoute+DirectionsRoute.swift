@@ -15,7 +15,7 @@ public extension MapboxVisionARNative.Route {
     /**
         Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
     */
-    public convenience init(route: MapboxDirections.Route) {
+    convenience init(route: MapboxDirections.Route) {
         var points = Array<RoutePoint>()
         
         route.legs.forEach { $0.steps.forEach { step in

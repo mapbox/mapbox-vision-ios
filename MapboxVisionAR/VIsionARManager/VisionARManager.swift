@@ -28,13 +28,22 @@ public final class VisionARManager {
         
         - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
     */
-    public static func create(visionManager: VisionManager, delegate: VisionARManagerDelegate? = nil) -> VisionARManager {
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate? = nil) -> VisionARManager {
         let manager = VisionARManager()
         manager.native = VisionARManagerNative.create(visionManager: visionManager.native, delegate: manager)
         manager.delegate = delegate
         return manager
     }
-    
+
+    /**
+        Setup length of AR lane.
+
+        - Parameter laneLength: Length of AR lane in meters.
+    */
+    func set(laneLength: Double) {
+        native?.setLaneLength(laneLength)
+    }
+
     /**
         Cleanup the state and resources of `VisionARManger`.
     */

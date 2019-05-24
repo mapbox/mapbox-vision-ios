@@ -33,7 +33,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
             isReady = true
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateOrientation), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

@@ -50,7 +50,7 @@ final class VideoTrimmer {
         }
         
         let durationOfCurrentSlice = CMTimeSubtract(endTime, startTime)
-        let timeRangeForCurrentSlice = CMTimeRangeMake(startTime, durationOfCurrentSlice)
+        let timeRangeForCurrentSlice = CMTimeRangeMake(start: startTime, duration: durationOfCurrentSlice)
         
         do {
             try videoTrack.insertTimeRange(timeRangeForCurrentSlice, of: videoAssetTrack, at: CMTime())
