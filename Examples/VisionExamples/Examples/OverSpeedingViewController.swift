@@ -69,7 +69,7 @@ class OverSpeedingViewController: UIViewController {
 }
 
 extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManagerDelegate {
-    func visionManager(_ visionManager: VisionManager, didUpdateVehicleState vehicleState: VehicleState) {
+    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateVehicleState vehicleState: VehicleState) {
         DispatchQueue.main.async { [weak self] in
             // save the latest state of the vehicle
             self?.vehicleState = vehicleState
@@ -83,7 +83,7 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
         }
     }
     
-    func visionManagerDidCompleteUpdate(_ visionManager: VisionManager) {
+    func visionManagerDidCompleteUpdate(_ visionManager: VisionManagerProtocol) {
         DispatchQueue.main.async { [weak self] in
             // when update is completed all the data has the most current state
             guard let state = self?.vehicleState, let restrictions = self?.restrictions else { return }
