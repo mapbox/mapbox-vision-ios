@@ -60,7 +60,7 @@ struct VisionDependencies {
 
         let dataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: native,
-            motionManager: MotionManager(with: platform.getMotionReferenceFrame()),
+            motionManager: MotionManager(),
             locationManager: LocationManager()
         ))
 
