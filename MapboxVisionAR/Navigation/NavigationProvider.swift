@@ -4,7 +4,7 @@ import MapboxVision
 import MapboxVisionARNative
 
 /// :nodoc:
-public protocol NavigationManagerDelegate: class {
+public protocol NavigationManagerDelegate: AnyObject {
     func navigationManager(_ navigationManager: NavigationManager, didUpdate route: Route)
     func navigationManagerArrivedAtDestination(_ navigationManager: NavigationManager)
 }

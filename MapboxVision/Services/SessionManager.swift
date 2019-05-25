@@ -1,6 +1,6 @@
 import Foundation
 
-protocol SessionDelegate: class {
+protocol SessionDelegate: AnyObject {
     func sessionStarted()
     func sessionStopped(abort: Bool)
 }

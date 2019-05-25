@@ -6,7 +6,7 @@ import Foundation
  
      - NOTE: All delegate methods are called on a background thread.
 */
-public protocol VisionARManagerDelegate: class {
+public protocol VisionARManagerDelegate: AnyObject {
 
     /**
         Tells the delegate that AR camera was updated.

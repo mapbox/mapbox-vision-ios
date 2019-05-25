@@ -3,7 +3,7 @@ import Foundation
 import MapboxVisionNative
 import UIKit
 
-protocol RecordCoordinatorDelegate: class {
+protocol RecordCoordinatorDelegate: AnyObject {
     func recordingStarted(path: String)
     func recordingStopped()
 }

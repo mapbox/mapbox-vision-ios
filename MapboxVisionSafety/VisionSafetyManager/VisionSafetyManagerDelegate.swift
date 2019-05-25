@@ -6,7 +6,7 @@ import Foundation
  
      NOTE: All delegate methods are called on a background thread.
 */
-public protocol VisionSafetyManagerDelegate: class {
+public protocol VisionSafetyManagerDelegate: AnyObject {
 
     /**
         Tells the delegate that current road restrictions were updated.

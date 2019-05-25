@@ -1,7 +1,7 @@
 import CoreMedia
 import Foundation
 
-protocol VideoBufferDelegate: class {
+protocol VideoBufferDelegate: AnyObject {
     func chunkCut(number: Int, finished: Bool)
 }
 

@@ -7,8 +7,7 @@ import MapboxVisionNative
  
     - NOTE: All delegate methods are called on a background thread.
 */
-public protocol VisionManagerDelegate: class {
-    
+public protocol VisionManagerDelegate: AnyObject {
     /**
         Tells the delegate that authorization status was updated.
         `VisionManager` may not emit events unless it has successfully authorized.
