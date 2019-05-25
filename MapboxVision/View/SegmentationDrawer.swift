@@ -31,8 +31,8 @@ final class SegmentationDrawer: NSObject, MTKViewDelegate {
     }
 
     func set(_ segMask: FrameSegmentation) {
-        source = segMask.frame.image.getTexture();
-        mask = segMask.mask.getTexture();
+        source = segMask.frame.image.getTexture()
+        mask = segMask.mask.getTexture()
     }
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {

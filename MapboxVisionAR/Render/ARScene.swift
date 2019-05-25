@@ -116,12 +116,12 @@ class ARCameraNode: ARNode {
     }
 
     private func requestProjectionUpdate() {
-        needProjectionUpdate = true;
+        needProjectionUpdate = true
     }
 
     func projectionMatrix() -> float4x4 {
         if (needProjectionUpdate) {
-            needProjectionUpdate = false;
+            needProjectionUpdate = false
             cachedProjectionMatrix = makePerpectiveProjectionMatrix(fovRadians: fovRadians, aspectRatio: aspectRatio, nearZ: nearClipPlane, farZ: farClipPlane)
         }
 

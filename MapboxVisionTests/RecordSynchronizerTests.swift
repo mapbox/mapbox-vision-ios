@@ -87,7 +87,7 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
             URL(fileURLWithPath: "/2/images.zip"),
         ]
 
-        XCTAssert(archiver.archives.count == archives.count, "Archiver should create \(archives.count) archives");
+        XCTAssert(archiver.archives.count == archives.count, "Archiver should create \(archives.count) archives")
 
         archives.forEach { (archive) in
             XCTAssertNotNil(archiver.archives[archive], "Archiver should create archive with right path")

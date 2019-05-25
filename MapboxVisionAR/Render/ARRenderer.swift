@@ -40,7 +40,7 @@ struct FragmentUniforms {
 
 struct LaneFragmentUniforms {
     var baseColor = float4(1, 1, 1, 1)
-};
+}
 
 private let textureMappingVertices: [Float] = [
 //   X     Y    Z       U    V
@@ -331,7 +331,7 @@ class ARRenderer: NSObject, MTKViewDelegate {
         scene.camera.fovRadians = camParams.fov
         scene.camera.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
 
-        scene.camera.position = float3(0, camParams.height, 0);
+        scene.camera.position = float3(0, camParams.height, 0)
     }
 
     func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
@@ -359,7 +359,7 @@ class ARRenderer: NSObject, MTKViewDelegate {
                 let material = entity.material
                 // TODO: make it in common case
                 if node === arrowNode {
-                    let points = lane.curve.getControlPoints();
+                    let points = lane.curve.getControlPoints()
 
                     guard points.count == 4 else {
                         assertionFailure("ARLane should contains four points")
