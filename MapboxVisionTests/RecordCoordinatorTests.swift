@@ -50,7 +50,7 @@ final class RecordCoordinatorTests: XCTestCase {
         wait(for: [recordingStartedExpectation], timeout: 1)
         
         guard
-            let path = RecordingPath(existing: recordingStartedExpectation.recordingPath, settings: videoSettings),
+            let path = RecordingDir(existing: recordingStartedExpectation.recordingPath, settings: videoSettings),
             directoryExists(at: path.recordingPath)
         else {
             XCTFail("Recording directory \(recordingStartedExpectation.recordingPath.debugDescription) should exist with created structure.")
