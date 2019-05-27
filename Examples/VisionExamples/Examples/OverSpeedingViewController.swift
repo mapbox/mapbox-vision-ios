@@ -76,7 +76,7 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
         }
     }
 
-    func visionSafetyManager(_: VisionSafetyManager, didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
         DispatchQueue.main.async { [weak self] in
             // save currenly applied road restrictions
             self?.restrictions = roadRestrictions
@@ -96,7 +96,7 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
 }
 
 extension OverSpeedingViewController: VideoSourceObserver {
-    public func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
+    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         DispatchQueue.main.async { [weak self] in
             // display received sample buffer by passing it to presentation controller
             self?.visionViewController.present(sampleBuffer: videoSample.buffer)

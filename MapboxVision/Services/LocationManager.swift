@@ -27,7 +27,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
-    func locationManager(_: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined, .restricted, .denied:
             isReady = false
@@ -40,12 +40,12 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let handler = locationHandler else { return }
         locations.forEach(handler)
     }
 
-    func locationManager(_: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         headingHandler?(newHeading)
     }
 

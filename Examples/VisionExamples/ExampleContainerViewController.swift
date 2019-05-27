@@ -24,7 +24,7 @@ final class ExampleContainerViewController: UIViewController {
         controller.didMove(toParent: self)
     }
 
-    @IBAction private func closeTapped(_: Any) {
+    @IBAction private func closeTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
 }

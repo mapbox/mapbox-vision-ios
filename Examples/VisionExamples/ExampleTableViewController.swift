@@ -7,11 +7,11 @@ final class ExampleTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
     }
 
-    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listOfExamples.count
     }
 
-    override func numberOfSections(in _: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 

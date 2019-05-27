@@ -43,7 +43,7 @@ public final class NavigationManager {
     }
 
     @objc
-    private func didReroute(_: NSNotification) {
+    private func didReroute(_ notification: NSNotification) {
         routeHasChanged = true
     }
 }

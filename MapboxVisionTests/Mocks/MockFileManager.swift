@@ -22,7 +22,7 @@ final class MockFileManager: FileManagerProtocol {
         return data.contains { $0.url == url }
     }
 
-    func createFile(atPath path: String, contents _: Data?) -> Bool {
+    func createFile(atPath path: String, contents: Data?) -> Bool {
         let fileUrl = URL(fileURLWithPath: path)
         let file = File(url: fileUrl, size: fileSize(at: fileUrl))
         data.append(file)

@@ -204,7 +204,7 @@ final class RecordSynchronizer: Synchronizable {
             .forEach(dependencies.dataSource.removeFile)
     }
 
-    private func markAsSynced(dir: URL, remoteDir _: String) throws {
+    private func markAsSynced(dir: URL, remoteDir: String) throws {
         guard createSyncFile(in: dir) != nil else {
             throw RecordSynchronizerError.syncFileCreationFail(dir)
         }
