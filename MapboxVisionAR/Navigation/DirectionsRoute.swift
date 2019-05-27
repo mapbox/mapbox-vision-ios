@@ -1,4 +1,3 @@
-#if canImport(MapboxDirections)
 import Foundation
 import MapboxDirections
 import MapboxVisionARNative
@@ -35,4 +34,3 @@ public extension VisionARManager {
         set(route: MapboxVisionARNative.Route(route: route))
     }
 }
-#endif
