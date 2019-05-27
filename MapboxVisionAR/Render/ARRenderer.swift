@@ -350,11 +350,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
         // TODO: reorder for less pixeloverdraw
         scene.rootNode.childs.forEach { node in
             if let entity = node.entity, let mesh = entity.mesh {
-                if let pipeline = entity.renderPipeline {
-                    commandEncoder.setRenderPipelineState(pipeline)
-                } else {
-                    commandEncoder.setRenderPipelineState(renderPipelineDefault)
-                }
+                let currentPipeline = entity.renderPipeline ?? renderPipelineDefault
+                commandEncoder.setRenderPipelineState(currentPipeline)
 
                 let modelMatrix = node.worldTransform()
                 let material = entity.material

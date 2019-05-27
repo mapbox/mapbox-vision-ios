@@ -107,11 +107,13 @@ final class RecordSynchronizer: Synchronizable {
         uploadArchivedFiles(types: [.image], subPath: imagesSubpath, archiveName: imagesFileName, completion: completion)
     }
 
-    private func uploadArchivedFiles(types: [RecordFileType],
-                                     subPath: String? = nil,
-                                     archiveName: String,
-                                     eachDirectoryCompletion: ((_ dir: URL, _ remoteDir: String) -> Void)? = nil,
-                                     completion: @escaping () -> Void) {
+    private func uploadArchivedFiles(
+        types: [RecordFileType],
+        subPath: String? = nil,
+        archiveName: String,
+        eachDirectoryCompletion: ((_ dir: URL, _ remoteDir: String) -> Void)? = nil,
+        completion: @escaping () -> Void
+    ) {
         let group = DispatchGroup()
 
         for dir in dependencies.dataSource.recordDirectories {
