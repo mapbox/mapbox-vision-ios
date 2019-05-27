@@ -14,15 +14,18 @@ Please note that [Apple's Swift API Design Guidelines](https://swift.org/documen
 
 There're following items that can differ a bit from Style Guide above:
 - We do NOT have limit on line length, but it's recommended to have lines less than 100 characters
-- We do NOT have limit on closure body length
-- We do NOT have limit on function body length less than 400 lines
-- We do NOT have limit on type body length
-- We do NOT have limit on file length, but we strongly recommend to have files less than 1000 lines
-- We have one empty vertical whitespace in the beginning of ... (propose custom: protocols/classes/functions)
+- We do have limit on closure body length (50 lines)
+- We do have limit on function body length (100 lines)
+- We do have limit on type body length (500 lines)
+- We do have limit on file length (1000 lines)
+- We do NOT have empty vertical whitespace after opening braces
+- We use Javadoc-style block comments `/** ... */` for multiline doc comments
+- We use `///` comments for single-line doc comments
 - All work that we can't finish right away must be marked appropriately (`// TODO: description` or `// FIXME: description`)
-- We write our code without warnings
+- We write our code without warnings!
 
 We use automation tools to enforce formatting (see `Enforcing formatting and linting` section below).
+If you have any issues with linting/formatting, please let iOS mobile team know.
 
 # Enforcing formatting and linting
 
@@ -44,6 +47,7 @@ You can also check [Source/SwiftLintFramework/Rules directory](https://github.co
 ## Installation and usage
 
 Please note we're using `Swift 4.2` as a minimal version, thus make sure you install appropriate toolchain or switch to it in case you have more than one. Otherwise you might face some false positivis triggers or build errors.
+Please do NOT add new rules into config files without explicit approve from mobile team!
 
 ### Install Swiftlint
 
