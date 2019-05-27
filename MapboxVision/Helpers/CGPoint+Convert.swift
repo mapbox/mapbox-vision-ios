@@ -5,8 +5,8 @@ public extension CGPoint {
     /**
      Convert point with respect of aspect ratio
 
-     - Parameter from: Original frame size
-     - Parameter to: Destination frame size
+     - Parameter original: Original frame size
+     - Parameter destination: Destination frame size
      - Returns: Point converted with respect of aspect ratio
      */
 

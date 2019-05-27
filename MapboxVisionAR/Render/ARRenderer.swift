@@ -465,7 +465,8 @@ class ARRenderer: NSObject, MTKViewDelegate {
     private func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
         #if !targetEnvironment(simulator)
             var imageTexture: CVMetalTexture?
-            guard let textureCache = textureCache,
+            guard
+                let textureCache = textureCache,
                 CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
                                                           textureCache,
                                                           buffer,

@@ -79,7 +79,10 @@ final class VideoRecorder {
         writerQueue.async { [weak self] in
             guard let self = self else { return }
 
-            guard self.isRecording, let writer = self.currentAssetWriter else {
+            guard
+                self.isRecording,
+                let writer = self.currentAssetWriter
+            else {
                 completion(.error(.notRecording))
                 return
             }
