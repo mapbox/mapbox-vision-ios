@@ -24,7 +24,7 @@ public class VisionARViewController: UIViewController {
     private var renderer: ARRenderer?
     
     /**
-     Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
+     Create an instance of VisionARNavigationController.
      */
     public init() {
         super.init(nibName: nil, bundle: nil)
