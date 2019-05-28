@@ -13,7 +13,7 @@ We follow the [Google Swift Style Guide](https://google.github.io/swift/)
 Please note that [Apple's Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) are considered as a part of the style guide.
 
 There're following items that can differ a bit from Style Guide above:
-- We do NOT have limit on line length, but it's recommended to have lines less than 100 characters
+- We do NOT have limit on line length, but it's recommended to have lines less than 120 characters
 - We do have limit on closure body length (50 lines)
 - We do have limit on function body length (100 lines)
 - We do have limit on type body length (500 lines)
