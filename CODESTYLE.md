@@ -51,25 +51,14 @@ Please do NOT add new rules into config files without explicit approve from mobi
 
 ### Install Swiftlint
 
-Following options to install tools are available:
-
-1. Using Homebrew:
+Preferred way to install Swiftlint is using `Homebrew`. Open terminal and run following commands:
 
 ```
 brew update
 brew install swiftlint
 ```
 
-2. Using a pre-built package:
-
-Install SwiftLint by downloading `SwiftLint.pkg` from the [latest GitHub release](https://github.com/realm/SwiftLint/releases/) and running it.
-
-3. Compiling from source:
-
-You can also build from source by cloning [Swiftlint project](https://github.com/realm/SwiftLint) and running (Xcode 10.0 or later):
-```
-git submodule update --init --recursive; make install
-```
+You can find more information about installation at [Swiftlint's GitHub page](https://github.com/realm/SwiftLint#installation).
 
 ### How to use Swiftlint:
 
@@ -91,22 +80,14 @@ Directories will be searched recursively.
 
 ### Install Swiftformat
 
-1. Using Homebrew:
+Preferred way to install Swiftlint is using `Homebrew`. Open terminal and run following commands:
 
 ```
 brew update
 brew install swiftformat
 ```
 
-2. Compiling from source:
-
-If you prefer, you can check out and build SwiftFormat manually on macOS or Linux as follows:
-```
-git clone https://github.com/nicklockwood/SwiftFormat   
-cd SwiftFormat
-swift build -c release
-```
-You can find more details at [Swiftformat page](https://github.com/nicklockwood/SwiftFormat#command-line-tool)
+You can find more information about installation at [Swiftformat's GitHub page](https://github.com/nicklockwood/SwiftFormat#command-line-tool).
 
 ### How to use Swiftformat:
 
