@@ -14,15 +14,17 @@ public protocol VisionManagerProtocol: AnyObject {
      Converts the location of the point from a screen coordinate to a world coordinate.
 
      - Parameter screenCoordinate: Screen coordinate expressed in pixels
+     - Returns: World coordinate if `screenCoordinate` can be projected on the road and nil otherwise
      */
-    func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate
+    func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate?
 
     /**
      Converts the location of the point from a world coordinate to a screen coordinate.
 
      - Parameter worldCoordinate: Point in world coordinate
+     - Returns: Screen coordinate if `worldCoordinate` can be represented in screen coordinates and nil otherwise
      */
-    func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D
+    func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D?
 
     /**
      Converts the location of the point from a geographical coordinate to a world coordinate.
