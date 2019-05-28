@@ -136,7 +136,6 @@ file_length:
       warning: 1000
 function_body_length:
     warning: 100
-line_length: 200
 type_body_length:
     warning: 500
 # Disable rules from the default enabled set
