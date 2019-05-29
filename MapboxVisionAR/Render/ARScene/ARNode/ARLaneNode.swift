@@ -1,6 +1,6 @@
 import simd
 
-class ARLaneNode: ARNode  {
+class ARLaneNode: ARNode {
     // MARK: - Lifecycle
 
     init(arLaneEntity: ARLaneEntity) {

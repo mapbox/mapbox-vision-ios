@@ -7,6 +7,6 @@ class ARScene {
     // MARK: - Public methods
 
     func getChildARLaneNodes() -> [ARLaneNode]? {
-        return self.rootNode.childs.filter({ $0.nodeType == .arrowNode }) as? [ARLaneNode]
+        return self.rootNode.childs.filter { $0.nodeType == .arrowNode } as? [ARLaneNode]
     }
 }

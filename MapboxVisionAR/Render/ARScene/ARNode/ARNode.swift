@@ -1,7 +1,6 @@
 import simd
 
 class ARNode {
-
     // MARK: - Properties
 
     var entity: AREntity?
@@ -49,7 +48,7 @@ class ARNode {
     }
 
     func worldTransform() -> float4x4 {
-        if (needTransformUpdate) {
+        if needTransformUpdate {
             let localTransform = makeTransformMatrix(trans: position, rot: rotation, scale: scale)
 
             if let parent = parent {

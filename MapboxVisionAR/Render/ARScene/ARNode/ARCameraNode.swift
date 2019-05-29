@@ -1,7 +1,6 @@
 import simd
 
 class ARCameraNode: ARNode {
-
     // MARK: - Properties
 
     var needProjectionUpdate = Bool(true)
@@ -38,14 +37,14 @@ class ARCameraNode: ARNode {
 
     // MARK: - Internal functions
 
-    func frameSize(size: float2) -> Void {
+    func frameSize(size: float2) {
         assert(size.y > 0)
         aspectRatio = size.x / size.y
     }
 
     func projectionMatrix() -> float4x4 {
-        if (needProjectionUpdate) {
-            needProjectionUpdate = false;
+        if needProjectionUpdate {
+            needProjectionUpdate = false
             cachedProjectionMatrix = makePerpectiveProjectionMatrix(fovRadians: fovRadians, aspectRatio: aspectRatio, nearZ: nearClipPlane, farZ: farClipPlane)
         }
 
@@ -55,6 +54,6 @@ class ARCameraNode: ARNode {
     // MARK: - Private functions
 
     private func setNeedProjectionUpdate() {
-        needProjectionUpdate = true;
+        needProjectionUpdate = true
     }
 }

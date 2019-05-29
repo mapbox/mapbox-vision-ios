@@ -48,9 +48,9 @@ class ARRenderer: NSObject {
 
     // MARK: - Public properties
 
-    public var frame: CVPixelBuffer?
-    public var camera: ARCamera?
-    public var lane: ARLane?
+    var frame: CVPixelBuffer?
+    var camera: ARCamera?
+    var lane: ARLane?
 
     // MARK: - Lifecycle
 
@@ -158,13 +158,14 @@ class ARRenderer: NSObject {
         return vertexDescriptor
     }
 
-    static func makeRenderBackgroundPipeline(device: MTLDevice,
-                                             vertexDescriptor: MTLVertexDescriptor,
-                                             vertexFunction: MTLFunction,
-                                             fragmentFunction: MTLFunction,
-                                             colorPixelFormat: MTLPixelFormat,
-                                             depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
-
+    static func makeRenderBackgroundPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MTLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -177,13 +178,14 @@ class ARRenderer: NSObject {
         return try device.makeRenderPipelineState(descriptor: pipeline)
     }
 
-    static func makeRenderPipeline(device: MTLDevice,
-                                   vertexDescriptor: MDLVertexDescriptor,
-                                   vertexFunction: MTLFunction,
-                                   fragmentFunction: MTLFunction,
-                                   colorPixelFormat: MTLPixelFormat,
-                                   depthStencilPixelFormat: MTLPixelFormat) throws -> MTLRenderPipelineState {
-
+    static func makeRenderPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MDLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -224,8 +226,8 @@ class ARRenderer: NSObject {
         return device.makeDepthStencilState(descriptor: depthStencil)!
     }
 
-    static func processPoint(_ wc: WorldCoordinate) -> float3 {
-        return float3(Float(-wc.y), Float(wc.z), Float(-wc.x))
+    static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
+        return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
     }
 
     // MARK: - Public functions
@@ -277,7 +279,7 @@ class ARRenderer: NSObject {
                 let material = arEntity.material
 
                 if arNode.nodeType == .arrowNode {
-                    let points = lane.curve.getControlPoints();
+                    let points = lane.curve.getControlPoints()
 
                     guard points.count == 4 else {
                         assertionFailure("ARLane should contains four points")
@@ -340,7 +342,7 @@ class ARRenderer: NSObject {
         scene.cameraNode.fovRadians = camParams.fov
         scene.cameraNode.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
 
-        scene.cameraNode.position = float3(0, camParams.height, 0);
+        scene.cameraNode.position = float3(0, camParams.height, 0)
     }
 
     private func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
