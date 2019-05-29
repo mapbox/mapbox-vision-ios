@@ -305,11 +305,10 @@
 		2E071A912257C83300345FA8 /* Render */ = {
 			isa = PBXGroup;
 			children = (
-				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
-				2E071A382257887E00345FA8 /* Shaders.metal */,
-				2E071A3D2257887E00345FA8 /* ARMath.swift */,
-				2E071A352257887E00345FA8 /* ARRenderer.swift */,
-				2E071A362257887E00345FA8 /* ARScene.swift */,
+				3A11B01F229EC2C100070A61 /* ARScene */,
+				3A11B027229EC35400070A61 /* Renderer */,
+				3A11B026229EC34800070A61 /* Helpers */,
+				3A11B02A229EC3AE00070A61 /* ViewController */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -494,6 +493,103 @@
 				2E4EE2E220F0CC63003431B3 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3A11B01F229EC2C100070A61 /* ARScene */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A362257887E00345FA8 /* ARScene.swift */,
+				3A11B020229EC2F600070A61 /* ARNode */,
+			);
+			path = ARScene;
+			sourceTree = "<group>";
+		};
+		3A11B020229EC2F600070A61 /* ARNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B021229EC30700070A61 /* AREntity */,
+				3A11B024229EC32D00070A61 /* ARLaneMesh */,
+			);
+			path = ARNode;
+			sourceTree = "<group>";
+		};
+		3A11B021229EC30700070A61 /* AREntity */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B022229EC31700070A61 /* ARMaterial */,
+			);
+			path = AREntity;
+			sourceTree = "<group>";
+		};
+		3A11B022229EC31700070A61 /* ARMaterial */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B023229EC32300070A61 /* ARLight */,
+			);
+			path = ARMaterial;
+			sourceTree = "<group>";
+		};
+		3A11B023229EC32300070A61 /* ARLight */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ARLight;
+			sourceTree = "<group>";
+		};
+		3A11B024229EC32D00070A61 /* ARLaneMesh */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B025229EC33B00070A61 /* Error */,
+			);
+			path = ARLaneMesh;
+			sourceTree = "<group>";
+		};
+		3A11B025229EC33B00070A61 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		3A11B026229EC34800070A61 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A3D2257887E00345FA8 /* ARMath.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3A11B027229EC35400070A61 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A352257887E00345FA8 /* ARRenderer.swift */,
+				3A11B028229EC39800070A61 /* Error */,
+				3A11B029229EC3A200070A61 /* Shaders */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		3A11B028229EC39800070A61 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		3A11B029229EC3A200070A61 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A382257887E00345FA8 /* Shaders.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		3A11B02A229EC3AE00070A61 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
