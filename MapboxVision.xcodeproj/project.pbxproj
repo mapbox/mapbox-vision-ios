@@ -101,6 +101,8 @@
 		3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B043229ED3F500070A61 /* ARRendererError.swift */; };
 		3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B045229ED49B00070A61 /* UIColor+Extension.swift */; };
 		3A11B048229ED76500070A61 /* ARLaneMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B047229ED76500070A61 /* ARLaneMesh.swift */; };
+		3A11B052229F0B7A00070A61 /* MapboxVisionARTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B051229F0B7A00070A61 /* MapboxVisionARTests.swift */; };
+		3A11B054229F0B7A00070A61 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -121,6 +123,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3A11B055229F0B7A00070A61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4EE21120EFD378003431B3;
+			remoteInfo = MapboxVision;
+		};
 		B51E557F215E313500650DDE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
@@ -224,6 +233,9 @@
 		3A11B043229ED3F500070A61 /* ARRendererError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRendererError.swift; sourceTree = "<group>"; };
 		3A11B045229ED49B00070A61 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		3A11B047229ED76500070A61 /* ARLaneMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneMesh.swift; sourceTree = "<group>"; };
+		3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionARTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A11B051229F0B7A00070A61 /* MapboxVisionARTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxVisionARTests.swift; sourceTree = "<group>"; };
+		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -272,6 +284,14 @@
 				2E071A9C2257CCB700345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
 				B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A11B04C229F0B7A00070A61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A11B054229F0B7A00070A61 /* MapboxVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +387,7 @@
 				2E4EE21420EFD378003431B3 /* MapboxVision */,
 				B51E557A215E313500650DDE /* MapboxVisionTests */,
 				2E071A322257887E00345FA8 /* MapboxVisionAR */,
+				3A11B050229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */,
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
@@ -381,6 +402,7 @@
 				B51E5579215E313500650DDE /* MapboxVisionTests.xctest */,
 				2E07199C2257871300345FA8 /* MapboxVisionAR.framework */,
 				2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */,
+				3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -637,6 +659,15 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		3A11B050229F0B7A00070A61 /* MapboxVisionARTests */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B051229F0B7A00070A61 /* MapboxVisionARTests.swift */,
+				3A11B053229F0B7A00070A61 /* Info.plist */,
+			);
+			path = MapboxVisionARTests;
+			sourceTree = "<group>";
+		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -770,6 +801,24 @@
 			productReference = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */;
+			buildPhases = (
+				3A11B04B229F0B7A00070A61 /* Sources */,
+				3A11B04C229F0B7A00070A61 /* Frameworks */,
+				3A11B04D229F0B7A00070A61 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A11B056229F0B7A00070A61 /* PBXTargetDependency */,
+			);
+			name = MapboxVisionARTests;
+			productName = MapboxVisionARTests;
+			productReference = 3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B51E5578215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B51E5584215E313500650DDE /* Build configuration list for PBXNativeTarget "MapboxVisionTests" */;
@@ -795,12 +844,15 @@
 		2E4EE20920EFD378003431B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					2E4EE21120EFD378003431B3 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					3A11B04E229F0B7A00070A61 = {
+						CreatedOnToolsVersion = 10.2.1;
 					};
 					B51E5578215E313500650DDE = {
 						CreatedOnToolsVersion = 10.0;
@@ -822,6 +874,7 @@
 				2E4EE21120EFD378003431B3 /* MapboxVision */,
 				B51E5578215E313500650DDE /* MapboxVisionTests */,
 				2E0719562257871300345FA8 /* MapboxVisionAR */,
+				3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E07199E2257871B00345FA8 /* MapboxVisionSafety */,
 			);
 		};
@@ -851,6 +904,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A11B04D229F0B7A00070A61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1102,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A11B04B229F0B7A00070A61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A11B052229F0B7A00070A61 /* MapboxVisionARTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B51E5575215E313500650DDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1063,6 +1131,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3A11B056229F0B7A00070A61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E4EE21120EFD378003431B3 /* MapboxVision */;
+			targetProxy = 3A11B055229F0B7A00070A61 /* PBXContainerItemProxy */;
+		};
 		B51E5580215E313500650DDE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2E4EE21120EFD378003431B3 /* MapboxVision */;
@@ -1515,6 +1588,67 @@
 			};
 			name = Release;
 		};
+		3A11B057229F0B7A00070A61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3A11B058229F0B7A00070A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3A11B059229F0B7A00070A61 /* AdhocRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = AdhocRelease;
+		};
 		B51E5581215E313500650DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1618,6 +1752,16 @@
 				2E4EE21B20EFD378003431B3 /* Debug */,
 				2E4EE21C20EFD378003431B3 /* Release */,
 				2E197727211DD3C700311B95 /* AdhocRelease */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A11B057229F0B7A00070A61 /* Debug */,
+				3A11B058229F0B7A00070A61 /* Release */,
+				3A11B059229F0B7A00070A61 /* AdhocRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
