@@ -6,7 +6,7 @@ enum DocumentsLocation: String {
     case showcase = "Showcase"
     case cache = "Cache"
     case custom = ""
-    
+
     var path: String {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         return documentsPath.appendingPathComponent(rawValue, isDirectory: true)
@@ -17,7 +17,7 @@ struct RecordingPath {
     static func generateDirectoryName() -> String {
         return DateFormatter.createRecordingFormatter().string(from: Date())
     }
-    
+
     static func clear(basePath: DocumentsLocation) {
         let directoryPath = basePath.path
         do {
@@ -26,12 +26,12 @@ struct RecordingPath {
             print("Error: can't remove directory at \(directoryPath)")
         }
     }
-    
+
     let recordingPath: String
     let settings: VideoSettings
-    
+
     let basePath: DocumentsLocation
-    
+
     init(basePath: DocumentsLocation = DocumentsLocation.recordings, directory: String? = nil, settings: VideoSettings) {
         self.settings = settings
         self.basePath = basePath
@@ -41,41 +41,41 @@ struct RecordingPath {
         } else {
             recordingPath = basePath.path.appendingPathComponent(dir, isDirectory: true)
         }
-        
+
         createStructure()
     }
 
     init?(existing path: String, settings: VideoSettings) {
         self.basePath = .custom
-        
+
         self.settings = settings
         self.recordingPath = path
-        
+
         guard exists else { return nil }
     }
-    
+
     var videoPath: String {
         return recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
     }
-    
+
     func videoClipPath(start: Float, end: Float) -> String {
         return recordingPath.appendingPathComponent("\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(settings.fileExtension)")
     }
-    
+
     var videosLogPath: String {
         return recordingPath.appendingPathComponent("videos.json")
     }
-    
+
     var imagesDirectoryPath: String {
         return recordingPath.appendingPathComponent("images", isDirectory: true)
     }
-    
+
     @discardableResult
     func move(to newBasePath: DocumentsLocation) throws -> RecordingPath {
         let newPath = recordingPath.replacingOccurrences(of: self.basePath.path, with: newBasePath.path)
-        
+
         try FileManager.default.moveItem(atPath: recordingPath, toPath: newPath)
-        
+
         let directory = recordingPath.lastPathComponent
         return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
     }
@@ -85,7 +85,7 @@ struct RecordingPath {
             try FileManager.default.removeItem(atPath: recordingPath)
         }
     }
-    
+
     private func createStructure() {
         do {
             try delete()
@@ -94,7 +94,7 @@ struct RecordingPath {
             print("ERROR: failure during creating structure. Error: \(error)")
         }
     }
-    
+
     private var exists: Bool {
         var isDirectory = ObjCBool(false)
         return FileManager.default.fileExists(atPath: recordingPath, isDirectory: &isDirectory) && isDirectory.boolValue

@@ -1,16 +1,15 @@
 import Foundation
 
 public class BaseVisionManager: VisionManagerProtocol {
-
     // MARK: Performance control
 
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
-        didSet {
-            guard oldValue != modelPerformanceConfig else { return }
-            updateModelPerformanceConfig(modelPerformanceConfig)
+            didSet {
+                guard oldValue != modelPerformanceConfig else { return }
+                updateModelPerformanceConfig(modelPerformanceConfig)
+            }
         }
-    }
 
     // MARK: Utility
 
@@ -34,7 +33,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         return dependencies.native
     }
 
-    var delegate: VisionManagerDelegate?
+    weak var delegate: VisionManagerDelegate?
     private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies
@@ -114,13 +113,13 @@ public class BaseVisionManager: VisionManagerProtocol {
         notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-            self?.prepareForForeground()
+                self?.prepareForForeground()
         })
 
         notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-            self?.prepareForBackground()
+                self?.prepareForBackground()
         })
     }
 

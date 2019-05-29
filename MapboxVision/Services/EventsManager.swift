@@ -3,9 +3,8 @@ import MapboxMobileEvents
 import MapboxVisionNative
 
 final class EventsManager {
-    
     private let manager = MMEEventsManager()
-    
+
     private lazy var accessToken: String = {
         guard
             let dict = Bundle.main.infoDictionary,
@@ -16,7 +15,7 @@ final class EventsManager {
         }
         return token
     }()
-    
+
     private let formatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
@@ -24,14 +23,14 @@ final class EventsManager {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return dateFormatter
     }()
-    
+
     private lazy var recordingFormatter = DateFormatter.createRecordingFormatter()
-    
+
     init() {
         let bundle = Bundle(for: type(of: self))
         let name = bundle.infoDictionary!["CFBundleName"] as! String
         let version = bundle.infoDictionary!["CFBundleShortVersionString"] as! String
-        
+
         manager.initialize(
             withAccessToken: accessToken,
             userAgentBase: name,
@@ -41,16 +40,14 @@ final class EventsManager {
         manager.isMetricsEnabled = true
         manager.isDebugLoggingEnabled = true
     }
-    
+
     func sendEvent(name: String, entries: [String: Any]) {
         manager.enqueueEvent(withName: name, attributes: entries)
     }
 }
 
 extension EventsManager: NetworkClient {
-    
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {
-        
         let contentType: String
         switch file.pathExtension {
         case "zip": contentType = "zip"
@@ -60,7 +57,7 @@ extension EventsManager: NetworkClient {
             assertionFailure("EventsManager: post unsupported content type")
             contentType = ""
         }
-        
+
         let name = file.lastPathComponent
         let folder = file.deletingLastPathComponent().lastPathComponent
 
@@ -74,11 +71,11 @@ extension EventsManager: NetworkClient {
             "created": created,
             "type": contentType,
         ]
-        
+
         if contentType == "video" {
             var startTime = created
             var endTime = created
-            
+
             let components = name.deletingPathExtension.split(separator: "-")
             if
                 let date = recordingFormatter.date(from: folder),
@@ -90,15 +87,13 @@ extension EventsManager: NetworkClient {
                 startTime = formatter.string(from: date.addingTimeInterval(startInterval))
                 endTime = formatter.string(from: date.addingTimeInterval(endInterval))
             }
-            
+
             metadata["startTime"] = startTime
             metadata["endTime"] = endTime
         }
-        
+
         manager.postMetadata([metadata], filePaths: [file.path], completionHandler: completion)
     }
-    
-    func cancel() {
-        
-    }
+
+    func cancel() {}
 }

@@ -4,7 +4,6 @@ import Foundation
  Protocol that provides an ability to use `VisionManager` and `VisionReplayManager` interchangeably by abstracting common functionality.
  */
 public protocol VisionManagerProtocol: AnyObject {
-
     /**
      Performance configuration for machine learning models.
      Default value is merged with dynamic performance mode and high rate.

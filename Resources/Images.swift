@@ -5,7 +5,7 @@ private final class BundleToken {}
 
 struct ImageAsset {
     fileprivate let name: String
-    
+
     var image: UIImage? {
         let bundle = Bundle(for: BundleToken.self)
         let image = UIImage(named: name, in: bundle, compatibleWith: nil)

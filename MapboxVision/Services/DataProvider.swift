@@ -12,23 +12,23 @@ final class RecordedDataProvider: DataProvider {
         let recordingPath: RecordingPath
         let startTime: UInt
     }
-    
+
     let dependencies: Dependencies
     let telemetryPlayer: TelemetryPlayer
-    
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         self.telemetryPlayer = TelemetryPlayer()
         telemetryPlayer.read(fromFolder: dependencies.recordingPath.recordingPath)
     }
-    
+
     private var startTime = DispatchTime.now().uptimeMilliseconds
-    
+
     func start() {
         startTime = DispatchTime.now().uptimeMilliseconds
         telemetryPlayer.scrollData(dependencies.startTime)
     }
-    
+
     func update() {
         let settings = dependencies.recordingPath.settings
         let frameSize = CGSize(width: settings.width, height: settings.height)
@@ -36,7 +36,7 @@ final class RecordedDataProvider: DataProvider {
         telemetryPlayer.setCurrentTime(currentTimeMS)
         telemetryPlayer.updateData(withFrameSize: frameSize, srcSize: frameSize)
     }
-    
+
     func stop() {}
 }
 
@@ -46,23 +46,23 @@ final class RealtimeDataProvider: DataProvider {
         let motionManager: MotionManager
         let locationManager: LocationManager
     }
-    
+
     private let dependencies: Dependencies
-    
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
         dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
         dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
         dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
     }
-    
+
     func start() {
         dependencies.locationManager.start()
         dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
     func update() {}
-    
+
     func stop() {
         dependencies.locationManager.stop()
         dependencies.motionManager.stop()
@@ -71,9 +71,9 @@ final class RealtimeDataProvider: DataProvider {
 
 final class EmptyDataProvider: DataProvider {
     func start() {}
-    
+
     func update() {}
-    
+
     func stop() {}
 }
 

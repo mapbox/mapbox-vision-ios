@@ -1,6 +1,6 @@
-import Foundation
-import CoreVideo
 import CoreMedia
+import CoreVideo
+import Foundation
 
 extension CMSampleBuffer {
     var pixelBuffer: CVPixelBuffer? {
@@ -12,7 +12,7 @@ extension CVPixelBuffer {
     var width: Int {
         return CVPixelBufferGetWidth(self)
     }
-    
+
     var height: Int {
         return CVPixelBufferGetHeight(self)
     }
