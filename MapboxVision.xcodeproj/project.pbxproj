@@ -90,6 +90,17 @@
 		3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02D229EC55400070A61 /* ARMaterial.swift */; };
 		3A11B030229EC57D00070A61 /* AREntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02F229EC57D00070A61 /* AREntity.swift */; };
 		3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B031229EC6CD00070A61 /* ARNodeType.swift */; };
+		3A11B034229EC75C00070A61 /* ARMeshError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B033229EC75C00070A61 /* ARMeshError.swift */; };
+		3A11B036229EC77C00070A61 /* ARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B035229EC77C00070A61 /* ARConstants.swift */; };
+		3A11B038229ED24E00070A61 /* ARLaneEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B037229ED24E00070A61 /* ARLaneEntity.swift */; };
+		3A11B03A229ED29700070A61 /* ARRootNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B039229ED29700070A61 /* ARRootNode.swift */; };
+		3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03B229ED2AC00070A61 /* ARNode.swift */; };
+		3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03D229ED2D200070A61 /* ARLaneNode.swift */; };
+		3A11B040229ED2FA00070A61 /* ARGridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03F229ED2FA00070A61 /* ARGridNode.swift */; };
+		3A11B042229ED33C00070A61 /* ARCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B041229ED33C00070A61 /* ARCameraNode.swift */; };
+		3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B043229ED3F500070A61 /* ARRendererError.swift */; };
+		3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B045229ED49B00070A61 /* UIColor+Extension.swift */; };
+		3A11B048229ED76500070A61 /* ARLaneMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B047229ED76500070A61 /* ARLaneMesh.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -202,6 +213,17 @@
 		3A11B02D229EC55400070A61 /* ARMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARMaterial.swift; path = MapboxVisionAR/Render/Helpers/ARMaterial.swift; sourceTree = SOURCE_ROOT; };
 		3A11B02F229EC57D00070A61 /* AREntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AREntity.swift; path = MapboxVisionAR/Render/Helpers/AREntity.swift; sourceTree = SOURCE_ROOT; };
 		3A11B031229EC6CD00070A61 /* ARNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNodeType.swift; sourceTree = "<group>"; };
+		3A11B033229EC75C00070A61 /* ARMeshError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMeshError.swift; sourceTree = "<group>"; };
+		3A11B035229EC77C00070A61 /* ARConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARConstants.swift; sourceTree = "<group>"; };
+		3A11B037229ED24E00070A61 /* ARLaneEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARLaneEntity.swift; path = MapboxVisionAR/Render/Helpers/ARLaneEntity.swift; sourceTree = SOURCE_ROOT; };
+		3A11B039229ED29700070A61 /* ARRootNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNode.swift; sourceTree = "<group>"; };
+		3A11B03B229ED2AC00070A61 /* ARNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNode.swift; sourceTree = "<group>"; };
+		3A11B03D229ED2D200070A61 /* ARLaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNode.swift; sourceTree = "<group>"; };
+		3A11B03F229ED2FA00070A61 /* ARGridNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGridNode.swift; sourceTree = "<group>"; };
+		3A11B041229ED33C00070A61 /* ARCameraNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNode.swift; sourceTree = "<group>"; };
+		3A11B043229ED3F500070A61 /* ARRendererError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRendererError.swift; sourceTree = "<group>"; };
+		3A11B045229ED49B00070A61 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		3A11B047229ED76500070A61 /* ARLaneMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneMesh.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -516,6 +538,11 @@
 			isa = PBXGroup;
 			children = (
 				3A11B031229EC6CD00070A61 /* ARNodeType.swift */,
+				3A11B03B229ED2AC00070A61 /* ARNode.swift */,
+				3A11B039229ED29700070A61 /* ARRootNode.swift */,
+				3A11B03F229ED2FA00070A61 /* ARGridNode.swift */,
+				3A11B03D229ED2D200070A61 /* ARLaneNode.swift */,
+				3A11B041229ED33C00070A61 /* ARCameraNode.swift */,
 				3A11B021229EC30700070A61 /* AREntity */,
 				3A11B024229EC32D00070A61 /* ARLaneMesh */,
 			);
@@ -526,6 +553,7 @@
 			isa = PBXGroup;
 			children = (
 				3A11B02F229EC57D00070A61 /* AREntity.swift */,
+				3A11B037229ED24E00070A61 /* ARLaneEntity.swift */,
 				3A11B022229EC31700070A61 /* ARMaterial */,
 			);
 			path = AREntity;
@@ -551,6 +579,7 @@
 		3A11B024229EC32D00070A61 /* ARLaneMesh */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B047229ED76500070A61 /* ARLaneMesh.swift */,
 				3A11B025229EC33B00070A61 /* Error */,
 			);
 			path = ARLaneMesh;
@@ -559,6 +588,7 @@
 		3A11B025229EC33B00070A61 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B033229EC75C00070A61 /* ARMeshError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -566,7 +596,9 @@
 		3A11B026229EC34800070A61 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B035229EC77C00070A61 /* ARConstants.swift */,
 				2E071A3D2257887E00345FA8 /* ARMath.swift */,
+				3A11B045229ED49B00070A61 /* UIColor+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -584,6 +616,7 @@
 		3A11B028229EC39800070A61 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B043229ED3F500070A61 /* ARRendererError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -910,18 +943,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */,
+				3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
 				3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
-				3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */,
+				3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */,
 				3A11B030229EC57D00070A61 /* AREntity.swift in Sources */,
 				2E071A472257887F00345FA8 /* ARScene.swift in Sources */,
+				3A11B034229EC75C00070A61 /* ARMeshError.swift in Sources */,
 				3A11B02C229EC4D600070A61 /* ARLight.swift in Sources */,
 				2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */,
+				3A11B03A229ED29700070A61 /* ARRootNode.swift in Sources */,
+				3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */,
+				3A11B036229EC77C00070A61 /* ARConstants.swift in Sources */,
 				2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */,
 				2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */,
+				3A11B048229ED76500070A61 /* ARLaneMesh.swift in Sources */,
+				3A11B040229ED2FA00070A61 /* ARGridNode.swift in Sources */,
+				3A11B038229ED24E00070A61 /* ARLaneEntity.swift in Sources */,
 				2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */,
+				3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */,
+				3A11B042229ED33C00070A61 /* ARCameraNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
