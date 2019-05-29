@@ -1,31 +1,6 @@
 import MetalKit
 import simd
 
-struct ARLight {
-    var color = float3(1, 1, 1)
-    var position = float3(0, 0, 0)
-}
-
-struct ARMaterial {
-    var ambientLightColor = float3(0, 0, 0)
-    var diffuseColor = float4(1, 1, 1, 1)
-    var colorTexture: MTLTexture?
-    var light: ARLight?
-    var specularColor = float3(1, 1, 1)
-    var specularPower = Float(1)
-    var frontFaceMode = MTLWinding.counterClockwise
-}
-
-class AREntity {
-    var mesh: MTKMesh?
-    var material = ARMaterial()
-    var renderPipeline: MTLRenderPipelineState?
-
-    init(mesh: MTKMesh) {
-        self.mesh = mesh
-    }
-}
-
 class ARNode {
     private weak var parent: ARNode?
     private(set) var childs = [ARNode]()
