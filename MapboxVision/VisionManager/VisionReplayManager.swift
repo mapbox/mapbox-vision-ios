@@ -3,16 +3,26 @@ import Foundation
 
 /**
  `VisionReplayManager` is a counterpart of `VisionManager` that uses recorded video and telemetry instead of realtime data.
+ Use it to debug and test functions that use Vision in a development environment before testing in a vehicle.
  Use it in the same workflow as you use `VisionManager` after creating it with specific recorded session.
 
+ Lifecycle of VisionReplayManager :
+ 1. `create`
+ 2. `start`
+ 3. `stop`, then lifecycle may proceed with `destroy` or `start`
+ 4. `destroy`
+
  - Important: This class is intended for debugging purposes only.
+ Do NOT use session replay in production application.
  */
 public final class VisionReplayManager: BaseVisionManager {
     /**
      Fabric method for creating a `VisionReplayManager` instance.
 
      It's only allowed to have one living instance of `VisionManager` or `VisionReplayManager`.
-     To create `VisionReplayManager` with different configuration call `destroy` on existing instance or release all references to it.
+     To create `VisionReplayManager` with a different configuration call `destroy` on existing instance or release all references to it.
+
+     - Important: Do NOT call this method more than once.
 
      - Parameter recordPath: Path to a folder with recorded session. You typically record such sessions using `startRecording` / `stopRecording` on `VisionManager`.
 
@@ -32,6 +42,8 @@ public final class VisionReplayManager: BaseVisionManager {
     /**
      Start delivering events from `VisionReplayManager`.
      Calling `start` on already started or destroyed instance is considered a mistake.
+
+     - Important: Do NOT call this method more than once or after `destroy` is called.
 
      - Parameter delegate: Delegate for `VisionReplayManager`. Delegate is held as a strong reference until `stop` is called.
      */
@@ -53,7 +65,8 @@ public final class VisionReplayManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionReplayManager`.
-     Calling `stop` on a not started or destroyed instance is considered a mistake.
+
+     - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
     public func stop() {
         guard state == .started else {
@@ -68,7 +81,9 @@ public final class VisionReplayManager: BaseVisionManager {
     }
 
     /**
-     Cleanup the state and resources of `VisionReplayManager`.
+     Clean up the state and resources of `VisionReplayManager`.
+
+     - Important: Do NOT call this method more than once.
      */
     public func destroy() {
         guard !state.isUninitialized else { return }

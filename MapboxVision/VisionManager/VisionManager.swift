@@ -9,6 +9,14 @@ enum VisionManagerError: LocalizedError {
 /**
  The main object for registering for events from the SDK, starting and stopping their delivery.
  It also provides some useful functions for performance configuration and data conversion.
+
+ Lifecycle of VisionManager :
+ 1. `create`
+ 2. `start`
+ 3. `startRecording` (optional)
+ 4. `stopRecording` (optional)
+ 5. `stop`, then lifecycle may proceed with `destroy` or `start`
+ 6. `destroy`
  */
 public final class VisionManager: BaseVisionManager {
     // MARK: - Public
@@ -18,7 +26,7 @@ public final class VisionManager: BaseVisionManager {
     /**
      Fabric method for creating a `VisionManager` instance.
 
-     It's only allowed to have one living instance of `VisionManager`.
+     It's only allowed to have one living instance of `VisionManager` or `VisionReplayManager`.
      To create `VisionManager` with different configuration call `destroy` on existing instance or release all references to it.
 
      - Parameter videoSource: Video source which will be utilized by created instance of `VisionManager`.
@@ -33,6 +41,8 @@ public final class VisionManager: BaseVisionManager {
 
     /**
      Start delivering events from `VisionManager`.
+
+     Do NOT call this method more than once or after `destroy` is called.
 
      - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
      */
@@ -54,7 +64,12 @@ public final class VisionManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionManager`.
+    
+     To resume call `start` again.
+     Call this method after `start` and before `destroy`.
      This method also stops recording session if it was started.
+     
+     - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
     public func stop() {
         guard case let .started(videoSource, _) = state else {
@@ -69,13 +84,14 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-     Start recording session.
+     Start recording a session.
 
      During the session full telemetry and video are recorded to specified path.
-     You may use resulted folder to replay recorded session with `VisionRecordManager`.
-     This method should only be called after `VisionManager` is started.
-
-     - Important: Method serves debugging purposes. Do NOT use session recording in production applications.
+     You may use resulted folder to replay the recorded session with `VisionReplayManager`.
+     
+     - Important: Method serves debugging purposes.
+     Do NOT call this method more than once or before `start` or after `stop` is called.
+     Do NOT use session recording in production applications.
 
      - Parameter path: Path to directory where you'd like session to be recorded.
 
@@ -90,9 +106,11 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-     Stop recording session.
+     Stop recording a session.
 
-     - Important: Method serves debugging purposes. Do NOT use session recording in production applications.
+     - Important: Method serves debugging purposes.
+     Do NOT use session recording in production applications.
+     Do NOT call this method more than once or before `startRecording` or after `stop` is called.
      */
     public func stopRecording() {
         guard case .started = state else {
@@ -104,7 +122,9 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
-     Cleanup the state and resources of `VisionManger`.
+     Clean up the state and resources of `VisionManger`.
+
+     - Important: Do NOT call this method more than once.
      */
     public func destroy() {
         guard !state.isUninitialized else { return }
