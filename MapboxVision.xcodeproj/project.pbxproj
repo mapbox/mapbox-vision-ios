@@ -89,6 +89,7 @@
 		3A11B02C229EC4D600070A61 /* ARLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02B229EC4D600070A61 /* ARLight.swift */; };
 		3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02D229EC55400070A61 /* ARMaterial.swift */; };
 		3A11B030229EC57D00070A61 /* AREntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02F229EC57D00070A61 /* AREntity.swift */; };
+		3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B031229EC6CD00070A61 /* ARNodeType.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -200,6 +201,7 @@
 		3A11B02B229EC4D600070A61 /* ARLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARLight.swift; path = MapboxVisionAR/Render/Helpers/ARLight.swift; sourceTree = SOURCE_ROOT; };
 		3A11B02D229EC55400070A61 /* ARMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARMaterial.swift; path = MapboxVisionAR/Render/Helpers/ARMaterial.swift; sourceTree = SOURCE_ROOT; };
 		3A11B02F229EC57D00070A61 /* AREntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AREntity.swift; path = MapboxVisionAR/Render/Helpers/AREntity.swift; sourceTree = SOURCE_ROOT; };
+		3A11B031229EC6CD00070A61 /* ARNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNodeType.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 		3A11B020229EC2F600070A61 /* ARNode */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B031229EC6CD00070A61 /* ARNodeType.swift */,
 				3A11B021229EC30700070A61 /* AREntity */,
 				3A11B024229EC32D00070A61 /* ARLaneMesh */,
 			);
@@ -909,6 +912,7 @@
 			files = (
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
+				3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
 				3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */,
 				3A11B030229EC57D00070A61 /* AREntity.swift in Sources */,
