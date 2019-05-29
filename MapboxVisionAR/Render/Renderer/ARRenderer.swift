@@ -122,27 +122,8 @@ class ARRenderer: NSObject {
         let arLaneMesh = ARLaneMesh(device: device, vertexDescriptor: vertexDescriptor)
         let arLaneEntity = ARLaneEntity(with: arLaneMesh, and: renderPipelineArrow)
         let arrowNode = ARLaneNode(arLaneEntity: arLaneEntity)
+        arrowNode.set(laneWidth: 3.0)
         scene.rootNode.add(child: arrowNode)
-    }
-
-    func set(arLaneColor: UIColor) {
-        scene.getChildARLaneNodes()?.first?.set(laneColor: arLaneColor)
-    }
-
-    func set(arLaneWidth: Float) {
-        scene.getChildARLaneNodes()?.first?.set(laneWidth: arLaneWidth)
-    }
-
-    func set(arLight: ARLight) {
-        scene.getChildARLaneNodes()?.first?.set(light: arLight)
-    }
-
-    func set(arlaneLightColor: UIColor) {
-        scene.getChildARLaneNodes()?.first?.set(laneLightColor: arlaneLightColor)
-    }
-
-    func set(arLaneAmbientColor: UIColor) {
-        scene.getChildARLaneNodes()?.first?.set(laneAmbientColor: arLaneAmbientColor)
     }
 
     func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {

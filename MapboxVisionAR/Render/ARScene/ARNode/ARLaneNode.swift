@@ -12,7 +12,7 @@ class ARLaneNode: ARNode {
     // MARK: - Public methods
 
     /**
-     Set new color for underlying AR Lane.
+     Set a new color for underlying AR Lane.
 
      Method do nothing if `laneColor` does not have compatible color space
      or there's no underlying AR lane's representation.
@@ -30,24 +30,38 @@ class ARLaneNode: ARNode {
         }
     }
 
-    // width of lane in meter
+    /**
+     Set a new width for AR lane.
+
+     Method do nothing if there's no underlying AR lane's representation.
+
+     - Parameters:
+       - laneWidth: Width of AR lane.
+     */
     func set(laneWidth: Float) {
         self.scale.x = laneWidth
     }
 
-    // position of light source // TODO: update doc comments and fix in docs
-    func set(light: ARLight) {
-        self.entity?.material.light = light
+    /**
+     Set new position of light source for AR lane.
+
+     Method do nothing if there's no underlying AR lane's representation.
+
+     - Parameters:
+       - lightPosition: Position of a light source for AR lane.
+     */
+    func set(lightPosition: float3) {
+        self.entity?.material.light?.position = lightPosition
     }
 
     /**
-     Set new color of a light source for AR lane.
+     Set a new color of a light source for AR lane.
 
      Method do nothing if `laneLightColor` does not have compatible color space
      or there's no underlying AR lane's representation.
 
      - Parameters:
-       - laneLightColor: New color of a light source for AR lane. It must be in RGB color space.
+       - laneLightColor: Color of a light source for AR lane. It must be in RGB color space.
      */
     func set(laneLightColor: UIColor) {
         if let (red, green, blue) = laneLightColor.rgbComponents() {
@@ -59,13 +73,13 @@ class ARLaneNode: ARNode {
     }
 
     /**
-     Set new ambient color for AR lane.
+     Set a new ambient color for AR lane.
 
      Method do nothing if `laneAmbientColor` does not have compatible color space
      or there's no underlying AR lane's representation.
 
      - Parameters:
-       - laneAmbientColor: New ambient color for AR lane. It must be in RGB color space.
+       - laneAmbientColor: Ambient color for AR lane. It must be in RGB color space.
      */
     func set(laneAmbientColor: UIColor) {
         if let (red, green, blue) = laneAmbientColor.rgbComponents() {
