@@ -14,6 +14,15 @@ enum ARConstants {
          1.0, -1.0, 0.0,    1.0, 1.0,
         -1.0,  1.0, 0.0,    0.0, 0.0
     ]
+
+    enum ShaderName {
+        static let defaultVertexMain = "default_vertex_main"
+        static let arrowVertexMain = "arrow_vertex_main"
+        static let mapTextureVertex =  "map_texture_vertex"
+        static let defaultFragmentMain = "default_fragment_main"
+        static let laneFragmentMain = "lane_fragment_main"
+        static let displayTextureFragment = "display_texture_fragment"
+    }
 }
 
 struct DefaultVertexUniforms {

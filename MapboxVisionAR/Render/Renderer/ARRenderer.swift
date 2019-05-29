@@ -20,9 +20,8 @@ import MetalKit
  * Y <-- 0
  */
 
-
 class ARRenderer: NSObject {
-    // MARK: - Private properties
+    // MARK: Private properties
 
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
@@ -46,13 +45,13 @@ class ARRenderer: NSObject {
     private var time = Float(0)
     private var dt = Float(0)
 
-    // MARK: - Public properties
+    // MARK: Public properties
 
     var frame: CVPixelBuffer?
     var camera: ARCamera?
     var lane: ARLane?
 
-    // MARK: - Lifecycle
+    // MARK: Lifecycle
 
     init(device: MTLDevice, colorPixelFormat: MTLPixelFormat, depthStencilPixelFormat: MTLPixelFormat) throws {
         self.device = device
@@ -70,12 +69,12 @@ class ARRenderer: NSObject {
 
         let library = try device.makeDefaultLibrary(bundle: Bundle(for: type(of: self)))
         guard
-            let defaultVertexFunction = library.makeFunction(name: "default_vertex_main"), // TODO: name to const
-            let arrowVertexFunction = library.makeFunction(name: "arrow_vertex_main"),
-            let backgroundVertexFunction = library.makeFunction(name: "map_texture_vertex"),
-            let defaultFragmentFunction = library.makeFunction(name: "default_fragment_main"),
-            let arrowFragmentFunction = library.makeFunction(name: "lane_fragment_main"),
-            let backgroundFragmentFunction = library.makeFunction(name: "display_texture_fragment")
+            let defaultVertexFunction = library.makeFunction(name: ARConstants.ShaderName.defaultVertexMain),
+            let arrowVertexFunction = library.makeFunction(name: ARConstants.ShaderName.arrowVertexMain),
+            let backgroundVertexFunction = library.makeFunction(name: ARConstants.ShaderName.mapTextureVertex),
+            let defaultFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.defaultFragmentMain),
+            let arrowFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.laneFragmentMain),
+            let backgroundFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.displayTextureFragment)
             else {
                 throw ARRendererError.cantFindFunctions
         }
@@ -115,122 +114,7 @@ class ARRenderer: NSObject {
         super.init()
     }
 
-    // MARK: Static functions
-
-    static func makeVertexDescriptor() -> MDLVertexDescriptor {
-        let vertexDescriptor = MDLVertexDescriptor()
-        vertexDescriptor.attributes[0] = MDLVertexAttribute(
-            name: MDLVertexAttributePosition,
-            format: .float3,
-            offset: 0,
-            bufferIndex: 0
-        )
-        vertexDescriptor.attributes[1] = MDLVertexAttribute(
-            name: MDLVertexAttributeNormal,
-            format: .float3,
-            offset: MemoryLayout<Float>.size * 3,
-            bufferIndex: 0
-        )
-        vertexDescriptor.attributes[2] = MDLVertexAttribute(
-            name: MDLVertexAttributeTextureCoordinate,
-            format: .float2,
-            offset: MemoryLayout<Float>.size * 6,
-            bufferIndex: 0
-        )
-        vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: MemoryLayout<Float>.size * 8)
-        return vertexDescriptor
-    }
-
-    static func makeTextureMappingVertexDescriptor() -> MTLVertexDescriptor {
-        let vertexDescriptor = MTLVertexDescriptor()
-
-        vertexDescriptor.attributes[0].format = .float3
-        vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.attributes[0].bufferIndex = 0
-
-        vertexDescriptor.attributes[1].format = .float2
-        vertexDescriptor.attributes[1].offset = MemoryLayout<Float>.size * 3
-        vertexDescriptor.attributes[1].bufferIndex = 0
-
-        vertexDescriptor.layouts[0].stride = MemoryLayout<Float>.size * 5
-        vertexDescriptor.layouts[0].stepFunction = .perVertex
-
-        return vertexDescriptor
-    }
-
-    static func makeRenderBackgroundPipeline(
-        device: MTLDevice,
-        vertexDescriptor: MTLVertexDescriptor,
-        vertexFunction: MTLFunction,
-        fragmentFunction: MTLFunction,
-        colorPixelFormat: MTLPixelFormat,
-        depthStencilPixelFormat: MTLPixelFormat
-    ) throws -> MTLRenderPipelineState {
-        let pipeline = MTLRenderPipelineDescriptor()
-        pipeline.vertexFunction = vertexFunction
-        pipeline.fragmentFunction = fragmentFunction
-
-        pipeline.colorAttachments[0].pixelFormat = colorPixelFormat
-        pipeline.depthAttachmentPixelFormat = depthStencilPixelFormat
-
-        pipeline.vertexDescriptor = vertexDescriptor
-
-        return try device.makeRenderPipelineState(descriptor: pipeline)
-    }
-
-    static func makeRenderPipeline(
-        device: MTLDevice,
-        vertexDescriptor: MDLVertexDescriptor,
-        vertexFunction: MTLFunction,
-        fragmentFunction: MTLFunction,
-        colorPixelFormat: MTLPixelFormat,
-        depthStencilPixelFormat: MTLPixelFormat
-    ) throws -> MTLRenderPipelineState {
-        let pipeline = MTLRenderPipelineDescriptor()
-        pipeline.vertexFunction = vertexFunction
-        pipeline.fragmentFunction = fragmentFunction
-
-        pipeline.colorAttachments[0].pixelFormat = colorPixelFormat
-        pipeline.colorAttachments[0].isBlendingEnabled = true
-        pipeline.colorAttachments[0].rgbBlendOperation = MTLBlendOperation.add
-        pipeline.colorAttachments[0].alphaBlendOperation = MTLBlendOperation.add
-        pipeline.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactor.sourceAlpha
-        pipeline.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactor.sourceAlpha
-        pipeline.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        pipeline.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
-        pipeline.depthAttachmentPixelFormat = depthStencilPixelFormat
-
-        let mtlVertexDescriptor = MTKMetalVertexDescriptorFromModelIO(vertexDescriptor)
-        pipeline.vertexDescriptor = mtlVertexDescriptor
-
-        return try device.makeRenderPipelineState(descriptor: pipeline)
-    }
-
-    static func makeDefaultSamplerState(device: MTLDevice) -> MTLSamplerState {
-        let sampler = MTLSamplerDescriptor()
-
-        sampler.minFilter = .linear
-        sampler.mipFilter = .linear
-        sampler.magFilter = .linear
-
-        sampler.normalizedCoordinates = true
-        return device.makeSamplerState(descriptor: sampler)!
-    }
-
-    static func makeDefaultDepthStencilState(device: MTLDevice) -> MTLDepthStencilState {
-        let depthStencil = MTLDepthStencilDescriptor()
-
-        depthStencil.isDepthWriteEnabled = true
-        depthStencil.depthCompareFunction = .less
-
-        return device.makeDepthStencilState(descriptor: depthStencil)!
-    }
-
-    static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
-        return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
-    }
-
-    // MARK: - Public functions
+    // MARK: Public functions
 
     func initARScene() {
         scene.rootNode.removeAllChilds()
@@ -331,7 +215,7 @@ class ARRenderer: NSObject {
         }
     }
 
-    // MARK: - Private functions
+    // MARK: Private functions
 
     private func update(_ view: MTKView) {
         dt = 1 / Float(view.preferredFramesPerSecond)
@@ -401,5 +285,122 @@ extension ARRenderer: MTKViewDelegate {
         commandEncoder.endEncoding()
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+}
+
+extension ARRenderer {
+    // MARK: Static functions
+
+    static func makeVertexDescriptor() -> MDLVertexDescriptor {
+        let vertexDescriptor = MDLVertexDescriptor()
+        vertexDescriptor.attributes[0] = MDLVertexAttribute(
+            name: MDLVertexAttributePosition,
+            format: .float3,
+            offset: 0,
+            bufferIndex: 0
+        )
+        vertexDescriptor.attributes[1] = MDLVertexAttribute(
+            name: MDLVertexAttributeNormal,
+            format: .float3,
+            offset: MemoryLayout<Float>.size * 3,
+            bufferIndex: 0
+        )
+        vertexDescriptor.attributes[2] = MDLVertexAttribute(
+            name: MDLVertexAttributeTextureCoordinate,
+            format: .float2,
+            offset: MemoryLayout<Float>.size * 6,
+            bufferIndex: 0
+        )
+        vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: MemoryLayout<Float>.size * 8)
+        return vertexDescriptor
+    }
+
+    static func makeTextureMappingVertexDescriptor() -> MTLVertexDescriptor {
+        let vertexDescriptor = MTLVertexDescriptor()
+
+        vertexDescriptor.attributes[0].format = .float3
+        vertexDescriptor.attributes[0].offset = 0
+        vertexDescriptor.attributes[0].bufferIndex = 0
+
+        vertexDescriptor.attributes[1].format = .float2
+        vertexDescriptor.attributes[1].offset = MemoryLayout<Float>.size * 3
+        vertexDescriptor.attributes[1].bufferIndex = 0
+
+        vertexDescriptor.layouts[0].stride = MemoryLayout<Float>.size * 5
+        vertexDescriptor.layouts[0].stepFunction = .perVertex
+
+        return vertexDescriptor
+    }
+
+    static func makeRenderBackgroundPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MTLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+        ) throws -> MTLRenderPipelineState {
+        let pipeline = MTLRenderPipelineDescriptor()
+        pipeline.vertexFunction = vertexFunction
+        pipeline.fragmentFunction = fragmentFunction
+
+        pipeline.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipeline.depthAttachmentPixelFormat = depthStencilPixelFormat
+
+        pipeline.vertexDescriptor = vertexDescriptor
+
+        return try device.makeRenderPipelineState(descriptor: pipeline)
+    }
+
+    static func makeRenderPipeline(
+        device: MTLDevice,
+        vertexDescriptor: MDLVertexDescriptor,
+        vertexFunction: MTLFunction,
+        fragmentFunction: MTLFunction,
+        colorPixelFormat: MTLPixelFormat,
+        depthStencilPixelFormat: MTLPixelFormat
+        ) throws -> MTLRenderPipelineState {
+        let pipeline = MTLRenderPipelineDescriptor()
+        pipeline.vertexFunction = vertexFunction
+        pipeline.fragmentFunction = fragmentFunction
+
+        pipeline.colorAttachments[0].pixelFormat = colorPixelFormat
+        pipeline.colorAttachments[0].isBlendingEnabled = true
+        pipeline.colorAttachments[0].rgbBlendOperation = MTLBlendOperation.add
+        pipeline.colorAttachments[0].alphaBlendOperation = MTLBlendOperation.add
+        pipeline.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactor.sourceAlpha
+        pipeline.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactor.sourceAlpha
+        pipeline.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
+        pipeline.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactor.oneMinusSourceAlpha
+        pipeline.depthAttachmentPixelFormat = depthStencilPixelFormat
+
+        let mtlVertexDescriptor = MTKMetalVertexDescriptorFromModelIO(vertexDescriptor)
+        pipeline.vertexDescriptor = mtlVertexDescriptor
+
+        return try device.makeRenderPipelineState(descriptor: pipeline)
+    }
+
+    static func makeDefaultSamplerState(device: MTLDevice) -> MTLSamplerState {
+        let sampler = MTLSamplerDescriptor()
+
+        sampler.minFilter = .linear
+        sampler.mipFilter = .linear
+        sampler.magFilter = .linear
+
+        sampler.normalizedCoordinates = true
+        return device.makeSamplerState(descriptor: sampler)!
+    }
+
+    static func makeDefaultDepthStencilState(device: MTLDevice) -> MTLDepthStencilState {
+        let depthStencil = MTLDepthStencilDescriptor()
+
+        depthStencil.isDepthWriteEnabled = true
+        depthStencil.depthCompareFunction = .less
+
+        return device.makeDepthStencilState(descriptor: depthStencil)!
+    }
+
+    static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
+        return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
     }
 }
