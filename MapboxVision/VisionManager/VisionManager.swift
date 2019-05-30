@@ -42,7 +42,7 @@ public final class VisionManager: BaseVisionManager {
     /**
      Start delivering events from `VisionManager`.
 
-     Do NOT call this method more than once or after `destroy` is called.
+     - Important: Do NOT call this method more than once or after `destroy` is called.
 
      - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
      */
