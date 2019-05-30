@@ -62,7 +62,7 @@ public protocol VisionManagerDelegate: AnyObject {
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCamera camera: Camera)
 
     /**
-     This method is called after the whole update iteration is completed. This means that all the data which came from delegate methods is in sync.
+     This method is called after the whole update iteration is completed. This means that all the data that came from delegate methods is in sync.
      This method is an appropriate place to work with different values emitted from `VisionManager`.
 
      - NOTE: Performance of this function is critical since `VisionManager` blocks until the method execution is finished.
