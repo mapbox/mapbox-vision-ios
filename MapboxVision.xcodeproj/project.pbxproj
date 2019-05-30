@@ -104,6 +104,7 @@
 		3A11B052229F0B7A00070A61 /* MapboxVisionARTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B051229F0B7A00070A61 /* MapboxVisionARTests.swift */; };
 		3A11B054229F0B7A00070A61 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
+		3A11B061229F251700070A61 /* ARNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B060229F251700070A61 /* ARNodeTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -238,6 +239,7 @@
 		3A11B051229F0B7A00070A61 /* MapboxVisionARTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxVisionARTests.swift; sourceTree = "<group>"; };
 		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A11B05D229F1E1900070A61 /* ARSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneTests.swift; sourceTree = "<group>"; };
+		3A11B060229F251700070A61 /* ARNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNodeTests.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -683,8 +685,17 @@
 			isa = PBXGroup;
 			children = (
 				3A11B05D229F1E1900070A61 /* ARSceneTests.swift */,
+				3A11B05F229F24A900070A61 /* ARNode */,
 			);
 			path = ARScene;
+			sourceTree = "<group>";
+		};
+		3A11B05F229F24A900070A61 /* ARNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B060229F251700070A61 /* ARNodeTests.swift */,
+			);
+			path = ARNode;
 			sourceTree = "<group>";
 		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
@@ -1126,6 +1137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A11B052229F0B7A00070A61 /* MapboxVisionARTests.swift in Sources */,
+				3A11B061229F251700070A61 /* ARNodeTests.swift in Sources */,
 				3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
