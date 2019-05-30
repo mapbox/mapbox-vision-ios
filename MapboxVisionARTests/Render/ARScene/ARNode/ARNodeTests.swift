@@ -3,48 +3,50 @@ import simd
 import XCTest
 
 class ARNodeTests: XCTestCase {
-    private var arNode: ARNode
+    private var arNode: ARNode!
 
     override func setUp() {
         arNode = ARNode(type: .rootNode)
         super.setUp()
     }
 
-    override func tearDown() {
-        super.tearDown()
-        arNode = nil
-    }
-
     func testARNodeAfterInitDoesNotHaveAREntity() {
         // Given state from setUp()
         // When // Then
-        XCTAssert(arNode.entity == nil)
+        XCTAssertNil(arNode.entity)
     }
 
     func testARNodeAfterInitHasExpectedPosition() {
-        // Given state from setUp()
+        // Given
+        let expectedInitialPosition = float3(0, 0, 0)
+
         // When // Then
-        XCTAssert(arNode.position == float3(0, 0, 0))
+        XCTAssertTrue(arNode.position == expectedInitialPosition)
     }
 
     func testAddChildMethodAddsChildNodes() {
-        let numberOfChildNodes = Int.random(in: 1...10)
+        // Given
+        let expectedNumberOfChildNodes = Int.random(in: 1...10)
 
-        for idx in 1..numberOfChildNodes {
+        // When
+        for _ in 1...expectedNumberOfChildNodes {
             arNode.add(child: ARNode(type: .arrowNode))
         }
 
-        XCTAssert(arNode.childs.count == numberOfChildNodes)
+        // Then
+        XCTAssertTrue(arNode.childs.count == expectedNumberOfChildNodes)
     }
 
-    func testAddChildMethodAddsChildNodes() {
-        let numberOfChildNodes = Int.random(in: 1...10)
-
-        for idx in 1..numberOfChildNodes {
+    func testRemoveAllChildsMethodRemovesChildNodes() {
+        // Given
+        for _ in 1...Int.random(in: 1...10) {
             arNode.add(child: ARNode(type: .arrowNode))
         }
-        arNode.removeAllChilds()
 
-        XCTAssert(arNode.childs.isEmpty)
+        // When
+        arNode?.removeAllChilds()
+
+        // Then
+        XCTAssertTrue(arNode.childs.isEmpty)
     }
 }
