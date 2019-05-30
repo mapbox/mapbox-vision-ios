@@ -2,33 +2,28 @@
 import XCTest
 
 class ARSceneTests: XCTestCase {
-    private var arScene: ARScene
+    private var arScene: ARScene!
 
     override func setUp() {
         arScene = ARScene()
         super.setUp()
     }
 
-    override func tearDown() {
-        super.tearDown()
-        arScene = nil
-    }
-
-    func testARSceneAfterInitHasRootNodeWithRootNodeType() {
+    func testARSceneAfterInitARNodeWithRootNodeType() {
         // Given state from setUp()
         // When // Then
-        XCTAssert(arScene.rootNode.nodeType == .rootNode)
+        XCTAssertTrue(arScene.rootNode.nodeType == .rootNode)
     }
 
-    func testARSceneAfterInitHasCameraNodeWithCameraNodeType() {
+    func testARSceneAfterInitHasARNodeWithCameraNodeType() {
         // Given state from setUp()
         // When // Then
-        XCTAssert(arScene.cameraNode.nodeType == .cameraNode)
+        XCTAssertTrue(arScene.cameraNode.nodeType == .cameraNode)
     }
 
-    func testARSceneAfterInitDoesNotHaveChildARLaneNodes() {
+    func testARSceneAfterInitDoesNotHaveOtherChildARLaneNodes() {
         // Given state from setUp()
         // When // Then
-        XCTAssert(arScene.getChildARLaneNodes() == nil)
+        XCTAssertTrue(arScene.getChildARLaneNodes()!.isEmpty)
     }
 }
