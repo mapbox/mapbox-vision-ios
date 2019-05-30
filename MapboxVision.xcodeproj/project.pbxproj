@@ -101,9 +101,11 @@
 		3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B043229ED3F500070A61 /* ARRendererError.swift */; };
 		3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B045229ED49B00070A61 /* UIColor+Extension.swift */; };
 		3A11B048229ED76500070A61 /* ARLaneMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B047229ED76500070A61 /* ARLaneMesh.swift */; };
-		3A11B054229F0B7A00070A61 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
 		3A11B061229F251700070A61 /* ARNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B060229F251700070A61 /* ARNodeTests.swift */; };
+		3A7E992722A005A1005EB875 /* MapboxCoreNavigation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -124,12 +126,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3A11B055229F0B7A00070A61 /* PBXContainerItemProxy */ = {
+		3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2E4EE21120EFD378003431B3;
-			remoteInfo = MapboxVision;
+			remoteGlobalIDString = 2E0719562257871300345FA8;
+			remoteInfo = MapboxVisionAR;
 		};
 		B51E557F215E313500650DDE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -139,6 +141,31 @@
 			remoteInfo = MapboxVision;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3A7E992522A00519005EB875 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */,
+				3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */,
+				3A7E992722A005A1005EB875 /* MapboxCoreNavigation.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B50CFBA52162654E00C9C5A5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +265,7 @@
 		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A11B05D229F1E1900070A61 /* ARSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneTests.swift; sourceTree = "<group>"; };
 		3A11B060229F251700070A61 /* ARNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNodeTests.swift; sourceTree = "<group>"; };
+		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -293,7 +321,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A11B054229F0B7A00070A61 /* MapboxVision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +558,7 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */,
 				2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */,
 				2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */,
 				2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */,
@@ -835,11 +863,12 @@
 				3A11B04B229F0B7A00070A61 /* Sources */,
 				3A11B04C229F0B7A00070A61 /* Frameworks */,
 				3A11B04D229F0B7A00070A61 /* Resources */,
+				3A7E992522A00519005EB875 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3A11B056229F0B7A00070A61 /* PBXTargetDependency */,
+				3A7E992922A00B9D005EB875 /* PBXTargetDependency */,
 			);
 			name = MapboxVisionARTests;
 			productName = MapboxVisionARTests;
@@ -1159,10 +1188,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3A11B056229F0B7A00070A61 /* PBXTargetDependency */ = {
+		3A7E992922A00B9D005EB875 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2E4EE21120EFD378003431B3 /* MapboxVision */;
-			targetProxy = 3A11B055229F0B7A00070A61 /* PBXContainerItemProxy */;
+			target = 2E0719562257871300345FA8 /* MapboxVisionAR */;
+			targetProxy = 3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */;
 		};
 		B51E5580215E313500650DDE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1622,11 +1651,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1643,11 +1673,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
@@ -1663,11 +1694,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GJZR2MEM28;
 				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
