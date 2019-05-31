@@ -1,4 +1,3 @@
-import CoreMotion
 import Foundation
 import MapboxVisionNative
 
@@ -12,10 +11,6 @@ final class Platform: NSObject, PlatformInterface {
 
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-    }
-
-    func getMotionReferenceFrame() -> CMAttitudeReferenceFrame {
-        return .xArbitraryZVertical
     }
 
     func makeVideoClip(_ startTime: Float, end endTime: Float) {

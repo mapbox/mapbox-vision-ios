@@ -4,18 +4,17 @@ import Foundation
 
 final class MotionManager {
     private let motion = CMMotionManager()
-    private let referenceFrame: CMAttitudeReferenceFrame
     private let queue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
 
-    var handler: ((CMDeviceMotion) -> Void)?
-
-    init(with referenceFrame: CMAttitudeReferenceFrame) {
-        self.referenceFrame = referenceFrame
+    private enum Constants {
+        static let referenceFrame: CMAttitudeReferenceFrame = .xArbitraryZVertical
     }
+
+    var handler: ((CMDeviceMotion, CMAttitudeReferenceFrame) -> Void)?
 
     func start(updateInterval: Double) {
         guard motion.isDeviceMotionAvailable else { return }
@@ -23,9 +22,10 @@ final class MotionManager {
         motion.deviceMotionUpdateInterval = updateInterval
         motion.showsDeviceMovementDisplay = true
 
-        motion.startDeviceMotionUpdates(using: referenceFrame, to: queue) { [weak self] data, _ in
-            guard let data = data else { return }
-            self?.handler?(data)
+        motion.startDeviceMotionUpdates(using: Constants.referenceFrame, to: queue) { [weak self] (data, error) in
+            guard let data = data, let referenceFrame = self?.motion.attitudeReferenceFrame else { return }
+
+            self?.handler?(data, referenceFrame)
         }
     }
 

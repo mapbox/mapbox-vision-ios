@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.5.0 - Unreleased
-- Add support for UK country 
+- Add support for UK country
+- Support setting of attitudeOrient via DeviceMotionData
 
 ## 0.4.0
 - `VisionARManager` allows to change ARLane's length
