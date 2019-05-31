@@ -2,11 +2,19 @@ import simd
 
 /// Represents AR Lane that can be rendered as a part of `ARScene`
 class ARLaneNode: ARNode {
+    private(set) var nodeType: ARNodeType
+    private(set) var entity: AREntity?
+
+    var relations: NodeRelations
+    var geometry: NodeGeometry
+
     // MARK: - Lifecycle
 
     init(arLaneEntity: ARLaneEntity) {
-        super.init(type: .arrowNode)
-        self.entity = arLaneEntity
+        nodeType = .arrowNode
+        entity = arLaneEntity
+        relations = NodeRelations()
+        geometry = NodeGeometry()
     }
 
     // MARK: - Public methods

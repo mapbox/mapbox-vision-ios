@@ -24,6 +24,6 @@ class ARSceneTests: XCTestCase {
     func testARSceneAfterInitDoesNotHaveOtherChildARLaneNodes() {
         // Given state from setUp()
         // When // Then
-        XCTAssertTrue(arScene.getChildARLaneNodes()!.isEmpty)
+        XCTAssertTrue(arScene.getChildARLaneNodes().isEmpty)
     }
 }

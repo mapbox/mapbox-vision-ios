@@ -6,7 +6,7 @@ class ARNodeTests: XCTestCase {
     private var arNode: ARNode!
 
     override func setUp() {
-        arNode = ARNode(type: .rootNode)
+        arNode = ARRootNode()
         super.setUp()
     }
 
@@ -30,7 +30,7 @@ class ARNodeTests: XCTestCase {
 
         // When
         for _ in 1...expectedNumberOfChildNodes {
-            arNode.add(child: ARNode(type: .arrowNode))
+            arNode.add(child: ARRootNode())
         }
 
         // Then
@@ -40,7 +40,7 @@ class ARNodeTests: XCTestCase {
     func testRemoveAllChildsMethodRemovesChildNodes() {
         // Given
         for _ in 1...Int.random(in: 1...10) {
-            arNode.add(child: ARNode(type: .arrowNode))
+            arNode.add(child: ARRootNode())
         }
 
         // When

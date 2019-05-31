@@ -1,12 +1,12 @@
 class ARScene {
     // MARK: - Properties
 
-    var rootNode = ARNode(type: .rootNode)
+    var rootNode = ARRootNode()
     var cameraNode = ARCameraNode()
 
     // MARK: - Public methods
 
-    func getChildARLaneNodes() -> [ARLaneNode]? {
-        return self.rootNode.childs.filter { $0.nodeType == .arrowNode } as? [ARLaneNode]
+    func getChildARLaneNodes() -> [ARLaneNode] {
+        return rootNode.childs.compactMap { $0 as? ARLaneNode }
     }
 }

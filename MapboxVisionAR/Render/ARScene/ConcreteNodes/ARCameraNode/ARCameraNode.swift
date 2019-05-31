@@ -3,6 +3,11 @@ import simd
 class ARCameraNode: ARNode {
     // MARK: - Properties
 
+    private(set) var nodeType: ARNodeType
+    var entity: AREntity?
+    var relations: NodeRelations
+    var geometry: NodeGeometry
+
     var needProjectionUpdate = Bool(true)
     var nearClipPlane = Float(0.01) {
         didSet {
@@ -32,7 +37,9 @@ class ARCameraNode: ARNode {
     // MARK: - Lifecycle
 
     init() {
-        super.init(type: .cameraNode)
+        nodeType = .cameraNode
+        relations = NodeRelations()
+        geometry = NodeGeometry()
     }
 
     // MARK: - Internal functions

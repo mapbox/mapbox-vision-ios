@@ -3,5 +3,4 @@ enum ARNodeType {
     case gridNode
     case arrowNode
     case cameraNode
-    case generalNode
 }

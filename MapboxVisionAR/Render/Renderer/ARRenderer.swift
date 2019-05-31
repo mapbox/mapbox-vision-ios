@@ -137,7 +137,7 @@ class ARRenderer: NSObject {
         viewProjectionMatrix = scene.cameraNode.projectionMatrix() * viewMatrix
 
         scene.rootNode.childs.forEach { arNode in
-            if let arEntity = arNode.entity, let mesh = arEntity.mesh {
+            if let arNode = arNode as? ARNode, let arEntity = arNode.entity, let mesh = arEntity.mesh {
                 commandEncoder.setRenderPipelineState(arEntity.renderPipeline ?? renderPipelineDefault)
 
                 let modelMatrix = arNode.worldTransform()
