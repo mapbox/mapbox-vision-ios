@@ -100,6 +100,7 @@
 		3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B045229ED49B00070A61 /* UIColor+Extension.swift */; };
 		3A11B048229ED76500070A61 /* ARLaneMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B047229ED76500070A61 /* ARLaneMesh.swift */; };
 		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
+		3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8C0622A5239F00CC0954 /* Uniforms.swift */; };
 		3A7E992722A005A1005EB875 /* MapboxCoreNavigation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -266,6 +267,7 @@
 		3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionARTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A11B05D229F1E1900070A61 /* ARSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneTests.swift; sourceTree = "<group>"; };
+		3A5E8C0622A5239F00CC0954 /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
 		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A7E993122A11B71005EB875 /* NodeGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometry.swift; sourceTree = "<group>"; };
 		3A7E993322A11BA5005EB875 /* NodeRelations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRelations.swift; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 		3A11B029229EC3A200070A61 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				3A5E8C0522A5238800CC0954 /* Uniform Structures */,
 				2E071A382257887E00345FA8 /* Shaders.metal */,
 			);
 			path = Shaders;
@@ -718,6 +721,14 @@
 				3A7E994922A15538005EB875 /* ConcreteNodes */,
 			);
 			path = ARScene;
+			sourceTree = "<group>";
+		};
+		3A5E8C0522A5238800CC0954 /* Uniform Structures */ = {
+			isa = PBXGroup;
+			children = (
+				3A5E8C0622A5239F00CC0954 /* Uniforms.swift */,
+			);
+			path = "Uniform Structures";
 			sourceTree = "<group>";
 		};
 		3A7E993522A11BBA005EB875 /* Node */ = {
@@ -1158,6 +1169,7 @@
 				3A7E993422A11BA5005EB875 /* NodeRelations.swift in Sources */,
 				3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
+				3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */,
 				3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */,
 				3A11B030229EC57D00070A61 /* AREntity.swift in Sources */,
 				2E071A472257887F00345FA8 /* ARScene.swift in Sources */,
