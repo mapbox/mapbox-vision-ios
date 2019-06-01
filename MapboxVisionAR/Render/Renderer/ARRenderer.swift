@@ -21,10 +21,24 @@ import MetalKit
  */
 
 class ARRenderer: NSObject {
+    // MARK: Public properties
+
+    /// The `ARScene` object to be rendered.
+    let scene = ARScene()
+
+    var frame: CVPixelBuffer?
+    var camera: ARCamera?
+    var lane: ARLane?
+
     // MARK: Private properties
 
+    /// The Metal device this renderer uses for rendering.
     private let device: MTLDevice
+    /// The Metal command queue this renderer uses for rendering.
     private let commandQueue: MTLCommandQueue
+
+    private let samplerStateDefault: MTLSamplerState
+    private let depthStencilStateDefault: MTLDepthStencilState
 
     #if !targetEnvironment(simulator)
     private var textureCache: CVMetalTextureCache?
@@ -35,24 +49,21 @@ class ARRenderer: NSObject {
     private let renderPipelineDefault: MTLRenderPipelineState
     private let renderPipelineArrow: MTLRenderPipelineState
     private let renderPipelineBackground: MTLRenderPipelineState
-    private let samplerStateDefault: MTLSamplerState
-    private let depthStencilStateDefault: MTLDepthStencilState
 
     private var viewProjectionMatrix = matrix_identity_float4x4
 
-    private let scene = ARScene()
-
-    private var time = Float(0)
-    private var dt = Float(0)
-
-    // MARK: Public properties
-
-    var frame: CVPixelBuffer?
-    var camera: ARCamera?
-    var lane: ARLane?
-
     // MARK: Lifecycle
 
+    /**
+     Creates a renderer with the specified Metal device.
+
+     - Parameters:
+       - device: A Metal device used for drawing.
+       - colorPixelFormat: The color pixel format for the current drawable's texture.
+       - depthStencilPixelFormat: The format used to generate the packed depth/stencil texture.
+
+     - Returns: A new renderer object.
+     */
     init(device: MTLDevice, colorPixelFormat: MTLPixelFormat, depthStencilPixelFormat: MTLPixelFormat) throws {
         self.device = device
 
@@ -66,7 +77,6 @@ class ARRenderer: NSObject {
         }
         #endif
 
-
         let library = try device.makeDefaultLibrary(bundle: Bundle(for: type(of: self)))
         guard
             let defaultVertexFunction = library.makeFunction(name: ARConstants.ShaderName.defaultVertexMain),
@@ -79,26 +89,32 @@ class ARRenderer: NSObject {
                 throw ARRendererError.cantFindFunctions
         }
 
-        renderPipelineDefault = try ARRenderer.makeRenderPipeline(device: device,
-                                                                  vertexDescriptor: vertexDescriptor,
-                                                                  vertexFunction: defaultVertexFunction,
-                                                                  fragmentFunction: defaultFragmentFunction,
-                                                                  colorPixelFormat: colorPixelFormat,
-                                                                  depthStencilPixelFormat: depthStencilPixelFormat)
+        renderPipelineDefault = try ARRenderer.makeRenderPipeline(
+            device: device,
+            vertexDescriptor: vertexDescriptor,
+            vertexFunction: defaultVertexFunction,
+            fragmentFunction: defaultFragmentFunction,
+            colorPixelFormat: colorPixelFormat,
+            depthStencilPixelFormat: depthStencilPixelFormat
+        )
 
-        renderPipelineArrow = try ARRenderer.makeRenderPipeline(device: device,
-                                                                vertexDescriptor: vertexDescriptor,
-                                                                vertexFunction: arrowVertexFunction,
-                                                                fragmentFunction: arrowFragmentFunction,
-                                                                colorPixelFormat: colorPixelFormat,
-                                                                depthStencilPixelFormat: depthStencilPixelFormat)
+        renderPipelineArrow = try ARRenderer.makeRenderPipeline(
+            device: device,
+            vertexDescriptor: vertexDescriptor,
+            vertexFunction: arrowVertexFunction,
+            fragmentFunction: arrowFragmentFunction,
+            colorPixelFormat: colorPixelFormat,
+            depthStencilPixelFormat: depthStencilPixelFormat
+        )
 
-        renderPipelineBackground = try ARRenderer.makeRenderBackgroundPipeline(device: device,
-                                                                               vertexDescriptor: ARRenderer.makeTextureMappingVertexDescriptor(),
-                                                                               vertexFunction: backgroundVertexFunction,
-                                                                               fragmentFunction: backgroundFragmentFunction,
-                                                                               colorPixelFormat: colorPixelFormat,
-                                                                               depthStencilPixelFormat: depthStencilPixelFormat)
+        renderPipelineBackground = try ARRenderer.makeRenderBackgroundPipeline(
+            device: device,
+            vertexDescriptor: ARRenderer.makeTextureMappingVertexDescriptor(),
+            vertexFunction: backgroundVertexFunction,
+            fragmentFunction: backgroundFragmentFunction,
+            colorPixelFormat: colorPixelFormat,
+            depthStencilPixelFormat: depthStencilPixelFormat
+        )
 
         samplerStateDefault = ARRenderer.makeDefaultSamplerState(device: device)
         depthStencilStateDefault = ARRenderer.makeDefaultDepthStencilState(device: device)
@@ -106,9 +122,7 @@ class ARRenderer: NSObject {
         guard let buffer = device.makeBuffer(bytes: ARConstants.textureMappingVertices,
                                              length: ARConstants.textureMappingVertices.count * MemoryLayout<Float>.size,
                                              options: [])
-            else {
-                throw ARRendererError.cantCreateBuffer
-        }
+        else { throw ARRendererError.cantCreateBuffer }
         backgroundVertexBuffer = buffer
 
         super.init()
@@ -199,9 +213,6 @@ class ARRenderer: NSObject {
     // MARK: Private functions
 
     private func update(_ view: MTKView) {
-        dt = 1 / Float(view.preferredFramesPerSecond)
-        time += dt
-
         guard let camParams = camera else { return }
         scene.cameraNode.aspectRatio = camParams.aspectRatio
         scene.cameraNode.fovRadians = camParams.fov
@@ -210,7 +221,8 @@ class ARRenderer: NSObject {
         scene.cameraNode.position = float3(0, camParams.height, 0)
     }
 
-    private func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
+
+    func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
         #if !targetEnvironment(simulator)
         var imageTexture: CVMetalTexture?
         guard
@@ -229,43 +241,6 @@ class ARRenderer: NSObject {
         #else
         return nil
         #endif
-    }
-}
-
-extension ARRenderer: MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        // TODO: update camera
-    }
-
-    func draw(in view: MTKView) {
-        update(view)
-
-        // render
-        guard
-            let commandBuffer = commandQueue.makeCommandBuffer(),
-            let renderPass = view.currentRenderPassDescriptor,
-            let drawable = view.currentDrawable
-            else { return }
-
-        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
-
-        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass)
-            else { return }
-
-        if let frame = frame, let texture = makeTexture(from: frame) {
-            commandEncoder.setRenderPipelineState(renderPipelineBackground)
-            commandEncoder.setVertexBuffer(backgroundVertexBuffer, offset: 0, index: 0)
-            commandEncoder.setFragmentTexture(texture, index: 0)
-            commandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: ARConstants.textureMappingVertices.count)
-        }
-
-        if let lane = lane {
-            drawScene(commandEncoder: commandEncoder, lane: lane)
-        }
-
-        commandEncoder.endEncoding()
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
     }
 }
 
@@ -320,7 +295,7 @@ extension ARRenderer {
         fragmentFunction: MTLFunction,
         colorPixelFormat: MTLPixelFormat,
         depthStencilPixelFormat: MTLPixelFormat
-        ) throws -> MTLRenderPipelineState {
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -340,7 +315,7 @@ extension ARRenderer {
         fragmentFunction: MTLFunction,
         colorPixelFormat: MTLPixelFormat,
         depthStencilPixelFormat: MTLPixelFormat
-        ) throws -> MTLRenderPipelineState {
+    ) throws -> MTLRenderPipelineState {
         let pipeline = MTLRenderPipelineDescriptor()
         pipeline.vertexFunction = vertexFunction
         pipeline.fragmentFunction = fragmentFunction
@@ -383,5 +358,42 @@ extension ARRenderer {
 
     static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
         return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
+    }
+}
+
+extension ARRenderer: MTKViewDelegate {
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        // TODO: update camera
+    }
+
+    func draw(in view: MTKView) {
+        update(view)
+
+        // render
+        guard
+            let commandBuffer = commandQueue.makeCommandBuffer(),
+            let renderPass = view.currentRenderPassDescriptor,
+            let drawable = view.currentDrawable
+            else { return }
+
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
+
+        guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass)
+            else { return }
+
+        if let frame = frame, let texture = makeTexture(from: frame) {
+            commandEncoder.setRenderPipelineState(renderPipelineBackground)
+            commandEncoder.setVertexBuffer(backgroundVertexBuffer, offset: 0, index: 0)
+            commandEncoder.setFragmentTexture(texture, index: 0)
+            commandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: ARConstants.textureMappingVertices.count)
+        }
+
+        if let lane = lane {
+            drawScene(commandEncoder: commandEncoder, lane: lane)
+        }
+
+        commandEncoder.endEncoding()
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
     }
 }

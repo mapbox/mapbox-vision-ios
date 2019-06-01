@@ -46,8 +46,8 @@ struct FragmentUniforms {
     var ambientLightColor = float3(0, 0, 0)
     var specularColor = float3(1, 1, 1)
     var baseColor = float3(1, 1, 1)
-    var opacity = Float(1)
-    var specularPower = Float(1)
+    var opacity: Float = 1
+    var specularPower: Float = 1
     var light = ARLight()
 }
 

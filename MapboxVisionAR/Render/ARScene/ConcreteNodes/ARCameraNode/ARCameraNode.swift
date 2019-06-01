@@ -12,13 +12,13 @@ class ARCameraNode: ARNode {
     /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
-    var needProjectionUpdate = Bool(true)
-    var nearClipPlane = Float(0.01) {
+    var needProjectionUpdate = true
+    var nearClipPlane: Float = 0.01 {
         didSet {
             setNeedProjectionUpdate()
         }
     }
-    var farClipPlane = Float(1000) {
+    var farClipPlane: Float = 1000 {
         didSet {
             setNeedProjectionUpdate()
         }
@@ -28,7 +28,7 @@ class ARCameraNode: ARNode {
             setNeedProjectionUpdate()
         }
     }
-    var aspectRatio = Float(1.333) {
+    var aspectRatio = Float(4.0 / 3.0) {
         didSet {
             setNeedProjectionUpdate()
         }

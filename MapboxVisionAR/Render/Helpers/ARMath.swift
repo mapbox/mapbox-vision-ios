@@ -56,7 +56,7 @@ func makeTransformMatrix(trans: float3, rot: simd_quatf, scale: float3) -> float
     return float4x4(float4(rot3x3[0][0] * scale.x, rot3x3[1][0] * scale.y, rot3x3[2][0] * scale.z, 0),
                     float4(rot3x3[0][1] * scale.x, rot3x3[1][1] * scale.y, rot3x3[2][1] * scale.z, 0),
                     float4(rot3x3[0][2] * scale.x, rot3x3[1][2] * scale.y, rot3x3[2][2] * scale.z, 0),
-                    float4(trans[0], trans[1], trans[2], 1))
+                    float4(trans[0],               trans[1],               trans[2], 1))
 }
 
 func makeViewMatrix(trans: float3, rot: simd_quatf) -> float4x4 {
