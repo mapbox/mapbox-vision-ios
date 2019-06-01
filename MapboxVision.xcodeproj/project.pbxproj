@@ -93,7 +93,7 @@
 		3A11B034229EC75C00070A61 /* ARMeshError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B033229EC75C00070A61 /* ARMeshError.swift */; };
 		3A11B036229EC77C00070A61 /* ARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B035229EC77C00070A61 /* ARConstants.swift */; };
 		3A11B03A229ED29700070A61 /* ARRootNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B039229ED29700070A61 /* ARRootNode.swift */; };
-		3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03B229ED2AC00070A61 /* ARNode.swift */; };
+		3A11B03C229ED2AC00070A61 /* ARNode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03B229ED2AC00070A61 /* ARNode+Extension.swift */; };
 		3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03D229ED2D200070A61 /* ARLaneNode.swift */; };
 		3A11B040229ED2FA00070A61 /* ARGridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03F229ED2FA00070A61 /* ARGridNode.swift */; };
 		3A11B042229ED33C00070A61 /* ARCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B041229ED33C00070A61 /* ARCameraNode.swift */; };
@@ -109,6 +109,10 @@
 		3A7E993422A11BA5005EB875 /* NodeRelations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993322A11BA5005EB875 /* NodeRelations.swift */; };
 		3A7E993722A11BC8005EB875 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993622A11BC8005EB875 /* Node.swift */; };
 		3A7E994222A12039005EB875 /* ARLaneEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994122A12039005EB875 /* ARLaneEntity.swift */; };
+		3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994722A14692005EB875 /* NodeGeometryTests.swift */; };
+		3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */; };
+		3A7E994D22A15681005EB875 /* ARGridNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994C22A15681005EB875 /* ARGridNodeTests.swift */; };
+		3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -256,7 +260,7 @@
 		3A11B033229EC75C00070A61 /* ARMeshError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMeshError.swift; sourceTree = "<group>"; };
 		3A11B035229EC77C00070A61 /* ARConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARConstants.swift; sourceTree = "<group>"; };
 		3A11B039229ED29700070A61 /* ARRootNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNode.swift; sourceTree = "<group>"; };
-		3A11B03B229ED2AC00070A61 /* ARNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNode.swift; sourceTree = "<group>"; };
+		3A11B03B229ED2AC00070A61 /* ARNode+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARNode+Extension.swift"; sourceTree = "<group>"; };
 		3A11B03D229ED2D200070A61 /* ARLaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNode.swift; sourceTree = "<group>"; };
 		3A11B03F229ED2FA00070A61 /* ARGridNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGridNode.swift; sourceTree = "<group>"; };
 		3A11B041229ED33C00070A61 /* ARCameraNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNode.swift; sourceTree = "<group>"; };
@@ -272,6 +276,10 @@
 		3A7E993322A11BA5005EB875 /* NodeRelations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRelations.swift; sourceTree = "<group>"; };
 		3A7E993622A11BC8005EB875 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		3A7E994122A12039005EB875 /* ARLaneEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLaneEntity.swift; sourceTree = "<group>"; };
+		3A7E994722A14692005EB875 /* NodeGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometryTests.swift; sourceTree = "<group>"; };
+		3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNodeTests.swift; sourceTree = "<group>"; };
+		3A7E994C22A15681005EB875 /* ARGridNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGridNodeTests.swift; sourceTree = "<group>"; };
+		3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNodeTests.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -713,6 +721,8 @@
 			children = (
 				3A11B05D229F1E1900070A61 /* ARSceneTests.swift */,
 				3A11B05F229F24A900070A61 /* ARNode */,
+				3A7E994522A1467A005EB875 /* Node */,
+				3A7E994922A15538005EB875 /* ConcreteNodes */,
 			);
 			path = ARScene;
 			sourceTree = "<group>";
@@ -770,8 +780,8 @@
 		3A7E993D22A11D5D005EB875 /* ARLaneNode */ = {
 			isa = PBXGroup;
 			children = (
-				3A7E994122A12039005EB875 /* ARLaneEntity.swift */,
 				3A11B03D229ED2D200070A61 /* ARLaneNode.swift */,
+				3A7E994122A12039005EB875 /* ARLaneEntity.swift */,
 				3A11B024229EC32D00070A61 /* ARLaneMesh */,
 			);
 			path = ARLaneNode;
@@ -799,9 +809,35 @@
 		3A7E994022A11FBA005EB875 /* ARNodeProtocol */ = {
 			isa = PBXGroup;
 			children = (
-				3A11B03B229ED2AC00070A61 /* ARNode.swift */,
+				3A11B03B229ED2AC00070A61 /* ARNode+Extension.swift */,
 			);
 			path = ARNodeProtocol;
+			sourceTree = "<group>";
+		};
+		3A7E994522A1467A005EB875 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E994622A14681005EB875 /* NodeStructure */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		3A7E994622A14681005EB875 /* NodeStructure */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E994722A14692005EB875 /* NodeGeometryTests.swift */,
+			);
+			path = NodeStructure;
+			sourceTree = "<group>";
+		};
+		3A7E994922A15538005EB875 /* ConcreteNodes */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */,
+				3A7E994C22A15681005EB875 /* ARGridNodeTests.swift */,
+				3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */,
+			);
+			path = ConcreteNodes;
 			sourceTree = "<group>";
 		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
@@ -1141,7 +1177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */,
-				3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */,
+				3A11B03C229ED2AC00070A61 /* ARNode+Extension.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
 				3A7E993422A11BA5005EB875 /* NodeRelations.swift in Sources */,
@@ -1246,6 +1282,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A7E994D22A15681005EB875 /* ARGridNodeTests.swift in Sources */,
+				3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */,
+				3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */,
+				3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */,
 				3A11B061229F251700070A61 /* ARNodeTests.swift in Sources */,
 				3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */,
 			);
