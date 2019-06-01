@@ -2,14 +2,21 @@ import simd
 
 /// Represents AR Lane that can be rendered as a part of `ARScene`
 class ARLaneNode: ARNode {
-    private(set) var nodeType: ARNodeType
-    private(set) var entity: AREntity?
+    // MARK: - Properties
 
+    /// Type of node. Always returns `rootNode`.
+    private(set) var nodeType: ARNodeType
+    /// Underlying AR entity.
+    private(set) var entity: AREntity?
+    /// Describes position of the node in the node hierarchy.
     var relations: NodeRelations
+    /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
     // MARK: - Lifecycle
 
+    /**
+     */
     init(arLaneEntity: ARLaneEntity) {
         nodeType = .arrowNode
         entity = arLaneEntity

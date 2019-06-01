@@ -3,9 +3,13 @@ import simd
 class ARCameraNode: ARNode {
     // MARK: - Properties
 
+    /// Type of node. Always returns `rootNode`.
     private(set) var nodeType: ARNodeType
+    /// Underlying AR entity.
     var entity: AREntity?
+    /// Describes position of the node in the node hierarchy.
     var relations: NodeRelations
+    /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
     var needProjectionUpdate = Bool(true)
@@ -60,7 +64,7 @@ class ARCameraNode: ARNode {
 
     // MARK: - Private functions
 
-    func setNeedProjectionUpdate() { // TODO: private? same for setNeedTransformUpdate
+    func setNeedProjectionUpdate() {
         needProjectionUpdate = true
     }
 }
