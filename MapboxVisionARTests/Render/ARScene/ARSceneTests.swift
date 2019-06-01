@@ -9,16 +9,16 @@ class ARSceneTests: XCTestCase {
         super.setUp()
     }
 
-    func testARSceneAfterInitARNodeWithRootNodeType() {
+    func testARSceneAfterInitARRootNode() {
         // Given state from setUp()
         // When // Then
-        XCTAssertTrue(arScene.rootNode.nodeType == .rootNode)
+        XCTAssertEqual(arScene.rootNode.nodeType, .rootNode)
     }
 
-    func testARSceneAfterInitHasARNodeWithCameraNodeType() {
+    func testARSceneAfterInitHasARCameraNode() {
         // Given state from setUp()
         // When // Then
-        XCTAssertTrue(arScene.cameraNode.nodeType == .cameraNode)
+        XCTAssertEqual(arScene.cameraNode.nodeType, .cameraNode)
     }
 
     func testARSceneAfterInitDoesNotHaveOtherChildARLaneNodes() {
