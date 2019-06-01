@@ -10,23 +10,23 @@ class NodeGeometryTests: XCTestCase {
         super.setUp()
     }
 
-    func testNeedTransformUpdateFlagHasExpectedInitialState() {
+    func testNeedsUpdateWorldTransformFlagHasExpectedInitialState() {
         // Given state from setUp()
         let expectedInitialState = true
 
         // When // Then
-        XCTAssertEqual(nodeGeometry.needTransformUpdate, expectedInitialState)
+        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedInitialState)
     }
 
-    func testCachedTransformMatrixHasExpectedInitialState() {
+    func testCachedWorldTransformHasExpectedInitialState() {
         // Given state from setUp()
         let expectedInitialState = matrix_identity_float4x4
 
         // When // Then
-        XCTAssertEqual(nodeGeometry.cachedTransformMatrix, expectedInitialState)
+        XCTAssertEqual(nodeGeometry.cachedWorldTransform, expectedInitialState)
     }
 
-    func testWorldTransformMethodResetsNeedTransformUpdateFlag() {
+    func testWorldTransformMethodResetsNeedsUpdateWorldTransformFlag() {
         // Given state from setUp()
         let expectedFinalState = false
 
@@ -34,22 +34,22 @@ class NodeGeometryTests: XCTestCase {
         _ = nodeGeometry.worldTransform()
 
         // Then
-        XCTAssertEqual(nodeGeometry.needTransformUpdate, expectedFinalState)
+        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedFinalState)
     }
 
-    func testSetNeedTransformUpdateMethodSetsNeedTransformUpdateFlag() {
+    func testSetNeedsUpdateWorldTransformMethodSetsNeedsUpdateWorldTransformFlag() {
         // Given
         let expectedFinalState = true
         _ = nodeGeometry.worldTransform()
 
         // When
-        nodeGeometry.setNeedTransformUpdate()
+        nodeGeometry.setNeedsTransformUpdate()
 
         // Then
-        XCTAssertEqual(nodeGeometry.needTransformUpdate, expectedFinalState)
+        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedFinalState)
     }
 
-    func testSetNeedTransformUpdateMethodIsCalledWhenPositionChanges() {
+    func testSetNeedsUpdateWorldTransformMethodIsCalledWhenPositionChanges() {
         // Given
         _ = nodeGeometry.worldTransform()
 
@@ -57,10 +57,10 @@ class NodeGeometryTests: XCTestCase {
         nodeGeometry.position = float3(0, 0, 0)
 
         // Then
-        XCTAssertTrue(nodeGeometry.needTransformUpdate)
+        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
     }
 
-    func testSetNeedTransformUpdateMethodIsCalledWhenRotationChanges() {
+    func testSetNeedsUpdateWorldTransformMethodIsCalledWhenRotationChanges() {
         // Given
         _ = nodeGeometry.worldTransform()
 
@@ -68,10 +68,10 @@ class NodeGeometryTests: XCTestCase {
         nodeGeometry.rotation = simd_quatf()
 
         // Then
-        XCTAssertTrue(nodeGeometry.needTransformUpdate)
+        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
     }
 
-    func testSetNeedTransformUpdateMethodIsCalledWhenScaleChanges() {
+    func testSetNeedsUpdateWorldTransformMethodIsCalledWhenScaleChanges() {
         // Given
         _ = nodeGeometry.worldTransform()
 
@@ -79,7 +79,7 @@ class NodeGeometryTests: XCTestCase {
         nodeGeometry.scale = float3(0, 0, 0)
 
         // Then
-        XCTAssertTrue(nodeGeometry.needTransformUpdate)
+        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
     }
 
     func testUpdatesCachedMatrix() {

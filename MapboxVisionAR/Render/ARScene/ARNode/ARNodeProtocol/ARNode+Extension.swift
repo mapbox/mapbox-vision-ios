@@ -64,7 +64,7 @@ extension ARNode {
        - child: The node to be added.
      */
     func add(child: Node) {
-        child.geometry.setNeedTransformUpdate()
+        child.geometry.setNeedsTransformUpdate()
         childs.append(child)
         child.relations.parent = self
     }

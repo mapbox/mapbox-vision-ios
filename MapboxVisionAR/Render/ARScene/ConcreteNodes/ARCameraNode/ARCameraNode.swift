@@ -12,25 +12,25 @@ class ARCameraNode: ARNode {
     /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
-    var needProjectionUpdate = true
+    var needsUpdateProjection = true
     var nearClipPlane: Float = 0.01 {
         didSet {
-            setNeedProjectionUpdate()
+            setNeedsUpdateProjection()
         }
     }
     var farClipPlane: Float = 1000 {
         didSet {
-            setNeedProjectionUpdate()
+            setNeedsUpdateProjection()
         }
     }
     var fovRadians = degreesToRadians(60) {
         didSet {
-            setNeedProjectionUpdate()
+            setNeedsUpdateProjection()
         }
     }
     var aspectRatio = Float(4.0 / 3.0) {
         didSet {
-            setNeedProjectionUpdate()
+            setNeedsUpdateProjection()
         }
     }
 
@@ -54,8 +54,8 @@ class ARCameraNode: ARNode {
     }
 
     func projectionMatrix() -> float4x4 {
-        if needProjectionUpdate {
-            needProjectionUpdate = false
+        if needsUpdateProjection {
+            needsUpdateProjection = false
             cachedProjectionMatrix = makePerpectiveProjectionMatrix(fovRadians: fovRadians, aspectRatio: aspectRatio, nearZ: nearClipPlane, farZ: farClipPlane)
         }
 
@@ -64,7 +64,7 @@ class ARCameraNode: ARNode {
 
     // MARK: - Private functions
 
-    func setNeedProjectionUpdate() {
-        needProjectionUpdate = true
+    func setNeedsUpdateProjection() {
+        needsUpdateProjection = true
     }
 }

@@ -14,7 +14,7 @@ struct NodeGeometry {
      The node’s position locates it within the coordinate system of its parent using three-component vector. The default position is the zero vector, indicating that the node is placed at the origin of the parent node’s coordinate system.
      */
     var position = float3(0, 0, 0) {
-        didSet { setNeedTransformUpdate() }
+        didSet { setNeedsTransformUpdate() }
     }
 
     /**
@@ -23,7 +23,7 @@ struct NodeGeometry {
      The four-component rotation vector specifies the direction of the rotation axis in the first three components and the angle of rotation (in radians) in the fourth. The default rotation is the zero vector, specifying no rotation.
      */
     var rotation = simd_quatf() {
-        didSet { setNeedTransformUpdate() }
+        didSet { setNeedsTransformUpdate() }
     }
 
     /**
@@ -32,13 +32,13 @@ struct NodeGeometry {
      Each component of the scale vector multiplies the corresponding dimension of the node’s geometry. The default scale is 1.0 in all three dimensions. For example, applying a scale of (2.0, 0.5, 2.0) to a node containing a cube geometry reduces its height and increases its width and depth.
      */
     var scale = float3(1, 1, 1) {
-        didSet { setNeedTransformUpdate() }
+        didSet { setNeedsTransformUpdate() }
     }
 
-    /// Marks the world transorm as needing to be recalculated.
-    private(set) var needTransformUpdate = true
+    /// Marks the world transform as needing to be recalculated.
+    private(set) var needsUpdateWorldTransform = true
     /// The world transform applied to the node.
-    private(set) var cachedTransformMatrix = matrix_identity_float4x4
+    private(set) var cachedWorldTransform = matrix_identity_float4x4
 
     // MARK: - Functions
 
@@ -48,12 +48,12 @@ struct NodeGeometry {
      - Returns: Updated world transform matrix.
      */
     mutating func worldTransform() -> float4x4 {
-        if needTransformUpdate {
-            cachedTransformMatrix = makeTransformMatrix(trans: position, rot: rotation, scale: scale)
-            needTransformUpdate = false
+        if needsUpdateWorldTransform {
+            cachedWorldTransform = makeTransformMatrix(trans: position, rot: rotation, scale: scale)
+            needsUpdateWorldTransform = false
         }
 
-        return cachedTransformMatrix
+        return cachedWorldTransform
     }
 
     /**
@@ -61,7 +61,7 @@ struct NodeGeometry {
 
      You can use this method or the to notify the `ARScene` that your node has updated coordinates and world transform is need to be redrawn. This method makes a note of the request and returns immediately. The value is not actually recalculated until the next render cycle, at which point all invalidated world transforms are updated.
      */
-    mutating func setNeedTransformUpdate() {
-        needTransformUpdate = true
+    mutating func setNeedsTransformUpdate() {
+        needsUpdateWorldTransform = true
     }
 }
