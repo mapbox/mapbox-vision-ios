@@ -16,12 +16,28 @@ class ARNodeTests: XCTestCase {
         XCTAssertNil(arNode.entity)
     }
 
-    func testARNodeAfterInitHasExpectedPosition() {
+    func testARNodeAfterInitHasExpectedInitialPosition() {
         // Given
         let expectedInitialPosition = float3(0, 0, 0)
 
         // When // Then
-        XCTAssertTrue(arNode.position == expectedInitialPosition)
+        XCTAssertEqual(arNode.position, expectedInitialPosition)
+    }
+
+    func testARNodeAfterInitHasExpectedInitialRotation() {
+        // Given
+        let expectedInitialRotation = simd_quatf()
+
+        // When // Then
+        XCTAssertEqual(arNode.rotation, expectedInitialRotation)
+    }
+
+    func testARNodeAfterInitHasExpectedInitialScale() {
+        // Given
+        let expectedInitialScale = float3(1, 1, 1)
+
+        // When // Then
+        XCTAssertEqual(arNode.scale, expectedInitialScale)
     }
 
     func testAddChildMethodAddsChildNodes() {
@@ -34,7 +50,17 @@ class ARNodeTests: XCTestCase {
         }
 
         // Then
-        XCTAssertTrue(arNode.childs.count == expectedNumberOfChildNodes)
+        XCTAssertEqual(arNode.childs.count, expectedNumberOfChildNodes)
+    }
+
+    func testChildNodeHasParentAfterAddChildMethodExecution() {
+        // Given
+        let childNode = ARRootNode()
+
+        // When
+        arNode.add(child: childNode)
+        XCTAssertNotNil(childNode.parent)
+        XCTAssertTrue((childNode.parent as? ARNode) === arNode)
     }
 
     func testRemoveAllChildsMethodRemovesChildNodes() {
@@ -44,7 +70,7 @@ class ARNodeTests: XCTestCase {
         }
 
         // When
-        arNode?.removeAllChilds()
+        arNode.removeAllChilds()
 
         // Then
         XCTAssertTrue(arNode.childs.isEmpty)
