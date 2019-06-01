@@ -26,4 +26,25 @@ class ARRootNode: ARNode {
         relations = NodeRelations()
         geometry = NodeGeometry()
     }
+
+    /**
+     Adds a node to the node’s array of children.
+
+     Calling this method appends the node to the end of the `childs` array and create reference from child's property `parent`.
+     Method do nothing if `child` node has `rootNode` type.
+
+     - Parameters:
+     - child: The node to be added.
+     */
+    func add(child: Node) {
+        if let child = (child as? ARNode) {
+            if child.nodeType == .rootNode {
+                return
+            }
+        }
+
+        child.geometry.setNeedsTransformUpdate()
+        childs.append(child)
+        child.relations.parent = self
+    }
 }
