@@ -11,8 +11,8 @@ struct NodeGeometry {
         didSet { setNeedTransformUpdate() }
     }
 
-    var needTransformUpdate = true
-    var cachedTransformMatrix = matrix_identity_float4x4
+    private(set) var needTransformUpdate = true
+    private(set) var cachedTransformMatrix = matrix_identity_float4x4
 
     mutating func worldTransform() -> float4x4 {
         if needTransformUpdate {

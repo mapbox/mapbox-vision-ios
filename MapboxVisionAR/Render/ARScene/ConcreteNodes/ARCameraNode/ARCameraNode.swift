@@ -32,7 +32,7 @@ class ARCameraNode: ARNode {
 
     // MARK: - Private properties
 
-    private var cachedProjectionMatrix = float4x4()
+    private(set) var cachedProjectionMatrix = float4x4()
 
     // MARK: - Lifecycle
 
@@ -60,7 +60,7 @@ class ARCameraNode: ARNode {
 
     // MARK: - Private functions
 
-    private func setNeedProjectionUpdate() {
+    func setNeedProjectionUpdate() { // TODO: private? same for setNeedTransformUpdate
         needProjectionUpdate = true
     }
 }
