@@ -116,7 +116,7 @@ class ARRenderer: NSObject {
 
     // MARK: Public functions
 
-    func initARScene() {
+    func initARSceneForARLane() {
         scene.rootNode.removeAllChilds()
 
         let arLaneMesh = ARLaneMesh(device: device, vertexDescriptor: vertexDescriptor)

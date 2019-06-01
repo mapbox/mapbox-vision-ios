@@ -39,7 +39,7 @@ public class VisionARViewController: UIViewController {
             try renderer = ARRenderer(device: device,
                                       colorPixelFormat: arView.colorPixelFormat,
                                       depthStencilPixelFormat: arView.depthStencilPixelFormat)
-            renderer?.initARScene()
+            renderer?.initARSceneForARLane()
             arView.delegate = renderer
         } catch {
             assertionFailure(error.localizedDescription)
