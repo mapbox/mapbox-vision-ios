@@ -1,4 +1,4 @@
-/// Specifies the concrete type of `ARNode`.
+/// Specifies the concrete type of `ARNode` object.
 enum ARNodeType {
     /// The type represents `ARRootNode`.
     case rootNode

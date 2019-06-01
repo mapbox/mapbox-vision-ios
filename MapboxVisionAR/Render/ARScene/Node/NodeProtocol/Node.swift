@@ -1,8 +1,8 @@
-/// Methods and properties common to the nodes which will be displayed in `ARScene`.
+/// Methods and properties common to the nodes which can be a part of node hierarchy.
 protocol Node: AnyObject {
     // MARK: - Properties
 
-    /// Set of properties describing node in the node hierarchy.
+    /// Set of properties describing position of the node in the node hierarchy.
     var relations: NodeRelations { get set }
     /// Set of properties that determine the transformation between coordinate systems.
     var geometry: NodeGeometry { get set }
