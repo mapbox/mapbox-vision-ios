@@ -49,6 +49,17 @@ class NodeGeometryTests: XCTestCase {
         XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedFinalState)
     }
 
+    func testWorldTransformMethodReturnsValueEqualsToCachedValue() {
+        // Given
+        nodeGeometry.position = float3(1, 2, 3)
+
+        // When
+        let valueReturnedFromMethod = nodeGeometry.worldTransform()
+
+        // Then
+        XCTAssertEqual(valueReturnedFromMethod, nodeGeometry.cachedWorldTransform)
+    }
+
     func testSetNeedsUpdateWorldTransformMethodIsCalledWhenPositionChanges() {
         // Given
         _ = nodeGeometry.worldTransform()
@@ -82,12 +93,22 @@ class NodeGeometryTests: XCTestCase {
         XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
     }
 
-    func testUpdatesCachedMatrix() {
+    func testWorldTransformMethodCorrectlyUpdatesWorldTranform() {
         // Given
-        let initialState = 0
-        let updatedState = 0
+        let expectedWorldTransform = matrix_float4x4(
+            float4(-25,  56, -30, 0),
+            float4(-20, -38,  60, 0),
+            float4( 22,   8, -27, 0),
+            float4(  1,   2,   3, 1)
+        )
+        nodeGeometry.position = float3(1, 2, 3)
+        nodeGeometry.rotation = simd_quatf(ix: 1, iy: 2, iz: 3, r: 4)
+        nodeGeometry.scale = float3(1, 2, 3)
+
         // When
+        let updatedWorldTransform = nodeGeometry.worldTransform()
+
         // Then
-        XCTAssertNotEqual(initialState, updatedState)
+        XCTAssertEqual(updatedWorldTransform, expectedWorldTransform)
     }
 }
