@@ -1,8 +1,22 @@
 import Foundation
 
+typealias Byte = Int64
+
+private let BytesInKByte: Byte = 1024
+private let KByteInMByte: Byte = 1024
+
+private let KByte = BytesInKByte
+private let MByte = KByteInMByte * KByte
+
+private let SecondsInMinute: TimeInterval = 60
+private let MinutesInHour: TimeInterval = 60
+
+private let Minute = SecondsInMinute
+private let Hour = SecondsInMinute * Minute
+
 private let memoryLimit = 300.0 // mb
-private let networkingMemoryLimit: Int64 = 30 * 1024 * 1024
-private let updatingInterval: TimeInterval = 60 * 60
+private let networkingMemoryLimit = 30 * MByte
+private let updatingInterval = 1 * Hour
 
 final class RecordSynchronizer: Synchronizable {
     enum RecordSynchronizerError: LocalizedError {
@@ -26,7 +40,7 @@ final class RecordSynchronizer: Synchronizable {
     private let telemetryFileName = "telemetry"
     private let imagesSubpath = "images"
     private let imagesFileName = "images"
-    private let quota = RecordingQuota(memoryLimit: networkingMemoryLimit, updatingInterval: updatingInterval)
+    private let quota = RecordingQuota(memoryQuota: networkingMemoryLimit, refreshInterval: updatingInterval)
 
     private var isSyncing: Bool = false {
         didSet {
@@ -132,7 +146,7 @@ final class RecordSynchronizer: Synchronizable {
                     files.forEach(dependencies.dataSource.removeFile)
                 }
 
-                try self.quota.reserve(memory: dependencies.fileManager.fileSize(at: destination))
+                try self.quota.reserve(memoryToReserve: dependencies.fileManager.fileSize(at: destination))
             } catch {
                 print("Directory \(dir) failed to archive. Error: \(error.localizedDescription)")
                 group.leave()
@@ -167,7 +181,7 @@ final class RecordSynchronizer: Synchronizable {
             group.enter()
 
             do {
-                try quota.reserve(memory: fileSize(file))
+                try quota.reserve(memoryToReserve: fileSize(file))
             } catch {
                 print("Quota reservation error: \(error.localizedDescription)")
                 group.leave()
