@@ -13,11 +13,11 @@ public class BaseVisionManager: VisionManagerProtocol {
 
     // MARK: Utility
 
-    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
+    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate? {
         return dependencies.native.pixel(toWorld: screenCoordinate)
     }
 
-    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
+    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D? {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
 
