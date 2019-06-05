@@ -17,12 +17,12 @@ extension ARNode {
      Calling this method appends the node to the end of the `childs` array and create reference from child's property `parent`.
 
      - Parameters:
-       - child: The node to be added.
+       - childNode: The node to be added.
      */
-    func add(child: Node) {
-        child.geometry.setNeedsTransformUpdate()
-        childNodes.append(child)
-        child.parent = self
+    func add(childNode: Node) {
+        childNode.geometry.setNeedsTransformUpdate()
+        childNodes.append(childNode)
+        childNode.parent = self
     }
 
     /**

@@ -29,7 +29,7 @@ class ARSceneTests: XCTestCase {
 
     func testGetChildARLaneNodesMethodReturnsZeroARNodeWhenThereAreNoARLaneNodesInARScene() {
         // Given state from setUp()
-        arScene.rootNode.add(child: ARCameraNode())
+        arScene.rootNode.add(childNode: ARCameraNode())
 
         // When // Then
         XCTAssertTrue(arScene.getChildARLaneNodes().isEmpty)

@@ -15,9 +15,9 @@ protocol Node: AnyObject {
      Adds a node to the node’s array of children.
 
      - Parameters:
-       - child: The node to be added.
+       - childNode: The node to be added.
      */
-    func add(child: Node)
+    func add(childNode: Node)
 
     /**
      Removes all child nodes from the node’s array of children.

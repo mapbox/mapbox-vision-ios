@@ -52,7 +52,7 @@ class ARRootNodeTests: XCTestCase {
 
         // When
         for _ in 1...expectedNumberOfChildNodes {
-            rootNode.add(child: ARCameraNode())
+            rootNode.add(childNode: ARCameraNode())
         }
 
         // Then
@@ -65,7 +65,7 @@ class ARRootNodeTests: XCTestCase {
 
         // When
         for _ in 1...numberOfRootChildNodesTryingToAdd {
-            rootNode.add(child: ARRootNode())
+            rootNode.add(childNode: ARRootNode())
         }
 
         // Then
@@ -77,7 +77,7 @@ class ARRootNodeTests: XCTestCase {
         let childNode = ARCameraNode()
 
         // When
-        rootNode.add(child: childNode)
+        rootNode.add(childNode: childNode)
 
         // Then
         XCTAssertNotNil(childNode.parent)
@@ -87,7 +87,7 @@ class ARRootNodeTests: XCTestCase {
     func testRemoveAllChildsMethodRemovesChildNodes() {
         // Given
         for _ in 1...Int.random(in: 1...10) {
-            rootNode.add(child: ARRootNode())
+            rootNode.add(childNode: ARRootNode())
         }
 
         // When
@@ -103,7 +103,7 @@ class ARRootNodeTests: XCTestCase {
         let childNode = ARCameraNode()
         let initialWorldTransform = childNode.worldTransform()
 
-        parentNode.add(child: childNode)
+        parentNode.add(childNode: childNode)
 
         // When
         parentNode.geometry.position = float3(1, 1, 1)
@@ -119,7 +119,7 @@ class ARRootNodeTests: XCTestCase {
         let childNode = ARCameraNode()
         let initialWorldTransform = parentNode.worldTransform()
 
-        parentNode.add(child: childNode)
+        parentNode.add(childNode: childNode)
 
         // When
         childNode.geometry.position = float3(1, 1, 1)

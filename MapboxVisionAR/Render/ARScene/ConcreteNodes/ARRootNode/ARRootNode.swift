@@ -38,15 +38,15 @@ class ARRootNode: ARNode {
      - Parameters:
      - child: The node to be added.
      */
-    func add(child: Node) {
-        if let child = (child as? ARNode) {
-            if child.nodeType == .rootNode {
+    func add(childNode: Node) {
+        if let childNode = (childNode as? ARNode) {
+            if childNode.nodeType == .rootNode {
                 return
             }
         }
 
-        child.geometry.setNeedsTransformUpdate()
-        childNodes.append(child)
-        child.parent = self
+        childNode.geometry.setNeedsTransformUpdate()
+        childNodes.append(childNode)
+        childNode.parent = self
     }
 }

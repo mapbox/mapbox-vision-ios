@@ -136,8 +136,7 @@ class ARRenderer: NSObject {
         let arLaneMesh = ARLaneMesh(device: device, vertexDescriptor: vertexDescriptor)
         let arLaneEntity = ARLaneEntity(with: arLaneMesh, and: renderPipelineArrow)
         let arrowNode = ARLaneNode(arLaneEntity: arLaneEntity)
-        arrowNode.set(laneWidth: 3.0)
-        scene.rootNode.add(child: arrowNode)
+        scene.rootNode.add(childNode: arrowNode)
     }
 
     func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
