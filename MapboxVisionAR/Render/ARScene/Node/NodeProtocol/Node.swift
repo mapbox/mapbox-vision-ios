@@ -5,7 +5,7 @@ protocol Node: AnyObject {
     /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
     var parent: Node? { get set }
     /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
-    var childs: [Node] { get set }
+    var childNodes: [Node] { get set }
     /// Set of properties that determine the transformation between coordinate systems.
     var geometry: NodeGeometry { get set }
 

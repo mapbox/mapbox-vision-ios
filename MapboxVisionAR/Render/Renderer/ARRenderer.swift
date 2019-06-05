@@ -153,7 +153,7 @@ class ARRenderer: NSObject {
         )
         viewProjectionMatrix = scene.cameraNode.projectionMatrix() * viewMatrix
 
-        scene.rootNode.childs.forEach { arNode in
+        scene.rootNode.childNodes.forEach { arNode in
             if let arNode = arNode as? ARNode, let arEntity = arNode.entity, let mesh = arEntity.mesh {
                 commandEncoder.setRenderPipelineState(arEntity.renderPipeline ?? renderPipelineDefault)
 

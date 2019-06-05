@@ -20,6 +20,6 @@ class ARScene {
      - Returns: An array containing `ARLaneNode` nodes.
      */
     func getChildARLaneNodes() -> [ARLaneNode] {
-        return rootNode.childs.compactMap { $0 as? ARLaneNode }
+        return rootNode.childNodes.compactMap { $0 as? ARLaneNode }
     }
 }

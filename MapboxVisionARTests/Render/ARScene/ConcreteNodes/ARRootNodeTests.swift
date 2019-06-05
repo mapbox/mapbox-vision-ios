@@ -56,7 +56,7 @@ class ARRootNodeTests: XCTestCase {
         }
 
         // Then
-        XCTAssertEqual(rootNode.childs.count, expectedNumberOfChildNodes)
+        XCTAssertEqual(rootNode.childNodes.count, expectedNumberOfChildNodes)
     }
 
     func testAddChildMethodDoNotAddARRootNodeAsAChildNode() {
@@ -69,7 +69,7 @@ class ARRootNodeTests: XCTestCase {
         }
 
         // Then
-        XCTAssertTrue(rootNode.childs.isEmpty)
+        XCTAssertTrue(rootNode.childNodes.isEmpty)
     }
 
     func testChildNodeHasParentAfterAddChildMethodExecution() {
@@ -94,7 +94,7 @@ class ARRootNodeTests: XCTestCase {
         rootNode.removeAllChilds()
 
         // Then
-        XCTAssertTrue(rootNode.childs.isEmpty)
+        XCTAssertTrue(rootNode.childNodes.isEmpty)
     }
 
     func testWorldTransformMethodUpdatesWorldTransformWhenGeometryOfParentNodeChanges() {

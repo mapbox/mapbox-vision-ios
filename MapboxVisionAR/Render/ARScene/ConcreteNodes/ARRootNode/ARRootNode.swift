@@ -14,7 +14,7 @@ class ARRootNode: ARNode {
     /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
     weak var parent: Node?
     /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
-    var childs: [Node]
+    var childNodes: [Node]
     /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
@@ -25,7 +25,7 @@ class ARRootNode: ARNode {
      */
     init() {
         nodeType = .rootNode
-        childs = []
+        childNodes = []
         geometry = NodeGeometry()
     }
 
@@ -46,7 +46,7 @@ class ARRootNode: ARNode {
         }
 
         child.geometry.setNeedsTransformUpdate()
-        childs.append(child)
+        childNodes.append(child)
         child.parent = self
     }
 }

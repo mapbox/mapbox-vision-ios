@@ -21,7 +21,7 @@ extension ARNode {
      */
     func add(child: Node) {
         child.geometry.setNeedsTransformUpdate()
-        childs.append(child)
+        childNodes.append(child)
         child.parent = self
     }
 
@@ -31,7 +31,7 @@ extension ARNode {
      Calling this method removes all nodes from `childs` array.
      */
     func removeAllChilds() {
-        childs.removeAll()
+        childNodes.removeAll()
     }
 
     /**
