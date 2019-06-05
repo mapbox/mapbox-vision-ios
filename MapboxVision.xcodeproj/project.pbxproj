@@ -105,7 +105,6 @@
 		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993222A11B71005EB875 /* NodeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993122A11B71005EB875 /* NodeGeometry.swift */; };
-		3A7E993422A11BA5005EB875 /* NodeRelations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993322A11BA5005EB875 /* NodeRelations.swift */; };
 		3A7E993722A11BC8005EB875 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993622A11BC8005EB875 /* Node.swift */; };
 		3A7E994222A12039005EB875 /* ARLaneEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994122A12039005EB875 /* ARLaneEntity.swift */; };
 		3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994722A14692005EB875 /* NodeGeometryTests.swift */; };
@@ -270,7 +269,6 @@
 		3A5E8C0622A5239F00CC0954 /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
 		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A7E993122A11B71005EB875 /* NodeGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometry.swift; sourceTree = "<group>"; };
-		3A7E993322A11BA5005EB875 /* NodeRelations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRelations.swift; sourceTree = "<group>"; };
 		3A7E993622A11BC8005EB875 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		3A7E994122A12039005EB875 /* ARLaneEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARLaneEntity.swift; sourceTree = "<group>"; };
 		3A7E994722A14692005EB875 /* NodeGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometryTests.swift; sourceTree = "<group>"; };
@@ -744,7 +742,6 @@
 			isa = PBXGroup;
 			children = (
 				3A7E993122A11B71005EB875 /* NodeGeometry.swift */,
-				3A7E993322A11BA5005EB875 /* NodeRelations.swift */,
 			);
 			path = NodeStructure;
 			sourceTree = "<group>";
@@ -1166,7 +1163,6 @@
 				3A11B03C229ED2AC00070A61 /* ARNode+Extension.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
-				3A7E993422A11BA5005EB875 /* NodeRelations.swift in Sources */,
 				3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
 				3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */,

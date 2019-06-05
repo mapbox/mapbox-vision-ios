@@ -8,8 +8,10 @@ class ARLaneNode: ARNode {
     private(set) var nodeType: ARNodeType
     /// Underlying AR entity.
     private(set) var entity: AREntity?
-    /// Describes position of the node in the node hierarchy.
-    var relations: NodeRelations
+    /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
+    weak var parent: Node?
+    /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
+    var childs: [Node]
     /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
@@ -20,7 +22,7 @@ class ARLaneNode: ARNode {
     init(arLaneEntity: ARLaneEntity) {
         nodeType = .arrowNode
         entity = arLaneEntity
-        relations = NodeRelations()
+        childs = []
         geometry = NodeGeometry()
     }
 
@@ -54,7 +56,7 @@ class ARLaneNode: ARNode {
        - laneWidth: Width of AR lane.
      */
     func set(laneWidth: Float) {
-        self.scale.x = laneWidth
+        self.geometry.scale.x = laneWidth
     }
 
     /**

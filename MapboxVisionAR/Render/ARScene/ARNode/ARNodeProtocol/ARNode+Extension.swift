@@ -9,50 +9,6 @@ protocol ARNode: Node {
 }
 
 extension ARNode {
-    // MARK: - Properties
-
-    ///  The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
-    var parent: Node? {
-        get { return relations.parent }
-        set { relations.parent = newValue }
-    }
-
-    /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
-    var childs: [Node] {
-        get { return relations.childs }
-        set { relations.childs = newValue }
-    }
-
-    /**
-     The position of node.
-
-     The node’s position locates it within the coordinate system of its parent using three-component vector. The default position is the zero vector, indicating that the node is placed at the origin of the parent node’s coordinate system.
-     */
-    var position: float3 {
-        get { return geometry.position }
-        set { geometry.position = newValue }
-    }
-
-    /**
-     The node’s orientation, expressed as a rotation angle about an axis.
-
-     The four-component rotation vector specifies the direction of the rotation axis in the first three components and the angle of rotation (in radians) in the fourth. The default rotation is the zero vector, specifying no rotation.
-     */
-    var rotation: simd_quatf {
-        get { return geometry.rotation }
-        set { geometry.rotation = newValue }
-    }
-
-    /**
-     The scale factor applied to the node.
-
-     Each component of the scale vector multiplies the corresponding dimension of the node’s geometry. The default scale is 1.0 in all three dimensions. For example, applying a scale of (2.0, 0.5, 2.0) to a node containing a cube geometry reduces its height and increases its width and depth.
-     */
-    var scale: float3 {
-        get { return geometry.scale }
-        set { geometry.scale = newValue }
-    }
-
     // MARK: - Functions
 
     /**
@@ -66,7 +22,7 @@ extension ARNode {
     func add(child: Node) {
         child.geometry.setNeedsTransformUpdate()
         childs.append(child)
-        child.relations.parent = self
+        child.parent = self
     }
 
     /**

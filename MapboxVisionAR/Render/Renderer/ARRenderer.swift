@@ -147,7 +147,10 @@ class ARRenderer: NSObject {
         commandEncoder.setRenderPipelineState(renderPipelineDefault)
         commandEncoder.setFragmentSamplerState(samplerStateDefault, index: 0)
 
-        let viewMatrix = makeViewMatrix(trans: scene.cameraNode.position, rot: scene.cameraNode.rotation)
+        let viewMatrix = makeViewMatrix(
+            trans: scene.cameraNode.geometry.position,
+            rot: scene.cameraNode.geometry.rotation
+        )
         viewProjectionMatrix = scene.cameraNode.projectionMatrix() * viewMatrix
 
         scene.rootNode.childs.forEach { arNode in
@@ -184,7 +187,7 @@ class ARRenderer: NSObject {
                     commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<DefaultVertexUniforms>.size, index: 1)
                 }
 
-                var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.position,
+                var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.geometry.position,
                                                         ambientLightColor: material.ambientLightColor,
                                                         specularColor: material.specularColor,
                                                         baseColor: material.diffuseColor.xyz,
@@ -216,9 +219,9 @@ class ARRenderer: NSObject {
         guard let camParams = camera else { return }
         scene.cameraNode.aspectRatio = camParams.aspectRatio
         scene.cameraNode.fovRadians = camParams.fov
-        scene.cameraNode.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
+        scene.cameraNode.geometry.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
 
-        scene.cameraNode.position = float3(0, camParams.height, 0)
+        scene.cameraNode.geometry.position = float3(0, camParams.height, 0)
     }
 
 

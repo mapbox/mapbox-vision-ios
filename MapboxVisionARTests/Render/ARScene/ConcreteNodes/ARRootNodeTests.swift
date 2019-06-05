@@ -27,7 +27,7 @@ class ARRootNodeTests: XCTestCase {
         let expectedInitialPosition = float3(0, 0, 0)
 
         // When // Then
-        XCTAssertEqual(rootNode.position, expectedInitialPosition)
+        XCTAssertEqual(rootNode.geometry.position, expectedInitialPosition)
     }
 
     func testARNodeAfterInitHasExpectedInitialRotation() {
@@ -35,7 +35,7 @@ class ARRootNodeTests: XCTestCase {
         let expectedInitialRotation = simd_quatf()
 
         // When // Then
-        XCTAssertEqual(rootNode.rotation, expectedInitialRotation)
+        XCTAssertEqual(rootNode.geometry.rotation, expectedInitialRotation)
     }
 
     func testARNodeAfterInitHasExpectedInitialScale() {
@@ -43,7 +43,7 @@ class ARRootNodeTests: XCTestCase {
         let expectedInitialScale = float3(1, 1, 1)
 
         // When // Then
-        XCTAssertEqual(rootNode.scale, expectedInitialScale)
+        XCTAssertEqual(rootNode.geometry.scale, expectedInitialScale)
     }
 
     func testAddChildMethodAddsChildNodes() {
@@ -62,6 +62,7 @@ class ARRootNodeTests: XCTestCase {
     func testAddChildMethodDoNotAddARRootNodeAsAChildNode() {
         // Given state from setUp()
         let numberOfRootChildNodesTryingToAdd = Int.random(in: 1...10)
+
         // When
         for _ in 1...numberOfRootChildNodesTryingToAdd {
             rootNode.add(child: ARRootNode())
@@ -77,6 +78,8 @@ class ARRootNodeTests: XCTestCase {
 
         // When
         rootNode.add(child: childNode)
+
+        // Then
         XCTAssertNotNil(childNode.parent)
         XCTAssertTrue((childNode.parent as? ARNode) === rootNode)
     }
@@ -101,12 +104,12 @@ class ARRootNodeTests: XCTestCase {
         let initialWorldTransform = childNode.worldTransform()
 
         parentNode.add(child: childNode)
-        parentNode.geometry.position = float3(1, 1, 1)
 
         // When
-        let finalState = childNode.worldTransform()
+        parentNode.geometry.position = float3(1, 1, 1)
 
         // Then
+        let finalState = childNode.worldTransform()
         XCTAssertNotEqual(initialWorldTransform, finalState)
     }
 
@@ -117,12 +120,12 @@ class ARRootNodeTests: XCTestCase {
         let initialWorldTransform = parentNode.worldTransform()
 
         parentNode.add(child: childNode)
-        childNode.geometry.position = float3(1, 1, 1)
 
         // When
-        let finalState = parentNode.worldTransform()
+        childNode.geometry.position = float3(1, 1, 1)
 
         // Then
+        let finalState = parentNode.worldTransform()
         XCTAssertEqual(initialWorldTransform, finalState)
     }
 }

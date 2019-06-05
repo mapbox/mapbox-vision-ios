@@ -3,16 +3,19 @@ import simd
 class ARCameraNode: ARNode {
     // MARK: - Properties
 
-    /// Type of node. Always returns `rootNode`.
+    /// Type of node. Always returns `cameraNode`.
     private(set) var nodeType: ARNodeType
     /// Underlying AR entity.
     var entity: AREntity?
-    /// Describes position of the node in the node hierarchy.
-    var relations: NodeRelations
+    /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
+    weak var parent: Node?
+    /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
+    var childs: [Node]
     /// Describes transformation between coordinate systems.
     var geometry: NodeGeometry
 
-    var needsUpdateProjection = true
+    private(set) var cachedProjectionMatrix = float4x4()
+    private(set) var needsUpdateProjection = true
     var nearClipPlane: Float = 0.01 {
         didSet {
             setNeedsUpdateProjection()
@@ -34,15 +37,11 @@ class ARCameraNode: ARNode {
         }
     }
 
-    // MARK: - Private properties
-
-    private(set) var cachedProjectionMatrix = float4x4()
-
     // MARK: - Lifecycle
 
     init() {
         nodeType = .cameraNode
-        relations = NodeRelations()
+        childs = []
         geometry = NodeGeometry()
     }
 
@@ -61,8 +60,6 @@ class ARCameraNode: ARNode {
 
         return cachedProjectionMatrix
     }
-
-    // MARK: - Private functions
 
     func setNeedsUpdateProjection() {
         needsUpdateProjection = true
