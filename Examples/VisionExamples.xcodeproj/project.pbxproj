@@ -172,6 +172,7 @@
 				B517709E2242755300A693E6 /* Embed Frameworks */,
 				B51770A6224276DB00A693E6 /* Carthage */,
 				2E4E90BE224D185200838DAE /* Mapbox token */,
+				3A5E8C0222A42A6F00CC0954 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -248,6 +249,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "xml=\"$(plutil -extract MGLMapboxAccessToken xml1 -o - $TARGET_BUILD_DIR/$INFOPLIST_PATH)\"\ntoken=\"$(sed -n \"s/.*<string>\\(.*\\)<\\/string>.*/\\1/p\" <<< $xml)\"\nif [ -z \"$token\" ]; then\ntoken_file=~/.mapbox\ntoken=\"$(cat $token_file 2>/dev/null)\"\nif [ \"$token\" ]; then\nplutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\necho 'warning: Missing Mapbox access token'\nopen 'https://www.mapbox.com/account/access-tokens/'\necho \"warning: Get an access token from <https://www.mapbox.com/account/access-tokens/>, then create a new file at $token_file that contains the access token.\"\nfi\nfi\n";
+		};
+		3A5E8C0222A42A6F00CC0954 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		B51770A6224276DB00A693E6 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
