@@ -2,21 +2,21 @@ import Foundation
 
 typealias Byte = Int64
 
-private let BytesInKByte: Byte = 1024
-private let KByteInMByte: Byte = 1024
+private let bytesInKByte: Byte = 1024
+private let kByteInMByte: Byte = 1024
 
-private let KByte = BytesInKByte
-private let MByte = KByteInMByte * KByte
+private let kByte = bytesInKByte
+private let mByte = kByteInMByte * kByte
 
-private let SecondsInMinute: TimeInterval = 60
-private let MinutesInHour: TimeInterval = 60
+private let secondsInMinute: TimeInterval = 60
+private let minutesInHour: TimeInterval = 60
 
-private let Minute = SecondsInMinute
-private let Hour = SecondsInMinute * Minute
+private let minute = secondsInMinute
+private let hour = secondsInMinute * minute
 
 private let memoryLimit = 300.0 // mb
-private let networkingMemoryLimit = 30 * MByte
-private let updatingInterval = 1 * Hour
+private let networkingMemoryLimit = 30 * mByte
+private let updatingInterval = 1 * hour
 
 final class RecordSynchronizer: Synchronizable {
     enum RecordSynchronizerError: LocalizedError {
