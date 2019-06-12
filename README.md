@@ -34,7 +34,7 @@ Vision SDK for iOS contains several modules which built on top of Vision Core li
   1. `VisionAR SDK` for AR experience on iOS platform. It has own API to control:
       * configuration of AR lane:
           - lane's color;
-           - lane's geometry;
+          - lane's geometry;
           - lane's material (shaders, textures, parameters of light source.
       * customize occlusion;
       * draw custom objects?
