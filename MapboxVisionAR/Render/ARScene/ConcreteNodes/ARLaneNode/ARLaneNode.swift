@@ -4,7 +4,7 @@ import simd
 class ARLaneNode: ARNode {
     // MARK: - Properties
 
-    /// Type of node. Always returns `rootNode`.
+    /// Type of node. Always returns `laneNode`.
     private(set) var nodeType: ARNodeType
     /// Underlying AR entity.
     private(set) var entity: AREntity?
