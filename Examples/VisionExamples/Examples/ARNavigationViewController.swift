@@ -1,6 +1,10 @@
 import MapboxVision
 import MapboxVisionAR
 import UIKit
+import CoreLocation
+import MapboxCoreNavigation
+import MapboxDirections
+import MapboxVisionARNative
 
 /**
  * "AR Navigation" example demonstrates how to display navigation route projected on the surface of the road.
@@ -83,5 +87,32 @@ extension ARNavigationViewController: VideoSourceObserver {
             // display received sample buffer by passing it to ar view controller
             self?.visionARViewController.present(sampleBuffer: videoSample.buffer)
         }
+    }
+}
+
+public extension MapboxVisionARNative.Route {
+
+    /**
+     Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
+     */
+    convenience init(route: MapboxDirections.Route) {
+        var points = Array<RoutePoint>()
+
+        route.legs.forEach { $0.steps.forEach { step in
+
+            let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
+            points.append(maneuver)
+
+            guard let coords = step.coordinates else { return }
+            let routePoints = coords.map {
+                RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+            }
+            points.append(contentsOf: routePoints)
+            } }
+
+        self.init(points: points,
+                  eta: Float(route.expectedTravelTime),
+                  sourceStreetName: route.legs.first?.source.name ?? "",
+                  destinationStreetName: route.legs.last?.destination.name ?? "")
     }
 }
