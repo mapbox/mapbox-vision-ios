@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2E071A312257883900345FA8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
-		2E071A442257887F00345FA8 /* DirectionsRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A332257887E00345FA8 /* DirectionsRoute.swift */; };
 		2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */; };
 		2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A352257887E00345FA8 /* ARRenderer.swift */; };
 		2E071A472257887F00345FA8 /* ARScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E071A362257887E00345FA8 /* ARScene.swift */; };
@@ -130,7 +129,6 @@
 /* Begin PBXFileReference section */
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E071A332257887E00345FA8 /* DirectionsRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionsRoute.swift; sourceTree = "<group>"; };
 		2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionARManagerDelegate.swift; sourceTree = "<group>"; };
 		2E071A352257887E00345FA8 /* ARRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARRenderer.swift; sourceTree = "<group>"; };
 		2E071A362257887E00345FA8 /* ARScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARScene.swift; sourceTree = "<group>"; };
@@ -205,7 +203,7 @@
 		2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSource.swift; sourceTree = "<group>"; };
 		2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorTests.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
-		5A780571229C3250005E6017 /* MapboxDirections.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxDirections.framework; path = "Carthage/Build/iOS/MapboxDirections.framework"; sourceTree = "<group>"; };
+		5A780571229C3250005E6017 /* MapboxDirections.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxDirections.framework; path = Carthage/Build/iOS/MapboxDirections.framework; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -273,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				2E071A392257887E00345FA8 /* Models */,
-				2E071A932257C8B800345FA8 /* Navigation */,
 				2E071A912257C83300345FA8 /* Render */,
 				2E071A922257C89B00345FA8 /* VIsionARManager */,
 				2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */,
@@ -335,14 +332,6 @@
 				2E071A342257887E00345FA8 /* VisionARManagerDelegate.swift */,
 			);
 			path = VIsionARManager;
-			sourceTree = "<group>";
-		};
-		2E071A932257C8B800345FA8 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				2E071A332257887E00345FA8 /* DirectionsRoute.swift */,
-			);
-			path = Navigation;
 			sourceTree = "<group>";
 		};
 		2E071A942257C99C00345FA8 /* VisionSafetyManager */ = {
@@ -827,7 +816,6 @@
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
-				2E071A442257887F00345FA8 /* DirectionsRoute.swift in Sources */,
 				2E071A472257887F00345FA8 /* ARScene.swift in Sources */,
 				2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */,
 				2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */,
