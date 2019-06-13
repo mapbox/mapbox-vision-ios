@@ -24,7 +24,7 @@ final class RecordCoordinatorTests: XCTestCase {
         let docLocations: [DocumentsLocation] = [.cache, .currentRecording, .recordings]
         docLocations.map { $0.path }.forEach(removeDirectory)
 
-        coordinator = RecordCoordinator(settings: videoSettings)
+        coordinator = RecordCoordinator()
         coordinator.delegate = self
     }
 
@@ -41,7 +41,7 @@ final class RecordCoordinatorTests: XCTestCase {
 
     func testStart() {
         do {
-            try coordinator.startRecording(referenceTime: 0)
+            try coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings)
         } catch {
             XCTFail("Recording start has failed with error: \(error)")
         }
@@ -63,7 +63,7 @@ final class RecordCoordinatorTests: XCTestCase {
     }
 
     func testStop() {
-        try? coordinator.startRecording(referenceTime: 0)
+        try? coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings)
 
         wait(for: [recordingStartedExpectation], timeout: 1)
 
