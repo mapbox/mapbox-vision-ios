@@ -1,3 +1,4 @@
-github "mapbox/mapbox-vision-ios" ~> 0.2.1
-# safety
-# ar
+# binary "https://api.mapbox.com/downloads/v1/vision/ios/mapbox-vision-native-all.carthage?access_token=<ADD-TOKEN-HERE>" ~> 0.4.0
+
+github "mapbox/mapbox-vision-ios" ~> 0.4.0
+github "mapbox/MapboxDirections.swift" ~> 0.28.0
