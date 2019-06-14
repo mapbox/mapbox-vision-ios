@@ -22,13 +22,12 @@ public class VisionARViewController: UIViewController {
     }
 
     private var renderer: ARRenderer?
-    
     /**
      Create an instance of VisionARNavigationController.
      */
     public init() {
         super.init(nibName: nil, bundle: nil)
-        
+
         guard let device = MTLCreateSystemDefaultDevice() else {
             assertionFailure("Can't create Metal device")
             return

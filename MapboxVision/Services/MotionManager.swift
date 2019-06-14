@@ -22,7 +22,7 @@ final class MotionManager {
         motion.deviceMotionUpdateInterval = updateInterval
         motion.showsDeviceMovementDisplay = true
 
-        motion.startDeviceMotionUpdates(using: Constants.referenceFrame, to: queue) { [weak self] (data, error) in
+        motion.startDeviceMotionUpdates(using: Constants.referenceFrame, to: queue) { [weak self] data, _ in
             guard let data = data, let referenceFrame = self?.motion.attitudeReferenceFrame else { return }
 
             self?.handler?(data, referenceFrame)

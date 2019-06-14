@@ -104,6 +104,11 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
         view.addSubview(visionViewController.view)
         visionViewController.didMove(toParent: self)
     }
+
+    deinit {
+        // free up VisionManager's resources
+        visionManager.destroy()
+    }
 }
 
 extension ExternalCameraViewController: VideoSourceObserver {

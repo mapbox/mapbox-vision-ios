@@ -46,8 +46,6 @@ class OverSpeedingViewController: UIViewController {
 
         videoSource.stop()
         visionManager.stop()
-        // free up resources by destroying modules when they're not longer used
-        visionSafetyManager.destroy()
     }
 
     private func addVisionView() {
@@ -65,6 +63,13 @@ class OverSpeedingViewController: UIViewController {
             alertView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertView.trailingAnchor, multiplier: 1),
         ])
+    }
+
+    deinit {
+        // free up resources by destroying modules when they're not longer used
+        visionSafetyManager.destroy()
+        // free up VisionManager's resources, should be called after destroing its module
+        visionManager.destroy()
     }
 }
 

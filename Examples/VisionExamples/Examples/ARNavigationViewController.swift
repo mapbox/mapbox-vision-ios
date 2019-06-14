@@ -1,10 +1,9 @@
+import CoreLocation
+import MapboxDirections
 import MapboxVision
 import MapboxVisionAR
-import UIKit
-import CoreLocation
-import MapboxCoreNavigation
-import MapboxDirections
 import MapboxVisionARNative
+import UIKit
 
 /**
  * "AR Navigation" example demonstrates how to display navigation route projected on the surface of the road.
@@ -33,7 +32,7 @@ class ARNavigationViewController: UIViewController {
 
         let origin = CLLocationCoordinate2D()
         let destination = CLLocationCoordinate2D()
-        let options = NavigationRouteOptions(coordinates: [origin, destination], profileIdentifier: .automobile)
+        let options = RouteOptions(coordinates: [origin, destination], profileIdentifier: .automobile)
 
         // query a navigation route between location coordinates and pass it to VisionARManager
         Directions.shared.calculate(options) { [weak self] _, routes, _ in
@@ -54,14 +53,19 @@ class ARNavigationViewController: UIViewController {
 
         videoSource.stop()
         visionManager.stop()
-        // free up resources by destroying modules when they're not longer used
-        visionARManager.destroy()
     }
 
     private func addARView() {
         addChild(visionARViewController)
         view.addSubview(visionARViewController.view)
         visionARViewController.didMove(toParent: self)
+    }
+
+    deinit {
+        // free up resources by destroying modules when they're not longer used
+        visionARManager.destroy()
+        // free up VisionManager's resources, should be called after destroing its module
+        visionManager.destroy()
     }
 }
 
@@ -90,25 +94,25 @@ extension ARNavigationViewController: VideoSourceObserver {
     }
 }
 
-public extension MapboxVisionARNative.Route {
-
+extension MapboxVisionARNative.Route {
     /**
      Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
      */
     convenience init(route: MapboxDirections.Route) {
-        var points = Array<RoutePoint>()
+        var points = [RoutePoint]()
 
-        route.legs.forEach { $0.steps.forEach { step in
+        route.legs.forEach {
+            $0.steps.forEach { step in
+                let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
+                points.append(maneuver)
 
-            let maneuver = RoutePoint(position: GeoCoordinate(lon: step.maneuverLocation.longitude, lat: step.maneuverLocation.latitude))
-            points.append(maneuver)
-
-            guard let coords = step.coordinates else { return }
-            let routePoints = coords.map {
-                RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+                guard let coords = step.coordinates else { return }
+                let routePoints = coords.map {
+                    RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+                }
+                points.append(contentsOf: routePoints)
             }
-            points.append(contentsOf: routePoints)
-            } }
+        }
 
         self.init(points: points,
                   eta: Float(route.expectedTravelTime),
