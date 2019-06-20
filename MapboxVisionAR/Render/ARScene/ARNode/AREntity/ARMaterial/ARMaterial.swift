@@ -3,9 +3,9 @@ import simd
 /// A set of shading attributes that define the appearance of a geometry's surface when rendered.
 struct ARMaterial {
     /// Material’s base color represented in RGBA.
-    var diffuseColor = float4(1, 1, 1, 1)
+    var diffuseColor = ARConstants.ARLaneDefaultColor
     /// Ambient light color represented in RGB.
-    var ambientLightColor = float3(0, 0, 0)
+    var ambientLightColor = ARConstants.ARLaneDefaultColor.xyz
     /// Texture for coloring material.
     var colorTexture: MTLTexture?
     /// Light source for material.
@@ -14,7 +14,7 @@ struct ARMaterial {
     var specularColor = float3(1, 1, 1)
     /// The quantity that controls how “tight” the highlight is.
     /// A low specular power creates very broad highlights, while a high specular power creates pinpoint highlights.
-    var specularPower: Float = 1
+    var specularPower: Float = 100
     /// The vertex winding mode.
     var frontFaceMode = MTLWinding.counterClockwise
 }

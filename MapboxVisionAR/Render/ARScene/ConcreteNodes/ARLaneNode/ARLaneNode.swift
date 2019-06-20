@@ -6,7 +6,7 @@ class ARLaneNode: ARNode {
     // MARK: - Properties
 
     /// Attributes that define the appearance of AR lane.
-    private(set) var arMaterial: ARMaterial
+    private(set) var arMaterial = ARMaterial()
 
     // MARK: - Lifecycle
 
@@ -15,13 +15,6 @@ class ARLaneNode: ARNode {
      The instance has `laneNode` type.
      */
     init() {
-        var arMaterial = ARMaterial()
-        arMaterial.diffuseColor = ARConstants.ARLaneDefaultColor
-        arMaterial.specularPower = 100
-        arMaterial.specularColor = float3(1, 1, 1)
-        arMaterial.ambientLightColor = ARConstants.ARLaneDefaultColor.xyz
-        self.arMaterial = arMaterial
-
         super.init(with: .laneNode)
     }
 
