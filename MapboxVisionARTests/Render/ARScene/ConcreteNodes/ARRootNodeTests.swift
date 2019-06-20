@@ -16,18 +16,12 @@ class ARRootNodeTests: XCTestCase {
         XCTAssertEqual(rootNode.nodeType, .rootNode)
     }
 
-    func testARRootNodeDoesNotHaveAREntity() {
-        // Given state from setUp()
-        // When // Then
-        XCTAssertNil(rootNode.entity)
-    }
-
     func testARNodeAfterInitHasExpectedInitialPosition() {
         // Given
         let expectedInitialPosition = float3(0, 0, 0)
 
         // When // Then
-        XCTAssertEqual(rootNode.geometry.position, expectedInitialPosition)
+        XCTAssertEqual(rootNode.position, expectedInitialPosition)
     }
 
     func testARNodeAfterInitHasExpectedInitialRotation() {
@@ -35,7 +29,7 @@ class ARRootNodeTests: XCTestCase {
         let expectedInitialRotation = simd_quatf()
 
         // When // Then
-        XCTAssertEqual(rootNode.geometry.rotation, expectedInitialRotation)
+        XCTAssertEqual(rootNode.rotation, expectedInitialRotation)
     }
 
     func testARNodeAfterInitHasExpectedInitialScale() {
@@ -43,7 +37,7 @@ class ARRootNodeTests: XCTestCase {
         let expectedInitialScale = float3(1, 1, 1)
 
         // When // Then
-        XCTAssertEqual(rootNode.geometry.scale, expectedInitialScale)
+        XCTAssertEqual(rootNode.scale, expectedInitialScale)
     }
 
     func testAddChildMethodAddsChildNodes() {
@@ -81,7 +75,7 @@ class ARRootNodeTests: XCTestCase {
 
         // Then
         XCTAssertNotNil(childNode.parent)
-        XCTAssertTrue((childNode.parent as? ARNode) === rootNode)
+        XCTAssertTrue(childNode.parent === rootNode)
     }
 
     func testRemoveAllChildsMethodRemovesChildNodes() {
@@ -106,7 +100,7 @@ class ARRootNodeTests: XCTestCase {
         parentNode.add(childNode: childNode)
 
         // When
-        parentNode.geometry.position = float3(1, 1, 1)
+        parentNode.position = float3(1, 1, 1)
 
         // Then
         let finalState = childNode.worldTransform()
@@ -122,7 +116,7 @@ class ARRootNodeTests: XCTestCase {
         parentNode.add(childNode: childNode)
 
         // When
-        childNode.geometry.position = float3(1, 1, 1)
+        childNode.position = float3(1, 1, 1)
 
         // Then
         let finalState = parentNode.worldTransform()

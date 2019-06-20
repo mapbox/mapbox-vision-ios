@@ -36,6 +36,8 @@ class ARRenderer: NSObject {
     private let device: MTLDevice
     /// The Metal command queue this renderer uses for rendering.
     private let commandQueue: MTLCommandQueue
+    /// The mesh for AR lane in scene.
+    private var laneMesh: MTKMesh?
 
     private let samplerStateDefault: MTLSamplerState
     private let depthStencilStateDefault: MTLDepthStencilState
@@ -47,7 +49,7 @@ class ARRenderer: NSObject {
     private let vertexDescriptor: MDLVertexDescriptor = ARRenderer.makeVertexDescriptor()
     private let backgroundVertexBuffer: MTLBuffer
     private let renderPipelineDefault: MTLRenderPipelineState
-    private let renderPipelineArrow: MTLRenderPipelineState
+    private let renderPipelineLane: MTLRenderPipelineState
     private let renderPipelineBackground: MTLRenderPipelineState
 
     private var viewProjectionMatrix = matrix_identity_float4x4
@@ -85,7 +87,7 @@ class ARRenderer: NSObject {
             let defaultFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.defaultFragmentMain),
             let arrowFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.laneFragmentMain),
             let backgroundFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.displayTextureFragment)
-            else {
+        else {
                 throw ARRendererError.cantFindFunctions
         }
 
@@ -98,7 +100,7 @@ class ARRenderer: NSObject {
             depthStencilPixelFormat: depthStencilPixelFormat
         )
 
-        renderPipelineArrow = try ARRenderer.makeRenderPipeline(
+        renderPipelineLane = try ARRenderer.makeRenderPipeline(
             device: device,
             vertexDescriptor: vertexDescriptor,
             vertexFunction: arrowVertexFunction,
@@ -130,13 +132,10 @@ class ARRenderer: NSObject {
 
     // MARK: Public functions
 
-    func initARSceneForARLane() {
+    func initARSceneForARLane() throws {
         scene.rootNode.removeAllChilds()
-
-        let arLaneMesh = ARLaneMesh(device: device, vertexDescriptor: vertexDescriptor)
-        let arLaneEntity = ARLaneEntity(with: arLaneMesh, and: renderPipelineArrow)
-        let arrowNode = ARLaneNode(arLaneEntity: arLaneEntity)
-        scene.rootNode.add(childNode: arrowNode)
+        laneMesh = try self.loadMesh(named: ARConstants.arLaneMeshName)
+        scene.rootNode.add(childNode: ARLaneNode())
     }
 
     func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
@@ -147,67 +146,60 @@ class ARRenderer: NSObject {
         commandEncoder.setFragmentSamplerState(samplerStateDefault, index: 0)
 
         let viewMatrix = makeViewMatrix(
-            trans: scene.cameraNode.geometry.position,
-            rot: scene.cameraNode.geometry.rotation
+            trans: scene.cameraNode.position,
+            rot: scene.cameraNode.rotation
         )
         viewProjectionMatrix = scene.cameraNode.projectionMatrix() * viewMatrix
 
-        scene.rootNode.childNodes.forEach { arNode in
-            if let arNode = arNode as? ARNode, let arEntity = arNode.entity, let mesh = arEntity.mesh {
-                commandEncoder.setRenderPipelineState(arEntity.renderPipeline ?? renderPipelineDefault)
+        scene.getChildARLaneNodes().forEach { arLaneNode in
+            commandEncoder.setRenderPipelineState(renderPipelineLane)
 
-                let modelMatrix = arNode.worldTransform()
-                let material = arEntity.material
+            let modelMatrix = arLaneNode.worldTransform()
+            let material = arLaneNode.arMaterial
 
-                if arNode.nodeType == .arrowNode {
-                    let points = lane.curve.getControlPoints()
+            let points = lane.curve.getControlPoints()
 
-                    guard points.count == 4 else {
-                        assertionFailure("ARLane should contains four points")
-                        return
-                    }
+            guard points.count == 4 else {
+                assertionFailure("ARLane should contains four points")
+                return
+            }
 
-                    var vertexUniforms = ArrowVertexUniforms(
-                        viewProjectionMatrix: viewProjectionMatrix,
-                        modelMatrix: modelMatrix,
-                        normalMatrix: normalMatrix(mat: modelMatrix),
-                        p0: ARRenderer.processPoint(points[0]),
-                        p1: ARRenderer.processPoint(points[1]),
-                        p2: ARRenderer.processPoint(points[2]),
-                        p3: ARRenderer.processPoint(points[3])
-                    )
-                    commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
-                } else {
-                    var vertexUniforms = DefaultVertexUniforms(
-                        viewProjectionMatrix: viewProjectionMatrix,
-                        modelMatrix: modelMatrix,
-                        normalMatrix: normalMatrix(mat: modelMatrix)
-                    )
-                    commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<DefaultVertexUniforms>.size, index: 1)
-                }
+            var vertexUniforms = ArrowVertexUniforms(
+                viewProjectionMatrix: viewProjectionMatrix,
+                modelMatrix: modelMatrix,
+                normalMatrix: normalMatrix(mat: modelMatrix),
+                p0: ARRenderer.processPoint(points[0]),
+                p1: ARRenderer.processPoint(points[1]),
+                p2: ARRenderer.processPoint(points[2]),
+                p3: ARRenderer.processPoint(points[3])
+            )
+            commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
 
-                var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.geometry.position,
-                                                        ambientLightColor: material.ambientLightColor,
-                                                        specularColor: material.specularColor,
-                                                        baseColor: material.diffuseColor.xyz,
-                                                        opacity: material.diffuseColor.w,
-                                                        specularPower: material.specularPower,
-                                                        light: material.light ?? ARLight.defaultLightForLane())
+            var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.position,
+                                                    ambientLightColor: material.ambientLightColor,
+                                                    specularColor: material.specularColor,
+                                                    baseColor: material.diffuseColor.xyz,
+                                                    opacity: material.diffuseColor.w,
+                                                    specularPower: material.specularPower,
+                                                    light: material.light ?? ARLight.defaultLightForLane())
 
-                commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.size, index: 0)
-                commandEncoder.setFrontFacing(material.frontFaceMode)
+            commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.size, index: 0)
+            commandEncoder.setFrontFacing(material.frontFaceMode)
 
-                let vertexBuffer = mesh.vertexBuffers.first!
-                commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: vertexBuffer.offset, index: 0)
+            guard let laneMesh = laneMesh else {
+                return
+            }
 
-                for submesh in mesh.submeshes {
-                    let indexBuffer = submesh.indexBuffer
-                    commandEncoder.drawIndexedPrimitives(type: submesh.primitiveType,
-                                                         indexCount: submesh.indexCount,
-                                                         indexType: submesh.indexType,
-                                                         indexBuffer: indexBuffer.buffer,
-                                                         indexBufferOffset: indexBuffer.offset)
-                }
+            let vertexBuffer = laneMesh.vertexBuffers.first!
+            commandEncoder.setVertexBuffer(vertexBuffer.buffer, offset: vertexBuffer.offset, index: 0)
+
+            for submesh in laneMesh.submeshes {
+                let indexBuffer = submesh.indexBuffer
+                commandEncoder.drawIndexedPrimitives(type: submesh.primitiveType,
+                                                     indexCount: submesh.indexCount,
+                                                     indexType: submesh.indexType,
+                                                     indexBuffer: indexBuffer.buffer,
+                                                     indexBufferOffset: indexBuffer.offset)
             }
         }
     }
@@ -218,11 +210,10 @@ class ARRenderer: NSObject {
         guard let camParams = camera else { return }
         scene.cameraNode.aspectRatio = camParams.aspectRatio
         scene.cameraNode.fovRadians = camParams.fov
-        scene.cameraNode.geometry.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
+        scene.cameraNode.rotation = simd_quatf.byAxis(camParams.roll - Float.pi / 2, -camParams.pitch, 0)
 
-        scene.cameraNode.geometry.position = float3(0, camParams.height, 0)
+        scene.cameraNode.position = float3(0, camParams.height, 0)
     }
-
 
     func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
         #if !targetEnvironment(simulator)
@@ -243,6 +234,30 @@ class ARRenderer: NSObject {
         #else
         return nil
         #endif
+    }
+
+    /**
+     Load the mesh with a specific name.
+
+     - Parameters:
+       - name: name of the mesh to load.
+
+     - Throws:
+       - `ARMeshError.cantFindMeshFile` in case there's no mesh file with specified name.
+       - `ARMeshError.meshFileIsEmpty` in case mesh file is present, but it's empty.
+
+     - Returns:
+       Instance of `MTKMesh` suitable for use in a Metal app.
+     */
+    private func loadMesh(named name: String) throws -> MTKMesh {
+        let bufferAllocator = MTKMeshBufferAllocator(device: device)
+        guard let meshURL = Bundle(for: type(of: self)).url(forResource: name, withExtension: "obj") else {
+            throw ARMeshError.cantFindMeshFile(name)
+        }
+        let meshAsset = MDLAsset(url: meshURL, vertexDescriptor: vertexDescriptor, bufferAllocator: bufferAllocator)
+        let meshes = try MTKMesh.newMeshes(asset: meshAsset, device: device).metalKitMeshes
+        guard let mesh = meshes.first else { throw ARMeshError.meshFileIsEmpty(name) }
+        return mesh
     }
 }
 
@@ -351,7 +366,6 @@ extension ARRenderer {
 
     static func makeDefaultDepthStencilState(device: MTLDevice) -> MTLDepthStencilState {
         let depthStencil = MTLDepthStencilDescriptor()
-
         depthStencil.isDepthWriteEnabled = true
         depthStencil.depthCompareFunction = .less
 

@@ -1,29 +1,28 @@
+import MetalKit
 import simd
 
-/// Represents AR Lane that can be rendered as a part of `ARScene`
+/// Represents AR Lane that can be rendered as a part of `ARScene`.
 class ARLaneNode: ARNode {
     // MARK: - Properties
 
-    /// Type of node. Always returns `laneNode`.
-    private(set) var nodeType: ARNodeType
-    /// Underlying AR entity.
-    private(set) var entity: AREntity?
-    /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
-    weak var parent: Node?
-    /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
-    var childNodes: [Node]
-    /// Describes transformation between coordinate systems.
-    var geometry: NodeGeometry
+    /// Attributes that define the appearance of AR lane.
+    private(set) var arMaterial: ARMaterial
 
     // MARK: - Lifecycle
 
     /**
+     Creates an instance of `ARLaneNode`.
+     The instance has `laneNode` type.
      */
-    init(arLaneEntity: ARLaneEntity) {
-        nodeType = .arrowNode
-        entity = arLaneEntity
-        childNodes = []
-        geometry = NodeGeometry()
+    init() {
+        var arMaterial = ARMaterial()
+        arMaterial.diffuseColor = ARConstants.ARLaneDefaultColor
+        arMaterial.specularPower = 100
+        arMaterial.specularColor = float3(1, 1, 1)
+        arMaterial.ambientLightColor = ARConstants.ARLaneDefaultColor.xyz
+        self.arMaterial = arMaterial
+
+        super.init(with: .laneNode)
     }
 
     // MARK: - Public methods
@@ -43,7 +42,7 @@ class ARLaneNode: ARNode {
                                         Float(green),
                                         Float(blue),
                                         Float(alpha))
-            self.entity?.material.diffuseColor = newARLaneColor
+            self.arMaterial.diffuseColor = newARLaneColor
         }
     }
 
@@ -56,7 +55,7 @@ class ARLaneNode: ARNode {
        - laneWidth: Width of AR lane.
      */
     func set(laneWidth: Float) {
-        self.geometry.scale.x = laneWidth
+        self.scale.x = laneWidth
     }
 
     /**
@@ -68,7 +67,7 @@ class ARLaneNode: ARNode {
        - lightPosition: Position of a light source for AR lane.
      */
     func set(lightPosition: float3) {
-        self.entity?.material.light?.position = lightPosition
+        self.arMaterial.light?.position = lightPosition
     }
 
     /**
@@ -85,7 +84,7 @@ class ARLaneNode: ARNode {
             let newLaneLightColor = float3(Float(red),
                                            Float(green),
                                            Float(blue))
-            self.entity?.material.light?.color = newLaneLightColor
+            self.arMaterial.light?.color = newLaneLightColor
         }
     }
 
@@ -103,7 +102,7 @@ class ARLaneNode: ARNode {
             let newAmbientLightColor = float3(Float(red),
                                               Float(green),
                                               Float(blue))
-            self.entity?.material.ambientLightColor = newAmbientLightColor
+            self.arMaterial.ambientLightColor = newAmbientLightColor
         }
     }
 }

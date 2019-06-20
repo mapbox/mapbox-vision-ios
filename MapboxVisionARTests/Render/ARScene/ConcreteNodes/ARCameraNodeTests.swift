@@ -16,12 +16,6 @@ class ARCameraNodeTests: XCTestCase {
         XCTAssertEqual(cameraNode.nodeType, .cameraNode)
     }
 
-    func testARCameraNodeDoesNotHaveAREntity() {
-        // Given state from setUp()
-        // When // Then
-        XCTAssertNil(cameraNode.entity)
-    }
-
     func testNeedsUpdateProjectionFlagHasExpectedInitialState() {
         // Given state from setUp()
         let expectedInitialState = true

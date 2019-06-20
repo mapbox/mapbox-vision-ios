@@ -23,4 +23,6 @@ enum ARConstants {
         static let laneFragmentMain = "lane_fragment_main"
         static let displayTextureFragment = "display_texture_fragment"
     }
+
+    static let arLaneMeshName = "lane"
 }

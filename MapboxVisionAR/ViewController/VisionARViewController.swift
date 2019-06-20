@@ -39,7 +39,7 @@ public class VisionARViewController: UIViewController {
             try renderer = ARRenderer(device: device,
                                       colorPixelFormat: arView.colorPixelFormat,
                                       depthStencilPixelFormat: arView.depthStencilPixelFormat)
-            renderer?.initARSceneForARLane()
+            try renderer?.initARSceneForARLane()
             arView.delegate = renderer
         } catch {
             assertionFailure(error.localizedDescription)
@@ -71,6 +71,10 @@ public class VisionARViewController: UIViewController {
      */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
+    }
+
+    public func set(laneColor: UIColor) {
+//        renderer?
     }
 
     /// :nodoc:

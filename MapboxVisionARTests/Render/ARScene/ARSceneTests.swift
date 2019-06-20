@@ -9,7 +9,7 @@ class ARSceneTests: XCTestCase {
         super.setUp()
     }
 
-    func testARSceneAfterInitARRootNode() {
+    func testARSceneAfterInitHasARRootNode() {
         // Given state from setUp()
         // When // Then
         XCTAssertEqual(arScene.rootNode.nodeType, .rootNode)
