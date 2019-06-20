@@ -23,15 +23,14 @@ import MetalKit
 class ARRenderer: NSObject {
     // MARK: Public properties
 
-    /// The `ARScene` object to be rendered.
-    let scene = ARScene()
-
     var frame: CVPixelBuffer?
     var camera: ARCamera?
     var lane: ARLane?
 
     // MARK: Private properties
 
+    /// The `ARScene` object to be rendered.
+    private let scene = ARScene()
     /// The Metal device this renderer uses for rendering.
     private let device: MTLDevice
     /// The Metal command queue this renderer uses for rendering.
@@ -138,7 +137,21 @@ class ARRenderer: NSObject {
         scene.rootNode.add(childNode: ARLaneNode())
     }
 
-    func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
+    func set(laneVisualParameters: LaneVisualParams) {
+        if let arLaneNode = scene.getChildARLaneNodes().first {
+            arLaneNode.set(laneColor: laneVisualParameters.color)
+            arLaneNode.set(laneWidth: laneVisualParameters.width)
+            arLaneNode.set(lightPosition: float3(Float(laneVisualParameters.lightPosition.x),
+                                                 Float(laneVisualParameters.lightPosition.y),
+                                                 Float(laneVisualParameters.lightPosition.z)))
+            arLaneNode.set(laneLightColor: laneVisualParameters.lightColor)
+            arLaneNode.set(laneAmbientColor: laneVisualParameters.ambientColor)
+        }
+    }
+
+    // MARK: Private functions
+
+    private func drawScene(commandEncoder: MTLRenderCommandEncoder, lane: ARLane) {
         commandEncoder.setFrontFacing(.counterClockwise)
         commandEncoder.setCullMode(.back)
         commandEncoder.setDepthStencilState(depthStencilStateDefault)
@@ -203,8 +216,6 @@ class ARRenderer: NSObject {
             }
         }
     }
-
-    // MARK: Private functions
 
     private func update(_ view: MTKView) {
         guard let camParams = camera else { return }
