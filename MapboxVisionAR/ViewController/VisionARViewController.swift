@@ -73,8 +73,15 @@ public class VisionARViewController: UIViewController {
         renderer?.lane = lane
     }
 
-    public func set(laneColor: UIColor) {
-//        renderer?
+    /**
+     Set visual parameters for AR Lane.
+
+     - Parameters:
+       - laneVisualParams: Configuration that describes visual state of AR lane.
+     */
+
+    public func set(laneVisualParams: LaneVisualParams) {
+        renderer?.set(laneVisualParameters: laneVisualParams)
     }
 
     /// :nodoc:
