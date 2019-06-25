@@ -24,14 +24,14 @@ class ARSceneTests: XCTestCase {
     func testARSceneAfterInitDoesNotHaveOtherChildARLaneNodes() {
         // Given state from setUp()
         // When // Then
-        XCTAssertTrue(arScene.getChildARLaneNodes().isEmpty)
+        XCTAssertNil(arScene.arLaneNode())
     }
 
-    func testGetChildARLaneNodesMethodReturnsZeroARNodeWhenThereAreNoARLaneNodesInARScene() {
+    func testGetChildARLaneNodesMethodReturnsNilWhenThereAreNoARLaneNodeInARScene() {
         // Given state from setUp()
         arScene.rootNode.add(childNode: ARCameraNode())
 
         // When // Then
-        XCTAssertTrue(arScene.getChildARLaneNodes().isEmpty)
+        XCTAssertNil(arScene.arLaneNode())
     }
 }

@@ -15,11 +15,11 @@ class ARScene {
     // MARK: - Public methods
 
     /**
-     Returns all `ARLaneNode` nodes from the root’s child node subtree.
+     Return `ARLaneNode` node from the root’s child node subtree.
 
      - Returns: An array containing `ARLaneNode` nodes.
      */
-    func getChildARLaneNodes() -> [ARLaneNode] {
-        return rootNode.childNodes.compactMap { $0 as? ARLaneNode }
+    func arLaneNode() -> ARLaneNode? {
+        return rootNode.childNodes.compactMap { $0 as? ARLaneNode }.first
     }
 }

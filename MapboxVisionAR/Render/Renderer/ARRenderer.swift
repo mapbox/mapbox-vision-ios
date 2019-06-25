@@ -138,7 +138,7 @@ class ARRenderer: NSObject {
     }
 
     func set(laneVisualParameters: LaneVisualParams) {
-        if let arLaneNode = scene.getChildARLaneNodes().first {
+        if let arLaneNode = scene.arLaneNode() {
             arLaneNode.set(laneColor: laneVisualParameters.color)
             arLaneNode.set(laneWidth: laneVisualParameters.width)
             arLaneNode.set(lightPosition: float3(Float(laneVisualParameters.lightPosition.x),
@@ -164,7 +164,7 @@ class ARRenderer: NSObject {
         )
         viewProjectionMatrix = scene.cameraNode.projectionMatrix() * viewMatrix
 
-        scene.getChildARLaneNodes().forEach { arLaneNode in
+        if let arLaneNode = scene.arLaneNode() {
             commandEncoder.setRenderPipelineState(renderPipelineLane)
 
             let modelMatrix = arLaneNode.worldTransform()
