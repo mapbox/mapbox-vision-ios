@@ -1,3 +1,4 @@
+[![Secret-shield enabled](https://github.com/mapbox/secret-shield/blob/assets/secret-shield-enabled-badge.svg)](https://github.com/mapbox/secret-shield/blob/master/docs/enabledBadge.md)
 ![Swift version](https://img.shields.io/static/v1.svg?label=Swift&message=4.2&color=orange)
 ![Platform support](https://img.shields.io/static/v1.svg?label=iOS&message=%3E=%2011.2&color=brightgreen)
 
