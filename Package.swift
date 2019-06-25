@@ -15,7 +15,7 @@ let package = Package(
 
     let config = PackageConfiguration([
         "komondor": [
-            "pre-commit": "echo 'Hi'"
+            "pre-commit": "secret-shield --check-and-run 2018-07-05"
         ],
     ]).write()
 #endif
