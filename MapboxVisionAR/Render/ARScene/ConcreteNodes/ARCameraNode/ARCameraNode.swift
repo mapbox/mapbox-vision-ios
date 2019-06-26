@@ -1,10 +1,7 @@
 import simd
 
 class ARCameraNode: ARNode {
-    // MARK: Public properties
-
-    private(set) var cachedProjectionMatrix = float4x4()
-    private(set) var needsUpdateProjection = true
+    // MARK: - Public properties
 
     var nearClipPlane: Float = 0.01 {
         didSet {
@@ -29,6 +26,12 @@ class ARCameraNode: ARNode {
             setNeedsUpdateProjection()
         }
     }
+
+
+    // MARK: - Private properties
+
+    private var cachedProjectionMatrix = float4x4()
+    private var needsUpdateProjection = true
 
     // MARK: - Lifecycle
 
