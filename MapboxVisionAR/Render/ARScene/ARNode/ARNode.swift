@@ -8,7 +8,7 @@ class ARNode {
     weak var parentNode: ARNode?
     /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
     var childNodes: [ARNode]
-    /// Type of node. TODO: link possible cases
+    /// Type of node that is a part of AR scene.
     private(set) var nodeType: ARNodeType
 
     /**
