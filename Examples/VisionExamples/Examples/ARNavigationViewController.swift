@@ -30,15 +30,15 @@ class ARNavigationViewController: UIViewController {
         // create VisionARManager and register as its delegate to receive AR related events
         visionARManager = VisionARManager.create(visionManager: visionManager, delegate: self)
 
-//        let origin = CLLocationCoordinate2D()
-//        let destination = CLLocationCoordinate2D()
-//        let options = NavigationRouteOptions(coordinates: [origin, destination], profileIdentifier: .automobile)
-//
-//        // query a navigation route between location coordinates and pass it to VisionARManager
-//        Directions.shared.calculate(options) { [weak self] _, routes, _ in
-//            guard let route = routes?.first else { return }
-//            self?.visionARManager.set(route: Route(route: route))
-//        }
+        let origin = CLLocationCoordinate2D()
+        let destination = CLLocationCoordinate2D()
+        let options = NavigationRouteOptions(coordinates: [origin, destination], profileIdentifier: .automobile)
+
+        // query a navigation route between location coordinates and pass it to VisionARManager
+        Directions.shared.calculate(options) { [weak self] _, routes, _ in
+            guard let route = routes?.first else { return }
+            self?.visionARManager.set(route: Route(route: route))
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
