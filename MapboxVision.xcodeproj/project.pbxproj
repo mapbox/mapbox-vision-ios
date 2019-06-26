@@ -617,22 +617,6 @@
 			path = ARLight;
 			sourceTree = "<group>";
 		};
-		3A11B024229EC32D00070A61 /* ARLaneMesh */ = {
-			isa = PBXGroup;
-			children = (
-				3A11B025229EC33B00070A61 /* Error */,
-			);
-			path = ARLaneMesh;
-			sourceTree = "<group>";
-		};
-		3A11B025229EC33B00070A61 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				3A11B033229EC75C00070A61 /* ARMeshError.swift */,
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		3A11B026229EC34800070A61 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,6 +640,7 @@
 		3A11B028229EC39800070A61 /* Error */ = {
 			isa = PBXGroup;
 			children = (
+				3A11B033229EC75C00070A61 /* ARMeshError.swift */,
 				3A11B043229ED3F500070A61 /* ARRendererError.swift */,
 			);
 			path = Error;
@@ -743,7 +728,6 @@
 				3A11B03D229ED2D200070A61 /* ARLaneNode.swift */,
 				3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */,
 				3A11B022229EC31700070A61 /* ARMaterial */,
-				3A11B024229EC32D00070A61 /* ARLaneMesh */,
 			);
 			path = ARLaneNode;
 			sourceTree = "<group>";
