@@ -49,11 +49,11 @@ class ARNode {
     // MARK: - Lifecycle
 
     /**
-     Base initializator to create an instance of `ARNode`.
+     Base initializer to create an instance of `ARNode`.
      `ARNode`'s subclasses use it to set a concrete `NodeType`.
 
      - Parameters:
-       - arNodeType: `NodeType` for the node that will be created.
+       - arNodeType: `ARNodeType` for the node that will be created.
      */
     init(with arNodeType: ARNodeType) {
         childNodes = [ARNode]()
@@ -67,7 +67,7 @@ class ARNode {
      Adds a node to the node’s array of children.
 
      Calling this method appends the node to the end of the `childs` array and create reference from child's property `parent`.
-     Method do nothing if `childNode` node has a `rootNode` type.
+     Method does nothing if `childNode` node has a `rootNode` type.
 
      - Parameters:
        - childNode: The node to be added.
@@ -110,7 +110,7 @@ class ARNode {
     /**
      Marks the world transform as needing to be recalculated.
 
-     The method calls underlyting method on `NodeGeometry`.
+     The method calls underlying method on `NodeGeometry`.
      */
     func setNeedsTransformUpdate() {
         geometry.setNeedsTransformUpdate()
