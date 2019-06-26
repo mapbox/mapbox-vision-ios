@@ -5,7 +5,7 @@ class ARNode {
     // MARK: - Properties
 
     /// The node’s parent in the graph hierarchy. For a scene’s root node, the value of this property is nil.
-    weak var parent: ARNode?
+    weak var parentNode: ARNode?
     /// An array of the node's objects that are current node’s children in the scene graph hierarchy.
     var childNodes: [ARNode]
     /// Type of node. TODO: link possible cases
@@ -79,7 +79,7 @@ class ARNode {
 
         childNode.geometry.setNeedsTransformUpdate()
         childNodes.append(childNode)
-        childNode.parent = self
+        childNode.parentNode = self
     }
 
     /**
@@ -100,7 +100,7 @@ class ARNode {
      */
     func worldTransform() -> float4x4 {
         let localTransfrom = geometry.worldTransform()
-        if let parent = parent {
+        if let parent = parentNode {
             return parent.geometry.worldTransform() * localTransfrom
         } else {
             return localTransfrom

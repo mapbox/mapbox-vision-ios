@@ -66,7 +66,7 @@ class ARRootNodeTests: XCTestCase {
         XCTAssertTrue(rootNode.childNodes.isEmpty)
     }
 
-    func testChildNodeHasParentAfterAddChildMethodExecution() {
+    func testChildNodeHasParentNodeAfterAddChildMethodExecution() {
         // Given
         let childNode = ARCameraNode()
 
@@ -74,8 +74,8 @@ class ARRootNodeTests: XCTestCase {
         rootNode.add(childNode: childNode)
 
         // Then
-        XCTAssertNotNil(childNode.parent)
-        XCTAssertTrue(childNode.parent === rootNode)
+        XCTAssertNotNil(childNode.parentNode)
+        XCTAssertTrue(childNode.parentNode === rootNode)
     }
 
     func testRemoveAllChildsMethodRemovesChildNodes() {
