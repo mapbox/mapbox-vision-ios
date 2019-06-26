@@ -78,14 +78,14 @@ class ARRootNodeTests: XCTestCase {
         XCTAssertTrue(childNode.parentNode === rootNode)
     }
 
-    func testRemoveAllChildsMethodRemovesChildNodes() {
+    func testRemoveAllChildNodesMethodRemovesChildNodes() {
         // Given
         for _ in 1...Int.random(in: 1...10) {
             rootNode.add(childNode: ARRootNode())
         }
 
         // When
-        rootNode.removeAllChilds()
+        rootNode.removeAllChildNodes()
 
         // Then
         XCTAssertTrue(rootNode.childNodes.isEmpty)

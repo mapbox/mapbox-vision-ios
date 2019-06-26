@@ -132,7 +132,7 @@ class ARRenderer: NSObject {
     // MARK: Public functions
 
     func initARSceneForARLane() throws {
-        scene.rootNode.removeAllChilds()
+        scene.rootNode.removeAllChildNodes()
         laneMesh = try self.loadMesh(named: ARConstants.arLaneMeshName)
         scene.rootNode.add(childNode: ARLaneNode())
     }

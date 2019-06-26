@@ -87,7 +87,7 @@ class ARNode {
 
      Calling this method removes all nodes from `childNodes` array.
      */
-    func removeAllChilds() {
+    func removeAllChildNodes() {
         childNodes.removeAll()
     }
 
