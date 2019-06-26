@@ -16,14 +16,6 @@ class ARCameraNodeTests: XCTestCase {
         XCTAssertEqual(cameraNode.nodeType, .camera)
     }
 
-    func testNeedsUpdateProjectionFlagHasExpectedInitialState() {
-        // Given state from setUp()
-        let expectedInitialState = true
-
-        // When // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedInitialState)
-    }
-
     func testNearClipPlaneHasExpectedInitialState() {
         // Given state from setUp()
         let expectedInitialState: Float = 0.01
@@ -56,90 +48,116 @@ class ARCameraNodeTests: XCTestCase {
         XCTAssertEqual(cameraNode.aspectRatio, expectedInitialState)
     }
 
-    func testCachedProjectionMatrixHasExpectedInitialState() {
-        // Given state from setUp()
-        let expectedInitialState = float4x4()
-
-        // When // Then
-        XCTAssertEqual(cameraNode.cachedProjectionMatrix, expectedInitialState)
-    }
-
-    func testSetNeedsUpdateProjectionMethodSetsNeedsUpdateProjectionFlag() {
+    func testPureCallOfSetNeedsUpdateProjectionMethodDoesNotChangeProjectionMatrix() {
         // Given
-        let expectedFinalState = true
-        _ = cameraNode.projectionMatrix()
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
         cameraNode.setNeedsUpdateProjection()
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFinalState)
+        XCTAssertEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
-    func testProjectionMatrixMethodResetsNeedsUpdateProjectionFlag() {
+    func testProjectionMatrixIsNotChangedWhenNearClipPlaneRemainsTheSame() {
         // Given
-        let expectedFinalState = false
+        cameraNode.nearClipPlane = 250.0
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        _ = cameraNode.projectionMatrix()
+        cameraNode.nearClipPlane = 250.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFinalState)
+        XCTAssertEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
-    func testProjectionMatrixMethodReturnsValueEqualsToCachedValue() {
+    func testProjectionMatrixIsNotChangedWhenFarClipPlaneRemainsTheSame() {
         // Given
-        cameraNode.farClipPlane = 10
+        cameraNode.farClipPlane = 250.0
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        let valueReturnedFromMethod = cameraNode.projectionMatrix()
+        cameraNode.farClipPlane = 250.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(valueReturnedFromMethod, cameraNode.cachedProjectionMatrix)
+        XCTAssertEqual(initialProjectionMatrix, updatedProjectionMatrix)
+    }
+
+    func testProjectionMatrixIsNotChangedWhenFovRadiansRemainsTheSame() {
+        // Given
+        cameraNode.fovRadians = 250.0
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
+
+        // When
+        cameraNode.fovRadians = 250.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
+
+        // Then
+        XCTAssertEqual(initialProjectionMatrix, updatedProjectionMatrix)
+    }
+
+    func testProjectionMatrixIsNotChangedWhenAspectRatioRemainsTheSame() {
+        // Given
+        cameraNode.aspectRatio = 250.0
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
+
+        // When
+        cameraNode.aspectRatio = 250.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
+
+        // Then
+        XCTAssertEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
     func testSetNeedsUpdateProjectionMethodIsCalledWhenNearClipPlaneChanges() {
         // Given
-        let expectedFlagState = true
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        cameraNode.nearClipPlane = Float(1.0)
+        cameraNode.nearClipPlane = 150.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFlagState)
+        XCTAssertNotEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
     func testSetNeedsUpdateProjectionMethodIsCalledWhenFarClipPlaneChanges() {
         // Given
-        let expectedFlagState = true
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        cameraNode.farClipPlane = Float(1.0)
+        cameraNode.farClipPlane = 150.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFlagState)
+        XCTAssertNotEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
     func testSetNeedsUpdateProjectionMethodIsCalledWhenFovRadiansChanges() {
         // Given
-        let expectedFlagState = true
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        cameraNode.fovRadians = Float(1.0)
+        cameraNode.fovRadians = 150.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFlagState)
+        XCTAssertNotEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
     func testSetNeedsUpdateProjectionMethodIsCalledWhenAspectRatioChanges() {
         // Given
-        let expectedFlagState = true
+        let initialProjectionMatrix = cameraNode.projectionMatrix()
 
         // When
-        cameraNode.aspectRatio = Float(1.0)
+        cameraNode.aspectRatio = 150.0
+        let updatedProjectionMatrix = cameraNode.projectionMatrix()
 
         // Then
-        XCTAssertEqual(cameraNode.needsUpdateProjection, expectedFlagState)
+        XCTAssertNotEqual(initialProjectionMatrix, updatedProjectionMatrix)
     }
 
     func testProjectionMatrixMethodCorrectlyUpdatesProjectionMatrix() {
