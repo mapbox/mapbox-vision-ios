@@ -194,7 +194,7 @@ class ARRenderer: NSObject {
                                                     baseColor: material.diffuseColor.xyz,
                                                     opacity: material.diffuseColor.w,
                                                     specularPower: material.specularPower,
-                                                    light: material.light ?? ARLight.defaultLightForLane())
+                                                    light: material.light ?? ARConstants.laneDefaultLight)
 
             commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.size, index: 0)
             commandEncoder.setFrontFacing(material.frontFaceMode)

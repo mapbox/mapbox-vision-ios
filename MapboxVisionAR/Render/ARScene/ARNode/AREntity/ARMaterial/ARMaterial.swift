@@ -3,9 +3,9 @@ import simd
 /// A set of shading attributes that define the appearance of a geometry's surface when rendered.
 struct ARMaterial {
     /// Material’s base color represented in RGBA.
-    var diffuseColor = ARConstants.ARLaneDefaultColor
+    var diffuseColor = ARConstants.laneDefaultColor
     /// Ambient light color represented in RGB.
-    var ambientLightColor = ARConstants.ARLaneDefaultColor.xyz
+    var ambientLightColor = ARConstants.laneDefaultColor.xyz
     /// Texture for coloring material.
     var colorTexture: MTLTexture?
     /// Light source for material.

@@ -14,16 +14,16 @@ public struct LaneVisualParams {
     var ambientColor: UIColor
 
     init() {
-        color = UIColor(red: CGFloat(ARConstants.ARLaneDefaultColor.x),
-                        green: CGFloat(ARConstants.ARLaneDefaultColor.y),
-                        blue: CGFloat(ARConstants.ARLaneDefaultColor.z),
-                        alpha: CGFloat(ARConstants.ARLaneDefaultColor.w))
+        color = UIColor(red: CGFloat(ARConstants.laneDefaultColor.x),
+                        green: CGFloat(ARConstants.laneDefaultColor.y),
+                        blue: CGFloat(ARConstants.laneDefaultColor.z),
+                        alpha: CGFloat(ARConstants.laneDefaultColor.w))
         width = 1.0
         lightPosition = WorldCoordinate(x: 0, y: 0, z: 0)
         lightColor = UIColor.white
-        ambientColor = UIColor(red: CGFloat(ARConstants.ARLaneDefaultColor.x),
-                               green: CGFloat(ARConstants.ARLaneDefaultColor.y),
-                               blue: CGFloat(ARConstants.ARLaneDefaultColor.z),
+        ambientColor = UIColor(red: CGFloat(ARConstants.laneDefaultColor.x),
+                               green: CGFloat(ARConstants.laneDefaultColor.y),
+                               blue: CGFloat(ARConstants.laneDefaultColor.z),
                                alpha: 1.0)
     }
 }

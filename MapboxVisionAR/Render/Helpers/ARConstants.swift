@@ -3,7 +3,8 @@
 import simd
 
 enum ARConstants {
-    static let ARLaneDefaultColor = float4(0.2745, 0.4117, 0.949, 0.99)
+    static let laneDefaultColor = float4(0.2745, 0.4117, 0.949, 0.99)
+    static let laneDefaultLight = ARLight(color: float3(1, 1, 1), position: float3(0, 7, 0))
     static let textureMappingVertices: [Float] = [
         // X   Y    Z       U    V
         -1.0, -1.0, 0.0,    0.0, 1.0,
