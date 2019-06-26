@@ -42,7 +42,7 @@ class ARRenderer: NSObject {
     private let depthStencilStateDefault: MTLDepthStencilState
 
     #if !targetEnvironment(simulator)
-    private var textureCache: CVMetalTextureCache?
+        private var textureCache: CVMetalTextureCache?
     #endif
 
     private let vertexDescriptor: MDLVertexDescriptor = ARRenderer.makeVertexDescriptor()
@@ -73,9 +73,9 @@ class ARRenderer: NSObject {
         self.commandQueue.label = "com.mapbox.ARRenderer"
 
         #if !targetEnvironment(simulator)
-        guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) == kCVReturnSuccess else {
-            throw ARRendererError.cantCreateTextureCache
-        }
+            guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) == kCVReturnSuccess else {
+                throw ARRendererError.cantCreateTextureCache
+            }
         #endif
 
         let library = try device.makeDefaultLibrary(bundle: Bundle(for: type(of: self)))
@@ -87,7 +87,7 @@ class ARRenderer: NSObject {
             let arrowFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.laneFragmentMain),
             let backgroundFragmentFunction = library.makeFunction(name: ARConstants.ShaderName.displayTextureFragment)
         else {
-                throw ARRendererError.cantFindFunctions
+            throw ARRendererError.cantFindFunctions
         }
 
         renderPipelineDefault = try ARRenderer.makeRenderPipeline(
@@ -228,22 +228,22 @@ class ARRenderer: NSObject {
 
     func makeTexture(from buffer: CVPixelBuffer) -> MTLTexture? {
         #if !targetEnvironment(simulator)
-        var imageTexture: CVMetalTexture?
-        guard
-            let textureCache = textureCache,
-            CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
-                                                      textureCache,
-                                                      buffer,
-                                                      nil,
-                                                      .bgra8Unorm,
-                                                      CVPixelBufferGetWidth(buffer),
-                                                      CVPixelBufferGetHeight(buffer),
-                                                      0,
-                                                      &imageTexture) == kCVReturnSuccess
+            var imageTexture: CVMetalTexture?
+            guard
+                let textureCache = textureCache,
+                CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                          textureCache,
+                                                          buffer,
+                                                          nil,
+                                                          .bgra8Unorm,
+                                                          CVPixelBufferGetWidth(buffer),
+                                                          CVPixelBufferGetHeight(buffer),
+                                                          0,
+                                                          &imageTexture) == kCVReturnSuccess
             else { return nil }
-        return CVMetalTextureGetTexture(imageTexture!)
+            return CVMetalTextureGetTexture(imageTexture!)
         #else
-        return nil
+            return nil
         #endif
     }
 
@@ -401,12 +401,12 @@ extension ARRenderer: MTKViewDelegate {
             let commandBuffer = commandQueue.makeCommandBuffer(),
             let renderPass = view.currentRenderPassDescriptor,
             let drawable = view.currentDrawable
-            else { return }
+        else { return }
 
         renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0)
 
         guard let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass)
-            else { return }
+        else { return }
 
         if let frame = frame, let texture = makeTexture(from: frame) {
             commandEncoder.setRenderPipelineState(renderPipelineBackground)
