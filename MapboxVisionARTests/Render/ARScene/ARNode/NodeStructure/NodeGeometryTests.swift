@@ -97,7 +97,7 @@ class NodeGeometryTests: XCTestCase {
         XCTAssertEqual(initialWorldMatrix, updatedWorldMatrix)
     }
 
-    func testWorldTransformMethodCorrectlyUpdatesWorldTranform() {
+    func testWorldTransformMethodCorrectlyUpdatesWorldTransform() {
         // Given
         let expectedWorldTransform = matrix_float4x4(
             float4(-25,  56, -30, 0),

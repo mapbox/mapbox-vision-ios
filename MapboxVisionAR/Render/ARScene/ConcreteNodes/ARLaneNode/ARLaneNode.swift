@@ -23,7 +23,7 @@ class ARLaneNode: ARNode {
     /**
      Set a new color for underlying AR Lane.
 
-     Method do nothing if `laneColor` does not have compatible color space
+     Method does nothing if `laneColor` does not have compatible color space
      or there's no underlying AR lane's representation.
 
      - Parameters:
@@ -42,7 +42,7 @@ class ARLaneNode: ARNode {
     /**
      Set a new width for AR lane.
 
-     Method do nothing if there's no underlying AR lane's representation.
+     Method does nothing if there's no underlying AR lane's representation.
 
      - Parameters:
        - laneWidth: Width of AR lane.
@@ -54,7 +54,7 @@ class ARLaneNode: ARNode {
     /**
      Set new position of light source for AR lane.
 
-     Method do nothing if there's no underlying AR lane's representation.
+     Method does nothing if there's no underlying AR lane's representation.
 
      - Parameters:
        - lightPosition: Position of a light source for AR lane.
@@ -66,7 +66,7 @@ class ARLaneNode: ARNode {
     /**
      Set a new color of a light source for AR lane.
 
-     Method do nothing if `laneLightColor` does not have compatible color space
+     Method does nothing if `laneLightColor` does not have compatible color space
      or there's no underlying AR lane's representation.
 
      - Parameters:
@@ -84,7 +84,7 @@ class ARLaneNode: ARNode {
     /**
      Set a new ambient color for AR lane.
 
-     Method do nothing if `laneAmbientColor` does not have compatible color space
+     Method does nothing if `laneAmbientColor` does not have compatible color space
      or there's no underlying AR lane's representation.
 
      - Parameters:
