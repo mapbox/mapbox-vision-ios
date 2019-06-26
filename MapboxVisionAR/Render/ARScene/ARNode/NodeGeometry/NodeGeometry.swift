@@ -35,10 +35,12 @@ struct NodeGeometry {
         didSet { setNeedsTransformUpdate() }
     }
 
+    // MARK: - Private
+
     /// Marks the world transform as needing to be recalculated.
-    private(set) var needsUpdateWorldTransform = true
+    private var needsUpdateWorldTransform = true
     /// The world transform applied to the node.
-    private(set) var cachedWorldTransform = matrix_identity_float4x4
+    private var cachedWorldTransform = matrix_identity_float4x4
 
     // MARK: - Functions
 

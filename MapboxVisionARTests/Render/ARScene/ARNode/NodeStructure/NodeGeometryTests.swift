@@ -10,87 +10,91 @@ class NodeGeometryTests: XCTestCase {
         super.setUp()
     }
 
-    func testNeedsUpdateWorldTransformFlagHasExpectedInitialState() {
-        // Given state from setUp()
-        let expectedInitialState = true
-
-        // When // Then
-        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedInitialState)
-    }
-
-    func testCachedWorldTransformHasExpectedInitialState() {
-        // Given state from setUp()
-        let expectedInitialState = matrix_identity_float4x4
-
-        // When // Then
-        XCTAssertEqual(nodeGeometry.cachedWorldTransform, expectedInitialState)
-    }
-
-    func testWorldTransformMethodResetsNeedsUpdateWorldTransformFlag() {
-        // Given state from setUp()
-        let expectedFinalState = false
-
-        // When
-        _ = nodeGeometry.worldTransform()
-
-        // Then
-        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedFinalState)
-    }
-
-    func testSetNeedsUpdateWorldTransformMethodSetsNeedsUpdateWorldTransformFlag() {
+    func testPureCallOfSetNeedsUpdateWorldTransformMethodDoesNotChangeWorldTransform() {
         // Given
-        let expectedFinalState = true
-        _ = nodeGeometry.worldTransform()
+        let initialWorldMatrix = nodeGeometry.worldTransform()
 
         // When
         nodeGeometry.setNeedsTransformUpdate()
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
 
         // Then
-        XCTAssertEqual(nodeGeometry.needsUpdateWorldTransform, expectedFinalState)
-    }
-
-    func testWorldTransformMethodReturnsValueEqualsToCachedValue() {
-        // Given
-        nodeGeometry.position = float3(1, 2, 3)
-
-        // When
-        let valueReturnedFromMethod = nodeGeometry.worldTransform()
-
-        // Then
-        XCTAssertEqual(valueReturnedFromMethod, nodeGeometry.cachedWorldTransform)
+        XCTAssertEqual(initialWorldMatrix, updatedWorldMatrix)
     }
 
     func testSetNeedsUpdateWorldTransformMethodIsCalledWhenPositionChanges() {
         // Given
-        _ = nodeGeometry.worldTransform()
+        let initialWorldMatrix = nodeGeometry.worldTransform()
 
         // When
-        nodeGeometry.position = float3(0, 0, 0)
+        nodeGeometry.position = float3(0, 1, 2)
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
 
         // Then
-        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
+        XCTAssertNotEqual(initialWorldMatrix, updatedWorldMatrix)
+    }
+
+    func testWorldTransformIsNotChangedWhenPositionRemainsTheSame() {
+        // Given
+        nodeGeometry.position = float3(0, 1, 2)
+        let initialWorldMatrix = nodeGeometry.worldTransform()
+
+        // When
+        nodeGeometry.position = float3(0, 1, 2)
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
+
+        // Then
+        XCTAssertEqual(initialWorldMatrix, updatedWorldMatrix)
     }
 
     func testSetNeedsUpdateWorldTransformMethodIsCalledWhenRotationChanges() {
         // Given
-        _ = nodeGeometry.worldTransform()
+        let initialWorldMatrix = nodeGeometry.worldTransform()
 
         // When
-        nodeGeometry.rotation = simd_quatf()
+        nodeGeometry.rotation = simd_quatf(vector: simd_float4(1, 1, 1, 1))
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
 
         // Then
-        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
+        XCTAssertNotEqual(initialWorldMatrix, updatedWorldMatrix)
+    }
+
+    func testWorldTransformIsNotChangedWhenRotationRemainsTheSame() {
+        // Given
+        nodeGeometry.rotation = simd_quatf(vector: simd_float4(1, 1, 1, 1))
+        let initialWorldMatrix = nodeGeometry.worldTransform()
+
+        // When
+        nodeGeometry.rotation = simd_quatf(vector: simd_float4(1, 1, 1, 1))
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
+
+        // Then
+        XCTAssertEqual(initialWorldMatrix, updatedWorldMatrix)
     }
 
     func testSetNeedsUpdateWorldTransformMethodIsCalledWhenScaleChanges() {
         // Given
-        _ = nodeGeometry.worldTransform()
+        let initialWorldMatrix = nodeGeometry.worldTransform()
 
         // When
-        nodeGeometry.scale = float3(0, 0, 0)
+        nodeGeometry.scale = float3(0, 1, 2)
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
 
         // Then
-        XCTAssertTrue(nodeGeometry.needsUpdateWorldTransform)
+        XCTAssertNotEqual(initialWorldMatrix, updatedWorldMatrix)
+    }
+
+    func testWorldTransformIsNotChangedWhenScaleRemainsTheSame() {
+        // Given
+        nodeGeometry.scale = float3(0, 1, 2)
+        let initialWorldMatrix = nodeGeometry.worldTransform()
+
+        // When
+        nodeGeometry.scale = float3(0, 1, 2)
+        let updatedWorldMatrix = nodeGeometry.worldTransform()
+
+        // Then
+        XCTAssertEqual(initialWorldMatrix, updatedWorldMatrix)
     }
 
     func testWorldTransformMethodCorrectlyUpdatesWorldTranform() {
