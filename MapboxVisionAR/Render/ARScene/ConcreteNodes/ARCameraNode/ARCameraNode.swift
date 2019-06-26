@@ -33,7 +33,7 @@ class ARCameraNode: ARNode {
     // MARK: - Lifecycle
 
     init() {
-        super.init(with: .cameraNode)
+        super.init(with: .camera)
     }
 
     // MARK: - Internal functions

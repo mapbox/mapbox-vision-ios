@@ -13,7 +13,7 @@ class ARCameraNodeTests: XCTestCase {
     func testARCameraNodeHasCameraNodeType() {
         // Given state from setUp()
         // When // Then
-        XCTAssertEqual(cameraNode.nodeType, .cameraNode)
+        XCTAssertEqual(cameraNode.nodeType, .camera)
     }
 
     func testNeedsUpdateProjectionFlagHasExpectedInitialState() {

@@ -13,7 +13,7 @@ class ARRootNodeTests: XCTestCase {
     func testARRootNodeHasRootNodeType() {
         // Given state from setUp()
         // When // Then
-        XCTAssertEqual(rootNode.nodeType, .rootNode)
+        XCTAssertEqual(rootNode.nodeType, .root)
     }
 
     func testARNodeAfterInitHasExpectedInitialPosition() {

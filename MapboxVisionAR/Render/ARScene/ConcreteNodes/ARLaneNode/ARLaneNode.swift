@@ -12,10 +12,10 @@ class ARLaneNode: ARNode {
 
     /**
      Creates an instance of `ARLaneNode`.
-     The instance has `laneNode` type.
+     The instance has `lane` node type.
      */
     init() {
-        super.init(with: .laneNode)
+        super.init(with: .lane)
     }
 
     // MARK: - Public methods

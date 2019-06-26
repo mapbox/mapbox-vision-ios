@@ -9,9 +9,9 @@ class ARRootNode: ARNode {
 
     /**
      Creates an instance of `ARRootNode` class.
-     The instance has `rootNode` type.
+     The instance has `root` type.
      */
     init() {
-        super.init(with: .rootNode)
+        super.init(with: .root)
     }
 }

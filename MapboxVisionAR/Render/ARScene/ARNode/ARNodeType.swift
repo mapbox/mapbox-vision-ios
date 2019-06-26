@@ -1,9 +1,9 @@
 /// Specifies the concrete type of `ARNode` object.
 enum ARNodeType {
     /// The type represents `ARRootNode`.
-    case rootNode
+    case root
     /// The type represents `ARLaneNode`.
-    case laneNode
+    case lane
     /// The type represents `ARCameraNode`.
-    case cameraNode
+    case camera
 }

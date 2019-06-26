@@ -67,13 +67,13 @@ class ARNode {
      Adds a node to the node’s array of children.
 
      Calling this method appends the node to the end of the `childs` array and create reference from child's property `parent`.
-     Method does nothing if `childNode` node has a `rootNode` type.
+     Method does nothing if `childNode` node has a `root` type.
 
      - Parameters:
        - childNode: The node to be added.
      */
     func add(childNode: ARNode) {
-        if childNode.nodeType == .rootNode {
+        if childNode.nodeType == .root {
             return
         }
 
