@@ -47,6 +47,8 @@ The lastest version of documentation is available at [Vision's page](https://doc
 
 # Contributing
 
+We use [secret-shield](https://github.com/mapbox/secret-shield) tool which runs as a pre-commit hook. In order to enable it you should install [Komondor git hooks manager](https://github.com/shibapm/Komondor) by running `swift run komondor install`
+
 ## Code of conduct
 
 Everyone is invited to participate in Mapbox's open source projects and public discussions: we want to create a welcoming and friendly environment. Harassment of participants or other unethical and unprofessional behavior will not be tolerated in our spaces.
