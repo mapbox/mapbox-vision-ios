@@ -1,3 +1,5 @@
+// swiftlint:disable comma
+
 @testable import MapboxVisionAR
 import simd
 import XCTest
