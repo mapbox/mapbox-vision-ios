@@ -21,6 +21,13 @@ public class VisionARViewController: UIViewController {
         }
     }
 
+    /// Parameters to configure look and feel of AR lane via `LaneVisualParams` class.
+    public var laneVisualParameters = LaneVisualParams() {
+        willSet(newLaneVisualParameters) {
+            renderer?.set(laneVisualParameters: newLaneVisualParameters)
+        }
+    }
+
     private var renderer: ARRenderer?
     /**
      Create an instance of VisionARNavigationController.
@@ -79,7 +86,6 @@ public class VisionARViewController: UIViewController {
      - Parameters:
        - laneVisualParams: Configuration that describes visual state of AR lane.
      */
-
     public func set(laneVisualParams: LaneVisualParams) {
         renderer?.set(laneVisualParameters: laneVisualParams)
     }
