@@ -658,6 +658,7 @@
 		3A11B02A229EC3AE00070A61 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */,
 				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
 			);
 			path = ViewController;
@@ -726,7 +727,6 @@
 			isa = PBXGroup;
 			children = (
 				3A11B03D229ED2D200070A61 /* ARLaneNode.swift */,
-				3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */,
 				3A11B022229EC31700070A61 /* ARMaterial */,
 			);
 			path = ARLaneNode;
