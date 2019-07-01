@@ -188,6 +188,9 @@ class ARRenderer: NSObject {
             )
             commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
 
+            var laneWidthUniform = LaneWidthUniforms(width: arLaneNode.width)
+            commandEncoder.setVertexBytes(&laneWidthUniform, length: MemoryLayout<LaneWidthUniforms>.size, index: 2)
+
             var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.position,
                                                     ambientLightColor: material.ambientLightColor,
                                                     specularColor: material.specularColor,

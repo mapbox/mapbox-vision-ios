@@ -29,3 +29,7 @@ struct FragmentUniforms {
 struct LaneFragmentUniforms {
     var baseColor = float4(1, 1, 1, 1)
 }
+
+struct LaneWidthUniforms {
+    var width: Float
+}

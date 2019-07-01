@@ -7,6 +7,8 @@ class ARLaneNode: ARNode {
 
     /// Attributes that define the appearance of AR lane.
     private(set) var arMaterial = ARMaterial()
+    /// Width of AR lane in meters.
+    private(set) var width: Float = 1.0
 
     // MARK: - Lifecycle
 
@@ -45,10 +47,10 @@ class ARLaneNode: ARNode {
      Method does nothing if there's no underlying AR lane's representation.
 
      - Parameters:
-       - laneWidth: Width of AR lane.
+       - laneWidth: Width of AR lane in meters.
      */
     func set(laneWidth: Float) {
-        self.scale.x = laneWidth
+        self.width = laneWidth
     }
 
     /**
