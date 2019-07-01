@@ -64,11 +64,11 @@ public final class VisionManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionManager`.
-    
+
      To resume call `start` again.
      Call this method after `start` and before `destroy`.
      This method also stops recording session if it was started.
-     
+
      - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
     public func stop() {
@@ -88,7 +88,7 @@ public final class VisionManager: BaseVisionManager {
 
      During the session full telemetry and video are recorded to specified path.
      You may use resulted folder to replay the recorded session with `VisionReplayManager`.
-     
+
      - Important: Method serves debugging purposes.
      Do NOT call this method more than once or before `start` or after `stop` is called.
      Do NOT use session recording in production applications.

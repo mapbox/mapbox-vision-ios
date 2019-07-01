@@ -8,3 +8,4 @@
 # andOperator,braces,consecutiveBlankLines,consecutiveSpaces,fileHeader,hoistPatternLet,linebreaks,numberFormatting,redundantExtensionACL,redundantSelf,specifiers,unusedArguments
 
 --exclude **/Reachability.swift
+--exclude Examples/Carthage
