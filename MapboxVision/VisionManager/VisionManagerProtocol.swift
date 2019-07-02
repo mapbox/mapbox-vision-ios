@@ -30,15 +30,17 @@ public protocol VisionManagerProtocol: AnyObject {
      Converts the location of the point from a geographical coordinate to a world coordinate.
 
      - Parameter geoCoordinate: Geographical coordinate of the point
+     - Returns: World coordinate if `geoCoordinate` can be represented in world coordinates and nil otherwise
      */
-    func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate
+    func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate?
 
     /**
      Converts the location of the point in a world coordinate to a geographical coordinate.
 
      - Parameter worldCoordinate: World coordinate of the point
+     - Returns: Geographical coordinate if `worldCoordinate` can be represented in geographical coordinates and nil otherwise
      */
-    func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate
+    func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate?
 
     /// :nodoc:
     var native: VisionManagerBaseNative { get }
