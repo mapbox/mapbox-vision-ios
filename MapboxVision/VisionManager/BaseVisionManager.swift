@@ -1,32 +1,23 @@
-//
-//  BaseVisionManager.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 5/17/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 public class BaseVisionManager: VisionManagerProtocol {
-
     // MARK: Performance control
 
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
-        didSet {
-            guard oldValue != modelPerformanceConfig else { return }
-            updateModelPerformanceConfig(modelPerformanceConfig)
+            didSet {
+                guard oldValue != modelPerformanceConfig else { return }
+                updateModelPerformanceConfig(modelPerformanceConfig)
+            }
         }
-    }
 
     // MARK: Utility
 
-    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate {
+    public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate? {
         return dependencies.native.pixel(toWorld: screenCoordinate)
     }
 
-    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D {
+    public func worldToPixel(worldCoordinate: WorldCoordinate) -> Point2D? {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
 
@@ -42,7 +33,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         return dependencies.native
     }
 
-    var delegate: VisionManagerDelegate?
+    weak var delegate: VisionManagerDelegate?
     private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies
@@ -52,7 +43,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     private var isSyncAllowed: Bool {
         switch currentCountry {
         case .unknown, .china: return false
-        case .USA, .other: return true
+        case .UK, .USA, .other: return true
         }
     }
 
@@ -122,13 +113,13 @@ public class BaseVisionManager: VisionManagerProtocol {
         notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-            self?.prepareForForeground()
+                self?.prepareForForeground()
         })
 
         notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-            self?.prepareForBackground()
+                self?.prepareForBackground()
         })
     }
 
@@ -140,7 +131,7 @@ public class BaseVisionManager: VisionManagerProtocol {
 
     private func configureSync(_ country: Country) {
         switch country {
-        case .USA, .other:
+        case .UK, .USA, .other:
             dependencies.synchronizer.sync()
         case .china:
             dependencies.synchronizer.stopSync()

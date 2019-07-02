@@ -1,11 +1,3 @@
-//
-//  Shaders.metal
-//  VisionSDK
-//
-//  Created by Denis Koronchik on 8/22/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 #include <metal_stdlib>
 using namespace metal;
 

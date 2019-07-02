@@ -1,10 +1,3 @@
-//
-//  Constants
-//  VisionExample
-//
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -29,5 +22,5 @@ let listOfExamples: [NamedController] = [
         name: "AR navigation",
         description: "Demonstrates how to setup VisionAR and display default AR route.",
         controllerType: ARNavigationViewController.self
-    )
+    ),
 ]

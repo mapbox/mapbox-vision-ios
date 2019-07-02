@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionAll"
-  s.version      = "0.4.1"
+  s.version      = "0.5.0"
   s.summary      = "ML empowered vision framework"
 
   s.homepage     = 'https://www.mapbox.com/vision/'

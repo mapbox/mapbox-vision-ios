@@ -1,11 +1,3 @@
-//
-//  AppDependency.swift
-//  cv-assist-ios
-//
-//  Created by Alexander Pristavko on 3/13/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 import MapboxVisionNative
 
@@ -68,7 +60,7 @@ struct VisionDependencies {
 
         let dataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: native,
-            motionManager: MotionManager(with: platform.getMotionReferenceFrame()),
+            motionManager: MotionManager(),
             locationManager: LocationManager()
         ))
 

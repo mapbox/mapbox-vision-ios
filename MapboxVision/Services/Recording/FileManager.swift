@@ -1,11 +1,3 @@
-//
-//  FileManager.swift
-//  MapboxVision
-//
-//  Created by Maksim on 10/2/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 protocol FileManagerProtocol {
@@ -21,21 +13,20 @@ extension FileManagerProtocol {
         guard let contents = try? self.contentsOfDirectory(at: url) else {
             return 0
         }
-        
+
         return contents.map(fileSize).reduce(0, +)
     }
 }
 
 extension FileManager: FileManagerProtocol {
-    
     func createFile(atPath path: String, contents: Data?) -> Bool {
         return createFile(atPath: path, contents: contents, attributes: nil)
     }
-    
+
     func contentsOfDirectory(at url: URL) throws -> [URL] {
         return try contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])
     }
-    
+
     func fileSize(at url: URL) -> Int64 {
         guard let attributes = try? attributesOfItem(atPath: url.path) else { return 0 }
         return attributes[FileAttributeKey.size] as? Int64 ?? 0
