@@ -1,6 +1,12 @@
 # Changelog
 
-## v0.4.0
+## 0.4.1
+
+### Vision
+- Fixed a crash that may happen on creating or destroying `VisionARManager` or `VisionSafetyManager`
+- Fixed incorrect `ARCamera` values during replaying recorded sessions with `VisionReplayManager`
+
+## 0.4.0
 
 ### Vision
 - Added `startRecording` and `stopRecording` methods on `VisionManager` to record sessions.
