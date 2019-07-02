@@ -6,9 +6,13 @@
 - Changed World-Pixel transformation methods to return optional values
 - Removed `MapboxNavigation` dependency
 
+## 0.4.1
+
+### Vision
+- Fixed a crash that may happen on creating or destroying `VisionARManager` or `VisionSafetyManager`
+- Fixed incorrect `ARCamera` values during replaying recorded sessions with `VisionReplayManager`
+
 ## 0.4.0
-- `VisionARManager` allows to change ARLane's length
-- `boundingBox` property on `MBVDetection` now stores normalized relative coordinates
 
 ### Vision
 - Added `startRecording` and `stopRecording` methods on `VisionManager` to record sessions.
