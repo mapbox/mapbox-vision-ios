@@ -4,6 +4,7 @@
 - Added support for UK country
 - Added support for setting attitudeOrient via DeviceMotionData
 - Changed World-Pixel transformation methods to return optional values
+- Changed World-Geo transformation methods to return optional values
 - Removed `MapboxNavigation` dependency
 
 ## 0.4.1
