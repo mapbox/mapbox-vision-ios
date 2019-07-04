@@ -48,11 +48,11 @@ The lastest version of documentation is available at [Vision's page](https://doc
 # Contributing
 
 We use [secret-shield](https://github.com/mapbox/secret-shield) tool which runs as a pre-commit hook. In order to enable it you should [install it](https://github.com/mapbox/secret-shield#install) and setup pre-commit hook.
-You can integrate hook via git hooks manager (like [Husky](https://github.com/typicode/husky) or [Komondor](https://github.com/shibapm/Komondor).
+You can integrate hook via git hooks manager (like [Husky](https://github.com/typicode/husky) or [Komondor](https://github.com/shibapm/Komondor)).
 The simplest option is to copy the following script into a `mapbox-vision-ios/.git/hooks/pre-commit`:
 
 ```sh
-secret-shield --check-and-run 2018-07-05
+secret-shield --pre-commit || exit 1
 ```
 
 where `2018-07-05` is a [grace period](https://github.com/mapbox/secret-shield/blob/master/docs/enabledRepositories.md#what-is-the-grace-period).
