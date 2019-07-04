@@ -18,6 +18,7 @@ whitelist_rules:
  - cyclomatic_complexity # Complexity of function bodies should be limited.
  - discarded_notification_center_observer # When registering for a notification using a block, the opaque observer that is returned should be stored so it can be removed later.
  - discouraged_direct_init # Discouraged direct initialization of types that can be harmful.
+ - duplicate_enum_cases # Enum can't contain multiple cases with the same name.
  - duplicate_imports # Imports should be unique.
  - dynamic_inline # Avoid using 'dynamic' and '@inline(__always)' together.
  - empty_count # Prefer checking isEmpty over comparing count to zero.
@@ -46,6 +47,7 @@ whitelist_rules:
  - legacy_constant # Struct-scoped constants are preferred over legacy global constants.
  - legacy_constructor # Swift constructors are preferred over legacy convenience functions.
  - legacy_hashing # Prefer using the hash(into:) function instead of overriding hashValue
+ - legacy_multiple # Prefer using the isMultiple(of:) function instead of using the remainder operator (%) (from Swift 5.0)
  - legacy_nsgeometry_functions # Struct extension properties and methods are preferred over legacy functions
  - legacy_random # Prefer using type.random(in:) over legacy functions.
  - let_var_whitespace # Let and var should be separated from other statements by a blank line.
@@ -110,7 +112,6 @@ whitelist_rules:
  - vertical_whitespace_closing_braces # Don't include vertical whitespace (empty line) before closing braces.
  - vertical_whitespace_opening_braces # Don't include vertical whitespace (empty line) after opening braces.
  - void_return # Prefer -> Void over -> ().
- - weak_computed_property # Adding weak to a computed property has no effect.
  - xct_specific_matcher # Prefer specific XCTest matchers over XCTAssertEqual and XCTAssertNotEqual
  - xctfail_message # An XCTFail call should include a description of the assertion.
  
