@@ -21,11 +21,11 @@ public class BaseVisionManager: VisionManagerProtocol {
         return dependencies.native.world(toPixel: worldCoordinate)
     }
 
-    public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate {
+    public func geoToWorld(geoCoordinate: GeoCoordinate) -> WorldCoordinate? {
         return dependencies.native.geo(toWorld: geoCoordinate)
     }
 
-    public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate {
+    public func worldToGeo(worldCoordinates: WorldCoordinate) -> GeoCoordinate? {
         return dependencies.native.world(toGeo: worldCoordinates)
     }
 
