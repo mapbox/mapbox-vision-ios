@@ -169,7 +169,6 @@ public final class VisionManager: BaseVisionManager {
     private let dependencies: VisionDependencies
     private var state: State = .uninitialized
 
-    private var interruptionStartTime: Date?
     private var currentFrame: CVPixelBuffer?
     private var isStoppedForBackground = false
 
@@ -217,26 +216,15 @@ public final class VisionManager: BaseVisionManager {
     }
 
     override func prepareForBackground() {
-        interruptionStartTime = Date()
         guard state.isStarted else { return }
         isStoppedForBackground = true
         pause()
     }
 
     override func prepareForForeground() {
-        stopInterruption()
         guard isStoppedForBackground else { return }
         isStoppedForBackground = false
         resume()
-    }
-
-    private func stopInterruption() {
-        guard let interruptionStartTime = interruptionStartTime else { return }
-
-        let elapsedTime = Date().timeIntervalSince(interruptionStartTime)
-        if elapsedTime >= Constants.foregroundInterruptionResetThreshold {
-            dependencies.deviceInfo.reset()
-        }
     }
 
     private func tryRecording(mode: SessionRecorder.Mode) {
