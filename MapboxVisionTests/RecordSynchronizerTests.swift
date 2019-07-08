@@ -2,7 +2,7 @@ import XCTest
 
 @testable import MapboxVision
 
-class RecordSynchronizerTests: XCTestCase, SyncDelegate {
+class RecordSynchronizerTests: XCTestCase {
     var networkClient: MockNetworkClient!
     var dataSource: MockRecordDataSource!
     var archiver: MockArchiver!
@@ -74,12 +74,14 @@ class RecordSynchronizerTests: XCTestCase, SyncDelegate {
         recordSynchronizer.sync()
         wait(for: [positiveScenarioExpectation], timeout: 10.0)
     }
+}
 
-    func syncStarted() {
-        XCTAssert(dataSource.removedFiles.contains(URL(fileURLWithPath: "/3", isDirectory: true)), "Empty dir should be removed")
-    }
+extension RecordSynchronizerTests: SyncDelegate {
+    func syncStarted() {}
 
     func syncStopped() {
+        XCTAssert(dataSource.removedFiles.contains(URL(fileURLWithPath: "/3", isDirectory: true)), "Empty dir should be removed")
+
         let archives = [
             URL(fileURLWithPath: "/1/telemetry.zip"),
             URL(fileURLWithPath: "/2/telemetry.zip"),

@@ -87,7 +87,6 @@
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
 		9D72AB0D4BB86199CF051DC2 /* CVPixelBuffer+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */; };
 		9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */; };
-		B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBA92163C89D00C9C5A5 /* FileManager.swift */; };
 		B50CFBAD2163C91500C9C5A5 /* MockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBAC2163C91500C9C5A5 /* MockNetworkClient.swift */; };
 		B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBAE2163C98E00C9C5A5 /* MockRecordDataSource.swift */; };
@@ -111,19 +110,6 @@
 			remoteInfo = MapboxVision;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B50CFBA52162654E00C9C5A5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -640,7 +626,6 @@
 				B51E5575215E313500650DDE /* Sources */,
 				B51E5576215E313500650DDE /* Frameworks */,
 				B51E5577215E313500650DDE /* Resources */,
-				B50CFBA52162654E00C9C5A5 /* CopyFiles */,
 				3A11AFDA229C20D600070A61 /* Swiftlint */,
 			);
 			buildRules = (
@@ -1371,6 +1356,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1392,6 +1378,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionTests;
@@ -1412,6 +1399,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionTests;
