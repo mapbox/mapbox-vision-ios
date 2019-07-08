@@ -6,6 +6,7 @@
 - Changed World-Pixel transformation methods to return optional values
 - Changed World-Geo transformation methods to return optional values
 - Removed `MapboxNavigation` dependency
+- Changed implementation of `DeviceInfoProvider` provider in order to make device's id persistent
 
 ## 0.4.1
 
