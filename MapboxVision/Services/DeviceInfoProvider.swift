@@ -11,7 +11,7 @@ final class DeviceInfoProvider: DeviceInfoProvidable {
     lazy var id: String = {
         let defaults = UserDefaults.standard
 
-        if let uuid = defaults.object(forKey: Keys.uniqueDeviceIdKey) as? String {
+        if let uuid = defaults.string(forKey: Keys.uniqueDeviceIdKey) {
             return uuid
         } else {
             let uuid = NSUUID().uuidString
