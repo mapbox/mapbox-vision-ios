@@ -14,6 +14,17 @@ enum DocumentsLocation: String {
 }
 
 struct RecordingPath {
+    enum Error: LocalizedError {
+        case movedRecordingNotExist(String, String)
+
+        var errorDescription: String? {
+            switch self {
+            case let .movedRecordingNotExist(oldPath, newPath):
+                return "Recording moved from \(oldPath) doesn't exist at expected path \(newPath)"
+            }
+        }
+    }
+
     static func generateDirectoryName() -> String {
         return DateFormatter.createRecordingFormatter().string(from: Date())
     }
@@ -73,11 +84,18 @@ struct RecordingPath {
     @discardableResult
     func move(to newBasePath: DocumentsLocation) throws -> RecordingPath {
         let newPath = recordingPath.replacingOccurrences(of: self.basePath.path, with: newBasePath.path)
+        let fileManager = FileManager.default
 
-        try FileManager.default.moveItem(atPath: recordingPath, toPath: newPath)
+        if !fileManager.fileExists(atPath: newBasePath.path) {
+            try fileManager.createDirectory(atPath: newBasePath.path, withIntermediateDirectories: true, attributes: nil)
+        }
 
-        let directory = recordingPath.lastPathComponent
-        return RecordingPath(basePath: newBasePath, directory: directory, settings: settings)
+        try fileManager.moveItem(atPath: recordingPath, toPath: newPath)
+
+        guard let path = RecordingPath(existing: newPath, settings: settings) else {
+            throw Error.movedRecordingNotExist(recordingPath, newPath)
+        }
+        return path
     }
 
     func delete() throws {
