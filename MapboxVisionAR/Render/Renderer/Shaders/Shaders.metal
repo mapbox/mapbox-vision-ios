@@ -14,10 +14,6 @@ struct VertexOut {
     float2 texCoords;
 };
 
-struct LaneWidthUniforms {
-    float width;
-};
-
 struct DefaultVertexUniforms {
     float4x4 viewProjectionMatrix;
     float4x4 modelMatrix;
@@ -28,6 +24,7 @@ struct ArrowVertexUniforms {
     float4x4 viewProjectionMatrix;
     float4x4 modelMatrix;
     float3x3 normalMatrix;
+    float    laneWidth;
     float3   p0;
     float3   p1;
     float3   p2;
@@ -82,7 +79,7 @@ vertex VertexOut default_vertex_main(VertexIn vertexIn [[stage_in]], constant De
     return vertexOut;
 }
 
-vertex VertexOut arrow_vertex_main(VertexIn vertexIn [[stage_in]], constant ArrowVertexUniforms &uniforms [[buffer(1)]], constant LaneWidthUniforms &widthUniforms [[buffer(2)]])
+vertex VertexOut arrow_vertex_main(VertexIn vertexIn [[stage_in]], constant ArrowVertexUniforms &uniforms [[buffer(1)]])
 {
     VertexOut vertexOut;
     
@@ -102,7 +99,7 @@ vertex VertexOut arrow_vertex_main(VertexIn vertexIn [[stage_in]], constant Arro
     float3 const baseDirection = 3 * (p1 - p0) * t1_2 + 6 * (p2 - p1) * t1 * t + 3 * (p3 - p2) * t_2;
     
     float3 const offsetVector = normalize(float3(baseDirection.z, 0, -baseDirection.x));
-    float3 const smoothedPos = basePoint - offsetVector * vertexIn.position.x * widthUniforms.width;
+    float3 const smoothedPos = basePoint - offsetVector * vertexIn.position.x * uniforms.laneWidth;
 
     float4 const worldPosition = uniforms.modelMatrix * float4(smoothedPos.x, vertexIn.position.y, smoothedPos.z, 1);
     

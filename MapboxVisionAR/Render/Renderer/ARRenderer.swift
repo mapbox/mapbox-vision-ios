@@ -181,15 +181,13 @@ class ARRenderer: NSObject {
                 viewProjectionMatrix: viewProjectionMatrix,
                 modelMatrix: modelMatrix,
                 normalMatrix: normalMatrix(mat: modelMatrix),
+                laneWidth: arLaneNode.width,
                 p0: ARRenderer.processPoint(points[0]),
                 p1: ARRenderer.processPoint(points[1]),
                 p2: ARRenderer.processPoint(points[2]),
                 p3: ARRenderer.processPoint(points[3])
             )
             commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
-
-            var laneWidthUniform = LaneWidthUniforms(width: arLaneNode.width)
-            commandEncoder.setVertexBytes(&laneWidthUniform, length: MemoryLayout<LaneWidthUniforms>.size, index: 2)
 
             var fragmentUniforms = FragmentUniforms(cameraWorldPosition: scene.cameraNode.position,
                                                     ambientLightColor: material.ambientLightColor,

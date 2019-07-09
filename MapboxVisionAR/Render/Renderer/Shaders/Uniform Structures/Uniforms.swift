@@ -10,6 +10,7 @@ struct ArrowVertexUniforms {
     var viewProjectionMatrix: float4x4
     var modelMatrix: float4x4
     var normalMatrix: float3x3
+    var laneWidth: Float
     var p0: float3
     var p1: float3
     var p2: float3
@@ -28,8 +29,4 @@ struct FragmentUniforms {
 
 struct LaneFragmentUniforms {
     var baseColor = float4(1, 1, 1, 1)
-}
-
-struct LaneWidthUniforms {
-    var width: Float
 }
