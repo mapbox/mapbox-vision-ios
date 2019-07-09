@@ -16,7 +16,10 @@ struct VisionDependencies {
     let deviceInfo: DeviceInfoProvidable
 
     static func `default`() -> VisionDependencies {
-        guard let reachability = Reachability() else {
+        let reachability: Reachability
+        do {
+            reachability = try Reachability()
+        } catch {
             fatalError("Reachability failed to initialize")
         }
 
@@ -78,7 +81,10 @@ struct ReplayDependencies {
     let player: VideoPlayable
 
     static func `default`(recordPath: String) throws -> ReplayDependencies {
-        guard let reachability = Reachability() else {
+        let reachability: Reachability
+        do {
+            reachability = try Reachability()
+        } catch {
             fatalError("Reachability failed to initialize")
         }
 
