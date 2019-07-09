@@ -34,6 +34,7 @@
 		2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */; };
 		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
+		2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
 		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -154,6 +155,7 @@
 		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = Carthage/Build/iOS/MapboxVisionARNative.framework; sourceTree = "<group>"; };
 		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = Carthage/Build/iOS/MapboxVisionSafetyNative.framework; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
+		2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPathTests.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -560,6 +562,7 @@
 				2EF31C8F21904BB300752D23 /* RecordCoordinatorTests.swift */,
 				2EDD8708219EDC0200760C6D /* DeviceProviderTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
+				2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */,
 			);
 			path = MapboxVisionTests;
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */,
 				B51E557C215E313500650DDE /* RecordSynchronizerTests.swift in Sources */,
 				2EF31C9021904BB300752D23 /* RecordCoordinatorTests.swift in Sources */,
 				B50CFBAD2163C91500C9C5A5 /* MockNetworkClient.swift in Sources */,
