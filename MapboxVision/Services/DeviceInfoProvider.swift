@@ -1,23 +1,24 @@
-import UIKit
-
 protocol DeviceInfoProvidable {
     var id: String { get }
     var platformName: String { get }
-
-    func reset()
 }
 
 final class DeviceInfoProvider: DeviceInfoProvidable {
-    lazy var id: String = DeviceInfoProvider.generateID()
+    private enum Keys {
+        static let uniqueDeviceIdKey = "uniqueDeviceIdKey"
+    }
+
+    lazy var id: String = {
+        let defaults = UserDefaults.standard
+
+        if let uuid = defaults.string(forKey: Keys.uniqueDeviceIdKey) {
+            return uuid
+        } else {
+            let uuid = NSUUID().uuidString
+            defaults.set(uuid, forKey: Keys.uniqueDeviceIdKey)
+            return uuid
+        }
+    }()
+
     let platformName: String = UIDevice.current.systemName
-
-    private var interruptionStartTime: Date?
-
-    func reset() {
-        id = DeviceInfoProvider.generateID()
-    }
-
-    private static func generateID() -> String {
-        return NSUUID().uuidString
-    }
 }
