@@ -7,7 +7,7 @@ public struct LaneVisualParams {
                         green: CGFloat(ARConstants.laneDefaultColor.y),
                         blue: CGFloat(ARConstants.laneDefaultColor.z),
                         alpha: CGFloat(ARConstants.laneDefaultColor.w))
-    /// Width of the lane.
+    /// Width of the lane in meters.
     public var width: Float = 1.0
     /// Position of the light source.
     public var lightPosition = WorldCoordinate(x: 0, y: 0, z: 0)
