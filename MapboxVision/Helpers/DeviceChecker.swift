@@ -14,9 +14,9 @@ private enum DeviceModel {
 }
 
 extension UIDevice {
-     // By default we consider next-gen iPhone as a uncapable to run models with high performance.
-     // This is due to potential issues with temperature during operational mode.
-     // We must do proper testing before upgrading `maxIphoneVersionWithHighPerformance`.
+    // By default we consider next-gen iPhone as a uncapable to run models with high performance.
+    // This is due to potential issues with temperature during operational mode.
+    // We must do proper testing before upgrading `maxIphoneVersionWithHighPerformance`.
     var isHighPerformance: Bool {
         let modelID = self.modelID
 
@@ -29,6 +29,6 @@ extension UIDevice {
         }
 
         return currentModelMajorNumber >= DeviceModel.MajorNumber.minIphoneVersionWithHighPerformance &&
-               currentModelMajorNumber <= DeviceModel.MajorNumber.maxIphoneVersionWithHighPerformance
+            currentModelMajorNumber <= DeviceModel.MajorNumber.maxIphoneVersionWithHighPerformance
     }
 }

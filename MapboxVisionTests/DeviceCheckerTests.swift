@@ -1,11 +1,6 @@
-//
-//  Created by Dersim Davaod on 5/8/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
-import XCTest
 @testable import MapboxVision
+import XCTest
 
 class DeviceCheckerTests: XCTestCase {
     func testIsHighPerformanceDeviceReturnsFalseOnIphone7PlusOrLower() {
