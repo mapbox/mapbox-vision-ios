@@ -1,11 +1,6 @@
-//
-// Created by Alexander Pristavko on 2019-01-17.
-// Copyright (c) 2019 Mapbox. All rights reserved.
-//
-
-import Foundation
-import CoreVideo
 import CoreMedia
+import CoreVideo
+import Foundation
 
 extension CMSampleBuffer {
     var pixelBuffer: CVPixelBuffer? {
@@ -17,7 +12,7 @@ extension CVPixelBuffer {
     var width: Int {
         return CVPixelBufferGetWidth(self)
     }
-    
+
     var height: Int {
         return CVPixelBufferGetHeight(self)
     }

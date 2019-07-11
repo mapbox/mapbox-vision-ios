@@ -1,11 +1,3 @@
-//
-//  blend.metal
-//  cv-assist-ios
-//
-//  Created by Maksim on 5/17/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 #include <metal_stdlib>
 using namespace metal;
 

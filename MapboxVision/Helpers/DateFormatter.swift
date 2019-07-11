@@ -1,11 +1,3 @@
-//
-//  DateFormatter.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 1/9/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
 import Foundation
 
 extension DateFormatter {

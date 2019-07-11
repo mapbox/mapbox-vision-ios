@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 - Unreleased
+- Added support for UK country
+- Added support for setting attitudeOrient via DeviceMotionData
+- Changed World-Pixel transformation methods to return optional values
+- Changed World-Geo transformation methods to return optional values
+- Changed implementation of `DeviceInfoProvider` provider in order to make device's id persistent
+- Changed implementation of `DeviceChecker` to increase performance on devices with A12 Bionic SoC
+- Removed `MapboxNavigation` dependency
+
 ## 0.4.2
 
 ### Vision
