@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2
+
+### Vision
+- Changed required versions of dependencies: `MapboxNavigation` to 0.35.0 and `MapboxMobileEvents` to 0.9.5
+- Fixed deleting binary telemetry while moving it after recording is finished
+
 ## 0.4.1
 
 ### Vision
