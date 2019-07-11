@@ -1,4 +1,5 @@
 // swiftlint:disable comma
+// swiftformat:disable spaceInsideParens
 
 @testable import MapboxVisionAR
 import simd

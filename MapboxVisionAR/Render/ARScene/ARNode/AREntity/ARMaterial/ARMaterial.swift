@@ -9,7 +9,7 @@ struct ARMaterial {
     /// Texture for coloring material.
     var colorTexture: MTLTexture?
     /// Light source for material.
-    var light: ARLight?
+    var light = ARLight()
     /// The color of light reflected directly toward the viewer from the surface of a geometry using the material.
     var specularColor = float3(1, 1, 1)
     /// The quantity that controls how “tight” the highlight is.

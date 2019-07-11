@@ -7,7 +7,7 @@ struct ARLight {
     // MARK: - Properties
 
     /// Color of light.
-    var color = float3(1, 1, 1)
+    var color = ARConstants.laneDefaultLightColor
     /// Position of light source.
-    var position = float3(0, 0, 0)
+    var position = ARConstants.laneDefaultLightPosition
 }

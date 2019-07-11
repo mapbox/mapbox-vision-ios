@@ -141,9 +141,9 @@ class ARRenderer: NSObject {
         if let arLaneNode = scene.arLaneNode() {
             arLaneNode.set(laneColor: laneVisualParameters.color)
             arLaneNode.set(laneWidth: laneVisualParameters.width)
-            arLaneNode.set(lightPosition: float3(Float(laneVisualParameters.lightPosition.x),
-                                                 Float(laneVisualParameters.lightPosition.y),
-                                                 Float(laneVisualParameters.lightPosition.z)))
+            arLaneNode.set(laneLightPosition: float3(Float(laneVisualParameters.lightPosition.x),
+                                                     Float(laneVisualParameters.lightPosition.y),
+                                                     Float(laneVisualParameters.lightPosition.z)))
             arLaneNode.set(laneLightColor: laneVisualParameters.lightColor)
             arLaneNode.set(laneAmbientColor: laneVisualParameters.ambientColor)
         }
@@ -195,7 +195,7 @@ class ARRenderer: NSObject {
                                                     baseColor: material.diffuseColor.xyz,
                                                     opacity: material.diffuseColor.w,
                                                     specularPower: material.specularPower,
-                                                    light: material.light ?? ARConstants.laneDefaultLight)
+                                                    light: material.light)
 
             commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.size, index: 0)
             commandEncoder.setFrontFacing(material.frontFaceMode)

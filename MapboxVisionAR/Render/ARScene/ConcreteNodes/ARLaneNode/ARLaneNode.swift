@@ -59,10 +59,10 @@ class ARLaneNode: ARNode {
      Method does nothing if there's no underlying AR lane's representation.
 
      - Parameters:
-       - lightPosition: Position of a light source for AR lane.
+       - laneLightPosition: Position of a light source for AR lane.
      */
-    func set(lightPosition: float3) {
-        self.arMaterial.light?.position = lightPosition
+    func set(laneLightPosition: float3) {
+        self.arMaterial.light.position = laneLightPosition
     }
 
     /**
@@ -79,7 +79,7 @@ class ARLaneNode: ARNode {
             let newLaneLightColor = float3(Float(red),
                                            Float(green),
                                            Float(blue))
-            self.arMaterial.light?.color = newLaneLightColor
+            self.arMaterial.light.color = newLaneLightColor
         }
     }
 
