@@ -100,13 +100,14 @@
 		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
 		3A2D99BE22C347A300F15218 /* LaneVisualParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */; };
 		3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8C0622A5239F00CC0954 /* Uniforms.swift */; };
-		3A7E992722A005A1005EB875 /* MapboxCoreNavigation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E071A5322578A3E00345FA8 /* MapboxCoreNavigation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E992722A005A1005EB875 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993222A11B71005EB875 /* NodeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993122A11B71005EB875 /* NodeGeometry.swift */; };
 		3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994722A14692005EB875 /* NodeGeometryTests.swift */; };
 		3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */; };
 		3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */; };
+		3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -152,17 +153,7 @@
 			files = (
 				3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */,
 				3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */,
-				3A7E992722A005A1005EB875 /* MapboxCoreNavigation.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B50CFBA52162654E00C9C5A5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B50CFBA72162659200C9C5A5 /* MapboxMobileEvents.framework in CopyFiles */,
+				3A7E992722A005A1005EB875 /* (null) in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +259,7 @@
 		3A7E994722A14692005EB875 /* NodeGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometryTests.swift; sourceTree = "<group>"; };
 		3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNodeTests.swift; sourceTree = "<group>"; };
 		3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNodeTests.swift; sourceTree = "<group>"; };
+		3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNodeTests.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -761,6 +753,7 @@
 		3A7E994922A15538005EB875 /* ConcreteNodes */ = {
 			isa = PBXGroup;
 			children = (
+				3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */,
 				3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */,
 				3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */,
 			);
@@ -1209,6 +1202,7 @@
 				3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */,
 				3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */,
 				3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */,
+				3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
