@@ -9,7 +9,7 @@ public struct LaneVisualParams {
                                alpha: CGFloat(ARConstants.laneDefaultColor.w))
     /// Width of the lane in meters.
     public var width: Float = 1.0
-    /// Position of the light source.
+    /// Position of the light source in world coordinate system.
     public var lightPosition = WorldCoordinate(x: 0, y: 0, z: 0)
     /// Color of the light source. It does not take alpha channel into account.
     public var lightColor = UIColor.white

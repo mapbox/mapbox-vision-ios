@@ -8,6 +8,6 @@ struct ARLight {
 
     /// Color of light.
     var color = ARConstants.laneDefaultLightColor
-    /// Position of light source.
+    /// Position of light source in render coordinate system.
     var position = ARConstants.laneDefaultLightPosition
 }
