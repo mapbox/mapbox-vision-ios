@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.swift_version = '4.2'
 
   s.dependency "MapboxVisionNativeAll/Vision", "#{s.version}"
-  s.dependency "MapboxMobileEvents", "~> 0.9.3"
+  s.dependency "MapboxMobileEvents", "~> 0.9.5"
   s.dependency "ZIPFoundation", "~> 0.9.9"
 
 end
