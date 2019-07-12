@@ -172,7 +172,7 @@ public final class VisionManager: BaseVisionManager {
     private var currentFrame: CVPixelBuffer?
     private var isStoppedForBackground = false
 
-    private init(dependencies: VisionDependencies, videoSource: VideoSource) {
+    init(dependencies: VisionDependencies, videoSource: VideoSource) {
         self.dependencies = dependencies
 
         super.init(dependencies: BaseDependencies(
@@ -186,7 +186,10 @@ public final class VisionManager: BaseVisionManager {
     }
 
     deinit {
-        destroy()
+        guard state.isUninitialized else {
+            assertionFailure("Method destroy should be called before Manager's deinit")
+            return
+        }
     }
 
     private func startVideoStream() {
@@ -227,8 +230,8 @@ public final class VisionManager: BaseVisionManager {
         resume()
     }
 
-    private func tryRecording(mode: SessionRecorder.Mode) {
-        guard mode.isExternal || currentCountry.allowsRecording else { return }
+    private func tryRecording(mode: SessionRecordingMode) {
+        guard mode != .internal || currentCountry.allowsRecording else { return }
         dependencies.recorder.start(mode: mode)
     }
 
@@ -236,7 +239,7 @@ public final class VisionManager: BaseVisionManager {
         super.onCountryUpdated(country)
         if country.allowsRecording {
             tryRecording(mode: .internal)
-        } else if dependencies.recorder.currentMode.isInternal {
+        } else if dependencies.recorder.isInternal {
             dependencies.recorder.stop()
         }
     }
