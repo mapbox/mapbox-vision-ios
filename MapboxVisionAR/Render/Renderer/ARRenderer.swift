@@ -139,13 +139,9 @@ class ARRenderer: NSObject {
 
     func set(laneVisualParameters: LaneVisualParams) {
         if let arLaneNode = scene.arLaneNode() {
-            let lightPositionInRenderCoordinate = float3(Float(-laneVisualParameters.lightPosition.y),
-                                                         Float(laneVisualParameters.lightPosition.z),
-                                                         Float(-laneVisualParameters.lightPosition.x))
-
             arLaneNode.set(laneColor: laneVisualParameters.color)
             arLaneNode.set(laneWidth: laneVisualParameters.width)
-            arLaneNode.set(laneLightPosition: lightPositionInRenderCoordinate)
+            arLaneNode.set(laneLightPosition: ARRenderer.renderCoordinate(from: laneVisualParameters.lightPosition))
             arLaneNode.set(laneLightColor: laneVisualParameters.lightColor)
             arLaneNode.set(laneAmbientColor: laneVisualParameters.ambientColor)
         }
