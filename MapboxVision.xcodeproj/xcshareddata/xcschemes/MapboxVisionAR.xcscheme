@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3A11B04E229F0B7A00070A61"
+               BuildableName = "MapboxVisionARTests.xctest"
+               BlueprintName = "MapboxVisionARTests"
+               ReferencedContainer = "container:MapboxVision.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2E0719562257871300345FA8"
+            BuildableName = "MapboxVisionAR.framework"
+            BlueprintName = "MapboxVisionAR"
+            ReferencedContainer = "container:MapboxVision.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

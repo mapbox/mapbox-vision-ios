@@ -86,6 +86,28 @@
 		3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */; };
 		3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
+		3A11B02C229EC4D600070A61 /* ARLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02B229EC4D600070A61 /* ARLight.swift */; };
+		3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B02D229EC55400070A61 /* ARMaterial.swift */; };
+		3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B031229EC6CD00070A61 /* ARNodeType.swift */; };
+		3A11B034229EC75C00070A61 /* ARMeshError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B033229EC75C00070A61 /* ARMeshError.swift */; };
+		3A11B036229EC77C00070A61 /* ARConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B035229EC77C00070A61 /* ARConstants.swift */; };
+		3A11B03A229ED29700070A61 /* ARRootNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B039229ED29700070A61 /* ARRootNode.swift */; };
+		3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03B229ED2AC00070A61 /* ARNode.swift */; };
+		3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B03D229ED2D200070A61 /* ARLaneNode.swift */; };
+		3A11B042229ED33C00070A61 /* ARCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B041229ED33C00070A61 /* ARCameraNode.swift */; };
+		3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B043229ED3F500070A61 /* ARRendererError.swift */; };
+		3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B045229ED49B00070A61 /* UIColor+Extension.swift */; };
+		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
+		3A2D99BE22C347A300F15218 /* LaneVisualParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */; };
+		3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8C0622A5239F00CC0954 /* Uniforms.swift */; };
+		3A7E992722A005A1005EB875 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A7E993222A11B71005EB875 /* NodeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993122A11B71005EB875 /* NodeGeometry.swift */; };
+		3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994722A14692005EB875 /* NodeGeometryTests.swift */; };
+		3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */; };
+		3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */; };
+		3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -106,6 +128,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E0719562257871300345FA8;
+			remoteInfo = MapboxVisionAR;
+		};
 		B51E557F215E313500650DDE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
@@ -114,6 +143,21 @@
 			remoteInfo = MapboxVision;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3A7E992522A00519005EB875 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */,
+				3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */,
+				3A7E992722A005A1005EB875 /* (null) in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,6 +238,28 @@
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCheckerTests.swift; sourceTree = "<group>"; };
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
+		3A11B02B229EC4D600070A61 /* ARLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARLight.swift; path = MapboxVisionAR/Render/ARScene/ARNode/AREntity/ARMaterial/ARLight/ARLight.swift; sourceTree = SOURCE_ROOT; };
+		3A11B02D229EC55400070A61 /* ARMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ARMaterial.swift; path = MapboxVisionAR/Render/ARScene/ARNode/AREntity/ARMaterial/ARMaterial.swift; sourceTree = SOURCE_ROOT; };
+		3A11B031229EC6CD00070A61 /* ARNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNodeType.swift; sourceTree = "<group>"; };
+		3A11B033229EC75C00070A61 /* ARMeshError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMeshError.swift; sourceTree = "<group>"; };
+		3A11B035229EC77C00070A61 /* ARConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARConstants.swift; sourceTree = "<group>"; };
+		3A11B039229ED29700070A61 /* ARRootNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNode.swift; sourceTree = "<group>"; };
+		3A11B03B229ED2AC00070A61 /* ARNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNode.swift; sourceTree = "<group>"; };
+		3A11B03D229ED2D200070A61 /* ARLaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNode.swift; sourceTree = "<group>"; };
+		3A11B041229ED33C00070A61 /* ARCameraNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNode.swift; sourceTree = "<group>"; };
+		3A11B043229ED3F500070A61 /* ARRendererError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRendererError.swift; sourceTree = "<group>"; };
+		3A11B045229ED49B00070A61 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionARTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A11B05D229F1E1900070A61 /* ARSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneTests.swift; sourceTree = "<group>"; };
+		3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaneVisualParams.swift; sourceTree = "<group>"; };
+		3A5E8C0622A5239F00CC0954 /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
+		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A7E993122A11B71005EB875 /* NodeGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometry.swift; sourceTree = "<group>"; };
+		3A7E994722A14692005EB875 /* NodeGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometryTests.swift; sourceTree = "<group>"; };
+		3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNodeTests.swift; sourceTree = "<group>"; };
+		3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNodeTests.swift; sourceTree = "<group>"; };
+		3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNodeTests.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -245,6 +311,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A11B04C229F0B7A00070A61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B51E5576215E313500650DDE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,6 +334,7 @@
 			children = (
 				2E071A392257887E00345FA8 /* Models */,
 				2E071A912257C83300345FA8 /* Render */,
+				3A11B02A229EC3AE00070A61 /* ViewController */,
 				2E071A922257C89B00345FA8 /* VIsionARManager */,
 				2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */,
 				2E071A432257887E00345FA8 /* Info.plist */,
@@ -305,11 +379,9 @@
 		2E071A912257C83300345FA8 /* Render */ = {
 			isa = PBXGroup;
 			children = (
-				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
-				2E071A382257887E00345FA8 /* Shaders.metal */,
-				2E071A3D2257887E00345FA8 /* ARMath.swift */,
-				2E071A352257887E00345FA8 /* ARRenderer.swift */,
-				2E071A362257887E00345FA8 /* ARScene.swift */,
+				3A11B01F229EC2C100070A61 /* ARScene */,
+				3A11B027229EC35400070A61 /* Renderer */,
+				3A11B026229EC34800070A61 /* Helpers */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -338,6 +410,7 @@
 				2E4EE21420EFD378003431B3 /* MapboxVision */,
 				B51E557A215E313500650DDE /* MapboxVisionTests */,
 				2E071A322257887E00345FA8 /* MapboxVisionAR */,
+				3A11B050229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */,
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
@@ -352,6 +425,7 @@
 				B51E5579215E313500650DDE /* MapboxVisionTests.xctest */,
 				2E07199C2257871300345FA8 /* MapboxVisionAR.framework */,
 				2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */,
+				3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -478,6 +552,7 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */,
 				2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */,
 				2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */,
 				2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */,
@@ -494,6 +569,195 @@
 				2E4EE2E220F0CC63003431B3 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		3A11B01F229EC2C100070A61 /* ARScene */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A362257887E00345FA8 /* ARScene.swift */,
+				3A11B020229EC2F600070A61 /* ARNode */,
+				3A7E993F22A11DEB005EB875 /* ConcreteNodes */,
+			);
+			path = ARScene;
+			sourceTree = "<group>";
+		};
+		3A11B020229EC2F600070A61 /* ARNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B031229EC6CD00070A61 /* ARNodeType.swift */,
+				3A11B03B229ED2AC00070A61 /* ARNode.swift */,
+				3A2D99B422BCF82A00F15218 /* NodeGeometry */,
+			);
+			path = ARNode;
+			sourceTree = "<group>";
+		};
+		3A11B022229EC31700070A61 /* ARMaterial */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B02D229EC55400070A61 /* ARMaterial.swift */,
+				3A11B023229EC32300070A61 /* ARLight */,
+			);
+			name = ARMaterial;
+			path = ../../ARNode/AREntity/ARMaterial;
+			sourceTree = "<group>";
+		};
+		3A11B023229EC32300070A61 /* ARLight */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B02B229EC4D600070A61 /* ARLight.swift */,
+			);
+			path = ARLight;
+			sourceTree = "<group>";
+		};
+		3A11B026229EC34800070A61 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B035229EC77C00070A61 /* ARConstants.swift */,
+				2E071A3D2257887E00345FA8 /* ARMath.swift */,
+				3A11B045229ED49B00070A61 /* UIColor+Extension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3A11B027229EC35400070A61 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				2E071A352257887E00345FA8 /* ARRenderer.swift */,
+				3A11B028229EC39800070A61 /* Error */,
+				3A11B029229EC3A200070A61 /* Shaders */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		3A11B028229EC39800070A61 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B033229EC75C00070A61 /* ARMeshError.swift */,
+				3A11B043229ED3F500070A61 /* ARRendererError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		3A11B029229EC3A200070A61 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				3A5E8C0522A5238800CC0954 /* Uniform Structures */,
+				2E071A382257887E00345FA8 /* Shaders.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		3A11B02A229EC3AE00070A61 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */,
+				2E071A3F2257887E00345FA8 /* VisionARViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		3A11B050229F0B7A00070A61 /* MapboxVisionARTests */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B05B229F1C8200070A61 /* Render */,
+				3A11B053229F0B7A00070A61 /* Info.plist */,
+			);
+			path = MapboxVisionARTests;
+			sourceTree = "<group>";
+		};
+		3A11B05B229F1C8200070A61 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B05C229F1E0600070A61 /* ARScene */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
+		3A11B05C229F1E0600070A61 /* ARScene */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B05D229F1E1900070A61 /* ARSceneTests.swift */,
+				3A2D99B622BD0FBC00F15218 /* ARNode */,
+				3A7E994922A15538005EB875 /* ConcreteNodes */,
+			);
+			path = ARScene;
+			sourceTree = "<group>";
+		};
+		3A2D99B422BCF82A00F15218 /* NodeGeometry */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E993122A11B71005EB875 /* NodeGeometry.swift */,
+			);
+			path = NodeGeometry;
+			sourceTree = "<group>";
+		};
+		3A2D99B622BD0FBC00F15218 /* ARNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E994622A14681005EB875 /* NodeStructure */,
+			);
+			path = ARNode;
+			sourceTree = "<group>";
+		};
+		3A5E8C0522A5238800CC0954 /* Uniform Structures */ = {
+			isa = PBXGroup;
+			children = (
+				3A5E8C0622A5239F00CC0954 /* Uniforms.swift */,
+			);
+			path = "Uniform Structures";
+			sourceTree = "<group>";
+		};
+		3A7E993B22A11D41005EB875 /* ARRootNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B039229ED29700070A61 /* ARRootNode.swift */,
+			);
+			path = ARRootNode;
+			sourceTree = "<group>";
+		};
+		3A7E993D22A11D5D005EB875 /* ARLaneNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B03D229ED2D200070A61 /* ARLaneNode.swift */,
+				3A11B022229EC31700070A61 /* ARMaterial */,
+			);
+			path = ARLaneNode;
+			sourceTree = "<group>";
+		};
+		3A7E993E22A11DAF005EB875 /* ARCameraNode */ = {
+			isa = PBXGroup;
+			children = (
+				3A11B041229ED33C00070A61 /* ARCameraNode.swift */,
+			);
+			path = ARCameraNode;
+			sourceTree = "<group>";
+		};
+		3A7E993F22A11DEB005EB875 /* ConcreteNodes */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E993B22A11D41005EB875 /* ARRootNode */,
+				3A7E993D22A11D5D005EB875 /* ARLaneNode */,
+				3A7E993E22A11DAF005EB875 /* ARCameraNode */,
+			);
+			path = ConcreteNodes;
+			sourceTree = "<group>";
+		};
+		3A7E994622A14681005EB875 /* NodeStructure */ = {
+			isa = PBXGroup;
+			children = (
+				3A7E994722A14692005EB875 /* NodeGeometryTests.swift */,
+			);
+			path = NodeStructure;
+			sourceTree = "<group>";
+		};
+		3A7E994922A15538005EB875 /* ConcreteNodes */ = {
+			isa = PBXGroup;
+			children = (
+				3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */,
+				3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */,
+				3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */,
+			);
+			path = ConcreteNodes;
 			sourceTree = "<group>";
 		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
@@ -629,6 +893,25 @@
 			productReference = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */;
+			buildPhases = (
+				3A11B04B229F0B7A00070A61 /* Sources */,
+				3A11B04C229F0B7A00070A61 /* Frameworks */,
+				3A11B04D229F0B7A00070A61 /* Resources */,
+				3A7E992522A00519005EB875 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A7E992922A00B9D005EB875 /* PBXTargetDependency */,
+			);
+			name = MapboxVisionARTests;
+			productName = MapboxVisionARTests;
+			productReference = 3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B51E5578215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B51E5584215E313500650DDE /* Build configuration list for PBXNativeTarget "MapboxVisionTests" */;
@@ -654,12 +937,15 @@
 		2E4EE20920EFD378003431B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
 					2E4EE21120EFD378003431B3 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					3A11B04E229F0B7A00070A61 = {
+						CreatedOnToolsVersion = 10.2.1;
 					};
 					B51E5578215E313500650DDE = {
 						CreatedOnToolsVersion = 10.0;
@@ -681,6 +967,7 @@
 				2E4EE21120EFD378003431B3 /* MapboxVision */,
 				B51E5578215E313500650DDE /* MapboxVisionTests */,
 				2E0719562257871300345FA8 /* MapboxVisionAR */,
+				3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E07199E2257871B00345FA8 /* MapboxVisionSafety */,
 			);
 		};
@@ -710,6 +997,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A11B04D229F0B7A00070A61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,14 +1096,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A11B02E229EC55400070A61 /* ARMaterial.swift in Sources */,
+				3A11B03C229ED2AC00070A61 /* ARNode.swift in Sources */,
 				2E071A492257887F00345FA8 /* Shaders.metal in Sources */,
 				2E071A4F2257887F00345FA8 /* VisionARViewController.swift in Sources */,
+				3A11B032229EC6CD00070A61 /* ARNodeType.swift in Sources */,
 				2E071A8F2257BD9F00345FA8 /* Images.swift in Sources */,
+				3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */,
+				3A11B03E229ED2D200070A61 /* ARLaneNode.swift in Sources */,
 				2E071A472257887F00345FA8 /* ARScene.swift in Sources */,
+				3A7E993222A11B71005EB875 /* NodeGeometry.swift in Sources */,
+				3A11B034229EC75C00070A61 /* ARMeshError.swift in Sources */,
+				3A11B02C229EC4D600070A61 /* ARLight.swift in Sources */,
 				2E071A462257887F00345FA8 /* ARRenderer.swift in Sources */,
+				3A11B03A229ED29700070A61 /* ARRootNode.swift in Sources */,
+				3A11B046229ED49B00070A61 /* UIColor+Extension.swift in Sources */,
+				3A2D99BE22C347A300F15218 /* LaneVisualParams.swift in Sources */,
+				3A11B036229EC77C00070A61 /* ARConstants.swift in Sources */,
 				2E071A4D2257887F00345FA8 /* ARMath.swift in Sources */,
 				2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */,
 				2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */,
+				3A11B044229ED3F500070A61 /* ARRendererError.swift in Sources */,
+				3A11B042229ED33C00070A61 /* ARCameraNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +1194,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A11B04B229F0B7A00070A61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */,
+				3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */,
+				3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */,
+				3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */,
+				3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B51E5575215E313500650DDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -907,6 +1227,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3A7E992922A00B9D005EB875 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E0719562257871300345FA8 /* MapboxVisionAR */;
+			targetProxy = 3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */;
+		};
 		B51E5580215E313500650DDE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2E4EE21120EFD378003431B3 /* MapboxVision */;
@@ -1359,6 +1684,70 @@
 			};
 			name = Release;
 		};
+		3A11B057229F0B7A00070A61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3A11B058229F0B7A00070A61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3A11B059229F0B7A00070A61 /* AdhocRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
+				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = AdhocRelease;
+		};
 		B51E5581215E313500650DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1462,6 +1851,16 @@
 				2E4EE21B20EFD378003431B3 /* Debug */,
 				2E4EE21C20EFD378003431B3 /* Release */,
 				2E197727211DD3C700311B95 /* AdhocRelease */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A11B057229F0B7A00070A61 /* Debug */,
+				3A11B058229F0B7A00070A61 /* Release */,
+				3A11B059229F0B7A00070A61 /* AdhocRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

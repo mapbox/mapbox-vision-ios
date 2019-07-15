@@ -21,6 +21,13 @@ public class VisionARViewController: UIViewController {
         }
     }
 
+    /// Parameters to configure look and feel of AR lane via `LaneVisualParams` class.
+    public var laneVisualParameters = LaneVisualParams() {
+        willSet(newLaneVisualParameters) {
+            renderer?.set(laneVisualParameters: newLaneVisualParameters)
+        }
+    }
+
     private var renderer: ARRenderer?
     /**
      Create an instance of VisionARNavigationController.
@@ -39,7 +46,7 @@ public class VisionARViewController: UIViewController {
             try renderer = ARRenderer(device: device,
                                       colorPixelFormat: arView.colorPixelFormat,
                                       depthStencilPixelFormat: arView.depthStencilPixelFormat)
-            renderer?.initScene()
+            try renderer?.initARSceneForARLane()
             arView.delegate = renderer
         } catch {
             assertionFailure(error.localizedDescription)
@@ -71,6 +78,16 @@ public class VisionARViewController: UIViewController {
      */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
+    }
+
+    /**
+     Set visual parameters for AR Lane.
+
+     - Parameters:
+       - laneVisualParams: Configuration that describes visual state of AR lane.
+     */
+    public func set(laneVisualParams: LaneVisualParams) {
+        renderer?.set(laneVisualParameters: laneVisualParams)
     }
 
     /// :nodoc:
