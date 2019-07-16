@@ -55,7 +55,7 @@ npm install -g @mapbox/secret-shield
 Then you have to add a pre-commit git hook. The simplest option is to copy the following script into a `mapbox-vision-ios/.git/hooks/pre-commit`:
 ```sh
 #!/bin/sh
-secret-shield --pre-commit
+secret-shield --pre-commit -C verydeep --enable "Mapbox Public Key" --disable "High-entropy base64 string" "Short high-entropy string" "Long high-entropy string"
 ```
 
 Don't forget to make it executable:
