@@ -1,0 +1,6 @@
+module: MapboxVision
+readme: README.md
+copyright: "© 2019 [Mapbox](https://vision.mapbox.com). Download, installation, and use governed by the [Mapbox Terms of Service](https://www.mapbox.com/tos/)"
+hide_documentation_coverage: true
+undocumented_text: ""
+output: "docs"
