@@ -1,0 +1,11 @@
+# Config
+--ranges no-space
+
+# Enabled rules
+--rules anyObjectProtocol,blankLinesAroundMark,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenScopes,duplicateImports,elseOnSameLine,emptyBraces,indent,isEmpty,leadingDelimiters,linebreakAtEndOfFile,ranges,redundantBackticks,redundantBreak,redundantFileprivate,redundantGet,redundantInit,redundantLet,redundantLetError,redundantNilInit,redundantObjc,redundantParens,redundantPattern,redundantRawValues,redundantReturn,redundantVoidReturnType,semicolons,sortedImports,spaceAroundBraces,spaceAroundBrackets,spaceAroundComments,spaceAroundGenerics,spaceAroundOperators,spaceAroundParens,spaceInsideBraces,spaceInsideBrackets,spaceInsideComments,spaceInsideGenerics,spaceInsideParens,strongOutlets,strongifiedSelf,todos,trailingClosures,trailingCommas,trailingSpace,typeSugar,void,wrapArguments,yodaConditions
+
+# The rest of rules (disabled for now)
+# andOperator,braces,consecutiveBlankLines,consecutiveSpaces,fileHeader,hoistPatternLet,linebreaks,numberFormatting,redundantExtensionACL,redundantSelf,specifiers,unusedArguments
+
+--exclude **/Reachability.swift
+--exclude Examples/Carthage

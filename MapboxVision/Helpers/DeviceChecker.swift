@@ -1,38 +1,34 @@
-//
-//  DeviceChecker.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 8/10/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
-
 import Foundation
-import UIKit
 import MapboxVisionNative
+import UIKit
 
-private let iPhoneName = "iPhone"
-private let iPhoneMinModel = 10 // meaning iPhone 8/8Plus/X
+private enum DeviceModel {
+    enum Name {
+        static let iPhone = "iPhone"
+    }
+
+    enum MajorNumber {
+        static let minIphoneVersionWithHighPerformance = 10 // "10" corresponds to 8/8 Plus/X.
+        static let maxIphoneVersionWithHighPerformance = 11 // "11" corresponds to XR/XS/Xs Max.
+    }
+}
 
 extension UIDevice {
-    var isTopDevice: Bool {
-        var prefix: String = ""
-        var minModel: Int = 0
-        
-        var modelID = self.modelID
-        
-        if modelID.hasPrefix(iPhoneName) {
-            prefix = iPhoneName
-            minModel = iPhoneMinModel
+    // By default we consider next-gen iPhone as a uncapable to run models with high performance.
+    // This is due to potential issues with temperature during operational mode.
+    // We must do proper testing before upgrading `maxIphoneVersionWithHighPerformance`.
+    var isHighPerformance: Bool {
+        let modelID = self.modelID
+
+        guard
+            modelID.hasPrefix(DeviceModel.Name.iPhone),
+            let currentModelMajorVersion = modelID.dropFirst(DeviceModel.Name.iPhone.count).split(separator: ",").first,
+            let currentModelMajorNumber = Int(currentModelMajorVersion) else
+        {
+            return false
         }
-        
-        guard !prefix.isEmpty, minModel > 0 else { return false }
-        
-        modelID.removeFirst(prefix.count)
-        
-        if let majorVersion = modelID.split(separator: ",").first, let majorNumber = Int(majorVersion) {
-            return majorNumber == minModel
-        }
-        
-        return false
+
+        return currentModelMajorNumber >= DeviceModel.MajorNumber.minIphoneVersionWithHighPerformance &&
+            currentModelMajorNumber <= DeviceModel.MajorNumber.maxIphoneVersionWithHighPerformance
     }
 }

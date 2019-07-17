@@ -1,29 +1,17 @@
-//
-// Created by Alexander Pristavko on 8/21/18.
-// Copyright (c) 2018 Mapbox. All rights reserved.
-//
-
-import Foundation
-import UIKit
-import MetalKit
-import MapboxVision
-import MapboxCoreNavigation
-import MapboxVisionARNative
 import CoreMedia
+import Foundation
+import MapboxVision
+import MapboxVisionARNative
+import MetalKit
+import UIKit
 
 /**
-    Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
-*/
+ Class that represents visual component that renders video stream from the camera and AR navigation route on top of that.
+ */
 public class VisionARViewController: UIViewController {
-    
     /**
-        The delegate object to receive navigation events.
-    */
-    public weak var navigationDelegate: NavigationManagerDelegate?
-    
-    /**
-        Control the visibility of the Mapbox logo.
-    */
+     Control the visibility of the Mapbox logo.
+     */
     public var isLogoVisible: Bool {
         get {
             return !logoView.isHidden
@@ -33,98 +21,91 @@ public class VisionARViewController: UIViewController {
         }
     }
 
+    /// Parameters to configure look and feel of AR lane via `LaneVisualParams` class.
+    public var laneVisualParameters = LaneVisualParams() {
+        willSet(newLaneVisualParameters) {
+            renderer?.set(laneVisualParameters: newLaneVisualParameters)
+        }
+    }
+
     private var renderer: ARRenderer?
-    private var navigationManager: NavigationManager?
-    
     /**
-        Create an instance of VisionARNavigationController by specifying route controller from MapboxCoreNavigation framework.
-    */
-    public init(navigationService: NavigationService? = nil) {
-        
+     Create an instance of VisionARNavigationController.
+     */
+    public init() {
         super.init(nibName: nil, bundle: nil)
-        
-        self.navigationService = navigationService
-        setNavigationService(navigationService)
-        
+
         guard let device = MTLCreateSystemDefaultDevice() else {
             assertionFailure("Can't create Metal device")
             return
         }
-        
+
         arView.device = device
-        
+
         do {
             try renderer = ARRenderer(device: device,
                                       colorPixelFormat: arView.colorPixelFormat,
                                       depthStencilPixelFormat: arView.depthStencilPixelFormat)
-            renderer?.initScene()
+            try renderer?.initARSceneForARLane()
             arView.delegate = renderer
         } catch {
             assertionFailure(error.localizedDescription)
         }
     }
-    
+
     /// :nodoc:
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     /**
-        NavigationService from MapboxCoreNavigation framework
-    */
-    public var navigationService: NavigationService? {
-        didSet {
-            setNavigationService(navigationService)
-        }
-    }
-    
-    /**
-        Display sample buffer (e.g. taken from `VideoSource`).
-    */
+     Display sample buffer (e.g. taken from `VideoSource`).
+     */
     public func present(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         renderer?.frame = pixelBuffer
     }
-    
+
     /**
-        Set AR camera.
-    */
+     Set AR camera.
+     */
     public func present(camera: ARCamera) {
         renderer?.camera = camera
     }
-    
+
     /**
-        Display AR lane.
-    */
+     Display AR lane.
+     */
     public func present(lane: ARLane?) {
         renderer?.lane = lane
     }
-    
-    private func setNavigationService(_ navigationService: NavigationService?) {
-        if let navigationService = navigationService {
-            navigationManager = NavigationManager(navigationService: navigationService)
-            navigationManager?.delegate = navigationDelegate
-        } else {
-            navigationManager = nil
-        }
+
+    /**
+     Set visual parameters for AR Lane.
+
+     - Parameters:
+       - laneVisualParams: Configuration that describes visual state of AR lane.
+     */
+    public func set(laneVisualParams: LaneVisualParams) {
+        renderer?.set(laneVisualParameters: laneVisualParams)
     }
-    
+
     /// :nodoc:
     override public func viewDidLoad() {
         super.viewDidLoad()
         addChildView(arView)
-        
+
         view.addSubview(logoView)
         NSLayoutConstraint.activate([
             view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: logoView.bottomAnchor, multiplier: 1),
             view.safeAreaLayoutGuide.rightAnchor.constraint(equalToSystemSpacingAfter: logoView.rightAnchor, multiplier: 1),
         ])
     }
-    
+
     private func addChildView(_ childView: UIView) {
         childView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(childView)
-        
+
         NSLayoutConstraint.activate([
             childView.topAnchor.constraint(equalTo: view.topAnchor),
             childView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -132,14 +113,14 @@ public class VisionARViewController: UIViewController {
             childView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
-    
+
     private let logoView: UIView = {
         let view = UIImageView(image: VisionImages.logo.image)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0.5
         return view
     }()
-    
+
     private let arView: MTKView = {
         let view = MTKView()
         view.colorPixelFormat = .bgra8Unorm

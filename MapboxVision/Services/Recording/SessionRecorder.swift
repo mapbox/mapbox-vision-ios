@@ -1,13 +1,5 @@
-//
-//  SessionRecorder.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 5/13/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
-import Foundation
 import CoreMedia
+import Foundation
 
 private let internalSessionInterval: TimeInterval = 5 * 60
 private let externalSessionInterval: TimeInterval = 0
@@ -61,20 +53,20 @@ final class SessionRecorder {
             return nil
         }
     }
-    
+
     weak var delegate: RecordCoordinatorDelegate?
     var currentMode: Mode = .internal
-    
+
     private let dependencies: Dependencies
     private var hasPendingRecordingRequest = false
-    
+
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        
+
         dependencies.sessionManager.delegate = self
         dependencies.recorder.delegate = self
     }
-    
+
     func start(mode: Mode = .internal) {
         guard !dependencies.recorder.isRecording else { return }
 
@@ -82,17 +74,17 @@ final class SessionRecorder {
         dependencies.recorder.savesSourceVideo = mode.savesSourceVideo
         dependencies.sessionManager.startSession(interruptionInterval: mode.sessionInterval)
     }
-    
+
     func stop(abort: Bool = false) {
         guard dependencies.recorder.isRecording else { return }
 
         dependencies.sessionManager.stopSession(abort: abort)
     }
-    
+
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
         dependencies.recorder.handleFrame(sampleBuffer)
     }
-    
+
     private func record() {
         do {
             try dependencies.recorder.startRecording(referenceTime: dependencies.getSeconds(),
@@ -108,7 +100,7 @@ extension SessionRecorder: SessionDelegate {
     func sessionStarted() {
         record()
     }
-    
+
     func sessionStopped(abort: Bool) {
         dependencies.stopSavingSession()
         dependencies.recorder.stopRecording(abort: abort)
@@ -120,14 +112,13 @@ extension SessionRecorder: RecordCoordinatorDelegate {
         delegate?.recordingStarted(path: path)
         dependencies.startSavingSession(path)
     }
-    
+
     func recordingStopped() {
         delegate?.recordingStopped()
-        
+
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
             record()
         }
     }
 }
-

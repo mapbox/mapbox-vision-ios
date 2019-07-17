@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0
+
+### Vision
+- Added support for UK country
+- Added support for setting attitudeOrient via DeviceMotionData
+- Added `contains(worldCoordinate:)` method to Lane API
+- Added `objects(in lane:)`, `objects(with detectionClass:)` methods to WorldDescription API
+- Changed implementation of lane detector: it has better quality and improved energy efficiency. Only one ego lane is detected right now
+- Changed World-Pixel transformation methods to return optional values
+- Changed World-Geo transformation methods to return optional values
+- Changed implementation of `DeviceInfoProvider` provider in order to make device's id persistent
+- Changed implementation of `DeviceChecker` to increase performance on devices with A12 Bionic SoC
+- Removed `MapboxNavigation` dependency
+
+### AR
+- Added support for changing look and feel for ARLane
+
 ## 0.4.2
 
 ### Vision

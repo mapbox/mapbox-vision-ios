@@ -1,10 +1,5 @@
-//
-//  ARMath.swift
-//  VisionSDK
-//
-//  Created by Denis Koronchik on 8/21/18.
-//  Copyright © 2018 Mapbox. All rights reserved.
-//
+// swiftlint:disable comma identifier_name operator_usage_whitespace
+// swiftformat:disable indent spaceInsideParens
 
 import simd
 
@@ -20,7 +15,7 @@ extension simd_quatf {
         let y = self.vector[1]
         let z = self.vector[2]
         let w = self.vector[3]
-        
+
         let fTx  = x + x
         let fTy  = y + y
         let fTz  = z + z
@@ -33,7 +28,7 @@ extension simd_quatf {
         let fTyy = fTy * y
         let fTyz = fTz * y
         let fTzz = fTz * z
-        
+
         var kRot = matrix_identity_float3x3
         kRot[0][0] = 1.0 - (fTyy + fTzz)
         kRot[0][1] = fTxy - fTwz
@@ -44,10 +39,10 @@ extension simd_quatf {
         kRot[2][0] = fTxz - fTwy
         kRot[2][1] = fTyz + fTwx
         kRot[2][2] = 1.0 - (fTxx + fTyy)
-        
+
         return kRot
     }
-    
+
     static func byAxis(_ xRadians: Float, _ yRadians: Float, _ zRadians: Float) -> simd_quatf {
         return simd_quatf(angle: xRadians, axis: float3(1, 0, 0)) *
                simd_quatf(angle: yRadians, axis: float3(0, 1, 0)) *
@@ -55,23 +50,22 @@ extension simd_quatf {
     }
 }
 
-
 func makeTransformMatrix(trans: float3, rot: simd_quatf, scale: float3) -> float4x4 {
     let rot3x3 = rot.rotMatrix
-    
+
     return float4x4(float4(rot3x3[0][0] * scale.x, rot3x3[1][0] * scale.y, rot3x3[2][0] * scale.z, 0),
                     float4(rot3x3[0][1] * scale.x, rot3x3[1][1] * scale.y, rot3x3[2][1] * scale.z, 0),
                     float4(rot3x3[0][2] * scale.x, rot3x3[1][2] * scale.y, rot3x3[2][2] * scale.z, 0),
-                    float4(trans[0], trans[1], trans[2], 1))
+                    float4(trans[0],               trans[1],               trans[2], 1))
 }
 
 func makeViewMatrix(trans: float3, rot: simd_quatf) -> float4x4 {
     let rot3x3 = rot.rotMatrix
-    
+
     // Make the translation relative to new axes
     let rotT = rot3x3.transpose
     let t = -rotT * trans
-    
+
     return float4x4(float4(rotT[0][0], rotT[1][0], rotT[2][0], 0),
                     float4(rotT[0][1], rotT[1][1], rotT[2][1], 0),
                     float4(rotT[0][2], rotT[1][2], rotT[2][2], 0),
@@ -84,7 +78,7 @@ func makePerpectiveProjectionMatrix(fovRadians: Float, aspectRatio aspect: Float
     let zRange = nearZ - farZ
     let zScale = (farZ + nearZ) / zRange
     let wzScale = 2 * farZ * nearZ / zRange
-    
+
     return float4x4(float4(xScale,  0,      0,          0),
                     float4( 0,      yScale, 0,          0),
                     float4( 0,      0,      zScale,     -1),

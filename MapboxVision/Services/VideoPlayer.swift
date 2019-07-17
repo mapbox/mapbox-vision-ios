@@ -1,14 +1,6 @@
-//
-//  VideoPlayer.swift
-//  MapboxVision
-//
-//  Created by Alexander Pristavko on 5/17/19.
-//  Copyright © 2019 Mapbox. All rights reserved.
-//
-
-import Foundation
-import CoreMedia
 import AVFoundation
+import CoreMedia
+import Foundation
 
 protocol VideoPlayable: VideoSource {
     var delegate: VideoPlayerDelegate? { get set }
@@ -46,7 +38,7 @@ final class VideoPlayer: NSObject {
         player = AVPlayer(playerItem: playerItem)
         player.actionAtItemEnd = .none
 
-        let attributes = [String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA)]
+        let attributes = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
         videoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
 
         super.init()
@@ -83,7 +75,7 @@ final class VideoPlayer: NSObject {
             let sampleBuffer = CMSampleBuffer.sampleBuffer(from: pixelBuffer, timeStamp: time)
         else { return }
 
-        observers.notify { (observer) in
+        observers.notify { observer in
             observer.videoSource(self, didOutput: VideoSample(buffer: sampleBuffer, format: .BGRA))
         }
     }
@@ -96,14 +88,14 @@ extension VideoPlayer: VideoPlayable {
         player.play()
         isPlaying = true
     }
-    
+
     func stop() {
         guard isPlaying else { return }
         isPlaying = false
-        
+
         player.pause()
         displayLink?.isPaused = true
-        
+
         player.currentItem?.seek(to: .zero, completionHandler: nil)
     }
 }
@@ -131,21 +123,20 @@ extension VideoPlayer: AVPlayerItemOutputPullDelegate {
 private extension CMSampleBuffer {
     static func sampleBuffer(from pixelBuffer: CVPixelBuffer, timeStamp: CMTime) -> CMSampleBuffer? {
         var info = CMSampleTimingInfo(duration: .invalid, presentationTimeStamp: .zero, decodeTimeStamp: timeStamp)
-    
+
         var formatDescription: CMFormatDescription?
         let status = CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault,
                                                                   imageBuffer: pixelBuffer,
                                                                   formatDescriptionOut: &formatDescription)
-    
+
         guard status == noErr, let format = formatDescription else { return nil }
-    
+
         var sampleBuffer: CMSampleBuffer?
         CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
                                                  imageBuffer: pixelBuffer,
                                                  formatDescription: format,
                                                  sampleTiming: &info,
                                                  sampleBufferOut: &sampleBuffer)
-    
         return sampleBuffer
     }
 }
