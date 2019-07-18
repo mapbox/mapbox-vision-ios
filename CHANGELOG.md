@@ -13,6 +13,7 @@
 - Changed implementation of `DeviceInfoProvider` provider in order to make device's id persistent
 - Changed implementation of `DeviceChecker` to increase performance on devices with A12 Bionic SoC
 - Removed `MapboxNavigation` dependency
+- Updated source code of `Reachability.swift` dependency
 
 ### AR
 - Added support for changing look and feel for ARLane
