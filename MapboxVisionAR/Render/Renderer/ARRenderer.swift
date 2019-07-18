@@ -139,13 +139,9 @@ class ARRenderer: NSObject {
 
     func set(laneVisualParameters: LaneVisualParams) {
         if let arLaneNode = scene.arLaneNode() {
-            let lightPositionInRenderCoordinate = float3(Float(-laneVisualParameters.lightPosition.y),
-                                                         Float(laneVisualParameters.lightPosition.z),
-                                                         Float(-laneVisualParameters.lightPosition.x))
-
             arLaneNode.set(laneColor: laneVisualParameters.color)
             arLaneNode.set(laneWidth: laneVisualParameters.width)
-            arLaneNode.set(laneLightPosition: lightPositionInRenderCoordinate)
+            arLaneNode.set(laneLightPosition: ARRenderer.renderCoordinate(from: laneVisualParameters.lightPosition))
             arLaneNode.set(laneLightColor: laneVisualParameters.lightColor)
             arLaneNode.set(laneAmbientColor: laneVisualParameters.ambientColor)
         }
@@ -184,10 +180,10 @@ class ARRenderer: NSObject {
                 modelMatrix: modelMatrix,
                 normalMatrix: normalMatrix(mat: modelMatrix),
                 laneWidth: arLaneNode.width,
-                p0: ARRenderer.processPoint(points[0]),
-                p1: ARRenderer.processPoint(points[1]),
-                p2: ARRenderer.processPoint(points[2]),
-                p3: ARRenderer.processPoint(points[3])
+                p0: ARRenderer.renderCoordinate(from: points[0]),
+                p1: ARRenderer.renderCoordinate(from: points[1]),
+                p2: ARRenderer.renderCoordinate(from: points[2]),
+                p3: ARRenderer.renderCoordinate(from: points[3])
             )
             commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ArrowVertexUniforms>.size, index: 1)
 
@@ -386,8 +382,8 @@ extension ARRenderer {
         return device.makeDepthStencilState(descriptor: depthStencil)!
     }
 
-    static func processPoint(_ coordinate: WorldCoordinate) -> float3 {
-        return float3(Float(-coordinate.y), Float(coordinate.z), Float(-coordinate.x))
+    static func renderCoordinate(from worldCoordinate: WorldCoordinate) -> float3 {
+        return float3(Float(-worldCoordinate.y), Float(worldCoordinate.z), Float(-worldCoordinate.x))
     }
 }
 
