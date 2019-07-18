@@ -11,3 +11,29 @@ final class PerformanceProvider: NSObject {
         self.dependencies = dependencies
     }
 }
+
+extension PerformanceProvider: PerformanceProviderInterface {
+    func batteryLevel() -> Int8 {
+        return dependencies.batteryManager.batteryLevel
+    }
+
+    func thermalState() -> ProcessInfo.ThermalState {
+        return ProcessInfo.processInfo.thermalState
+    }
+
+    func isWifiEnabled() -> Bool {
+        return dependencies.reachability.connection == .wifi
+    }
+
+    func isBluetoothEnabled() -> Bool {
+        return dependencies.bluetoothManager.isBluetoothPoweredOn
+    }
+
+    func isCellularEnabled() -> Bool {
+        return dependencies.reachability.connection == .cellular
+    }
+
+    func isCharging() -> Bool {
+        return dependencies.batteryManager.isCharging
+    }
+}
