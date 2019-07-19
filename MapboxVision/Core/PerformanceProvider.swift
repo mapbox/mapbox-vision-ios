@@ -17,6 +17,10 @@ extension PerformanceProvider: PerformanceProviderInterface {
         return dependencies.batteryManager.batteryLevel
     }
 
+    func isCharging() -> Bool {
+        return dependencies.batteryManager.isCharging
+    }
+
     func thermalState() -> ProcessInfo.ThermalState {
         return ProcessInfo.processInfo.thermalState
     }
@@ -31,9 +35,5 @@ extension PerformanceProvider: PerformanceProviderInterface {
 
     func isCellularEnabled() -> Bool {
         return dependencies.reachability.connection == .cellular
-    }
-
-    func isCharging() -> Bool {
-        return dependencies.batteryManager.isCharging
     }
 }
