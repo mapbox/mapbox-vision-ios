@@ -52,6 +52,13 @@ struct VisionDependencies {
 
         let native = VisionManagerNative.create(withPlatform: platform)
 
+        let performanceProvider = PerformanceProvider(dependencies: PerformanceProvider.Dependencies(
+            reachability: reachability,
+            bluetoothManager: BluetoothManager(),
+            batteryManager: BatteryManager()
+        ))
+        native.setPerformanceProvider(performanceProvider)
+
         let recorder = SessionRecorder(dependencies: SessionRecorder.Dependencies(
             recorder: recordCoordinator,
             sessionManager: SessionManager(),
