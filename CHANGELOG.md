@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 - Unreleased
+
+## Vision
+- Added `PerformanceProvider` that conforms to `PerformanceProviderInterface` to collect battery status, thermal level and info about network connectivity
+
 ## 0.5.0
 
 ### Vision
