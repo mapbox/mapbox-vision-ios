@@ -2,7 +2,6 @@ import CoreBluetooth
 
 /// Class that contains logic to dispatch and manage the bluetooth module.
 final class BluetoothManager: NSObject {
-
     // MARK: Public properties
 
     /// Indicates whether the bluetooth module is powered on.

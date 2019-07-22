@@ -2,7 +2,6 @@ import Foundation
 
 /// Class that contains logic to dispatch and manage the battery state of the device.
 final class BatteryManager {
-
     /// Constants that represents significant battery power states.
     private enum ConstantsBatteryLevel {
         /// The value that corresponds to fully discharged battery (the device might be still powered on).
