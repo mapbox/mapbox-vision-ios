@@ -46,7 +46,7 @@ final class ManagedSynchronizer: Synchronizable {
     // MARK: Private
 
     private var isSyncAllowed: Bool {
-        return isExternallyAllowed && dependencies.reachability.connection != .none
+        return isExternallyAllowed && dependencies.reachability.connection != .unavailable
     }
 
     private func continueSync() {
