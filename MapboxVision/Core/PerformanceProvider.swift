@@ -1,12 +1,28 @@
+/// Class that is responsible for collecting platform-specific metrics.
 final class PerformanceProvider: NSObject {
+    /// Structure that describes dependencies for `PerformanceProvider` class
     struct Dependencies {
+        /// Managers the network connectivity. Need to collect the network status.
         let reachability: Reachability
+        /// Manages the bluetooth module. Need to collect the state of bluetooth module.
         let bluetoothManager: BluetoothManager
+        /// Manages the power state of the device. Need to collect the state of the battery.
         let batteryManager: BatteryManager
     }
 
+    // MARK: Private properties
+
+    /// Dependencies for `PerformanceProvider`.
     private let dependencies: Dependencies
 
+    // MARK: Lifecycle
+
+    /**
+     Base initializer to create an instance of `PerformanceProvider`.
+
+     - Parameters:
+       - dependencies: Initialized dependencies for `PerformanceProvider`.
+     */
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
     }
