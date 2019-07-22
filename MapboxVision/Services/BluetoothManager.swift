@@ -17,7 +17,7 @@ extension BluetoothManager: CBCentralManagerDelegate {
         switch central.state {
         case .poweredOn:
             isBluetoothPoweredOn = true
-        default:
+        case .unknown, .resetting, .unsupported, .unauthorized, .poweredOff:
             isBluetoothPoweredOn = false
         }
     }
