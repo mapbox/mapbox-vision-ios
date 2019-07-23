@@ -46,7 +46,7 @@ extension PerformanceProvider: PerformanceProviderInterface {
     }
 
     func isBluetoothEnabled() -> Bool {
-        return dependencies.bluetoothManager.isBluetoothPoweredOn
+        return dependencies.bluetoothManager.isBluetoothPoweredOn()
     }
 
     func isCellularEnabled() -> Bool {
