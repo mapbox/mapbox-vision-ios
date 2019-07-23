@@ -109,7 +109,6 @@
 		3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */; };
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
 		3AEAA06522E6DB8100731A32 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEAA06422E6DB8100731A32 /* BluetoothManager.swift */; };
-		3AEAA06722E6E7D300731A32 /* BatteryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEAA06622E6E7D300731A32 /* BatteryManager.swift */; };
 		3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
@@ -264,7 +263,6 @@
 		3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNodeTests.swift; sourceTree = "<group>"; };
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
 		3AEAA06422E6DB8100731A32 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
-		3AEAA06622E6E7D300731A32 /* BatteryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryManager.swift; sourceTree = "<group>"; };
 		3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNodeTests.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
@@ -509,7 +507,6 @@
 				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E4EE2A720F0590D003431B3 /* LocationManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
-				3AEAA06622E6E7D300731A32 /* BatteryManager.swift */,
 				3AEAA06422E6DB8100731A32 /* BluetoothManager.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
@@ -1156,7 +1153,6 @@
 				2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */,
 				2E4EE2AC20F0590F003431B3 /* LocationManager.swift in Sources */,
 				2E4EE2A220F058B9003431B3 /* AVCaptureConnection+Orientation.swift in Sources */,
-				3AEAA06722E6E7D300731A32 /* BatteryManager.swift in Sources */,
 				2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */,
 				2E4EE2A020F058B9003431B3 /* UserDefaults+DefaultValue.swift in Sources */,
 				2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */,

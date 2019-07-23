@@ -30,11 +30,11 @@ final class PerformanceProvider: NSObject {
 
 extension PerformanceProvider: PerformanceProviderInterface {
     func batteryLevel() -> Int8 {
-        return dependencies.batteryManager.batteryLevel
+        return dependencies.batteryManager.batteryLevel()
     }
 
     func isCharging() -> Bool {
-        return dependencies.batteryManager.isCharging
+        return dependencies.batteryManager.isCharging()
     }
 
     func thermalState() -> ProcessInfo.ThermalState {
