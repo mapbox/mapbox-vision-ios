@@ -37,10 +37,6 @@ extension PerformanceProvider: PerformanceProviderInterface {
         return dependencies.batteryManager.isCharging()
     }
 
-    func thermalState() -> ProcessInfo.ThermalState {
-        return ProcessInfo.processInfo.thermalState
-    }
-
     func isWifiEnabled() -> Bool {
         return dependencies.reachability.connection == .wifi
     }
