@@ -13,9 +13,16 @@ final class BatteryManager {
     // MARK: Public properties
 
     /// Indicates whether battery is currently charging or not.
-    private(set) var isCharging = false
+    var isCharging: Bool {
+        let batteryState = UIDevice.current.batteryState
+        return (batteryState == .charging) || (batteryState == .full)
+    }
+
     /// Battery level in range from 0 (fully discharged) to 100 (100% charged). In case when battery level can't be collected the return value is -1.
-    private(set) var batteryLevel = ConstantsBatteryLevel.unavailable
+    var batteryLevel: Int8 {
+        let rawBatteryLevel = UIDevice.current.batteryLevel
+        return (rawBatteryLevel >= ConstantsBatteryLevel.fullyDischarged) ? Int8(rawBatteryLevel * 100) : ConstantsBatteryLevel.unavailable
+    }
 
     // MARK: Lifecycle
 
@@ -24,27 +31,5 @@ final class BatteryManager {
      */
     init() {
         UIDevice.current.isBatteryMonitoringEnabled = true
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(batteryStateDidChange(notification:)),
-                                               name: UIDevice.batteryStateDidChangeNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(batteryLevelDidChange(notification:)),
-                                               name: UIDevice.batteryLevelDidChangeNotification,
-                                               object: nil)
-    }
-}
-
-extension BatteryManager {
-    @objc
-    func batteryStateDidChange(notification: NSNotification) {
-        let batteryState = UIDevice.current.batteryState
-        isCharging = (batteryState == .charging) || (batteryState == .full)
-    }
-
-    @objc
-    func batteryLevelDidChange(notification: NSNotification) {
-        let rawBatteryLevel = UIDevice.current.batteryLevel
-        batteryLevel = (rawBatteryLevel >= ConstantsBatteryLevel.fullyDischarged) ? Int8(rawBatteryLevel * 100) : ConstantsBatteryLevel.unavailable
     }
 }
