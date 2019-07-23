@@ -2,11 +2,11 @@
 final class PerformanceProvider: NSObject {
     /// Structure that describes dependencies for `PerformanceProvider` class
     struct Dependencies {
-        /// Managers the network connectivity. Need to collect the network status.
+        /// Manages the network connectivity. Is needed to collect the network status.
         let reachability: Reachability
-        /// Manages the bluetooth module. Need to collect the state of bluetooth module.
+        /// Manages the bluetooth module. Is needed to collect the state of bluetooth module.
         let bluetoothManager: BluetoothManager
-        /// Manages the power state of the device. Need to collect the state of the battery.
+        /// Manages the power state of the device. Is needed to collect the state of the battery.
         let batteryManager: BatteryManager
     }
 
