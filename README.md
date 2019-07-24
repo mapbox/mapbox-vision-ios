@@ -1,3 +1,4 @@
+[![Secret-shield enabled](https://github.com/mapbox/secret-shield/blob/assets/secret-shield-enabled-badge.svg)](https://github.com/mapbox/secret-shield/blob/master/docs/enabledBadge.md)
 ![Swift version](https://img.shields.io/static/v1.svg?label=Swift&message=4.2&color=orange)
 ![Platform support](https://img.shields.io/static/v1.svg?label=iOS&message=%3E=%2011.2&color=brightgreen)
 
@@ -45,6 +46,25 @@ To set up the Vision SDK you will need to download the SDK, install the framewor
 The lastest version of documentation is available at [Vision's page](https://docs.mapbox.com/ios/vision).
 
 # Contributing
+
+We use [secret-shield](https://github.com/mapbox/secret-shield) tool which runs as a pre-commit hook. In order to enable it you should install it with:
+```sh
+npm install -g @mapbox/secret-shield
+```
+
+Then you have to add a pre-commit git hook. The simplest option is to copy the following script into a `mapbox-vision-ios/.git/hooks/pre-commit`:
+```sh
+#!/bin/sh
+secret-shield --pre-commit -C verydeep --enable "Mapbox Public Key" --disable "High-entropy base64 string" "Short high-entropy string" "Long high-entropy string"
+```
+
+Don't forget to make it executable:
+```sh
+chmod +x .git/hooks/pre-commit
+```
+
+As an option you can Integrate hook via git hooks manager (like [Husky](https://github.com/typicode/husky) or [Komondor](https://github.com/shibapm/Komondor)).
+More information about installation is available [here](https://github.com/mapbox/secret-shield#install).
 
 ## Code of conduct
 
