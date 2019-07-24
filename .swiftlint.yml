@@ -207,7 +207,6 @@ type_body_length:
 # - yoda_condition # The variable should be placed on the left, the constant on the right of a comparison operator.
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
- - MapboxVision/Services/Reachability/Reachability.swift
  - build
  - Carthage
  - Examples/Carthage
