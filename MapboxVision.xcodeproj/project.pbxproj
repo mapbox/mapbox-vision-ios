@@ -901,6 +901,7 @@
 				3A11B04C229F0B7A00070A61 /* Frameworks */,
 				3A11B04D229F0B7A00070A61 /* Resources */,
 				3A7E992522A00519005EB875 /* CopyFiles */,
+				3A44F18622E8C03800748A63 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -1033,7 +1034,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVision/\"\nelse \n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		3A0EFA8C227C80AA00787E2A /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1051,7 +1052,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionAR/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		3A0EFA8D227C80AA00787E2A /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1069,7 +1070,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionSafety/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		3A11AFDA229C20D600070A61 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1087,7 +1088,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionTests/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		3A44F18622E8C03800748A63 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionARTests/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
