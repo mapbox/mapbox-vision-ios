@@ -19,7 +19,7 @@ class VisionManagerTests: XCTestCase {
         self.visionManager = VisionManager(dependencies: dependencies!, videoSource: MockVideoSource())
     }
 
-    func testAssertOnVisionManagerDeallocWithoutDestroy() {
+    func testNoCrashOnVisionManagerDeallocWithoutDestroy() {
         // We called destroy in destructors of VisionManager, BaseVisionManager, VisionManagerNative and VisionManagerBaseNative,
         // so VisionManagerBaseNative's destroy method called multiple times, so we tried to destroy already destroyed resources,
         // which caused an EXC_BAD_ACCESS.
@@ -33,14 +33,18 @@ class VisionManagerTests: XCTestCase {
         // we deallocate it without destroy
 
         // Then
-        // Should be assertion failure
-        AssertFailure(
+        // Shouldn't be any error and method destroy() should be called for BaseVisionManager
+        XCTAssertNoThrow(
             self.visionManager = nil,
-            "VisionManager should call assertioFailure when we release the object without calling destroy"
+            "VisionManager should be successfully deallocated releasing the object without calling destroy"
+        )
+        XCTAssertTrue(
+            (dependencies?.native as? MockNative)?.isDestroyed ?? false,
+            "Method destroy() should be called for BaseVisionManager"
         )
     }
 
-    func testNoAssertOnVisionManagerDeallocAfterDestroy() {
+    func testNoCrashOnVisionManagerDeallocAfterDestroy() {
         // Given
         // object of VisionManager with called destroy()
         self.visionManager?.destroy()
@@ -49,8 +53,8 @@ class VisionManagerTests: XCTestCase {
         // release the instance of VisionManager
 
         // Then
-        // Shouldn't be assertion failure
-        AssertNoFailure(
+        // Shouldn't be any error
+        XCTAssertNoThrow(
             self.visionManager = nil,
             "VisionManager should be successfully deallocated after calling destroy and releasing the object"
         )

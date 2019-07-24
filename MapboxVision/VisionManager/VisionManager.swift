@@ -186,10 +186,7 @@ public final class VisionManager: BaseVisionManager {
     }
 
     deinit {
-        guard state.isUninitialized else {
-            assertionFailure("Method destroy should be called before Manager's deinit")
-            return
-        }
+        destroy()
     }
 
     private func startVideoStream() {

@@ -2,6 +2,8 @@
 @testable import MapboxVisionNative
 
 class MockNative: VisionManagerNativeProtocol {
+    private(set) var isDestroyed: Bool = false
+
     func setSegmentationFixedFPS(_: Float) {}
 
     func setSegmentationDynamicFPS(minFPS: Float, maxFPS: Float) {}
@@ -20,7 +22,9 @@ class MockNative: VisionManagerNativeProtocol {
 
     func stop() {}
 
-    func destroy() {}
+    func destroy() {
+        isDestroyed = true
+    }
 
     func getSeconds() -> Float {
         return 0

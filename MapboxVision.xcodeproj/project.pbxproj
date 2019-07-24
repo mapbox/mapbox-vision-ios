@@ -117,9 +117,7 @@
 		5A3C9D9322C3B1C300700DC6 /* VisionManagerNativeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9222C3B1C300700DC6 /* VisionManagerNativeProtocol.swift */; };
 		5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9822C50D0000700DC6 /* MockNative.swift */; };
 		5A3C9D9B22C50D7C00700DC6 /* MockSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */; };
-		5A3C9DC622DCEB7F00700DC6 /* AssertAssertionFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9DC522DCEB7F00700DC6 /* AssertAssertionFailure.swift */; };
 		5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3E42C422B280180035A010 /* VisionManagerTests.swift */; };
-		5AFC925722C1263E00A17776 /* AssertionFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC925622C1263E00A17776 /* AssertionFailure.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -281,9 +279,7 @@
 		5A3C9D9222C3B1C300700DC6 /* VisionManagerNativeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerNativeProtocol.swift; sourceTree = "<group>"; };
 		5A3C9D9822C50D0000700DC6 /* MockNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNative.swift; sourceTree = "<group>"; };
 		5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSensors.swift; sourceTree = "<group>"; };
-		5A3C9DC522DCEB7F00700DC6 /* AssertAssertionFailure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertAssertionFailure.swift; sourceTree = "<group>"; };
 		5A3E42C422B280180035A010 /* VisionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerTests.swift; sourceTree = "<group>"; };
-		5AFC925622C1263E00A17776 /* AssertionFailure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertionFailure.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -571,7 +567,6 @@
 				2EC332A2217E02BA00E041FE /* String.swift */,
 				2E4EE29220F05843003431B3 /* URL.swift */,
 				2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */,
-				5AFC925622C1263E00A17776 /* AssertionFailure.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -837,7 +832,6 @@
 				B51E557D215E313500650DDE /* Info.plist */,
 				2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */,
 				5A3E42C422B280180035A010 /* VisionManagerTests.swift */,
-				5A3C9DC522DCEB7F00700DC6 /* AssertAssertionFailure.swift */,
 			);
 			path = MapboxVisionTests;
 			sourceTree = "<group>";
@@ -1196,7 +1190,6 @@
 				2E4EE27820F05659003431B3 /* Path.swift in Sources */,
 				2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */,
 				2E4EE27A20F0565E003431B3 /* RecordDataSource.swift in Sources */,
-				5AFC925722C1263E00A17776 /* AssertionFailure.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
 				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
 				2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */,
@@ -1273,7 +1266,6 @@
 				5A3C9D8D22C381EB00700DC6 /* MockSessionRecorder.swift in Sources */,
 				B51E557C215E313500650DDE /* RecordSynchronizerTests.swift in Sources */,
 				5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */,
-				5A3C9DC622DCEB7F00700DC6 /* AssertAssertionFailure.swift in Sources */,
 				2EF31C9021904BB300752D23 /* RecordCoordinatorTests.swift in Sources */,
 				B50CFBAD2163C91500C9C5A5 /* MockNetworkClient.swift in Sources */,
 				3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */,
