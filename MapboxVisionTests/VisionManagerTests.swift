@@ -24,8 +24,6 @@ class VisionManagerTests: XCTestCase {
         // so VisionManagerBaseNative's destroy method called multiple times, so we tried to destroy already destroyed resources,
         // which caused an EXC_BAD_ACCESS.
 
-        // Nevertheless the logic was sort of right, it should do assertFailure on deinit without destroy was called
-
         // Given
         // object of VisionManager
 
@@ -33,7 +31,7 @@ class VisionManagerTests: XCTestCase {
         // we deallocate it without destroy
 
         // Then
-        // Shouldn't be any error and method destroy() should be called for BaseVisionManager
+        // Shouldn't be any error and method destroy() should be called for VisionManagerNative
         XCTAssertNoThrow(
             self.visionManager = nil,
             "VisionManager should be successfully deallocated releasing the object without calling destroy"
@@ -53,7 +51,7 @@ class VisionManagerTests: XCTestCase {
         // release the instance of VisionManager
 
         // Then
-        // Shouldn't be any error
+        // shouldn't be any error
         XCTAssertNoThrow(
             self.visionManager = nil,
             "VisionManager should be successfully deallocated after calling destroy and releasing the object"
@@ -84,7 +82,7 @@ class VisionManagerTests: XCTestCase {
             .startInternal, // UK
             .stop,          // China
             .startInternal, // other
-            .startInternal  // unknown
+            .startInternal,  // unknown
         ]
 
         XCTAssert(
@@ -123,7 +121,7 @@ class VisionManagerTests: XCTestCase {
             .startInternal,
             .stop,
             .startInternal,
-            .startInternal
+            .startInternal,
         ]
 
         XCTAssert(

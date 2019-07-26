@@ -4,14 +4,14 @@ import MapboxVisionNative
 private let visionVideoSettings: VideoSettings = .lowQuality
 
 struct BaseDependencies {
-    let native: VisionManagerBaseNative
+    let native: VisionManagerBaseNativeProtocol
     let synchronizer: Synchronizable
 }
 
 struct VisionDependencies {
-    let native: VisionManagerNative
+    let native: VisionManagerNativeProtocol
     let synchronizer: Synchronizable
-    let recorder: SessionRecorder
+    let recorder: SessionRecorderProtocol
     let dataProvider: DataProvider
     let deviceInfo: DeviceInfoProvidable
 

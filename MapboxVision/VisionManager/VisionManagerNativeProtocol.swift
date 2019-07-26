@@ -28,8 +28,6 @@ protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {
     func stopSavingSession()
 }
 
-extension VisionManagerBaseNative: VisionManagerBaseNativeProtocol {
-}
+extension VisionManagerBaseNative: VisionManagerBaseNativeProtocol {}
 
-extension VisionManagerNative: VisionManagerNativeProtocol {
-}
+extension VisionManagerNative: VisionManagerNativeProtocol {}
