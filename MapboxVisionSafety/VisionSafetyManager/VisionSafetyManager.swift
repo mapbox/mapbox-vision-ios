@@ -51,6 +51,11 @@ public final class VisionSafetyManager {
     public func setCollisionWithVehicleMinSpeed(minSpeed: Float) {
         native?.setCollisionMinSpeed(minSpeed)
     }
+
+    deinit {
+        guard native != nil else { return }
+        destroy()
+    }
 }
 
 /// :nodoc:

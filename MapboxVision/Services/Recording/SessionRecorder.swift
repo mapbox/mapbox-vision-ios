@@ -14,48 +14,8 @@ final class SessionRecorder {
         let stopSavingSession: () -> Void
     }
 
-    enum Mode: Equatable {
-        case `internal`
-        case external(path: String)
-
-        var sessionInterval: TimeInterval {
-            switch self {
-            case .internal:
-                return internalSessionInterval
-            case .external:
-                return externalSessionInterval
-            }
-        }
-
-        var isInternal: Bool {
-            if case .internal = self { return true }
-            return false
-        }
-
-        var isExternal: Bool {
-            if case .external = self { return true }
-            return false
-        }
-
-        fileprivate var savesSourceVideo: Bool {
-            switch self {
-            case .internal:
-                return false
-            case .external:
-                return true
-            }
-        }
-
-        fileprivate var path: String? {
-            if case let .external(path) = self {
-                return path
-            }
-            return nil
-        }
-    }
-
     weak var delegate: RecordCoordinatorDelegate?
-    var currentMode: Mode = .internal
+    var currentMode: SessionRecordingMode = .internal
 
     private let dependencies: Dependencies
     private var hasPendingRecordingRequest = false
@@ -67,7 +27,7 @@ final class SessionRecorder {
         dependencies.recorder.delegate = self
     }
 
-    func start(mode: Mode = .internal) {
+    func start(mode: SessionRecordingMode = .internal) {
         guard !dependencies.recorder.isRecording else { return }
 
         currentMode = mode
@@ -120,5 +80,56 @@ extension SessionRecorder: RecordCoordinatorDelegate {
             hasPendingRecordingRequest = false
             record()
         }
+    }
+}
+
+extension SessionRecorder: SessionRecorderProtocol {
+    func stop() {
+        stop(abort: false)
+    }
+
+    var isInternal: Bool {
+        return currentMode.isInternal
+    }
+
+    var isExternal: Bool {
+        return currentMode.isExternal
+    }
+}
+
+private extension SessionRecordingMode {
+    var sessionInterval: TimeInterval {
+        switch self {
+        case .internal:
+            return internalSessionInterval
+        case .external:
+            return externalSessionInterval
+        }
+    }
+
+    var isInternal: Bool {
+        if case .internal = self { return true }
+        return false
+    }
+
+    var isExternal: Bool {
+        if case .external = self { return true }
+        return false
+    }
+
+    var savesSourceVideo: Bool {
+        switch self {
+        case .internal:
+            return false
+        case .external:
+            return true
+        }
+    }
+
+    var path: String? {
+        if case let .external(path) = self {
+            return path
+        }
+        return nil
     }
 }

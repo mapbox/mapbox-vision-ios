@@ -30,7 +30,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     }
 
     public var native: VisionManagerBaseNative {
-        return dependencies.native
+        return dependencies.native as! VisionManagerBaseNative
     }
 
     weak var delegate: VisionManagerDelegate?
