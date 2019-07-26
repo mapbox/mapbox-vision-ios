@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Fixed the bug with crashes on destroy
+
 ## 0.5.0
 
 ### Vision
