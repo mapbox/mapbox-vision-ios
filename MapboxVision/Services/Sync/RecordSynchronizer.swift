@@ -1,21 +1,8 @@
 import Foundation
 
-typealias Byte = Int64
-
-private let bytesInKByte: Byte = 1024
-private let kByteInMByte: Byte = 1024
-
-private let kByte = bytesInKByte
-private let mByte = kByteInMByte * kByte
-
-private let secondsInMinute: TimeInterval = 60
-private let minutesInHour: TimeInterval = 60
-
-private let minute = secondsInMinute
-private let hour = secondsInMinute * minute
 
 private let memoryLimit = 300.0 // mb
-private let networkingMemoryLimit = 30 * mByte
+private let networkingMemoryLimit: Byte = 30 * .mByte
 private let updatingInterval = 1 * .hour
 
 final class RecordSynchronizer: Synchronizable {
