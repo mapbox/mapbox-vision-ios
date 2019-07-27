@@ -5,11 +5,11 @@ protocol FileManagerProtocol {
     func contentsOfDirectory(at url: URL) throws -> [URL]
     func fileExists(atPath path: String) -> Bool
     func createFile(atPath path: String, contents: Data?) -> Bool
-    func fileSize(at url: URL) -> Int64
+    func fileSize(at url: URL) -> UInt64
 }
 
 extension FileManagerProtocol {
-    func sizeOfDirectory(at url: URL) -> Int64 {
+    func sizeOfDirectory(at url: URL) -> UInt64 {
         guard let contents = try? self.contentsOfDirectory(at: url) else {
             return 0
         }
@@ -27,8 +27,8 @@ extension FileManager: FileManagerProtocol {
         return try contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])
     }
 
-    func fileSize(at url: URL) -> Int64 {
+    func fileSize(at url: URL) -> UInt64 {
         guard let attributes = try? attributesOfItem(atPath: url.path) else { return 0 }
-        return attributes[FileAttributeKey.size] as? Int64 ?? 0
+        return attributes[FileAttributeKey.size] as? UInt64 ?? 0
     }
 }
