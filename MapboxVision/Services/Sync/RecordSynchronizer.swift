@@ -16,7 +16,7 @@ private let hour = secondsInMinute * minute
 
 private let memoryLimit = 300.0 // mb
 private let networkingMemoryLimit = 30 * mByte
-private let updatingInterval = 1 * hour
+private let updatingInterval = 1 * .hour
 
 final class RecordSynchronizer: Synchronizable {
     enum RecordSynchronizerError: LocalizedError {
