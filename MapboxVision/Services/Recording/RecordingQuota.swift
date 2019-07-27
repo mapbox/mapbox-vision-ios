@@ -1,7 +1,7 @@
 import Foundation
 
 final class RecordingQuota {
-    private enum Keys {
+    enum Keys {
         static let recordingMemoryQuotaKey = "recordingMemoryQuota"
         static let lastResetTimeKey = "lastResetTimeKey"
     }
@@ -10,7 +10,7 @@ final class RecordingQuota {
         case memoryQuotaExceeded
     }
 
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let memoryQuota: Byte
     private let refreshInterval: TimeInterval
@@ -56,16 +56,15 @@ final class RecordingQuota {
     // MARK: - Functions
 
     func reserve(memoryToReserve: Byte) throws {
-        var quota = cachedCurrentQuota
+        var currentQuota = cachedCurrentQuota
 
         let now = Date()
         if now.timeIntervalSince(lastResetTime) >= refreshInterval {
-            quota = memoryQuota
+            currentQuota = memoryQuota
             lastResetTime = now
         }
 
-        let quotaRemainder = quota - memoryToReserve
-        guard quotaRemainder >= 0 else { throw RecordingQuotaError.memoryQuotaExceeded }
-        cachedCurrentQuota = quotaRemainder
+        guard currentQuota >= memoryToReserve else { throw RecordingQuotaError.memoryQuotaExceeded }
+        cachedCurrentQuota = currentQuota - memoryToReserve
     }
 }
