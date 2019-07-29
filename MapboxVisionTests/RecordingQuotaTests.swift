@@ -12,7 +12,7 @@ class RecordingQuotaTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        refreshInterval = TimeInterval(Int.random(in: 1...5))
+        refreshInterval = 1.0
         initialMemoryQuota = 10 * .kByte
 
         recordingQuota = RecordingQuota(memoryQuota: initialMemoryQuota, refreshInterval: refreshInterval)
