@@ -4,7 +4,7 @@ import Foundation
 final class MockFileManager: FileManagerProtocol {
     struct File {
         let url: URL
-        let size: Int64
+        let size: MemoryByte
     }
 
     var data: [File] = []
@@ -29,7 +29,7 @@ final class MockFileManager: FileManagerProtocol {
         return true
     }
 
-    func fileSize(at url: URL) -> Int64 {
+    func fileSize(at url: URL) -> MemoryByte {
         return data.first { $0.url == url }?.size ?? 0
     }
 }
