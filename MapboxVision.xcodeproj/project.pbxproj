@@ -1559,7 +1559,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1718,7 +1717,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1747,7 +1745,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVision;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
