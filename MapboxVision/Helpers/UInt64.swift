@@ -1,6 +1,6 @@
-typealias Byte = UInt64
+typealias MemoryByte = UInt64
 
-extension Byte {
+extension MemoryByte {
     private static let bytesInKByte: UInt64 = 1024
     private static let kByteInMByte: UInt64 = 1024
 

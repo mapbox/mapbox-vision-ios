@@ -12,7 +12,7 @@ final class RecordingQuota {
 
     // MARK: - Private properties
 
-    private let memoryQuota: Byte
+    private let memoryQuota: MemoryByte
     private let refreshInterval: TimeInterval
 
     private var lastResetTime: Date {
@@ -31,9 +31,9 @@ final class RecordingQuota {
         }
     }
 
-    private var cachedCurrentQuota: Byte {
+    private var cachedCurrentQuota: MemoryByte {
         get {
-            if let quota = UserDefaults.standard.object(forKey: Keys.recordingMemoryQuotaKey) as? Byte {
+            if let quota = UserDefaults.standard.object(forKey: Keys.recordingMemoryQuotaKey) as? MemoryByte {
                 return quota
             } else {
                 let quota = memoryQuota
@@ -48,14 +48,14 @@ final class RecordingQuota {
 
     // MARK: - Lifecycle
 
-    init(memoryQuota: Byte, refreshInterval: TimeInterval) {
+    init(memoryQuota: MemoryByte, refreshInterval: TimeInterval) {
         self.memoryQuota = memoryQuota
         self.refreshInterval = refreshInterval
     }
 
     // MARK: - Functions
 
-    func reserve(memoryToReserve: Byte) throws {
+    func reserve(memoryToReserve: MemoryByte) throws {
         var currentQuota = cachedCurrentQuota
 
         let now = Date()

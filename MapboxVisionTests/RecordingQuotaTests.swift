@@ -5,7 +5,7 @@ class RecordingQuotaTests: XCTestCase {
     // MARK: - Private properties
 
     private var refreshInterval: TimeInterval!
-    private var initialMemoryQuota: Byte!
+    private var initialMemoryQuota: MemoryByte!
     private var recordingQuota: RecordingQuota!
 
     // MARK: - Test functions
@@ -26,7 +26,7 @@ class RecordingQuotaTests: XCTestCase {
 
     func testReserveMethodDoesNotThrowIfTriesToReserveZeroBytes() {
         // Given
-        let memoryZeroBytes: Byte = 0
+        let memoryZeroBytes: MemoryByte = 0
 
         // When // Then
         XCTAssertNoThrow(try recordingQuota.reserve(memoryToReserve: memoryZeroBytes))
@@ -34,7 +34,7 @@ class RecordingQuotaTests: XCTestCase {
 
     func testReserveMethodDoesThrowIfReservesMemoryLessThanQuota() {
         // Given
-        let epsilon: Byte = 1
+        let epsilon: MemoryByte = 1
         let memoryToReserveLessThanQuota = initialMemoryQuota - epsilon
 
         // When // Then
@@ -68,7 +68,7 @@ class RecordingQuotaTests: XCTestCase {
 
     func testReserveMethodThrowsIfReservesMemoryMoreThanQuota() {
         // Given
-        let epsilon: Byte = 1
+        let epsilon: MemoryByte = 1
         let memoryToReserveExceedingQuota = initialMemoryQuota + epsilon
 
         // When // Then
@@ -77,7 +77,7 @@ class RecordingQuotaTests: XCTestCase {
 
     func testReserveMethodDoesNotThrowIfCurrentQuotaWasReset() {
         // Given
-        let epsilon: Byte = 1
+        let epsilon: MemoryByte = 1
         let memoryToReserveMoreThanHalfAQuota = (initialMemoryQuota / 2) + epsilon
         XCTAssertNoThrow(try recordingQuota.reserve(memoryToReserve: memoryToReserveMoreThanHalfAQuota))
 
