@@ -1,6 +1,6 @@
 import Foundation
 
-private let memoryLimit = 300.0 // mb
+private let memoryLimit: MemoryByte = 300 * .mByte
 private let networkingMemoryLimit: MemoryByte = 30 * .mByte
 private let updatingInterval = 1 * .hour
 
@@ -193,14 +193,14 @@ final class RecordSynchronizer: Synchronizable {
         dependencies.dataSource.recordDirectories
             .sortedByCreationDate
             .filter(isMarkAsSynced)
-            .reduce(([URL](), 0.0)) { base, url in
-                let dirSize = Double(dependencies.fileManager.sizeOfDirectory(at: url)) / 1024.0 / 1024.0
+            .reduce(([URL](), MemoryByte(0))) { base, url in
+                let dirSize = dependencies.fileManager.sizeOfDirectory(at: url)
 
-                let size = base.1 + dirSize
-                if size > memoryLimit || dirSize == 0 {
-                    return (base.0 + [url], size)
+                let totalDirSize = base.1 + dirSize
+                if totalDirSize > memoryLimit || dirSize == 0 {
+                    return (base.0 + [url], totalDirSize)
                 } else {
-                    return (base.0, size)
+                    return (base.0, totalDirSize)
                 }
             }.0
             .forEach(dependencies.dataSource.removeFile)
