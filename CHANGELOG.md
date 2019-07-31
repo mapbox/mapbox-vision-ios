@@ -13,6 +13,7 @@
 - Renamed `getPoints:` to `points:` in `BezierCubic3D`
 - Renamed `getDerivatives:` to `derivatives` in `BezierCubic3D`
 - Renamed `getControlPoints` to `controlPoints` in `BezierCubic3D`
+- Updated source code of `Reachability.swift` dependency
 
 ## 0.5.0
 
@@ -27,7 +28,6 @@
 - Changed implementation of `DeviceInfoProvider` provider in order to make device's id persistent
 - Changed implementation of `DeviceChecker` to increase performance on devices with A12 Bionic SoC
 - Removed `MapboxNavigation` dependency
-- Updated source code of `Reachability.swift` dependency
 
 ### AR
 - Added support for changing look and feel for ARLane
