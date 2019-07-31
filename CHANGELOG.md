@@ -2,6 +2,7 @@
 
 ## Unreleased
 - Fixed the bug with crashes on destroy
+- Add MapboxAccounts dependency
 
 ## 0.5.0
 
