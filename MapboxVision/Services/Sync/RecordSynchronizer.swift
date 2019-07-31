@@ -1,8 +1,8 @@
 import Foundation
 
-private let memoryLimit = 300.0 // mb
-private let networkingMemoryLimit: Int64 = 30 * 1024 * 1024
-private let updatingInterval: TimeInterval = 60 * 60
+private let memoryLimit: MemoryByte = 300 * .mByte
+private let networkingMemoryLimit: MemoryByte = 30 * .mByte
+private let updatingInterval = 1 * .hour
 
 final class RecordSynchronizer: Synchronizable {
     enum RecordSynchronizerError: LocalizedError {
@@ -26,7 +26,7 @@ final class RecordSynchronizer: Synchronizable {
     private let telemetryFileName = "telemetry"
     private let imagesSubpath = "images"
     private let imagesFileName = "images"
-    private let quota = RecordingQuota(memoryLimit: networkingMemoryLimit, updatingInterval: updatingInterval)
+    private let quota = RecordingQuota(memoryQuota: networkingMemoryLimit, refreshInterval: updatingInterval)
 
     private var isSyncing: Bool = false {
         didSet {
@@ -132,7 +132,7 @@ final class RecordSynchronizer: Synchronizable {
                     files.forEach(dependencies.dataSource.removeFile)
                 }
 
-                try self.quota.reserve(memory: dependencies.fileManager.fileSize(at: destination))
+                try self.quota.reserve(memoryToReserve: dependencies.fileManager.fileSize(at: destination))
             } catch {
                 print("Directory \(dir) failed to archive. Error: \(error.localizedDescription)")
                 group.leave()
@@ -167,7 +167,7 @@ final class RecordSynchronizer: Synchronizable {
             group.enter()
 
             do {
-                try quota.reserve(memory: fileSize(file))
+                try quota.reserve(memoryToReserve: fileSize(file))
             } catch {
                 print("Quota reservation error: \(error.localizedDescription)")
                 group.leave()
@@ -193,14 +193,14 @@ final class RecordSynchronizer: Synchronizable {
         dependencies.dataSource.recordDirectories
             .sortedByCreationDate
             .filter(isMarkAsSynced)
-            .reduce(([URL](), 0.0)) { base, url in
-                let dirSize = Double(dependencies.fileManager.sizeOfDirectory(at: url)) / 1024.0 / 1024.0
+            .reduce(([URL](), MemoryByte(0))) { base, url in
+                let dirSize = dependencies.fileManager.sizeOfDirectory(at: url)
 
-                let size = base.1 + dirSize
-                if size > memoryLimit || dirSize == 0 {
-                    return (base.0 + [url], size)
+                let totalDirSize = base.1 + dirSize
+                if totalDirSize > memoryLimit || dirSize == 0 {
+                    return (base.0 + [url], totalDirSize)
                 } else {
-                    return (base.0, size)
+                    return (base.0, totalDirSize)
                 }
             }.0
             .forEach(dependencies.dataSource.removeFile)

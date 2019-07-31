@@ -51,6 +51,11 @@ public final class VisionARManager {
     public func set(route: Route) {
         native?.setRoute(route)
     }
+
+    deinit {
+        guard native != nil else { return }
+        destroy()
+    }
 }
 
 /// :nodoc:

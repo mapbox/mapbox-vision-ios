@@ -1,7 +1,7 @@
+import simd
+
 // swiftlint:disable comma identifier_name operator_usage_whitespace
 // swiftformat:disable indent spaceInsideParens
-
-import simd
 
 extension float4 {
     var xyz: float3 {

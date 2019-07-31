@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.6.0
+
+### Vision
+- Added MapboxAccounts dependency
+- Added `currentLaneCenter`, `currentLaneWidth` to `RoadDescription`
+- Added method `pointsWithSegmentsNumber:` and property `curve` in `MBVLaneEdge`
+- Added method `pointsWithSegmentsNumber:` in `BezierCubic3D`
+- Fixed the bug with crashes on destroy
+- Renamed `currentLanePosition` to `relativePositionInLane` in `RoadDescription`
+- Renamed `getPoint:` to `point:` in `BezierCubic3D`
+- Renamed `getPoints:` to `points:` in `BezierCubic3D`
+- Renamed `getDerivatives:` to `derivatives` in `BezierCubic3D`
+- Renamed `getControlPoints` to `controlPoints` in `BezierCubic3D`
+- Updated source code of `Reachability.swift` dependency
+
 ## 0.5.0
 
 ### Vision

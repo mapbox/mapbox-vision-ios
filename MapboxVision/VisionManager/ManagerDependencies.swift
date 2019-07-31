@@ -4,19 +4,22 @@ import MapboxVisionNative
 private let visionVideoSettings: VideoSettings = .lowQuality
 
 struct BaseDependencies {
-    let native: VisionManagerBaseNative
+    let native: VisionManagerBaseNativeProtocol
     let synchronizer: Synchronizable
 }
 
 struct VisionDependencies {
-    let native: VisionManagerNative
+    let native: VisionManagerNativeProtocol
     let synchronizer: Synchronizable
-    let recorder: SessionRecorder
+    let recorder: SessionRecorderProtocol
     let dataProvider: DataProvider
     let deviceInfo: DeviceInfoProvidable
 
     static func `default`() -> VisionDependencies {
-        guard let reachability = Reachability() else {
+        let reachability: Reachability
+        do {
+            reachability = try Reachability()
+        } catch {
             fatalError("Reachability failed to initialize")
         }
 
@@ -78,7 +81,10 @@ struct ReplayDependencies {
     let player: VideoPlayable
 
     static func `default`(recordPath: String) throws -> ReplayDependencies {
-        guard let reachability = Reachability() else {
+        let reachability: Reachability
+        do {
+            reachability = try Reachability()
+        } catch {
             fatalError("Reachability failed to initialize")
         }
 

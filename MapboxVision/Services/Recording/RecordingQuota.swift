@@ -1,36 +1,19 @@
 import Foundation
 
 final class RecordingQuota {
-    private enum Keys {
-        static let hasStoredRecordingQuotaKey = "hasStoredRecordingQuota"
+    enum Keys {
         static let recordingMemoryQuotaKey = "recordingMemoryQuota"
         static let lastResetTimeKey = "lastResetTimeKey"
     }
 
     private enum RecordingQuotaError: LocalizedError {
-        case memoryLimitOverflowed
+        case memoryQuotaExceeded
     }
 
-    private let memoryLimit: Int64
-    private let updatingInterval: TimeInterval
+    // MARK: - Private properties
 
-    init(memoryLimit: Int64, updatingInterval: TimeInterval) {
-        self.memoryLimit = memoryLimit
-        self.updatingInterval = updatingInterval
-    }
-
-    func reserve(memory: Int64) throws {
-        var quota = currentQuota
-        let now = Date()
-        if now.timeIntervalSince(lastResetTime) >= updatingInterval {
-            quota = memoryLimit
-            lastResetTime = now
-        }
-
-        let reminder = quota - memory
-        guard reminder >= 0 else { throw RecordingQuotaError.memoryLimitOverflowed }
-        currentQuota = reminder
-    }
+    private let memoryQuota: MemoryByte
+    private let refreshInterval: TimeInterval
 
     private var lastResetTime: Date {
         get {
@@ -48,20 +31,40 @@ final class RecordingQuota {
         }
     }
 
-    private var currentQuota: Int64 {
+    private var cachedCurrentQuota: MemoryByte {
         get {
-            let defaults = UserDefaults.standard
-            if defaults.bool(forKey: Keys.hasStoredRecordingQuotaKey) {
-                return Int64(defaults.integer(forKey: Keys.recordingMemoryQuotaKey))
+            if let quota = UserDefaults.standard.object(forKey: Keys.recordingMemoryQuotaKey) as? MemoryByte {
+                return quota
             } else {
-                let quota = memoryLimit
-                defaults.set(quota, forKey: Keys.recordingMemoryQuotaKey)
-                defaults.set(true, forKey: Keys.hasStoredRecordingQuotaKey)
+                let quota = memoryQuota
+                UserDefaults.standard.set(quota, forKey: Keys.recordingMemoryQuotaKey)
                 return quota
             }
         }
         set {
             UserDefaults.standard.set(newValue, forKey: Keys.recordingMemoryQuotaKey)
         }
+    }
+
+    // MARK: - Lifecycle
+
+    init(memoryQuota: MemoryByte, refreshInterval: TimeInterval) {
+        self.memoryQuota = memoryQuota
+        self.refreshInterval = refreshInterval
+    }
+
+    // MARK: - Functions
+
+    func reserve(memoryToReserve: MemoryByte) throws {
+        var currentQuota = cachedCurrentQuota
+
+        let now = Date()
+        if now.timeIntervalSince(lastResetTime) >= refreshInterval {
+            currentQuota = memoryQuota
+            lastResetTime = now
+        }
+
+        guard currentQuota >= memoryToReserve else { throw RecordingQuotaError.memoryQuotaExceeded }
+        cachedCurrentQuota = currentQuota - memoryToReserve
     }
 }

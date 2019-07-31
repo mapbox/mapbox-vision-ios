@@ -30,7 +30,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     }
 
     public var native: VisionManagerBaseNative {
-        return dependencies.native
+        return dependencies.native as! VisionManagerBaseNative
     }
 
     weak var delegate: VisionManagerDelegate?
@@ -91,18 +91,18 @@ public class BaseVisionManager: VisionManagerProtocol {
     private func updateSegmentationPerformance(_ performance: ModelPerformance) {
         switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
         case .fixed(let fps):
-            dependencies.native.config.setSegmentationFixedFPS(fps)
+            dependencies.native.setSegmentationFixedFPS(fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.native.config.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
     }
 
     private func updateDetectionPerformance(_ performance: ModelPerformance) {
         switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
         case .fixed(let fps):
-            dependencies.native.config.setDetectionFixedFPS(fps)
+            dependencies.native.setDetectionFixedFPS(fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.native.config.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
     }
 
