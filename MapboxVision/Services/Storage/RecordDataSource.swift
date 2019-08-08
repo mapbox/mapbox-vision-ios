@@ -22,33 +22,3 @@ final class SyncRecordDataSource: RecordDataSource {
         return URL(fileURLWithPath: DocumentsLocation.recordings.path, isDirectory: true)
     }
 }
-
-final class ShowcaseRecordDataSource: RecordDataSource {
-    var baseURL: URL {
-        return URL(fileURLWithPath: DocumentsLocation.showcase.path, isDirectory: true)
-    }
-}
-
-final class CachedRecordDataSource: RecordDataSource {
-    let dataSource: RecordDataSource
-
-    init(dataSource: RecordDataSource) {
-        self.dataSource = dataSource
-    }
-
-    private lazy var cachedBaseURL: URL = {
-        dataSource.baseURL
-    }()
-
-    var baseURL: URL {
-        return cachedBaseURL
-    }
-
-    private lazy var cachedRecordDirectories: [URL] = {
-        dataSource.recordDirectories
-    }()
-
-    var recordDirectories: [URL] {
-        return cachedRecordDirectories
-    }
-}
