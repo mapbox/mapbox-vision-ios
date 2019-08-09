@@ -17,6 +17,24 @@ final class RecordSynchronizer: Synchronizable {
         let fileManager: FileManagerProtocol
     }
 
+    private enum State {
+        case idle
+        case syncing
+        case stopping
+    
+        var isIdle: Bool {
+            return self == .idle
+        }
+
+        var isSyncing: Bool {
+            return self == .syncing
+        }
+
+        var isStopping: Bool {
+            return self == .stopping
+        }
+    }
+
     weak var delegate: SyncDelegate?
 
     private let dependencies: Dependencies
@@ -28,15 +46,16 @@ final class RecordSynchronizer: Synchronizable {
     private let imagesFileName = "images"
     private let quota = RecordingQuota(memoryQuota: networkingMemoryLimit, refreshInterval: updatingInterval)
 
-    private var isSyncing: Bool = false {
+    private var state: State = .idle {
         didSet {
-            let value = isSyncing
-            DispatchQueue.main.async {
-                if value {
-                    self.delegate?.syncStarted()
-                } else {
-                    self.delegate?.syncStopped()
-                }
+            guard let delegate = delegate else { return }
+            switch state {
+            case .idle:
+                DispatchQueue.main.async(execute: delegate.syncStopped)
+            case .syncing:
+                DispatchQueue.main.async(execute: delegate.syncStarted)
+            case .stopping:
+                break
             }
         }
     }
@@ -55,18 +74,18 @@ final class RecordSynchronizer: Synchronizable {
         queue.async { [weak self] in
             guard let self = self else { return }
 
-            if self.isSyncing {
+            if !self.state.isIdle {
                 self.hasPendingRequest = true
                 return
             }
 
-            self.isSyncing = true
             self.executeSync()
         }
     }
 
     private func executeSync() {
         hasPendingRequest = false
+        state = .syncing
 
         guard let directories = dataSource?.recordDirectories else { return }
         clean(directories)
@@ -78,7 +97,7 @@ final class RecordSynchronizer: Synchronizable {
                         self.executeSync()
                         return
                     }
-                    self.isSyncing = false
+                    self.state = .idle
                 }
             }
         }
@@ -238,6 +257,7 @@ final class RecordSynchronizer: Synchronizable {
     }
 
     func stopSync() {
+        state = state.isSyncing ? .stopping : .idle
         dependencies.networkClient.cancel()
     }
 }
