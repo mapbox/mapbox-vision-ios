@@ -19,6 +19,6 @@ extension RecordDataSource {
 
 final class SyncRecordDataSource: RecordDataSource {
     var baseURL: URL {
-        return URL(fileURLWithPath: DocumentsLocation.recordings.path, isDirectory: true)
+        return URL(fileURLWithPath: DocumentsLocation.recordings(.other).path, isDirectory: true)
     }
 }

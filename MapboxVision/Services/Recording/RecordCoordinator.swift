@@ -5,7 +5,7 @@ import UIKit
 
 protocol RecordCoordinatorDelegate: AnyObject {
     func recordingStarted(path: String)
-    func recordingStopped()
+    func recordingStopped(recordingPath: RecordingPath)
 }
 
 enum RecordCoordinatorError: LocalizedError {
@@ -59,8 +59,6 @@ final class RecordCoordinator {
     init() {
         self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit)
         videoRecorder.delegate = self
-
-        createFolder(path: DocumentsLocation.recordings.path)
     }
 
     func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
@@ -190,31 +188,19 @@ final class RecordCoordinator {
         imageWriter.record(image: uiimage, to: imagePath)
     }
 
-    func clearCache() {
-        RecordingPath.clear(basePath: .recordings)
-    }
-
     private func recordingStopped() {
         trimRequestCache.removeAll()
         jsonWriter = nil
 
-        if let path = currentRecordingPath {
-            do {
-                if path.basePath != .custom {
-                    try path.move(to: .recordings)
-                }
-            } catch {
-                print("RecordCoordinator: moving current recording to \(path) failed. Error: \(error)")
-            }
-        }
-
-        currentRecordingPath = nil
         currentVideoSettings = nil
         currentVideoIsFull = false
         endBackgroundTask()
         isReady = true
 
-        delegate?.recordingStopped()
+        if let path = currentRecordingPath {
+            delegate?.recordingStopped(recordingPath: path)
+            currentRecordingPath = nil
+        }
     }
 
     private func trimClip(chunk: Int, request: VideoTrimRequest, completion: (() -> Void)? = nil) {
@@ -288,14 +274,6 @@ final class RecordCoordinator {
                                             attributes: nil)
         } catch {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
-        }
-    }
-
-    private func createFolder(path: String) {
-        do {
-            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            assertionFailure("Folder creation has failed for path \(path). Error: \(error.localizedDescription)")
         }
     }
 }

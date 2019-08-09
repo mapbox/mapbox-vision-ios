@@ -102,7 +102,7 @@ public final class VisionManager: BaseVisionManager {
             throw VisionManagerError.startRecordingBeforeStart
         }
         dependencies.recorder.stop()
-        tryRecording(mode: .external(path: path))
+        dependencies.recorder.start(mode: .external(path: path))
     }
 
     /**
@@ -118,7 +118,7 @@ public final class VisionManager: BaseVisionManager {
             return
         }
         dependencies.recorder.stop()
-        tryRecording(mode: .internal)
+        dependencies.recorder.start(mode: .internal)
     }
 
     /**
@@ -204,7 +204,7 @@ public final class VisionManager: BaseVisionManager {
         startVideoStream()
         dependencies.native.start(self)
 
-        tryRecording(mode: .internal)
+        dependencies.recorder.start(mode: .internal)
     }
 
     private func pause() {
@@ -227,18 +227,20 @@ public final class VisionManager: BaseVisionManager {
         resume()
     }
 
-    private func tryRecording(mode: SessionRecordingMode) {
-        guard mode != .internal || currentCountry.allowsRecording else { return }
-        dependencies.recorder.start(mode: mode)
-    }
-
     override public func onCountryUpdated(_ country: Country) {
+        let oldCountry = currentCountry
+
         super.onCountryUpdated(country)
-        if country.allowsRecording {
-            tryRecording(mode: .internal)
-        } else if dependencies.recorder.isInternal {
-            dependencies.recorder.stop()
-        }
+
+        guard
+            state.isStarted,
+            dependencies.recorder.isInternal,
+            let oldRegion = oldCountry.syncRegion,
+            oldRegion != country.syncRegion
+        else { return }
+
+        dependencies.recorder.stop()
+        dependencies.recorder.start(mode: .internal)
     }
 }
 
@@ -266,18 +268,32 @@ extension VisionManager: VideoSourceObserver {
 extension VisionManager: RecordCoordinatorDelegate {
     func recordingStarted(path: String) {}
 
-    func recordingStopped() {
+    func recordingStopped(recordingPath: RecordingPath) {
+        try? handle(recordingPath: recordingPath, country: currentCountry)
         trySync()
+    }
+
+    private func handle(recordingPath: RecordingPath, country: Country) throws {
+        guard recordingPath.basePath != .custom else { return }
+
+        guard let syncRegion = country.syncRegion else {
+            try recordingPath.delete()
+            return
+        }
+
+        try recordingPath.move(to: .recordings(syncRegion))
     }
 }
 
 private extension Country {
-    var allowsRecording: Bool {
+    var syncRegion: SyncRegion? {
         switch self {
-        case .USA, .UK, .other, .unknown:
-            return true
+        case .USA, .UK, .other:
+            return .other
         case .china:
-            return false
+            return .china
+        case .unknown:
+            return nil
         }
     }
 }

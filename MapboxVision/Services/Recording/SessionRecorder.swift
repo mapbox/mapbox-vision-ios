@@ -73,8 +73,8 @@ extension SessionRecorder: RecordCoordinatorDelegate {
         dependencies.startSavingSession(path)
     }
 
-    func recordingStopped() {
-        delegate?.recordingStopped()
+    func recordingStopped(recordingPath: RecordingPath) {
+        delegate?.recordingStopped(recordingPath: recordingPath)
 
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
