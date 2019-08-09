@@ -63,10 +63,13 @@ final class RecordSynchronizer: Synchronizable {
 
     private func executeSync() {
         hasPendingRequest = false
-        clean()
-        uploadTelemetry {
-            self.uploadImages {
-                self.uploadVideos {
+
+        let directories = dependencies.dataSource.recordDirectories
+        clean(directories)
+
+        uploadTelemetry(directories) {
+            self.uploadImages(directories) {
+                self.uploadVideos(directories) {
                     if self.hasPendingRequest {
                         self.executeSync()
                         return
@@ -93,8 +96,8 @@ final class RecordSynchronizer: Synchronizable {
         return files
     }
 
-    private func uploadTelemetry(completion: @escaping () -> Void) {
-        uploadArchivedFiles(types: [.bin, .json], archiveName: telemetryFileName, eachDirectoryCompletion: { [weak self] dir, remoteDir in
+    private func uploadTelemetry(_ directories: [URL], completion: @escaping () -> Void) {
+        uploadArchivedFiles(directories, types: [.bin, .json], archiveName: telemetryFileName, eachDirectoryCompletion: { [weak self] dir, remoteDir in
             do {
                 try self?.markAsSynced(dir: dir, remoteDir: remoteDir)
             } catch {
@@ -103,11 +106,12 @@ final class RecordSynchronizer: Synchronizable {
         }, completion: completion)
     }
 
-    private func uploadImages(completion: @escaping () -> Void) {
-        uploadArchivedFiles(types: [.image], subPath: imagesSubpath, archiveName: imagesFileName, completion: completion)
+    private func uploadImages(_ directories: [URL], completion: @escaping () -> Void) {
+        uploadArchivedFiles(directories, types: [.image], subPath: imagesSubpath, archiveName: imagesFileName, completion: completion)
     }
 
     private func uploadArchivedFiles(
+        _ directories: [URL],
         types: [RecordFileType],
         subPath: String? = nil,
         archiveName: String,
@@ -116,7 +120,7 @@ final class RecordSynchronizer: Synchronizable {
     ) {
         let group = DispatchGroup()
 
-        for dir in dependencies.dataSource.recordDirectories {
+        for dir in directories {
             group.enter()
 
             let destination = dir.appendingPathComponent(archiveName).appendingPathExtension(RecordFileType.archive.fileExtension)
@@ -155,11 +159,11 @@ final class RecordSynchronizer: Synchronizable {
         group.notify(queue: queue, execute: completion)
     }
 
-    private func uploadVideos(completion: @escaping () -> Void) {
+    private func uploadVideos(_ directories: [URL], completion: @escaping () -> Void) {
         let group = DispatchGroup()
 
         let fileSize = dependencies.fileManager.fileSize
-        let sorted = dependencies.dataSource.recordDirectories
+        let sorted = directories
             .flatMap { (try? self.getFiles($0, types: [.video])) ?? [] }
             .sorted { fileSize($0) < fileSize($1) }
 
@@ -189,8 +193,8 @@ final class RecordSynchronizer: Synchronizable {
         group.notify(queue: queue, execute: completion)
     }
 
-    private func clean() {
-        dependencies.dataSource.recordDirectories
+    private func clean(_ directories: [URL]) {
+        directories
             .sortedByCreationDate
             .filter(isMarkAsSynced)
             .reduce(([URL](), MemoryByte(0))) { base, url in
