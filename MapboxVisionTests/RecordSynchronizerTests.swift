@@ -22,11 +22,11 @@ class RecordSynchronizerTests: XCTestCase {
         deviceInfo = DeviceInfoProvider()
         recordSynchronizer = RecordSynchronizer(RecordSynchronizer.Dependencies(
             networkClient: networkClient,
-            dataSource: dataSource,
             deviceInfo: deviceInfo,
             archiver: archiver,
             fileManager: fileManager
         ))
+        recordSynchronizer.set(dataSource: dataSource)
         recordSynchronizer.delegate = self
     }
 
@@ -80,7 +80,7 @@ extension RecordSynchronizerTests: SyncDelegate {
     func syncStarted() {}
 
     func syncStopped() {
-        XCTAssert(dataSource.removedFiles.contains(URL(fileURLWithPath: "/3", isDirectory: true)), "Empty dir should be removed")
+        XCTAssertFalse(fileManager.urls.contains(URL(fileURLWithPath: "/3", isDirectory: true)), "Empty dir should be removed")
 
         let archives = [
             URL(fileURLWithPath: "/1/telemetry.zip"),
@@ -96,11 +96,11 @@ extension RecordSynchronizerTests: SyncDelegate {
             let uploadDir = networkClient.uploaded[archive]
             let dir = "\(archive.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
             XCTAssert(uploadDir == dir, "\(archive) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
-            XCTAssert(dataSource.removedFiles.contains(archive), "\(archive) should be removed after upload")
+            XCTAssertFalse(fileManager.urls.contains(archive), "\(archive) should be removed after upload")
         }
 
-        XCTAssert(dataSource.removedFiles.contains(URL(fileURLWithPath: "/1/gps.bin")), "Bin file should be removed after archivation")
-        XCTAssert(dataSource.removedFiles.contains(URL(fileURLWithPath: "/1/videos.json")), "Json file should be removed after archivation")
+        XCTAssertFalse(fileManager.urls.contains(URL(fileURLWithPath: "/1/gps.bin")), "Bin file should be removed after archivation")
+        XCTAssertFalse(fileManager.urls.contains(URL(fileURLWithPath: "/1/videos.json")), "Json file should be removed after archivation")
 
         XCTAssert(fileManager.fileExists(atPath: "/1/.synced"), "Telemetry from first dir should be marked as synced")
         XCTAssert(fileManager.fileExists(atPath: "/2/.synced"), "Telemetry from second dir should be marked as synced")
@@ -118,7 +118,7 @@ extension RecordSynchronizerTests: SyncDelegate {
             let uploadDir = networkClient.uploaded[file]
             let dir = "\(file.pathComponents[1])_en_US_\(deviceInfo.id)_\(deviceInfo.platformName)"
             XCTAssert(uploadDir == dir, "\(file) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
-            XCTAssert(dataSource.removedFiles.contains(file), "\(file) should be removed after upload")
+            XCTAssertFalse(fileManager.urls.contains(file), "\(file) should be removed after upload")
         }
 
         positiveScenarioExpectation.fulfill()
