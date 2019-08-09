@@ -33,6 +33,10 @@ final class ManagedSynchronizer: Synchronizable {
 
     // MARK: Public
 
+    func set(dataSource: RecordDataSource) {
+        dependencies.base.set(dataSource: dataSource)
+    }
+
     func sync() {
         isExternallyAllowed = true
         continueSync()

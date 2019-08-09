@@ -8,6 +8,8 @@ protocol SyncDelegate: AnyObject {
 protocol Synchronizable: AnyObject {
     var delegate: SyncDelegate? { get set }
 
+    func set(dataSource: RecordDataSource)
+
     func sync()
     func stopSync()
 }

@@ -23,11 +23,9 @@ struct VisionDependencies {
         let eventsManager = EventsManager()
         let deviceInfo = DeviceInfoProvider()
 
-        let dataSource = SyncRecordDataSource()
         let recordArchiver = RecordArchiver()
         let recordSyncDependencies = RecordSynchronizer.Dependencies(
             networkClient: eventsManager,
-            dataSource: dataSource,
             deviceInfo: deviceInfo,
             archiver: recordArchiver,
             fileManager: FileManager.default
@@ -85,11 +83,9 @@ struct ReplayDependencies {
         let eventsManager = EventsManager()
         let deviceInfo = DeviceInfoProvider()
 
-        let dataSource = SyncRecordDataSource()
         let recordArchiver = RecordArchiver()
         let recordSyncDependencies = RecordSynchronizer.Dependencies(
             networkClient: eventsManager,
-            dataSource: dataSource,
             deviceInfo: deviceInfo,
             archiver: recordArchiver,
             fileManager: FileManager.default

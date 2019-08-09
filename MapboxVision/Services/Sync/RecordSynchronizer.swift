@@ -12,7 +12,6 @@ final class RecordSynchronizer: Synchronizable {
 
     struct Dependencies {
         let networkClient: NetworkClient
-        let dataSource: RecordDataSource
         let deviceInfo: DeviceInfoProvidable
         let archiver: Archiver
         let fileManager: FileManagerProtocol
@@ -21,6 +20,7 @@ final class RecordSynchronizer: Synchronizable {
     weak var delegate: SyncDelegate?
 
     private let dependencies: Dependencies
+    private var dataSource: RecordDataSource?
     private let queue = DispatchQueue(label: "com.mapbox.RecordSynchronizer")
     private let syncFileName = ".synced"
     private let telemetryFileName = "telemetry"
@@ -47,6 +47,10 @@ final class RecordSynchronizer: Synchronizable {
         self.dependencies = dependencies
     }
 
+    func set(dataSource: RecordDataSource) {
+        self.dataSource = dataSource
+    }
+
     func sync() {
         queue.async { [weak self] in
             guard let self = self else { return }
@@ -64,7 +68,7 @@ final class RecordSynchronizer: Synchronizable {
     private func executeSync() {
         hasPendingRequest = false
 
-        let directories = dependencies.dataSource.recordDirectories
+        guard let directories = dataSource?.recordDirectories else { return }
         clean(directories)
 
         uploadTelemetry(directories) {
