@@ -6,6 +6,7 @@ protocol FileManagerProtocol {
     func fileExists(atPath path: String) -> Bool
     func createFile(atPath path: String, contents: Data?) -> Bool
     func fileSize(at url: URL) -> MemoryByte
+    func remove(item: URL)
 }
 
 extension FileManagerProtocol {
@@ -30,5 +31,9 @@ extension FileManager: FileManagerProtocol {
     func fileSize(at url: URL) -> MemoryByte {
         guard let attributes = try? attributesOfItem(atPath: url.path) else { return 0 }
         return attributes[FileAttributeKey.size] as? MemoryByte ?? 0
+    }
+    
+    func remove(item: URL) {
+        try? removeItem(at: item)
     }
 }

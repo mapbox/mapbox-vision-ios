@@ -129,7 +129,7 @@ final class RecordSynchronizer: Synchronizable {
                     }
                     let files = try getFiles(sourceDir, types: types)
                     try dependencies.archiver.archive(files, destination: destination)
-                    files.forEach(dependencies.dataSource.removeFile)
+                    files.forEach(dependencies.fileManager.remove)
                 }
 
                 try self.quota.reserve(memoryToReserve: dependencies.fileManager.fileSize(at: destination))
@@ -145,7 +145,7 @@ final class RecordSynchronizer: Synchronizable {
                 if let error = error {
                     print(error)
                 } else {
-                    self?.dependencies.dataSource.removeFile(at: destination)
+                    self?.dependencies.fileManager.remove(item: destination)
                     eachDirectoryCompletion?(dir, remoteDir)
                 }
                 group.leave()
@@ -180,7 +180,7 @@ final class RecordSynchronizer: Synchronizable {
                 if let error = error {
                     print(error)
                 } else {
-                    self?.dependencies.dataSource.removeFile(at: file)
+                    self?.dependencies.fileManager.remove(item: file)
                 }
                 group.leave()
             }
@@ -203,7 +203,7 @@ final class RecordSynchronizer: Synchronizable {
                     return (base.0, totalDirSize)
                 }
             }.0
-            .forEach(dependencies.dataSource.removeFile)
+            .forEach(dependencies.fileManager.remove)
     }
 
     private func markAsSynced(dir: URL, remoteDir: String) throws {

@@ -135,8 +135,6 @@ public class BaseVisionManager: VisionManagerProtocol {
             dependencies.synchronizer.sync()
         case .china:
             dependencies.synchronizer.stopSync()
-            let data = SyncRecordDataSource()
-            data.recordDirectories.forEach(data.removeFile)
         case .unknown:
             dependencies.synchronizer.stopSync()
         }
