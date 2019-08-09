@@ -21,7 +21,7 @@ final class RecordSynchronizer: Synchronizable {
         case idle
         case syncing
         case stopping
-    
+
         var isIdle: Bool {
             return self == .idle
         }
@@ -90,13 +90,15 @@ final class RecordSynchronizer: Synchronizable {
         guard let directories = dataSource?.recordDirectories else { return }
         clean(directories)
 
-        uploadTelemetry(directories) {
-            self.uploadImages(directories) {
-                self.uploadVideos(directories) {
-                    if self.hasPendingRequest {
-                        self.executeSync()
-                        return
-                    }
+        uploadTelemetry(directories) { [weak self] in
+            guard let self = self, self.canContinue() else { return }
+
+            self.uploadImages(directories) { [weak self] in
+                guard let self = self, self.canContinue() else { return }
+
+                self.uploadVideos(directories) { [weak self] in
+                    guard let self = self, self.canContinue() else { return }
+
                     self.state = .idle
                 }
             }
@@ -254,6 +256,18 @@ final class RecordSynchronizer: Synchronizable {
             return nil
         }
         return URL(fileURLWithPath: syncFilePath, relativeTo: url)
+    }
+
+    private func canContinue() -> Bool {
+        if state.isStopping {
+            if hasPendingRequest {
+                executeSync()
+            } else {
+                state = .idle
+            }
+            return false
+        }
+        return true
     }
 
     func stopSync() {
