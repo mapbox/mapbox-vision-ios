@@ -2,22 +2,26 @@
 import XCTest
 
 class VisionManagerTests: XCTestCase {
-    var visionManager: VisionManager?
-    var dependencies: VisionDependencies?
+    var visionManager: VisionManager!
+    var dependencies: VisionDependencies!
+    var recorder: MockSessionRecorder!
 
     override func setUp() {
         super.setUp()
 
+        recorder = MockSessionRecorder()
         dependencies = VisionDependencies(
             native: MockNative(),
             synchronizer: MockSynchronizable(),
-            recorder: MockSessionRecorder(),
+            recorder: recorder,
             dataProvider: MockDataProvider(),
             deviceInfo: DeviceInfoProvider()
         )
 
         self.visionManager = VisionManager(dependencies: dependencies!, videoSource: MockVideoSource())
     }
+
+    // MARK: - Destroy
 
     func testNoCrashOnVisionManagerDeallocWithoutDestroy() {
         // We called destroy in destructors of VisionManager, BaseVisionManager, VisionManagerNative and VisionManagerBaseNative,
@@ -58,15 +62,31 @@ class VisionManagerTests: XCTestCase {
         )
     }
 
+    // MARK: - Recording
+
+    func testVisionManagerDoesNotRecordOnCountryChangeWhenNotStarted() {
+        // Given
+        // VisionManager with default country
+
+        // When
+        visionManager.onCountryUpdated(.USA)
+        visionManager.onCountryUpdated(.UK)
+        visionManager.onCountryUpdated(.china)
+        visionManager.onCountryUpdated(.other)
+        visionManager.onCountryUpdated(.unknown)
+
+        // Then
+        XCTAssert(recorder.actionsLog.isEmpty, "VisionManager should not record when not started.")
+    }
+
     func testVisionManagerRecordsDataInTheRightWayForCorrespondingCountries() {
         // Given
         // VisionManager with default country
-        guard let visionManager = self.visionManager, let recorder = dependencies?.recorder as? MockSessionRecorder else {
-            XCTFail("Configured environment doesn't fit test case")
-            return
-        }
 
         // When
+        // VisionManager is started
+        visionManager.start()
+
         // We set countries
         visionManager.onCountryUpdated(.USA)
         visionManager.onCountryUpdated(.UK)
@@ -75,34 +95,40 @@ class VisionManagerTests: XCTestCase {
         visionManager.onCountryUpdated(.unknown)
 
         // Then
-        // we expect that visionManager will call SessionRecorder's method `startInternal` for all countries but China and that there
-        // will no be any other calls to SessionRecorder. For China we expect `stop` method to be called
+        // VisionManager is expected to start internal recording on its start, not react to country update
+        // if synchronization region isn't changed, stop internal recording and start it again if the synchronization region is changed
         let expectedActions: [MockSessionRecorder.Action] = [
-            .startInternal, // USA
-            .startInternal, // UK
+            .startInternal, // initial
+            // nothing      // USA
+            // nothing,     // UK
             .stop,          // China
-            .startInternal, // other
-            .startInternal,  // unknown
+            .startInternal,
+            .stop,          // other
+            .startInternal,
+            .stop,          // unknown
+            .startInternal,
         ]
 
         XCTAssert(
             recorder.actionsLog.elementsEqual(expectedActions),
-            "VisionManager should call SessionRecorder's method `startInternal` for all countries but China"
+            """
+            Internal recording doesn't react correctly to country change.
+            SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
+            """
         )
     }
 
     func testVisionManagerRecordsDataInTheRightWayForCorrespondingCountriesWithExternalRecordingEnabled() {
         // Given
-        // VisionManager with default country which is in external recording mode
-        guard let visionManager = self.visionManager, let recorder = dependencies?.recorder as? MockSessionRecorder else {
-            XCTAssert(false)
-            return
-        }
-
-        visionManager.start()
-        try? visionManager.startRecording(to: "")
+        // VisionManager with default country
 
         // When
+        // VisionManager is started
+        visionManager.start()
+
+        // External recording is started
+        try? visionManager.startRecording(to: "")
+
         // We set countries
         visionManager.onCountryUpdated(.USA)
         visionManager.onCountryUpdated(.UK)
@@ -111,25 +137,97 @@ class VisionManagerTests: XCTestCase {
         visionManager.onCountryUpdated(.unknown)
 
         // Then
-        // we expect that visionManager will stop external recording and start internal for all countries but China. For China it
-        // should just stop recording. In any case, it shouldn't resume external recording
+        // VisionManager should not stop external recording if country is changed
         let expectedActions: [MockSessionRecorder.Action] = [
             .startInternal,
             .stop,
             .startExternal(withPath: ""),
-            .startInternal,
-            .startInternal,
-            .stop,
-            .startInternal,
-            .startInternal,
         ]
 
         XCTAssert(
             recorder.actionsLog.elementsEqual(expectedActions),
-            "VisionManager should stop external recording after setting a new country and start internal for all countries but China"
+            """
+            External recording doesn't react correctly to country change.
+            SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
+            """
         )
+    }
 
+    func testVisionManagerStopsInternalRecordingOnStop() {
+        // Given
+        // VisionManager
+
+        // When
+        visionManager.start()
+        visionManager.stop()
+
+        // Then
+        let expectedActions: [MockSessionRecorder.Action] = [
+            .startInternal,
+            .stop,
+        ]
+
+        XCTAssert(
+            recorder.actionsLog.elementsEqual(expectedActions),
+            """
+            Internal recording doesn't react correctly to VisionManager start and stop.
+            SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
+            """
+        )
+    }
+
+    func testVisionManagerStopsExternalRecordingOnStop() {
+        // Given
+        // VisionManager
+
+        // When
+        visionManager.start()
+        try? visionManager.startRecording(to: "")
+        visionManager.stop()
+
+        // Then
+        let expectedActions: [MockSessionRecorder.Action] = [
+            .startInternal,
+            .stop,
+            .startExternal(withPath: ""),
+            .stop,
+        ]
+
+        XCTAssert(
+            recorder.actionsLog.elementsEqual(expectedActions),
+            """
+            External recording doesn't react correctly to VisionManager start and stop.
+            SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
+            """
+        )
+    }
+
+    func testVisionManagerStopsAllRecordingOnStop() {
+        // Given
+        // VisionManager
+
+        // When
+        visionManager.start()
+        try? visionManager.startRecording(to: "")
         visionManager.stopRecording()
         visionManager.stop()
+
+        // Then
+        let expectedActions: [MockSessionRecorder.Action] = [
+            .startInternal,
+            .stop,
+            .startExternal(withPath: ""),
+            .stop,
+            .startInternal,
+            .stop
+        ]
+
+        XCTAssert(
+            recorder.actionsLog.elementsEqual(expectedActions),
+            """
+            Recording doesn't react correctly to VisionManager start, stop and single external recording request.
+            SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
+            """
+        )
     }
 }

@@ -2,10 +2,10 @@ import XCTest
 
 @testable import MapboxVision
 
-final class RecordingStartedTestExpectation: XCTestExpectation {
-    var recordingPath: String!
+final class RecordingTestExpectation<T>: XCTestExpectation {
+    var recordingPath: T!
 
-    func fulfill(with path: String) {
+    func fulfill(with path: T) {
         recordingPath = path
         fulfill()
     }
@@ -15,13 +15,13 @@ final class RecordCoordinatorTests: XCTestCase {
     let videoSettings = VideoSettings(width: 960, height: 540, codec: .h264, fileType: .mp4, fileExtension: "mp4", bitRate: 6_000_000)
     var coordinator: RecordCoordinator!
 
-    let recordingStartedExpectation = RecordingStartedTestExpectation(description: "Recording has been started")
-    let recordingStoppedExpectation = XCTestExpectation(description: "Recording has been stopped")
+    let recordingStartedExpectation = RecordingTestExpectation<String>(description: "Recording has been started")
+    let recordingStoppedExpectation = RecordingTestExpectation<RecordingPath>(description: "Recording has been stopped")
 
     override func setUp() {
         super.setUp()
 
-        let docLocations: [DocumentsLocation] = [.cache, .currentRecording, .recordings]
+        let docLocations: [DocumentsLocation] = [.cache, .currentRecording, .recordings(.china), .recordings(.other)]
         docLocations.map { $0.path }.forEach(removeDirectory)
 
         coordinator = RecordCoordinator()
@@ -32,11 +32,6 @@ final class RecordCoordinatorTests: XCTestCase {
         recordingStartedExpectation.recordingPath = nil
         coordinator = nil
         super.tearDown()
-    }
-
-    func testRecordingCreation() {
-        let location = DocumentsLocation.recordings.path
-        XCTAssert(directoryExists(at: location), "\(location) should exist")
     }
 
     func testStart() {
@@ -72,10 +67,8 @@ final class RecordCoordinatorTests: XCTestCase {
 
         wait(for: [recordingStoppedExpectation], timeout: 1)
 
-        let finalPath = recordingStartedExpectation.recordingPath.replacingOccurrences(of: DocumentsLocation.currentRecording.rawValue,
-                                                                                       with: DocumentsLocation.recordings.rawValue)
-
-        XCTAssert(directoryExists(at: finalPath), "Recording should be moved to \(finalPath) after recording is stopped")
+        let recordingPath = recordingStoppedExpectation.recordingPath.recordingPath
+        XCTAssert(directoryExists(at: recordingPath), "Recording should be saved at \(recordingPath) after recording is stopped")
     }
 
     private func directoryExists(at path: String) -> Bool {
@@ -99,7 +92,7 @@ extension RecordCoordinatorTests: RecordCoordinatorDelegate {
         recordingStartedExpectation.fulfill(with: path)
     }
 
-    func recordingStopped() {
-        recordingStoppedExpectation.fulfill()
+    func recordingStopped(recordingPath: RecordingPath) {
+        recordingStoppedExpectation.fulfill(with: recordingPath)
     }
 }
