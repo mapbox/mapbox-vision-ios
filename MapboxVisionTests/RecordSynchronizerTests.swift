@@ -3,83 +3,109 @@ import XCTest
 @testable import MapboxVision
 
 class RecordSynchronizerTests: XCTestCase {
+    typealias File = MockFileManager.File
+
     var networkClient: MockNetworkClient!
     var dataSource: MockRecordDataSource!
     var archiver: MockArchiver!
     var recordSynchronizer: RecordSynchronizer!
     var fileManager: MockFileManager!
     var deviceInfo: DeviceInfoProvider!
-
-    let positiveScenarioExpectation = XCTestExpectation(description: "Positive scenario")
-
+    var syncDelegate: ClosureSyncDelegate!
+    
+    private let data = [
+        URL(fileURLWithPath: "/1", isDirectory: true): [
+            File(url: URL(fileURLWithPath: "/1/gps.bin"), size: 20),
+            File(url: URL(fileURLWithPath: "/1/videos.json"), size: 3),
+            File(url: URL(fileURLWithPath: "/1/1.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/1/2.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/1/3.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/1/images/1.jpg"), size: 1),
+            File(url: URL(fileURLWithPath: "/1/images/2.jpg"), size: 1),
+            File(url: URL(fileURLWithPath: "/1/images/3.jpg"), size: 1),
+        ],
+        URL(fileURLWithPath: "/2", isDirectory: true): [
+            File(url: URL(fileURLWithPath: "/2/gps.bin"), size: 15),
+            File(url: URL(fileURLWithPath: "/2/videos.json"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/1.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/2.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/3.mp4"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/images/1.jpg"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/images/2.jpg"), size: 1),
+            File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1),
+        ],
+        URL(fileURLWithPath: "/3", isDirectory: true): [
+            File(url: URL(fileURLWithPath: "/3/.synced"), size: 0),
+        ],
+    ]
+    
     override func setUp() {
         super.setUp()
-
+        
         networkClient = MockNetworkClient()
         dataSource = MockRecordDataSource()
         archiver = MockArchiver()
         fileManager = MockFileManager()
         deviceInfo = DeviceInfoProvider()
+        syncDelegate = ClosureSyncDelegate()
         recordSynchronizer = RecordSynchronizer(RecordSynchronizer.Dependencies(
-            networkClient: networkClient,
-            deviceInfo: deviceInfo,
-            archiver: archiver,
-            fileManager: fileManager
+                networkClient: networkClient,
+                deviceInfo: deviceInfo,
+                archiver: archiver,
+                fileManager: fileManager
         ))
         recordSynchronizer.set(dataSource: dataSource)
-        recordSynchronizer.delegate = self
+        recordSynchronizer.delegate = syncDelegate
     }
-
-    override func tearDown() {
-        networkClient = nil
-        dataSource = nil
-        archiver = nil
-        recordSynchronizer = nil
-        fileManager = nil
-        super.tearDown()
-    }
-
+    
     func testPositiveScenario() {
-        typealias File = MockFileManager.File
-
-        let data = [
-            URL(fileURLWithPath: "/1", isDirectory: true): [
-                File(url: URL(fileURLWithPath: "/1/gps.bin"), size: 20),
-                File(url: URL(fileURLWithPath: "/1/videos.json"), size: 3),
-                File(url: URL(fileURLWithPath: "/1/1.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/2.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/3.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/images/1.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/images/2.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/1/images/3.jpg"), size: 1),
-            ],
-            URL(fileURLWithPath: "/2", isDirectory: true): [
-                File(url: URL(fileURLWithPath: "/2/gps.bin"), size: 15),
-                File(url: URL(fileURLWithPath: "/2/videos.json"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/1.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/2.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/3.mp4"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/images/1.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/images/2.jpg"), size: 1),
-                File(url: URL(fileURLWithPath: "/2/images/3.jpg"), size: 1),
-            ],
-            URL(fileURLWithPath: "/3", isDirectory: true): [
-                File(url: URL(fileURLWithPath: "/3/.synced"), size: 0),
-            ],
-        ]
-
+        // Given
         fileManager.data = data.values.flatMap { $0 }
         dataSource.recordDirectories = data.keys.map { $0 }
-
+        
+        let expectation = XCTestExpectation(description: "Positive scenario")
+        
+        syncDelegate.onSyncStopped = {
+            self.positiveScenarioOnSyncStopped(expectation)
+        }
+        
+        // When
         recordSynchronizer.sync()
-        wait(for: [positiveScenarioExpectation], timeout: 10.0)
+        
+        // Then
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
+    func testStoppingSyncBeforeAllDataIsUploaded() {
+        // Given
+        fileManager.data = data.values.flatMap { $0 }
+        dataSource.recordDirectories = data.keys.map { $0 }
+        
+        let expectation = XCTestExpectation(description: "Cancellation")
+        
+        syncDelegate.onSyncStopped = {
+            let uploads: Set = [
+                URL(fileURLWithPath: "/1/telemetry.zip"),
+                URL(fileURLWithPath: "/2/telemetry.zip"),
+            ]
+            
+            XCTAssert(Set(self.networkClient.uploaded.keys) == uploads, "Synchronizer should be able to upload only telemetry.")
+            expectation.fulfill()
+        }
+        
+        // When
+        recordSynchronizer.sync()
+        DispatchQueue.main.async {
+            self.recordSynchronizer.stopSync()
+        }
+        
+        // Then
+        wait(for: [expectation], timeout: 1)
     }
 }
 
-extension RecordSynchronizerTests: SyncDelegate {
-    func syncStarted() {}
-
-    func syncStopped() {
+extension RecordSynchronizerTests {
+    func positiveScenarioOnSyncStopped(_ expectation: XCTestExpectation) {
         XCTAssertFalse(fileManager.urls.contains(URL(fileURLWithPath: "/3", isDirectory: true)), "Empty dir should be removed")
 
         let archives = [
@@ -120,7 +146,7 @@ extension RecordSynchronizerTests: SyncDelegate {
             XCTAssert(uploadDir == dir, "\(file) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
             XCTAssertFalse(fileManager.urls.contains(file), "\(file) should be removed after upload")
         }
-
-        positiveScenarioExpectation.fulfill()
+        
+        expectation.fulfill()
     }
 }

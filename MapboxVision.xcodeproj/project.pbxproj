@@ -77,6 +77,7 @@
 		2E7F1501228F0E0B00BAF585 /* VisionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
+		2EBE10E72301674400CE87CE /* ClosureSyncDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
 		2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */; };
@@ -242,6 +243,7 @@
 		2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerProtocol.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
+		2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureSyncDelegate.swift; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProviderTests.swift; sourceTree = "<group>"; };
@@ -594,6 +596,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		2EBE10E52301672C00CE87CE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		3A11B01F229EC2C100070A61 /* ARScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,6 +835,7 @@
 		B51E557A215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXGroup;
 			children = (
+				2EBE10E52301672C00CE87CE /* Helpers */,
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */,
 				B51E557B215E313500650DDE /* RecordSynchronizerTests.swift */,
@@ -1277,6 +1288,7 @@
 				3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */,
 				5A3C9D9122C39F5300700DC6 /* MockDataProvider.swift in Sources */,
 				B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */,
+				2EBE10E72301674400CE87CE /* ClosureSyncDelegate.swift in Sources */,
 				B50CFBB12163C9AC00C9C5A5 /* MockArchiver.swift in Sources */,
 				B50CFBB32163C9C500C9C5A5 /* MockFileManager.swift in Sources */,
 				5A3C9D8B22C37DE200700DC6 /* MockPlatform.swift in Sources */,
