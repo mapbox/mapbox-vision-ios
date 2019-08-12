@@ -214,6 +214,18 @@ public final class VisionManager: BaseVisionManager {
 
         dependencies.recorder.stop()
     }
+    
+    private func configureRecording(oldCountry: Country, newCountry: Country) {
+        guard
+            state.isStarted,
+            dependencies.recorder.isInternal,
+            let oldRegion = oldCountry.syncRegion,
+            oldRegion != newCountry.syncRegion
+        else { return }
+        
+        dependencies.recorder.stop()
+        dependencies.recorder.start(mode: .internal)
+    }
 
     override func prepareForBackground() {
         guard state.isStarted else { return }
@@ -229,18 +241,8 @@ public final class VisionManager: BaseVisionManager {
 
     override public func onCountryUpdated(_ country: Country) {
         let oldCountry = currentCountry
-
+        configureRecording(oldCountry: oldCountry, newCountry: country)
         super.onCountryUpdated(country)
-
-        guard
-            state.isStarted,
-            dependencies.recorder.isInternal,
-            let oldRegion = oldCountry.syncRegion,
-            oldRegion != country.syncRegion
-        else { return }
-
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .internal)
     }
 }
 

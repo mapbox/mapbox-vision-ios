@@ -129,15 +129,21 @@ public class BaseVisionManager: VisionManagerProtocol {
 
     // MARK: Private
 
-    private func configureSync(_ country: Country) {
-        switch country {
-        case .UK, .USA, .other:
-            dependencies.synchronizer.sync()
-        case .china:
+    private func configureSync(oldCountry: Country, newCountry: Country) {
+        if newCountry.syncRegion == nil {
             dependencies.synchronizer.stopSync()
-        case .unknown:
-            dependencies.synchronizer.stopSync()
+            return
         }
+
+        guard
+            let newRegion = newCountry.syncRegion,
+            oldCountry.syncRegion != newRegion
+        else { return }
+
+        let dataSource = SyncRecordDataSource(region: newRegion)
+        dependencies.synchronizer.stopSync()
+        dependencies.synchronizer.set(dataSource: dataSource)
+        dependencies.synchronizer.sync()
     }
 }
 
@@ -175,9 +181,10 @@ extension BaseVisionManager: VisionDelegate {
     }
 
     public func onCountryUpdated(_ country: Country) {
+        let oldCountry = currentCountry
         currentCountry = country
+        configureSync(oldCountry: oldCountry, newCountry: country)
         delegate?.visionManager(self, didUpdateCountry: country)
-        configureSync(country)
     }
 
     public func onUpdateCompleted() {
