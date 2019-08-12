@@ -13,7 +13,7 @@ extension RecordDataSource {
 
 final class SyncRecordDataSource: RecordDataSource {
     private let region: SyncRegion
-    
+
     init(region: SyncRegion) {
         self.region = region
     }

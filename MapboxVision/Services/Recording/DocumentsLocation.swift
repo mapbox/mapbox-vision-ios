@@ -41,7 +41,7 @@ enum DocumentsLocation: Equatable {
         } else {
             basePath = NSTemporaryDirectory()
         }
-        
+
         if let bundleIdentifier = Bundle(for: BundleToken.self).bundleIdentifier {
             basePath = basePath.appendingPathComponent(bundleIdentifier, isDirectory: true)
         }

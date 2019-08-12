@@ -18,19 +18,22 @@ class BaseVisionManagerTests: XCTestCase {
         visionManager = BaseVisionManager(dependencies: dependencies)
     }
 
-    // swiftlint:disable comma
     func testChangingCountries() {
         // Given
         let actions: [(Country, [MockSynchronizable.Action])] = [
-            (.unknown , [.stopSync]),
-            (.USA     , [.stopSync,
-                         .set(dataSource: otherDataSource, baseURL: URL(string: Constants.URL.defaultEventsEndpoint)!),
-                         .sync]),
-            (.UK      , []),
-            (.china   , [.stopSync,
-                         .set(dataSource: chinaDataSource, baseURL: URL(string: Constants.URL.chinaEventsEndpoint)!),
-                         .sync]),
-            (.unknown , [.stopSync]),
+            (.unknown, [.stopSync]),
+            (.USA, [
+                .stopSync,
+                .set(dataSource: otherDataSource, baseURL: URL(string: Constants.URL.defaultEventsEndpoint)!),
+                .sync
+            ]),
+            (.UK, []),
+            (.china, [
+                .stopSync,
+                .set(dataSource: chinaDataSource, baseURL: URL(string: Constants.URL.chinaEventsEndpoint)!),
+                .sync
+            ]),
+            (.unknown, [.stopSync]),
         ]
 
         // When

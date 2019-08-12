@@ -214,7 +214,7 @@ public final class VisionManager: BaseVisionManager {
 
         dependencies.recorder.stop()
     }
-    
+
     private func configureRecording(oldCountry: Country, newCountry: Country) {
         guard
             state.isStarted,
@@ -222,7 +222,7 @@ public final class VisionManager: BaseVisionManager {
             let oldRegion = oldCountry.syncRegion,
             oldRegion != newCountry.syncRegion
         else { return }
-        
+
         dependencies.recorder.stop()
         dependencies.recorder.start(mode: .internal)
     }

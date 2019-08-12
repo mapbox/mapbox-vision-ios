@@ -113,13 +113,13 @@ public class BaseVisionManager: VisionManagerProtocol {
         notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-                self?.prepareForForeground()
+            self?.prepareForForeground()
         })
 
         notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-                self?.prepareForBackground()
+            self?.prepareForBackground()
         })
     }
 

@@ -32,7 +32,7 @@ extension FileManager: FileManagerProtocol {
         guard let attributes = try? attributesOfItem(atPath: url.path) else { return 0 }
         return attributes[FileAttributeKey.size] as? MemoryByte ?? 0
     }
-    
+
     func remove(item: URL) {
         try? removeItem(at: item)
     }

@@ -12,7 +12,7 @@ class RecordSynchronizerTests: XCTestCase {
     var fileManager: MockFileManager!
     var deviceInfo: DeviceInfoProvider!
     var syncDelegate: ClosureSyncDelegate!
-    
+
     private let data = [
         URL(fileURLWithPath: "/1", isDirectory: true): [
             File(url: URL(fileURLWithPath: "/1/gps.bin"), size: 20),
@@ -38,10 +38,10 @@ class RecordSynchronizerTests: XCTestCase {
             File(url: URL(fileURLWithPath: "/3/.synced"), size: 0),
         ],
     ]
-    
+
     override func setUp() {
         super.setUp()
-        
+
         networkClient = MockNetworkClient()
         dataSource = MockRecordDataSource()
         archiver = MockArchiver()
@@ -54,51 +54,51 @@ class RecordSynchronizerTests: XCTestCase {
                 archiver: archiver,
                 fileManager: fileManager
         ))
-        recordSynchronizer.set(dataSource: dataSource)
+        recordSynchronizer.set(dataSource: dataSource, baseURL: nil)
         recordSynchronizer.delegate = syncDelegate
     }
-    
+
     func testPositiveScenario() {
         // Given
         fileManager.data = data.values.flatMap { $0 }
         dataSource.recordDirectories = data.keys.map { $0 }
-        
+
         let expectation = XCTestExpectation(description: "Positive scenario")
-        
+
         syncDelegate.onSyncStopped = {
             self.positiveScenarioOnSyncStopped(expectation)
         }
-        
+
         // When
         recordSynchronizer.sync()
-        
+
         // Then
         wait(for: [expectation], timeout: 10.0)
     }
-    
+
     func testStoppingSyncBeforeAllDataIsUploaded() {
         // Given
         fileManager.data = data.values.flatMap { $0 }
         dataSource.recordDirectories = data.keys.map { $0 }
-        
+
         let expectation = XCTestExpectation(description: "Cancellation")
-        
+
         syncDelegate.onSyncStopped = {
             let uploads: Set = [
                 URL(fileURLWithPath: "/1/telemetry.zip"),
                 URL(fileURLWithPath: "/2/telemetry.zip"),
             ]
-            
+
             XCTAssert(Set(self.networkClient.uploaded.keys) == uploads, "Synchronizer should be able to upload only telemetry.")
             expectation.fulfill()
         }
-        
+
         // When
         recordSynchronizer.sync()
         DispatchQueue.main.async {
             self.recordSynchronizer.stopSync()
         }
-        
+
         // Then
         wait(for: [expectation], timeout: 1)
     }
@@ -146,7 +146,7 @@ extension RecordSynchronizerTests {
             XCTAssert(uploadDir == dir, "\(file) should be uploaded to \(dir). Actual upload dir: \(uploadDir ?? "none")")
             XCTAssertFalse(fileManager.urls.contains(file), "\(file) should be removed after upload")
         }
-        
+
         expectation.fulfill()
     }
 }

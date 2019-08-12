@@ -7,7 +7,7 @@ class MockSynchronizable: Synchronizable {
         case stopSync
         case set(dataSource: RecordDataSource, baseURL: URL?)
 
-        static func ==(lhs: Action, rhs: Action) -> Bool {
+         static func == (lhs: Action, rhs: Action) -> Bool {
             switch (lhs, rhs) {
             case (.sync, .sync):
                 return true
