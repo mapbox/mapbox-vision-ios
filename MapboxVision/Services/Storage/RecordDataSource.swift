@@ -12,7 +12,13 @@ extension RecordDataSource {
 }
 
 final class SyncRecordDataSource: RecordDataSource {
+    private let region: SyncRegion
+    
+    init(region: SyncRegion) {
+        self.region = region
+    }
+
     var baseURL: URL {
-        return URL(fileURLWithPath: DocumentsLocation.recordings(.other).path, isDirectory: true)
+        return URL(fileURLWithPath: DocumentsLocation.recordings(region).path, isDirectory: true)
     }
 }
