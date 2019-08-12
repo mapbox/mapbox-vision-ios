@@ -78,6 +78,7 @@
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
 		2EBE10E72301674400CE87CE /* ClosureSyncDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */; };
+		2EBE10E92301816600CE87CE /* Country+SyncRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
 		2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */; };
@@ -244,6 +245,7 @@
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
 		2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureSyncDelegate.swift; sourceTree = "<group>"; };
+		2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+SyncRegion.swift"; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProviderTests.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 				2E4EE29B20F058B7003431B3 /* AVCaptureConnection+Orientation.swift */,
 				2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */,
 				2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */,
+				2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */,
 				9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */,
 				9D72A773F7BCE045156649B6 /* DateFormatter.swift */,
 				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
@@ -1252,6 +1255,7 @@
 				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
 				5A3C9D9322C3B1C300700DC6 /* VisionManagerNativeProtocol.swift in Sources */,
 				2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */,
+				2EBE10E92301816600CE87CE /* Country+SyncRegion.swift in Sources */,
 				9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */,
 				9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */,
 				9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */,
