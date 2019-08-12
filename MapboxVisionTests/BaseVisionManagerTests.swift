@@ -23,9 +23,13 @@ class BaseVisionManagerTests: XCTestCase {
         // Given
         let actions: [(Country, [MockSynchronizable.Action])] = [
             (.unknown , [.stopSync]),
-            (.USA     , [.stopSync, .setDataSource(dataSource: otherDataSource), .sync]),
+            (.USA     , [.stopSync,
+                         .set(dataSource: otherDataSource, baseURL: URL(string: Constants.URL.defaultEventsEndpoint)!),
+                         .sync]),
             (.UK      , []),
-            (.china   , [.stopSync, .setDataSource(dataSource: chinaDataSource), .sync]),
+            (.china   , [.stopSync,
+                         .set(dataSource: chinaDataSource, baseURL: URL(string: Constants.URL.chinaEventsEndpoint)!),
+                         .sync]),
             (.unknown , [.stopSync]),
         ]
 

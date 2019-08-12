@@ -33,8 +33,8 @@ final class ManagedSynchronizer: Synchronizable {
 
     // MARK: Public
 
-    func set(dataSource: RecordDataSource) {
-        dependencies.base.set(dataSource: dataSource)
+    func set(dataSource: RecordDataSource, baseURL: URL?) {
+        dependencies.base.set(dataSource: dataSource, baseURL: baseURL)
     }
 
     func sync() {

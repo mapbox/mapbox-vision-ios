@@ -5,7 +5,7 @@ class MockSynchronizable: Synchronizable {
     enum Action: Equatable {
         case sync
         case stopSync
-        case setDataSource(dataSource: RecordDataSource)
+        case set(dataSource: RecordDataSource, baseURL: URL?)
 
         static func ==(lhs: Action, rhs: Action) -> Bool {
             switch (lhs, rhs) {
@@ -13,8 +13,9 @@ class MockSynchronizable: Synchronizable {
                 return true
             case (.stopSync, .stopSync):
                 return true
-            case let (.setDataSource(rhsDataSource), .setDataSource(lhsDataSource)):
-                return rhsDataSource.baseURL == lhsDataSource.baseURL
+            case let (.set(rhsDataSource, rhsBaseURL),
+                      .set(lhsDataSource, lhsBaseURL)):
+                return rhsDataSource.baseURL == lhsDataSource.baseURL && rhsBaseURL == lhsBaseURL
             default:
                 return false
             }
@@ -25,8 +26,8 @@ class MockSynchronizable: Synchronizable {
 
     weak var delegate: SyncDelegate?
 
-    func set(dataSource: RecordDataSource) {
-        actionLog.append(.setDataSource(dataSource: dataSource))
+    func set(dataSource: RecordDataSource, baseURL: URL?) {
+        actionLog.append(.set(dataSource: dataSource, baseURL: baseURL))
     }
 
     func sync() {

@@ -66,7 +66,8 @@ final class RecordSynchronizer: Synchronizable {
         self.dependencies = dependencies
     }
 
-    func set(dataSource: RecordDataSource) {
+    func set(dataSource: RecordDataSource, baseURL: URL?) {
+        dependencies.networkClient.set(baseURL: baseURL)
         self.dataSource = dataSource
     }
 

@@ -142,7 +142,7 @@ public class BaseVisionManager: VisionManagerProtocol {
 
         let dataSource = SyncRecordDataSource(region: newRegion)
         dependencies.synchronizer.stopSync()
-        dependencies.synchronizer.set(dataSource: dataSource)
+        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
         dependencies.synchronizer.sync()
     }
 }
