@@ -41,10 +41,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     private var notificationObservers = [Any]()
 
     private var isSyncAllowed: Bool {
-        switch currentCountry {
-        case .unknown, .china: return false
-        case .UK, .USA, .other: return true
-        }
+        return currentCountry.syncRegion != nil
     }
 
     // MARK: Initialization
