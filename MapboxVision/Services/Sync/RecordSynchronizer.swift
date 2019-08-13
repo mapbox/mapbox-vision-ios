@@ -7,7 +7,6 @@ private let updatingInterval = 1 * .hour
 final class RecordSynchronizer: Synchronizable {
     enum RecordSynchronizerError: LocalizedError {
         case syncFileCreationFail(URL)
-        case noRequestedFiles([RecordFileType], URL)
     }
 
     struct Dependencies {
@@ -117,7 +116,6 @@ final class RecordSynchronizer: Synchronizable {
         let extensions = types.map { $0.fileExtension }
         let files = try dependencies.fileManager.contentsOfDirectory(at: url)
             .filter { extensions.contains($0.pathExtension) }
-        guard !files.isEmpty else { throw RecordSynchronizerError.noRequestedFiles(types, url) }
 
         return files
     }
@@ -157,7 +155,10 @@ final class RecordSynchronizer: Synchronizable {
                     if let subPath = subPath {
                         sourceDir.appendPathComponent(subPath, isDirectory: true)
                     }
+
                     let files = try getFiles(sourceDir, types: types)
+                    guard !files.isEmpty else { continue }
+
                     try dependencies.archiver.archive(files, destination: destination)
                     files.forEach(dependencies.fileManager.remove)
                 }
