@@ -5,18 +5,24 @@ class VisionManagerTests: XCTestCase {
     var visionManager: VisionManager!
     var dependencies: VisionDependencies!
     var recorder: MockSessionRecorder!
+    var synchronizer: MockSynchronizable!
+    var syncDelegate: ClosureSyncDelegate!
 
     override func setUp() {
         super.setUp()
 
         recorder = MockSessionRecorder()
+        synchronizer = MockSynchronizable()
         dependencies = VisionDependencies(
             native: MockNative(),
-            synchronizer: MockSynchronizable(),
+            synchronizer: synchronizer,
             recorder: recorder,
             dataProvider: MockDataProvider(),
             deviceInfo: DeviceInfoProvider()
         )
+
+        syncDelegate = ClosureSyncDelegate()
+        synchronizer.delegate = syncDelegate
 
         self.visionManager = VisionManager(dependencies: dependencies!, videoSource: MockVideoSource())
     }
@@ -229,5 +235,57 @@ class VisionManagerTests: XCTestCase {
             SessionRecorder's action log: \(recorder.actionsLog) doesn't match expected one: \(expectedActions)
             """
         )
+    }
+
+    func testStopRecordingNotTriggerSyncForDefaultCountry() {
+        // Given
+        // VisionManager with default .unknown country
+
+        // When
+        visionManager.start()
+        visionManager.stop()
+
+        // Then
+        XCTAssert(synchronizer.actionLog.isEmpty, "Stopped recording shouldn't initiate sync")
+    }
+
+    func testStopRecordingTriggersSyncForOtherCountry() {
+        // Given
+        visionManager.onCountryUpdated(.other)
+        synchronizer.cleanActionLog()
+
+        let stopExpectation = XCTestExpectation(description: "Sync stop expectation")
+        syncDelegate.onSyncStopped = {
+            stopExpectation.fulfill()
+        }
+
+        // When
+        visionManager.start()
+        visionManager.stop()
+
+        // Then
+        wait(for: [stopExpectation], timeout: 1)
+
+        XCTAssertEqual(synchronizer.actionLog, [.sync], "Stopped recording for other country should initiate sync")
+    }
+
+    func testStopRecordingTriggersSyncForChinaCountry() {
+        // Given
+        visionManager.onCountryUpdated(.china)
+        synchronizer.cleanActionLog()
+
+        let stopExpectation = XCTestExpectation(description: "Sync stop expectation")
+        syncDelegate.onSyncStopped = {
+            stopExpectation.fulfill()
+        }
+
+        // When
+        visionManager.start()
+        visionManager.stop()
+
+        // Then
+        wait(for: [stopExpectation], timeout: 1)
+
+        XCTAssertEqual(synchronizer.actionLog, [.sync], "Stopped recording for china country should initiate sync")
     }
 }

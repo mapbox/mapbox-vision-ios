@@ -15,6 +15,7 @@ class MockSessionRecorder: SessionRecorderProtocol {
     func stop() {
         isInternal = true
         actionsLog.append(.stop)
+        delegate?.recordingStopped(recordingPath: RecordingPath(basePath: .custom, settings: .highQuality))
     }
 
     func start(mode: SessionRecordingMode) {
@@ -25,6 +26,7 @@ class MockSessionRecorder: SessionRecorderProtocol {
         } else {
             actionsLog.append(.startInternal)
         }
+        delegate?.recordingStarted(path: "")
     }
 
     func handleFrame(_ frame: CMSampleBuffer) {

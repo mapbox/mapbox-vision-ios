@@ -32,9 +32,18 @@ class MockSynchronizable: Synchronizable {
 
     func sync() {
         actionLog.append(.sync)
+        delegate?.syncStarted()
+        DispatchQueue.main.async {
+            self.delegate?.syncStopped()
+        }
     }
 
     func stopSync() {
         actionLog.append(.stopSync)
+        delegate?.syncStopped()
+    }
+
+    func cleanActionLog() {
+        actionLog.removeAll()
     }
 }
