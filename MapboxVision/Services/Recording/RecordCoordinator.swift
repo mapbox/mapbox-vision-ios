@@ -65,41 +65,49 @@ final class RecordCoordinator {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
 
-        currentVideoSettings = videoSettings
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
 
-        isRecording = true
-        currentReferenceTime = referenceTime
-        currentVideoIsFull = savesSourceVideo
+            self.currentVideoSettings = videoSettings
 
-        let cachePath = DocumentsLocation.cache.path
-        recreateFolder(path: DocumentsLocation.currentRecording.path)
-        recreateFolder(path: cachePath)
+            self.isRecording = true
+            self.currentReferenceTime = referenceTime
+            self.currentVideoIsFull = self.savesSourceVideo
 
-        let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
-        let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
-        currentRecordingPath = recordingPath
+            let cachePath = DocumentsLocation.cache.path
+            self.recreateFolder(path: DocumentsLocation.currentRecording.path)
+            self.recreateFolder(path: cachePath)
 
-        jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
+            let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
+            let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
+            self.currentRecordingPath = recordingPath
 
-        currentStartTime = DispatchTime.now()
-        currentEndTime = nil
+            self.jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
 
-        videoRecorder.chunkLength = savesSourceVideo ? 0 : defaultChunkLength
-        videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
-        videoRecorder.startRecording(to: cachePath, settings: videoSettings)
+            self.currentStartTime = DispatchTime.now()
+            self.currentEndTime = nil
 
-        delegate?.recordingStarted(path: recordingPath.recordingPath)
+            self.videoRecorder.chunkLength = self.savesSourceVideo ? 0 : defaultChunkLength
+            self.videoRecorder.chunkLimit = self.savesSourceVideo ? 1 : defaultChunkLimit
+            self.videoRecorder.startRecording(to: cachePath, settings: videoSettings)
+
+            self.delegate?.recordingStarted(path: recordingPath.recordingPath)
+        }
     }
 
     func stopRecording() {
-        guard isRecording else { return }
-
-        isRecording = false
-        isReady = false
-        currentEndTime = DispatchTime.now()
+        guard isRecording, isReady else { return }
 
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
-        videoRecorder.stopRecording()
+
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
+
+            self.isRecording = false
+            self.isReady = false
+            self.currentEndTime = DispatchTime.now()
+            self.videoRecorder.stopRecording()
+        }
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
