@@ -157,7 +157,10 @@ final class RecordSynchronizer: Synchronizable {
                     }
 
                     let files = try getFiles(sourceDir, types: types)
-                    guard !files.isEmpty else { continue }
+                    guard !files.isEmpty else {
+                        group.leave()
+                        continue
+                    }
 
                     try dependencies.archiver.archive(files, destination: destination)
                     files.forEach(dependencies.fileManager.remove)
