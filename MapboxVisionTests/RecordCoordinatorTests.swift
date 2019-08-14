@@ -41,10 +41,10 @@ final class RecordCoordinatorTests: XCTestCase {
             XCTFail("Recording start has failed with error: \(error)")
         }
 
+        wait(for: [recordingStartedExpectation], timeout: 1)
+
         XCTAssert(coordinator.isRecording, "Coordinator should be recording after recording start")
         XCTAssert(directoryExists(at: DocumentsLocation.cache.path), "Cache should exist after recording is started")
-
-        wait(for: [recordingStartedExpectation], timeout: 1)
 
         guard
             let path = RecordingPath(existing: recordingStartedExpectation.recordingPath, settings: videoSettings),
@@ -63,9 +63,10 @@ final class RecordCoordinatorTests: XCTestCase {
         wait(for: [recordingStartedExpectation], timeout: 1)
 
         coordinator.stopRecording()
-        XCTAssert(!coordinator.isRecording, "Coordinator should not be recording after recording stop")
 
         wait(for: [recordingStoppedExpectation], timeout: 1)
+
+        XCTAssert(!coordinator.isRecording, "Coordinator should not be recording after recording stop")
 
         let recordingPath = recordingStoppedExpectation.recordingPath.recordingPath
         XCTAssert(directoryExists(at: recordingPath), "Recording should be saved at \(recordingPath) after recording is stopped")
