@@ -34,15 +34,10 @@ public class BaseVisionManager: VisionManagerProtocol {
     }
 
     weak var delegate: VisionManagerDelegate?
-    private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies
     private var isStoppedForBackground = false
     private var notificationObservers = [Any]()
-
-    private var isSyncAllowed: Bool {
-        return currentCountry.syncRegion != nil
-    }
 
     // MARK: Initialization
 
@@ -63,12 +58,6 @@ public class BaseVisionManager: VisionManagerProtocol {
     func prepareForForeground() {}
 
     func prepareForBackground() {}
-
-    func trySync() {
-        if isSyncAllowed {
-            dependencies.synchronizer.sync()
-        }
-    }
 
     // MARK: Model performance configuration
 
@@ -123,25 +112,6 @@ public class BaseVisionManager: VisionManagerProtocol {
     private func unsubscribeFromNotifications() {
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
     }
-
-    // MARK: Private
-
-    private func configureSync(oldCountry: Country, newCountry: Country) {
-        if newCountry.syncRegion == nil {
-            dependencies.synchronizer.stopSync()
-            return
-        }
-
-        guard
-            let newRegion = newCountry.syncRegion,
-            oldCountry.syncRegion != newRegion
-        else { return }
-
-        let dataSource = SyncRecordDataSource(region: newRegion)
-        dependencies.synchronizer.stopSync()
-        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
-        dependencies.synchronizer.sync()
-    }
 }
 
 extension BaseVisionManager: VisionDelegate {
@@ -178,9 +148,6 @@ extension BaseVisionManager: VisionDelegate {
     }
 
     public func onCountryUpdated(_ country: Country) {
-        let oldCountry = currentCountry
-        currentCountry = country
-        configureSync(oldCountry: oldCountry, newCountry: country)
         delegate?.visionManager(self, didUpdateCountry: country)
     }
 

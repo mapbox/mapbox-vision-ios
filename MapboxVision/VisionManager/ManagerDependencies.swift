@@ -5,7 +5,6 @@ private let visionVideoSettings: VideoSettings = .lowQuality
 
 struct BaseDependencies {
     let native: VisionManagerBaseNativeProtocol
-    let synchronizer: Synchronizable
 }
 
 struct VisionDependencies {
@@ -72,31 +71,15 @@ struct VisionDependencies {
 
 struct ReplayDependencies {
     let native: VisionReplayManagerNative
-    let synchronizer: Synchronizable
     let player: VideoPlayable
 
     static func `default`(recordPath: String) throws -> ReplayDependencies {
-        guard let reachability = Reachability() else {
-            fatalError("Reachability failed to initialize")
+        guard let videoPath = RecordingPath(existing: recordPath, settings: .lowQuality)?.videoPath else {
+            throw CocoaError(.fileNoSuchFile)
         }
+        let player = try VideoPlayer(path: videoPath)
 
         let eventsManager = EventsManager()
-        let deviceInfo = DeviceInfoProvider()
-
-        let recordArchiver = RecordArchiver()
-        let recordSyncDependencies = RecordSynchronizer.Dependencies(
-            networkClient: eventsManager,
-            deviceInfo: deviceInfo,
-            archiver: recordArchiver,
-            fileManager: FileManager.default
-        )
-        let recordSynchronizer = RecordSynchronizer(recordSyncDependencies)
-
-        let syncDependencies = ManagedSynchronizer.Dependencies(
-            base: recordSynchronizer,
-            reachability: reachability
-        )
-        let synchronizer = ManagedSynchronizer(dependencies: syncDependencies)
 
         let platform = Platform(dependencies: Platform.Dependencies(
             recordCoordinator: nil,
@@ -105,11 +88,6 @@ struct ReplayDependencies {
 
         let native = VisionReplayManagerNative.create(withPlatform: platform, recordPath: recordPath)
 
-        guard let videoPath = RecordingPath(existing: recordPath, settings: .lowQuality)?.videoPath else {
-            throw CocoaError(.fileNoSuchFile)
-        }
-        let player = try VideoPlayer(path: videoPath)
-
-        return ReplayDependencies(native: native, synchronizer: synchronizer, player: player)
+        return ReplayDependencies(native: native, player: player)
     }
 }

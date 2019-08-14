@@ -169,16 +169,14 @@ public final class VisionManager: BaseVisionManager {
     private let dependencies: VisionDependencies
     private var state: State = .uninitialized
 
+    private var currentCountry = Country.unknown
     private var currentFrame: CVPixelBuffer?
     private var isStoppedForBackground = false
 
     init(dependencies: VisionDependencies, videoSource: VideoSource) {
         self.dependencies = dependencies
 
-        super.init(dependencies: BaseDependencies(
-            native: dependencies.native,
-            synchronizer: dependencies.synchronizer
-        ))
+        super.init(dependencies: BaseDependencies(native: dependencies.native))
 
         state = .initialized(videoSource: videoSource)
 
@@ -187,6 +185,10 @@ public final class VisionManager: BaseVisionManager {
 
     deinit {
         destroy()
+    }
+
+    private var isSyncAllowed: Bool {
+        return currentCountry.syncRegion != nil
     }
 
     private func startVideoStream() {
@@ -227,6 +229,29 @@ public final class VisionManager: BaseVisionManager {
         dependencies.recorder.start(mode: .internal)
     }
 
+    private func configureSync(oldCountry: Country, newCountry: Country) {
+        if newCountry.syncRegion == nil {
+            dependencies.synchronizer.stopSync()
+            return
+        }
+
+        guard
+            let newRegion = newCountry.syncRegion,
+            oldCountry.syncRegion != newRegion
+        else { return }
+
+        let dataSource = SyncRecordDataSource(region: newRegion)
+        dependencies.synchronizer.stopSync()
+        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
+        dependencies.synchronizer.sync()
+    }
+
+    private func trySync() {
+        if isSyncAllowed {
+            dependencies.synchronizer.sync()
+        }
+    }
+
     override func prepareForBackground() {
         guard state.isStarted else { return }
         isStoppedForBackground = true
@@ -241,7 +266,11 @@ public final class VisionManager: BaseVisionManager {
 
     override public func onCountryUpdated(_ country: Country) {
         let oldCountry = currentCountry
+        currentCountry = country
+
         configureRecording(oldCountry: oldCountry, newCountry: country)
+        configureSync(oldCountry: oldCountry, newCountry: country)
+
         super.onCountryUpdated(country)
     }
 }
