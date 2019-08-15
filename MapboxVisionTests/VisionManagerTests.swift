@@ -14,6 +14,10 @@ class VisionManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        let fileManager = FileManager.default
+        let docLocations: [DocumentsLocation] = [.cache, .currentRecording, .recordings(.china), .recordings(.other)]
+        docLocations.map { $0.path }.forEach(fileManager.removeDirectory)
+
         recorder = MockSessionRecorder()
         synchronizer = MockSynchronizable()
         dependencies = VisionDependencies(
@@ -317,5 +321,25 @@ class VisionManagerTests: XCTestCase {
         wait(for: [stopExpectation], timeout: 1)
 
         XCTAssertEqual(synchronizer.actionLog, [.sync], "Stopped recording for china country should initiate sync")
+    }
+
+    func testCorrectCountry() {
+        // Given
+        visionManager.onCountryUpdated(.china)
+
+        let startExpectation = XCTestExpectation(description: "Sync stop expectation")
+        syncDelegate.onSyncStarted = {
+            startExpectation.fulfill()
+        }
+
+        // When
+        visionManager.start()
+        visionManager.onCountryUpdated(.other)
+
+        wait(for: [startExpectation], timeout: 1)
+
+        // Then
+        XCTAssertFalse(chinaDataSource.recordDirectories.isEmpty)
+        XCTAssertTrue(otherDataSource.recordDirectories.isEmpty)
     }
 }

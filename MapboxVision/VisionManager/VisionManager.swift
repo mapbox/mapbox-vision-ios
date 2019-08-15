@@ -170,6 +170,8 @@ public final class VisionManager: BaseVisionManager {
     private var state: State = .uninitialized
 
     private var currentCountry = Country.unknown
+    private var currentRecordingPath: String?
+    private var recordingToCountryCache = [String: Country]()
     private var currentFrame: CVPixelBuffer?
     private var isStoppedForBackground = false
 
@@ -225,6 +227,9 @@ public final class VisionManager: BaseVisionManager {
             oldRegion != newCountry.syncRegion
         else { return }
 
+        if let path = currentRecordingPath {
+            recordingToCountryCache[path] = oldCountry
+        }
         dependencies.recorder.stop()
         dependencies.recorder.start(mode: .internal)
     }
@@ -297,10 +302,15 @@ extension VisionManager: VideoSourceObserver {
 }
 
 extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {}
+    func recordingStarted(path: String) {
+        currentRecordingPath = path.lastPathComponent
+    }
 
     func recordingStopped(recordingPath: RecordingPath) {
-        try? handle(recordingPath: recordingPath, country: currentCountry)
+        let country: Country =
+            recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent) ?? currentCountry
+
+        try? handle(recordingPath: recordingPath, country: country)
         trySync()
     }
 
