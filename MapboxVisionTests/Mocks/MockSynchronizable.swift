@@ -9,9 +9,7 @@ class MockSynchronizable: Synchronizable {
 
          static func == (lhs: Action, rhs: Action) -> Bool {
             switch (lhs, rhs) {
-            case (.sync, .sync):
-                return true
-            case (.stopSync, .stopSync):
+            case (.sync, .sync), (.stopSync, .stopSync):
                 return true
             case let (.set(rhsDataSource, rhsBaseURL),
                       .set(lhsDataSource, lhsBaseURL)):

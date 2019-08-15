@@ -6,7 +6,7 @@ enum DocumentsLocation: Equatable {
     case cache
     case custom
 
-    private var value: String {
+    private var directoryName: String {
         switch self {
         case .currentRecording:
             return "Current"
@@ -23,11 +23,9 @@ enum DocumentsLocation: Equatable {
         let searchDirectory: FileManager.SearchPathDirectory?
 
         switch self {
-        case .currentRecording, .cache:
+        case .currentRecording, .cache, .recordings:
             searchDirectory = .cachesDirectory
-        case .recordings:
-            searchDirectory = .applicationSupportDirectory
-        default:
+        case .custom:
             searchDirectory = nil
         }
 
@@ -46,7 +44,7 @@ enum DocumentsLocation: Equatable {
             basePath = basePath.appendingPathComponent(bundleIdentifier, isDirectory: true)
         }
 
-        return basePath.appendingPathComponent(value, isDirectory: true)
+        return basePath.appendingPathComponent(directoryName, isDirectory: true)
     }
 }
 

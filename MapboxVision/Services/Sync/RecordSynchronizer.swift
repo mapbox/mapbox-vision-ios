@@ -20,18 +20,6 @@ final class RecordSynchronizer: Synchronizable {
         case idle
         case syncing
         case stopping
-
-        var isIdle: Bool {
-            return self == .idle
-        }
-
-        var isSyncing: Bool {
-            return self == .syncing
-        }
-
-        var isStopping: Bool {
-            return self == .stopping
-        }
     }
 
     weak var delegate: SyncDelegate?
@@ -74,7 +62,7 @@ final class RecordSynchronizer: Synchronizable {
         queue.async { [weak self] in
             guard let self = self else { return }
 
-            if !self.state.isIdle {
+            if self.state != .idle {
                 self.hasPendingRequest = true
                 return
             }
@@ -264,7 +252,7 @@ final class RecordSynchronizer: Synchronizable {
     }
 
     private func canContinue() -> Bool {
-        if state.isStopping {
+        if state == .stopping {
             if hasPendingRequest {
                 executeSync()
             } else {
@@ -276,7 +264,7 @@ final class RecordSynchronizer: Synchronizable {
     }
 
     func stopSync() {
-        state = state.isSyncing ? .stopping : .idle
+        state = state == .syncing ? .stopping : .idle
         dependencies.networkClient.cancel()
     }
 }
