@@ -244,7 +244,7 @@ class VisionManagerTests: XCTestCase {
 
     func testChangingCountries() {
         // Given
-        let actions: [(Country, [MockSynchronizable.Action])] = [
+        let expectedActions: [(Country, [MockSynchronizable.Action])] = [
             (.unknown, [.stopSync]),
             (.USA, [
                 .stopSync,
@@ -261,10 +261,10 @@ class VisionManagerTests: XCTestCase {
         ]
 
         // When
-        actions.compactMap { $0.0 }.forEach(visionManager.onCountryUpdated)
+        expectedActions.compactMap { $0.0 }.forEach(visionManager.onCountryUpdated)
 
         // Then
-        XCTAssertEqual(synchronizer.actionLog, Array(actions.compactMap { $0.1 }.joined()))
+        XCTAssertEqual(synchronizer.actionLog, Array(expectedActions.compactMap { $0.1 }.joined()))
     }
 
     func testStopRecordingNotTriggerSyncForDefaultCountry() {
