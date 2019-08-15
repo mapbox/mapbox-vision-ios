@@ -20,24 +20,13 @@ enum DocumentsLocation: Equatable {
     }
 
     var path: String {
-        let searchDirectory: FileManager.SearchPathDirectory?
-
-        switch self {
-        case .currentRecording, .cache, .recordings:
-            searchDirectory = .cachesDirectory
-        case .custom:
-            searchDirectory = nil
-        }
-
-        var basePath: String
+        var basePath: String = NSTemporaryDirectory()
 
         if
-            let searchDirectory = searchDirectory,
-            let baseDirectory = NSSearchPathForDirectoriesInDomains(searchDirectory, .userDomainMask, true).first
+            self != .custom,
+            let cachesPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first
         {
-            basePath = baseDirectory
-        } else {
-            basePath = NSTemporaryDirectory()
+            basePath = cachesPath
         }
 
         if let bundleIdentifier = Bundle(for: BundleToken.self).bundleIdentifier {
@@ -48,6 +37,6 @@ enum DocumentsLocation: Equatable {
     }
 }
 
-private class BundleToken {
+private final class BundleToken {
     private init() {}
 }
