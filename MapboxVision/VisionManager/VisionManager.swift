@@ -307,8 +307,10 @@ extension VisionManager: RecordCoordinatorDelegate {
     }
 
     func recordingStopped(recordingPath: RecordingPath) {
-        let country: Country =
-            recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent) ?? currentCountry
+        currentRecordingPath = nil
+
+        let country = recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent)
+            ?? currentCountry
 
         try? handle(recordingPath: recordingPath, country: country)
         trySync()
