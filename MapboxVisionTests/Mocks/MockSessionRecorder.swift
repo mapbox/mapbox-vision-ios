@@ -11,20 +11,31 @@ class MockSessionRecorder: SessionRecorderProtocol {
     }
 
     private(set) var actionsLog: [Action] = []
+    private var currentRecoring: RecordingPath?
 
     func stop() {
         isInternal = true
         actionsLog.append(.stop)
+
+        if let recording = currentRecoring {
+            delegate?.recordingStopped(recordingPath: recording)
+        }
     }
 
     func start(mode: SessionRecordingMode) {
         isInternal = mode == .internal
 
+        let recordingPath: RecordingPath
         if case let .external(path) = mode {
             actionsLog.append(.startExternal(withPath: path))
+            recordingPath = RecordingPath(basePath: .custom, directory: path, settings: .highQuality)
         } else {
             actionsLog.append(.startInternal)
+            recordingPath = RecordingPath(basePath: .currentRecording, settings: .highQuality)
         }
+
+        currentRecoring = recordingPath
+        delegate?.recordingStarted(path: recordingPath.recordingPath)
     }
 
     func handleFrame(_ frame: CMSampleBuffer) {

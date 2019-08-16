@@ -2,7 +2,7 @@ import Foundation
 
 protocol SessionDelegate: AnyObject {
     func sessionStarted()
-    func sessionStopped(abort: Bool)
+    func sessionStopped()
 }
 
 final class SessionManager {
@@ -34,20 +34,20 @@ final class SessionManager {
         startInterval()
     }
 
-    func stopSession(abort: Bool = false) {
+    func stopSession() {
         guard isStarted else { return }
         isStarted.toggle()
 
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
         interruptionTimer?.invalidate()
-        stopInterval(abort: abort)
+        stopInterval()
     }
 
     private func startInterval() {
         delegate?.sessionStarted()
     }
 
-    private func stopInterval(abort: Bool = false) {
-        delegate?.sessionStopped(abort: abort)
+    private func stopInterval() {
+        delegate?.sessionStopped()
     }
 }

@@ -34,6 +34,7 @@
 		2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */; };
 		2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E22F1982108870B0093F043 /* VideoBuffer.swift */; };
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
+		2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B828523058986001494E5 /* FileManager+Helpers.swift */; };
 		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */; };
 		2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23E20EFD651003431B3 /* VisionManager.swift */; };
@@ -65,6 +66,7 @@
 		2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2B820F05ACB003431B3 /* Result.swift */; };
 		2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */; };
 		2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
+		2E50E4AE22FC7B2C00A2C03D /* SyncRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E50E4AD22FC7B2C00A2C03D /* SyncRegion.swift */; };
 		2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E539DE8210F00190058D9B2 /* SessionManager.swift */; };
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
 		2E7F14EA22896C5700BAF585 /* Synchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14E922896C5700BAF585 /* Synchronizable.swift */; };
@@ -76,6 +78,8 @@
 		2E7F1501228F0E0B00BAF585 /* VisionManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */; };
 		2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */; };
 		2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */; };
+		2EBE10E72301674400CE87CE /* ClosureSyncDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */; };
+		2EBE10E92301816600CE87CE /* Country+SyncRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */; };
 		2EC332A3217E02BA00E041FE /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC332A2217E02BA00E041FE /* String.swift */; };
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
 		2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */; };
@@ -100,7 +104,6 @@
 		3A2D99BE22C347A300F15218 /* LaneVisualParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D99BD22C347A300F15218 /* LaneVisualParams.swift */; };
 		3A5E8C0722A5239F00CC0954 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8C0622A5239F00CC0954 /* Uniforms.swift */; };
 		3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
-		3A7E992722A005A1005EB875 /* (null) in CopyFiles */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A7E993222A11B71005EB875 /* NodeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E993122A11B71005EB875 /* NodeGeometry.swift */; };
@@ -125,6 +128,7 @@
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
 		9D72AB0D4BB86199CF051DC2 /* CVPixelBuffer+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */; };
 		9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */; };
+		9D72ACF3C976A03345D44F97 /* DocumentsLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A2983A81E002804CA22C /* DocumentsLocation.swift */; };
 		B50CFBAA2163C89D00C9C5A5 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBA92163C89D00C9C5A5 /* FileManager.swift */; };
 		B50CFBAD2163C91500C9C5A5 /* MockNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBAC2163C91500C9C5A5 /* MockNetworkClient.swift */; };
 		B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CFBAE2163C98E00C9C5A5 /* MockRecordDataSource.swift */; };
@@ -165,7 +169,6 @@
 			files = (
 				3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */,
 				3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */,
-				3A7E992722A005A1005EB875 /* (null) in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +200,7 @@
 		2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPathTests.swift; sourceTree = "<group>"; };
 		2E22F1982108870B0093F043 /* VideoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBuffer.swift; sourceTree = "<group>"; };
 		2E245B1B215A57D2008F57D1 /* OperationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationMode.swift; sourceTree = "<group>"; };
+		2E2B828523058986001494E5 /* FileManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helpers.swift"; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4EE21520EFD378003431B3 /* MapboxVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVision.h; sourceTree = "<group>"; };
 		2E4EE21620EFD378003431B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 		2E4EE2B820F05ACB003431B3 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Convert.swift"; sourceTree = "<group>"; };
 		2E4EE2E220F0CC63003431B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2E50E4AD22FC7B2C00A2C03D /* SyncRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRegion.swift; sourceTree = "<group>"; };
 		2E539DE8210F00190058D9B2 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		2E7F14E922896C5700BAF585 /* Synchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizable.swift; sourceTree = "<group>"; };
@@ -241,6 +246,8 @@
 		2E7F1500228F0E0B00BAF585 /* VisionManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerProtocol.swift; sourceTree = "<group>"; };
 		2E81BBF0222E9FA900C4B49C /* VisionManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerDelegate.swift; sourceTree = "<group>"; };
 		2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPerformance.swift; sourceTree = "<group>"; };
+		2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureSyncDelegate.swift; sourceTree = "<group>"; };
+		2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Country+SyncRegion.swift"; sourceTree = "<group>"; };
 		2EC332A2217E02BA00E041FE /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EDD8708219EDC0200760C6D /* DeviceInfoProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoProviderTests.swift; sourceTree = "<group>"; };
@@ -284,6 +291,7 @@
 		5A3C9D9822C50D0000700DC6 /* MockNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNative.swift; sourceTree = "<group>"; };
 		5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSensors.swift; sourceTree = "<group>"; };
 		5A3E42C422B280180035A010 /* VisionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerTests.swift; sourceTree = "<group>"; };
+		9D72A2983A81E002804CA22C /* DocumentsLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentsLocation.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
 		9D72A773F7BCE045156649B6 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -502,6 +510,7 @@
 				B5BD9F6E211C69FF001EE97F /* RecordingQuota.swift */,
 				B50CFBA92163C89D00C9C5A5 /* FileManager.swift */,
 				2E7F14ED22898EF200BAF585 /* SessionRecorder.swift */,
+				9D72A2983A81E002804CA22C /* DocumentsLocation.swift */,
 			);
 			path = Recording;
 			sourceTree = "<group>";
@@ -522,8 +531,9 @@
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
 				2E539DE8210F00190058D9B2 /* SessionManager.swift */,
-				2E4EE25420F05370003431B3 /* VideoSettings.swift */,
+				2E50E4AD22FC7B2C00A2C03D /* SyncRegion.swift */,
 				2E7F14FE228E982D00BAF585 /* VideoPlayer.swift */,
+				2E4EE25420F05370003431B3 /* VideoSettings.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -555,6 +565,7 @@
 				2E4EE29B20F058B7003431B3 /* AVCaptureConnection+Orientation.swift */,
 				2E4EE2CB20F06A11003431B3 /* CGPoint+Convert.swift */,
 				2E4EE29A20F058B7003431B3 /* Collection+Safe.swift */,
+				2EBE10E82301816600CE87CE /* Country+SyncRegion.swift */,
 				9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */,
 				9D72A773F7BCE045156649B6 /* DateFormatter.swift */,
 				2E19772A211DDD5900311B95 /* DeviceChecker.swift */,
@@ -588,6 +599,15 @@
 				2E4EE2E220F0CC63003431B3 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2EBE10E52301672C00CE87CE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2EBE10E62301674400CE87CE /* ClosureSyncDelegate.swift */,
+				2E2B828523058986001494E5 /* FileManager+Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3A11B01F229EC2C100070A61 /* ARScene */ = {
@@ -821,6 +841,7 @@
 		B51E557A215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXGroup;
 			children = (
+				2EBE10E52301672C00CE87CE /* Helpers */,
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */,
 				B51E557B215E313500650DDE /* RecordSynchronizerTests.swift */,
@@ -1183,6 +1204,7 @@
 			files = (
 				2E7F14FF228E982D00BAF585 /* VideoPlayer.swift in Sources */,
 				3A0D52F722EC5F0A00E60FCF /* TimeInterval.swift in Sources */,
+				2E50E4AE22FC7B2C00A2C03D /* SyncRegion.swift in Sources */,
 				2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */,
 				2E4EE27320F05652003431B3 /* Platform.swift in Sources */,
 				2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */,
@@ -1236,11 +1258,13 @@
 				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
 				5A3C9D9322C3B1C300700DC6 /* VisionManagerNativeProtocol.swift in Sources */,
 				2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */,
+				2EBE10E92301816600CE87CE /* Country+SyncRegion.swift in Sources */,
 				9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */,
 				9D72AB1C8F3CE6B6E2222E7E /* CameraVideoSource.swift in Sources */,
 				9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */,
 				9D72AB0D4BB86199CF051DC2 /* CVPixelBuffer+Helper.swift in Sources */,
 				9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */,
+				9D72ACF3C976A03345D44F97 /* DocumentsLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,11 +1295,13 @@
 				3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */,
 				5A3C9D9122C39F5300700DC6 /* MockDataProvider.swift in Sources */,
 				B50CFBAF2163C98E00C9C5A5 /* MockRecordDataSource.swift in Sources */,
+				2EBE10E72301674400CE87CE /* ClosureSyncDelegate.swift in Sources */,
 				B50CFBB12163C9AC00C9C5A5 /* MockArchiver.swift in Sources */,
 				B50CFBB32163C9C500C9C5A5 /* MockFileManager.swift in Sources */,
 				5A3C9D8B22C37DE200700DC6 /* MockPlatform.swift in Sources */,
 				5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */,
 				3ACF140022A955FD00EA3255 /* RecordingQuotaTests.swift in Sources */,
+				2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */,
 				2EDD8709219EDC0200760C6D /* DeviceInfoProviderTests.swift in Sources */,
 				5A3C9D8722C37AF700700DC6 /* MockVideoSource.swift in Sources */,
 				5A3C9D9B22C50D7C00700DC6 /* MockSensors.swift in Sources */,

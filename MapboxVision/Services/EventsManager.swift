@@ -47,6 +47,10 @@ final class EventsManager {
 }
 
 extension EventsManager: NetworkClient {
+    func set(baseURL: URL?) {
+        manager.baseURL = baseURL
+    }
+
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {
         let contentType: String
         switch file.pathExtension {

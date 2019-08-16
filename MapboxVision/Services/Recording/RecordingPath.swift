@@ -1,18 +1,5 @@
 import Foundation
 
-enum DocumentsLocation: String {
-    case currentRecording = "Current"
-    case recordings = "Recordings"
-    case showcase = "Showcase"
-    case cache = "Cache"
-    case custom = ""
-
-    var path: String {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        return documentsPath.appendingPathComponent(rawValue, isDirectory: true)
-    }
-}
-
 struct RecordingPath {
     enum Error: LocalizedError {
         case movedRecordingNotExist(String, String)
@@ -43,7 +30,7 @@ struct RecordingPath {
 
     let basePath: DocumentsLocation
 
-    init(basePath: DocumentsLocation = DocumentsLocation.recordings, directory: String? = nil, settings: VideoSettings) {
+    init(basePath: DocumentsLocation, directory: String? = nil, settings: VideoSettings) {
         self.settings = settings
         self.basePath = basePath
         let dir = directory ?? RecordingPath.generateDirectoryName()

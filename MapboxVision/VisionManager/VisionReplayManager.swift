@@ -100,7 +100,8 @@ public final class VisionReplayManager: BaseVisionManager {
 
     init(dependencies: ReplayDependencies) {
         self.dependencies = dependencies
-        super.init(dependencies: BaseDependencies(native: dependencies.native, synchronizer: dependencies.synchronizer))
+
+        super.init(dependencies: BaseDependencies(native: dependencies.native))
 
         dependencies.player.add(observer: self)
         dependencies.player.delegate = self
