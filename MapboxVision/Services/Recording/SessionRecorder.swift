@@ -35,10 +35,10 @@ final class SessionRecorder {
         dependencies.sessionManager.startSession(interruptionInterval: mode.sessionInterval)
     }
 
-    func stop(abort: Bool = false) {
+    func stop() {
         guard dependencies.recorder.isRecording else { return }
 
-        dependencies.sessionManager.stopSession(abort: abort)
+        dependencies.sessionManager.stopSession()
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
@@ -61,9 +61,9 @@ extension SessionRecorder: SessionDelegate {
         record()
     }
 
-    func sessionStopped(abort: Bool) {
+    func sessionStopped() {
         dependencies.stopSavingSession()
-        dependencies.recorder.stopRecording(abort: abort)
+        dependencies.recorder.stopRecording()
     }
 }
 
@@ -73,8 +73,8 @@ extension SessionRecorder: RecordCoordinatorDelegate {
         dependencies.startSavingSession(path)
     }
 
-    func recordingStopped() {
-        delegate?.recordingStopped()
+    func recordingStopped(recordingPath: RecordingPath) {
+        delegate?.recordingStopped(recordingPath: recordingPath)
 
         if hasPendingRecordingRequest {
             hasPendingRecordingRequest = false
@@ -84,10 +84,6 @@ extension SessionRecorder: RecordCoordinatorDelegate {
 }
 
 extension SessionRecorder: SessionRecorderProtocol {
-    func stop() {
-        stop(abort: false)
-    }
-
     var isInternal: Bool {
         return currentMode.isInternal
     }

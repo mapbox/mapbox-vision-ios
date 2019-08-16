@@ -8,7 +8,7 @@ class RecordingPathTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let locations: [DocumentsLocation] = [.cache, .currentRecording, .recordings, .showcase]
+        let locations: [DocumentsLocation] = [.cache, .currentRecording, .recordings(.other), .recordings(.china), .custom]
         locations.forEach { try? fileManager.removeItem(atPath: $0.path) }
     }
 
@@ -26,7 +26,7 @@ class RecordingPathTests: XCTestCase {
         // When
         let newPath: RecordingPath
         do {
-            newPath = try path.move(to: .recordings)
+            newPath = try path.move(to: .recordings(.other))
         } catch {
             XCTFail(error.localizedDescription)
             return
@@ -40,11 +40,13 @@ class RecordingPathTests: XCTestCase {
 
     func testMovingToExistingBasePath() {
         // Given
+        let recordingsLocation = DocumentsLocation.recordings(.other)
+
         let path1 = RecordingPath(basePath: .currentRecording, directory: "one", settings: settings)
-        XCTAssertNoThrow(try path1.move(to: .recordings))
+        XCTAssertNoThrow(try path1.move(to: recordingsLocation))
         let path2 = RecordingPath(basePath: .currentRecording, directory: "two", settings: settings)
 
         // When // Then
-        XCTAssertNoThrow(try path2.move(to: .recordings))
+        XCTAssertNoThrow(try path2.move(to: recordingsLocation))
     }
 }

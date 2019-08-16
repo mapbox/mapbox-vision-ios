@@ -34,18 +34,10 @@ public class BaseVisionManager: VisionManagerProtocol {
     }
 
     weak var delegate: VisionManagerDelegate?
-    private(set) var currentCountry = Country.unknown
 
     private let dependencies: BaseDependencies
     private var isStoppedForBackground = false
     private var notificationObservers = [Any]()
-
-    private var isSyncAllowed: Bool {
-        switch currentCountry {
-        case .unknown, .china: return false
-        case .UK, .USA, .other: return true
-        }
-    }
 
     // MARK: Initialization
 
@@ -66,12 +58,6 @@ public class BaseVisionManager: VisionManagerProtocol {
     func prepareForForeground() {}
 
     func prepareForBackground() {}
-
-    func trySync() {
-        if isSyncAllowed {
-            dependencies.synchronizer.sync()
-        }
-    }
 
     // MARK: Model performance configuration
 
@@ -113,33 +99,18 @@ public class BaseVisionManager: VisionManagerProtocol {
         notificationObservers.append(center.addObserver(forName: UIApplication.willEnterForegroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-                self?.prepareForForeground()
+            self?.prepareForForeground()
         })
 
         notificationObservers.append(center.addObserver(forName: UIApplication.didEnterBackgroundNotification,
                                                         object: nil,
                                                         queue: .main) { [weak self] _ in
-                self?.prepareForBackground()
+            self?.prepareForBackground()
         })
     }
 
     private func unsubscribeFromNotifications() {
         notificationObservers.forEach(NotificationCenter.default.removeObserver)
-    }
-
-    // MARK: Private
-
-    private func configureSync(_ country: Country) {
-        switch country {
-        case .UK, .USA, .other:
-            dependencies.synchronizer.sync()
-        case .china:
-            dependencies.synchronizer.stopSync()
-            let data = SyncRecordDataSource()
-            data.recordDirectories.forEach(data.removeFile)
-        case .unknown:
-            dependencies.synchronizer.stopSync()
-        }
     }
 }
 
@@ -177,9 +148,7 @@ extension BaseVisionManager: VisionDelegate {
     }
 
     public func onCountryUpdated(_ country: Country) {
-        currentCountry = country
         delegate?.visionManager(self, didUpdateCountry: country)
-        configureSync(country)
     }
 
     public func onUpdateCompleted() {

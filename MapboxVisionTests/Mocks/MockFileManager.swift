@@ -9,6 +9,10 @@ final class MockFileManager: FileManagerProtocol {
 
     var data: [File] = []
 
+    var urls: [URL] {
+        return data.map { $0.url }
+    }
+
     func contentsOfDirectory(atPath path: String) throws -> [String] {
         return try contentsOfDirectory(at: URL(fileURLWithPath: path, isDirectory: true)).map { $0.lastPathComponent }
     }
@@ -31,5 +35,9 @@ final class MockFileManager: FileManagerProtocol {
 
     func fileSize(at url: URL) -> MemoryByte {
         return data.first { $0.url == url }?.size ?? 0
+    }
+
+    func remove(item: URL) {
+        data.removeAll { $0.url == item }
     }
 }

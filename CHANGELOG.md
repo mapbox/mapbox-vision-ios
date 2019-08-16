@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+### Vision
+- Improved lane detection
+
 ## 0.6.0
 
 ### Vision

@@ -5,7 +5,7 @@ import UIKit
 
 protocol RecordCoordinatorDelegate: AnyObject {
     func recordingStarted(path: String)
-    func recordingStopped()
+    func recordingStopped(recordingPath: RecordingPath)
 }
 
 enum RecordCoordinatorError: LocalizedError {
@@ -35,7 +35,6 @@ final class RecordCoordinator {
     private var trimRequestCache = [Int: [VideoTrimRequest]]()
     private(set) var isRecording: Bool = false
     private var isReady: Bool = true
-    private var abortRecording: Bool = false
     weak var delegate: RecordCoordinatorDelegate?
 
     private let videoRecorder: VideoBuffer
@@ -60,50 +59,55 @@ final class RecordCoordinator {
     init() {
         self.videoRecorder = VideoBuffer(chunkLength: defaultChunkLength, chunkLimit: defaultChunkLimit)
         videoRecorder.delegate = self
-
-        createFolder(path: DocumentsLocation.recordings.path)
     }
 
     func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
         guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
 
-        currentVideoSettings = videoSettings
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
 
-        isRecording = true
-        currentReferenceTime = referenceTime
-        currentVideoIsFull = savesSourceVideo
+            self.currentVideoSettings = videoSettings
 
-        let cachePath = DocumentsLocation.cache.path
-        recreateFolder(path: DocumentsLocation.currentRecording.path)
-        recreateFolder(path: cachePath)
+            self.isRecording = true
+            self.currentReferenceTime = referenceTime
+            self.currentVideoIsFull = self.savesSourceVideo
 
-        let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
-        let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
-        currentRecordingPath = recordingPath
+            let cachePath = DocumentsLocation.cache.path
+            self.recreateFolder(path: DocumentsLocation.currentRecording.path)
+            self.recreateFolder(path: cachePath)
 
-        jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
+            let basePath: DocumentsLocation = directory != nil ? .custom : .currentRecording
+            let recordingPath = RecordingPath(basePath: basePath, directory: directory, settings: videoSettings)
+            self.currentRecordingPath = recordingPath
 
-        currentStartTime = DispatchTime.now()
-        currentEndTime = nil
+            self.jsonWriter = FileRecorder(path: recordingPath.videosLogPath)
 
-        videoRecorder.chunkLength = savesSourceVideo ? 0 : defaultChunkLength
-        videoRecorder.chunkLimit = savesSourceVideo ? 1 : defaultChunkLimit
-        videoRecorder.startRecording(to: cachePath, settings: videoSettings)
+            self.currentStartTime = DispatchTime.now()
+            self.currentEndTime = nil
 
-        delegate?.recordingStarted(path: recordingPath.recordingPath)
+            self.videoRecorder.chunkLength = self.savesSourceVideo ? 0 : defaultChunkLength
+            self.videoRecorder.chunkLimit = self.savesSourceVideo ? 1 : defaultChunkLimit
+            self.videoRecorder.startRecording(to: cachePath, settings: videoSettings)
+
+            self.delegate?.recordingStarted(path: recordingPath.recordingPath)
+        }
     }
 
-    func stopRecording(abort: Bool = false) {
-        guard isRecording else { return }
-
-        abortRecording = abort
-        isRecording = false
-        isReady = false
-        currentEndTime = DispatchTime.now()
+    func stopRecording() {
+        guard isRecording, isReady else { return }
 
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
-        videoRecorder.stopRecording()
+
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
+
+            self.isRecording = false
+            self.isReady = false
+            self.currentEndTime = DispatchTime.now()
+            self.videoRecorder.stopRecording()
+        }
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
@@ -192,34 +196,19 @@ final class RecordCoordinator {
         imageWriter.record(image: uiimage, to: imagePath)
     }
 
-    func clearCache() {
-        RecordingPath.clear(basePath: .recordings)
-    }
-
     private func recordingStopped() {
         trimRequestCache.removeAll()
         jsonWriter = nil
 
-        if let path = currentRecordingPath {
-            do {
-                if abortRecording {
-                    try path.delete()
-                } else if path.basePath != .custom {
-                    try path.move(to: .recordings)
-                }
-            } catch {
-                print("RecordCoordinator: moving/deleting current recording to \(path) failed. Error: \(error)")
-            }
-        }
-
-        currentRecordingPath = nil
         currentVideoSettings = nil
         currentVideoIsFull = false
         endBackgroundTask()
         isReady = true
-        abortRecording = false
 
-        delegate?.recordingStopped()
+        if let path = currentRecordingPath {
+            delegate?.recordingStopped(recordingPath: path)
+            currentRecordingPath = nil
+        }
     }
 
     private func trimClip(chunk: Int, request: VideoTrimRequest, completion: (() -> Void)? = nil) {
@@ -293,14 +282,6 @@ final class RecordCoordinator {
                                             attributes: nil)
         } catch {
             assertionFailure("Folder recreation has failed. Error: \(error.localizedDescription)")
-        }
-    }
-
-    private func createFolder(path: String) {
-        do {
-            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            assertionFailure("Folder creation has failed for path \(path). Error: \(error.localizedDescription)")
         }
     }
 }
