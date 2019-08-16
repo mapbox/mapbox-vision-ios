@@ -3,7 +3,7 @@
 ## 0.7.0
 
 ### Vision
-- Changed country-based telemetry synchronization
+- Improved lane detection
 
 ## 0.6.0
 
