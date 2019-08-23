@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.1
+
+### Vision
+- Fix issue with `dynamic` FPS for a `Merge model`
+
 ## 0.7.0
 
 ### Vision
