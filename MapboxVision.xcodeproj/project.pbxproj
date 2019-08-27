@@ -80,17 +80,10 @@
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
 		3A0D52F722EC5F0A00E60FCF /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D52F622EC5F0A00E60FCF /* TimeInterval.swift */; };
 		3A0D52F922EC74EA00E60FCF /* MemoryByte.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D52F822EC74EA00E60FCF /* MemoryByte.swift */; };
-		3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11B05D229F1E1900070A61 /* ARSceneTests.swift */; };
 		3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */; };
 		3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
-		3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994722A14692005EB875 /* NodeGeometryTests.swift */; };
-		3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */; };
-		3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */; };
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
 		3ACF140022A955FD00EA3255 /* RecordingQuotaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */; };
-		3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */; };
 		5A3C9D8722C37AF700700DC6 /* MockVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8622C37AF700700DC6 /* MockVideoSource.swift */; };
 		5A3C9D8922C37CCC00700DC6 /* MockSynchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8822C37CCC00700DC6 /* MockSynchronizable.swift */; };
 		5A3C9D8B22C37DE200700DC6 /* MockPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8A22C37DE200700DC6 /* MockPlatform.swift */; };
@@ -122,13 +115,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E0719562257871300345FA8;
-			remoteInfo = MapboxVisionAR;
-		};
 		B51E557F215E313500650DDE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2E4EE20920EFD378003431B3 /* Project object */;
@@ -137,20 +123,6 @@
 			remoteInfo = MapboxVision;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		3A7E992522A00519005EB875 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				3A7E993022A02B17005EB875 /* ZIPFoundation.framework in CopyFiles */,
-				3A7E992F22A02AFB005EB875 /* MapboxMobileEvents.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2E07199C2257871300345FA8 /* MapboxVisionAR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionAR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,17 +198,10 @@
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		3A0D52F622EC5F0A00E60FCF /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		3A0D52F822EC74EA00E60FCF /* MemoryByte.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryByte.swift; sourceTree = "<group>"; };
-		3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionARTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A11B053229F0B7A00070A61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3A11B05D229F1E1900070A61 /* ARSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneTests.swift; sourceTree = "<group>"; };
 		3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCheckerTests.swift; sourceTree = "<group>"; };
 		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A7E994722A14692005EB875 /* NodeGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeGeometryTests.swift; sourceTree = "<group>"; };
-		3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRootNodeTests.swift; sourceTree = "<group>"; };
-		3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraNodeTests.swift; sourceTree = "<group>"; };
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
 		3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuotaTests.swift; sourceTree = "<group>"; };
-		3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLaneNodeTests.swift; sourceTree = "<group>"; };
 		5A3C9D8622C37AF700700DC6 /* MockVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVideoSource.swift; sourceTree = "<group>"; };
 		5A3C9D8822C37CCC00700DC6 /* MockSynchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSynchronizable.swift; sourceTree = "<group>"; };
 		5A3C9D8A22C37DE200700DC6 /* MockPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlatform.swift; sourceTree = "<group>"; };
@@ -296,13 +261,6 @@
 				2E071A9C2257CCB700345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */,
 				B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3A11B04C229F0B7A00070A61 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +335,6 @@
 				2E4EE21420EFD378003431B3 /* MapboxVision */,
 				B51E557A215E313500650DDE /* MapboxVisionTests */,
 				2E071A322257887E00345FA8 /* MapboxVisionAR */,
-				3A11B050229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */,
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
@@ -392,7 +349,6 @@
 				B51E5579215E313500650DDE /* MapboxVisionTests.xctest */,
 				2E07199C2257871300345FA8 /* MapboxVisionAR.framework */,
 				2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */,
-				3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -543,59 +499,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		3A11B050229F0B7A00070A61 /* MapboxVisionARTests */ = {
-			isa = PBXGroup;
-			children = (
-				3A11B05B229F1C8200070A61 /* Render */,
-				3A11B053229F0B7A00070A61 /* Info.plist */,
-			);
-			path = MapboxVisionARTests;
-			sourceTree = "<group>";
-		};
-		3A11B05B229F1C8200070A61 /* Render */ = {
-			isa = PBXGroup;
-			children = (
-				3A11B05C229F1E0600070A61 /* ARScene */,
-			);
-			path = Render;
-			sourceTree = "<group>";
-		};
-		3A11B05C229F1E0600070A61 /* ARScene */ = {
-			isa = PBXGroup;
-			children = (
-				3A11B05D229F1E1900070A61 /* ARSceneTests.swift */,
-				3A2D99B622BD0FBC00F15218 /* ARNode */,
-				3A7E994922A15538005EB875 /* ConcreteNodes */,
-			);
-			path = ARScene;
-			sourceTree = "<group>";
-		};
-		3A2D99B622BD0FBC00F15218 /* ARNode */ = {
-			isa = PBXGroup;
-			children = (
-				3A7E994622A14681005EB875 /* NodeStructure */,
-			);
-			path = ARNode;
-			sourceTree = "<group>";
-		};
-		3A7E994622A14681005EB875 /* NodeStructure */ = {
-			isa = PBXGroup;
-			children = (
-				3A7E994722A14692005EB875 /* NodeGeometryTests.swift */,
-			);
-			path = NodeStructure;
-			sourceTree = "<group>";
-		};
-		3A7E994922A15538005EB875 /* ConcreteNodes */ = {
-			isa = PBXGroup;
-			children = (
-				3AED5CF022D8A0EE0017488F /* ARLaneNodeTests.swift */,
-				3A7E994A22A15557005EB875 /* ARRootNodeTests.swift */,
-				3A7E994E22A156E2005EB875 /* ARCameraNodeTests.swift */,
-			);
-			path = ConcreteNodes;
-			sourceTree = "<group>";
-		};
 		9D72AC788D4F1F83614B3374 /* VideoSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,26 +642,6 @@
 			productReference = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */;
-			buildPhases = (
-				3A11B04B229F0B7A00070A61 /* Sources */,
-				3A11B04C229F0B7A00070A61 /* Frameworks */,
-				3A11B04D229F0B7A00070A61 /* Resources */,
-				3A7E992522A00519005EB875 /* CopyFiles */,
-				3A44F18622E8C03800748A63 /* Swiftlint */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3A7E992922A00B9D005EB875 /* PBXTargetDependency */,
-			);
-			name = MapboxVisionARTests;
-			productName = MapboxVisionARTests;
-			productReference = 3A11B04F229F0B7A00070A61 /* MapboxVisionARTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		B51E5578215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B51E5584215E313500650DDE /* Build configuration list for PBXNativeTarget "MapboxVisionTests" */;
@@ -791,9 +674,6 @@
 					2E4EE21120EFD378003431B3 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
-					3A11B04E229F0B7A00070A61 = {
-						CreatedOnToolsVersion = 10.2.1;
-					};
 					B51E5578215E313500650DDE = {
 						CreatedOnToolsVersion = 10.0;
 					};
@@ -814,7 +694,6 @@
 				2E4EE21120EFD378003431B3 /* MapboxVision */,
 				B51E5578215E313500650DDE /* MapboxVisionTests */,
 				2E0719562257871300345FA8 /* MapboxVisionAR */,
-				3A11B04E229F0B7A00070A61 /* MapboxVisionARTests */,
 				2E07199E2257871B00345FA8 /* MapboxVisionSafety */,
 			);
 		};
@@ -841,13 +720,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3A11B04D229F0B7A00070A61 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,24 +804,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionTests/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		3A44F18622E8C03800748A63 /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionARTests/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1043,18 +897,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3A11B04B229F0B7A00070A61 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3A7E994B22A15557005EB875 /* ARRootNodeTests.swift in Sources */,
-				3A7E994F22A156E2005EB875 /* ARCameraNodeTests.swift in Sources */,
-				3A7E994822A14692005EB875 /* NodeGeometryTests.swift in Sources */,
-				3A11B05E229F1E1900070A61 /* ARSceneTests.swift in Sources */,
-				3AED5CF122D8A0EE0017488F /* ARLaneNodeTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B51E5575215E313500650DDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1087,11 +929,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3A7E992922A00B9D005EB875 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E0719562257871300345FA8 /* MapboxVisionAR */;
-			targetProxy = 3A7E992822A00B9D005EB875 /* PBXContainerItemProxy */;
-		};
 		B51E5580215E313500650DDE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2E4EE21120EFD378003431B3 /* MapboxVision */;
@@ -1544,70 +1381,6 @@
 			};
 			name = Release;
 		};
-		3A11B057229F0B7A00070A61 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GJZR2MEM28;
-				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3A11B058229F0B7A00070A61 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GJZR2MEM28;
-				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		3A11B059229F0B7A00070A61 /* AdhocRelease */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GJZR2MEM28;
-				INFOPLIST_FILE = MapboxVisionARTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionARTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = AdhocRelease;
-		};
 		B51E5581215E313500650DDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1711,16 +1484,6 @@
 				2E4EE21B20EFD378003431B3 /* Debug */,
 				2E4EE21C20EFD378003431B3 /* Release */,
 				2E197727211DD3C700311B95 /* AdhocRelease */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3A11B05A229F0B7A00070A61 /* Build configuration list for PBXNativeTarget "MapboxVisionARTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3A11B057229F0B7A00070A61 /* Debug */,
-				3A11B058229F0B7A00070A61 /* Release */,
-				3A11B059229F0B7A00070A61 /* AdhocRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
