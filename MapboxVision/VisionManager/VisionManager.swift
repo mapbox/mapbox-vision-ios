@@ -21,6 +21,16 @@ enum VisionManagerError: LocalizedError {
 public final class VisionManager: BaseVisionManager {
     // MARK: - Public
 
+    /// Delegate for `VisionManager`. Delegate is held as a weak reference.
+    public var delegate: VisionManagerDelegate? {
+        get {
+            return baseDelegate
+        }
+        set {
+            baseDelegate = newValue
+        }
+    }
+
     // MARK: Lifetime
 
     /**
@@ -46,7 +56,18 @@ public final class VisionManager: BaseVisionManager {
 
      - Parameter delegate: Delegate for `VisionManager`. Delegate is held as a strong reference until `stop` is called.
      */
-    public func start(delegate: VisionManagerDelegate? = nil) {
+    @available(swift, deprecated: 0.9.0, message: "This will be removed in 0.10.0. Use method start() instead and set delegate as property.")
+    public func start(delegate: VisionManagerDelegate?) {
+        baseDelegate = delegate
+        start()
+    }
+
+    /**
+     Start delivering events from `VisionManager`.
+
+     - Important: Do NOT call this method more than once or after `destroy` is called.
+     */
+    public func start() {
         switch state {
         case .uninitialized:
             assertionFailure("VisionManager should be initialized before starting")
@@ -55,8 +76,7 @@ public final class VisionManager: BaseVisionManager {
             assertionFailure("VisionManager is already started")
             return
         case let .initialized(videoSource), let .stopped(videoSource):
-            self.delegate = delegate
-            state = .started(videoSource: videoSource, delegate: delegate)
+            state = .started(videoSource: videoSource)
         }
 
         resume()
@@ -72,7 +92,7 @@ public final class VisionManager: BaseVisionManager {
      - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
     public func stop() {
-        guard case let .started(videoSource, _) = state else {
+        guard case let .started(videoSource) = state else {
             assertionFailure("VisionManager is not started")
             return
         }
@@ -80,7 +100,7 @@ public final class VisionManager: BaseVisionManager {
         pause()
 
         state = .stopped(videoSource: videoSource)
-        self.delegate = nil
+        baseDelegate = nil
     }
 
     /**
@@ -142,7 +162,7 @@ public final class VisionManager: BaseVisionManager {
     private enum State {
         case uninitialized
         case initialized(videoSource: VideoSource)
-        case started(videoSource: VideoSource, delegate: VisionManagerDelegate?)
+        case started(videoSource: VideoSource)
         case stopped(videoSource: VideoSource)
 
         var isUninitialized: Bool {
@@ -183,6 +203,8 @@ public final class VisionManager: BaseVisionManager {
         state = .initialized(videoSource: videoSource)
 
         dependencies.recorder.delegate = self
+        dependencies.native.delegate = self
+        dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
     }
 
     deinit {
@@ -194,19 +216,19 @@ public final class VisionManager: BaseVisionManager {
     }
 
     private func startVideoStream() {
-        guard case let .started(videoSource, _) = state else { return }
+        guard case let .started(videoSource) = state else { return }
         videoSource.add(observer: self)
     }
 
     private func stopVideoStream() {
-        guard case let .started(videoSource, _) = state else { return }
+        guard case let .started(videoSource) = state else { return }
         videoSource.remove(observer: self)
     }
 
     private func resume() {
         dependencies.dataProvider.start()
         startVideoStream()
-        dependencies.native.start(self)
+        dependencies.native.start()
 
         dependencies.recorder.start(mode: .internal)
     }

@@ -16,6 +16,20 @@ import Foundation
  Do NOT use session replay in production application.
  */
 public final class VisionReplayManager: BaseVisionManager {
+    // MARK: - Public
+
+    /// Delegate for `VisionManager`. Delegate is held as a weak reference.
+    public var delegate: VisionManagerDelegate? {
+        get {
+            return baseDelegate
+        }
+        set {
+            baseDelegate = newValue
+        }
+    }
+
+    // MARK: Lifetime
+
     /**
      Fabric method for creating a `VisionReplayManager` instance.
 
@@ -47,7 +61,19 @@ public final class VisionReplayManager: BaseVisionManager {
 
      - Parameter delegate: Delegate for `VisionReplayManager`. Delegate is held as a strong reference until `stop` is called.
      */
-    public func start(delegate: VisionManagerDelegate? = nil) {
+    @available(swift, deprecated: 0.9.0, message: "This will be removed in 0.10.0. Use method start() instead and set delegate as property.")
+    public func start(delegate: VisionManagerDelegate?) {
+        baseDelegate = delegate
+        start()
+    }
+
+    /**
+     Start delivering events from `VisionReplayManager`.
+     Calling `start` on already started or destroyed instance is considered a mistake.
+
+     - Important: Do NOT call this method more than once or after `destroy` is called.
+     */
+    public func start() {
         switch state {
         case .uninitialized:
             assertionFailure("VisionManager should be initialized before starting")
@@ -56,7 +82,6 @@ public final class VisionReplayManager: BaseVisionManager {
             assertionFailure("VisionManager is already started")
             return
         case .initialized, .stopped:
-            self.delegate = delegate
             state = .started
         }
 
@@ -77,7 +102,7 @@ public final class VisionReplayManager: BaseVisionManager {
         pause()
 
         state = .stopped
-        delegate = nil
+        baseDelegate = nil
     }
 
     /**
@@ -105,6 +130,7 @@ public final class VisionReplayManager: BaseVisionManager {
 
         dependencies.player.add(observer: self)
         dependencies.player.delegate = self
+        dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
 
         state = .initialized
     }

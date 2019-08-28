@@ -8,7 +8,7 @@ import MapboxVisionNative
  Depends on `VisionManager`.
  */
 public final class VisionARManager {
-    private var native: VisionARManagerNative?
+    var native: VisionARManagerNative?
     private var delegate: VisionARManagerDelegate?
 
     /**

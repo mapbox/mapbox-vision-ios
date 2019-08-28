@@ -83,6 +83,8 @@
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
 		3ACF140022A955FD00EA3255 /* RecordingQuotaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */; };
 		5A006F5E23192C2C0097FADF /* VisionARViewController+LaneParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A006F5D23192C2C0097FADF /* VisionARViewController+LaneParams.swift */; };
+		5A006F4A231546250097FADF /* VisionARViewController+VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A006F49231546250097FADF /* VisionARViewController+VideoSource.swift */; };
+		5A006F58231570FC0097FADF /* VideoSourceObserverProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A006F57231570FC0097FADF /* VideoSourceObserverProxy.swift */; };
 		5A3C9D8722C37AF700700DC6 /* MockVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8622C37AF700700DC6 /* MockVideoSource.swift */; };
 		5A3C9D8922C37CCC00700DC6 /* MockSynchronizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8822C37CCC00700DC6 /* MockSynchronizable.swift */; };
 		5A3C9D8B22C37DE200700DC6 /* MockPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D8A22C37DE200700DC6 /* MockPlatform.swift */; };
@@ -202,6 +204,8 @@
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
 		3ACF13FF22A955FD00EA3255 /* RecordingQuotaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuotaTests.swift; sourceTree = "<group>"; };
 		5A006F5D23192C2C0097FADF /* VisionARViewController+LaneParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisionARViewController+LaneParams.swift"; sourceTree = "<group>"; };
+		5A006F49231546250097FADF /* VisionARViewController+VideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VisionARViewController+VideoSource.swift"; path = "ViewController/VisionARViewController+VideoSource.swift"; sourceTree = "<group>"; };
+		5A006F57231570FC0097FADF /* VideoSourceObserverProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSourceObserverProxy.swift; sourceTree = "<group>"; };
 		5A3C9D8622C37AF700700DC6 /* MockVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVideoSource.swift; sourceTree = "<group>"; };
 		5A3C9D8822C37CCC00700DC6 /* MockSynchronizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSynchronizable.swift; sourceTree = "<group>"; };
 		5A3C9D8A22C37DE200700DC6 /* MockPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlatform.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				5A006F5B231928AE0097FADF /* ViewController */,
+				5A006F49231546250097FADF /* VisionARViewController+VideoSource.swift */,
 				2E071A922257C89B00345FA8 /* VIsionARManager */,
 				2E071A3E2257887E00345FA8 /* MapboxVisionAR.h */,
 				2E071A432257887E00345FA8 /* Info.plist */,
@@ -514,6 +519,7 @@
 				9D72A9D70E54F426D0E8990E /* VideoSource.swift */,
 				2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */,
 				9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */,
+				5A006F57231570FC0097FADF /* VideoSourceObserverProxy.swift */,
 			);
 			path = VideoSource;
 			sourceTree = "<group>";
@@ -820,6 +826,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A006F4A231546250097FADF /* VisionARViewController+VideoSource.swift in Sources */,
 				2E071A482257887F00345FA8 /* VisionARManager.swift in Sources */,
 				2E071A452257887F00345FA8 /* VisionARManagerDelegate.swift in Sources */,
 				5A006F5E23192C2C0097FADF /* VisionARViewController+LaneParams.swift in Sources */,
@@ -850,6 +857,7 @@
 				2E4EE27A20F0565E003431B3 /* RecordDataSource.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
 				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
+				5A006F58231570FC0097FADF /* VideoSourceObserverProxy.swift in Sources */,
 				2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */,
 				3A0D52F922EC74EA00E60FCF /* MemoryByte.swift in Sources */,
 				5A3C9D8F22C3826F00700DC6 /* SessionRecorderProtocol.swift in Sources */,
