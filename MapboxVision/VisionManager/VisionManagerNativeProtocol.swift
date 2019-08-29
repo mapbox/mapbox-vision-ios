@@ -3,16 +3,15 @@ import MapboxVisionNative
 
 protocol VisionManagerBaseNativeProtocol: AnyObject {
     var config: CoreConfig { get set }
+    var useMergedModel: Bool { get set }
 
     func pixel(toWorld screenCoordinate: Point2D) -> WorldCoordinate?
     func world(toPixel worldCoordinate: WorldCoordinate) -> Point2D?
     func geo(toWorld geoCoordinate: GeoCoordinate) -> WorldCoordinate?
     func world(toGeo worldCoordinates: WorldCoordinate) -> GeoCoordinate?
 
-    func setSegmentationFixedFPS(_: Float)
-    func setSegmentationDynamicFPS(minFPS: Float, maxFPS: Float)
-    func setDetectionFixedFPS(_: Float)
-    func setDetectionDynamicFPS(minFPS: Float, maxFPS: Float)
+    func setFixedFPS(for modelType: MLModelType, FPS: Float)
+    func setDynamicFPS(for modelType: MLModelType, minFPS: Float, maxFPS: Float)
 }
 
 protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {

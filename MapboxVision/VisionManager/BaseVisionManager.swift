@@ -64,31 +64,21 @@ public class BaseVisionManager: VisionManagerProtocol {
     private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
         switch config {
         case let .merged(performance):
-            dependencies.native.config.useMergeMLModelLaunch = true
-            updateSegmentationPerformance(performance)
-            updateDetectionPerformance(performance)
+            dependencies.native.useMergedModel = true
+            update(performance: performance, for: .mergedSegDetect)
         case let .separate(segmentationPerformance, detectionPerformance):
-            dependencies.native.config.useMergeMLModelLaunch = false
-            updateSegmentationPerformance(segmentationPerformance)
-            updateDetectionPerformance(detectionPerformance)
+            dependencies.native.useMergedModel = false
+            update(performance: segmentationPerformance, for: .segmentation)
+            update(performance: detectionPerformance, for: .detection)
         }
     }
 
-    private func updateSegmentationPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .segmentation, with: performance) {
+    private func update(performance: ModelPerformance, for modelType: MLModelType) {
+        switch ModelPerformanceResolver.coreModelPerformance(for: modelType, with: performance) {
         case .fixed(let fps):
-            dependencies.native.setSegmentationFixedFPS(fps)
+            dependencies.native.setFixedFPS(for: modelType, FPS: fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.native.setSegmentationDynamicFPS(minFPS: minFps, maxFPS: maxFps)
-        }
-    }
-
-    private func updateDetectionPerformance(_ performance: ModelPerformance) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: .detection, with: performance) {
-        case .fixed(let fps):
-            dependencies.native.setDetectionFixedFPS(fps)
-        case .dynamic(let minFps, let maxFps):
-            dependencies.native.setDetectionDynamicFPS(minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.setDynamicFPS(for: modelType, minFPS: minFps, maxFPS: maxFps)
         }
     }
 
