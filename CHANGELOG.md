@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.8.0 - Unreleased
+## 0.8.0
 
 ### Vision
 - Fixed applying dynamic mode of ML performance for the merged model
+- Add monitoring of device state in order to detect the effect on performance
 
 ## 0.7.1
 
