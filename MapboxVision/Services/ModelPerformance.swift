@@ -96,10 +96,6 @@ public struct ModelPerformance: Equatable {
     }
 }
 
-enum ModelType {
-    case segmentation, detection
-}
-
 enum CoreModelPerformance {
     case fixed(fps: Float)
     case dynamic(minFps: Float, maxFps: Float)
@@ -127,22 +123,26 @@ enum ModelPerformanceResolver {
 
     private static let isHighPerformance = UIDevice.current.isHighPerformance
 
-    private static let segmentationHighEnd = PerformanceEntry(off: 1, low: 2, high: 7)
-    private static let    detectionHighEnd = PerformanceEntry(off: 3, low: 4, high: 12)
+    private static let    segmentationHighEnd = PerformanceEntry(off: 1, low: 2, high: 7)
+    private static let       detectionHighEnd = PerformanceEntry(off: 3, low: 4, high: 12)
+    private static let mergedSegDetectHighEnd = PerformanceEntry(off: 3, low: 4, high: 12)
 
-    private static let  segmentationLowEnd = PerformanceEntry(off: 1, low: 2, high: 5)
-    private static let     detectionLowEnd = PerformanceEntry(off: 3, low: 4, high: 11)
+    private static let     segmentationLowEnd = PerformanceEntry(off: 1, low: 2, high: 5)
+    private static let        detectionLowEnd = PerformanceEntry(off: 3, low: 4, high: 11)
+    private static let  mergedSegDetectLowEnd = PerformanceEntry(off: 3, low: 4, high: 11)
 
-    private static func performanceEntry(for model: ModelType) -> PerformanceEntry {
+    private static func performanceEntry(for model: MLModelType) -> PerformanceEntry {
         switch model {
         case .segmentation:
             return isHighPerformance ? segmentationHighEnd : segmentationLowEnd
         case .detection:
             return isHighPerformance ? detectionHighEnd : detectionLowEnd
+        case .mergedSegDetect:
+            return isHighPerformance ? mergedSegDetectHighEnd : mergedSegDetectLowEnd
         }
     }
 
-    static func coreModelPerformance(for model: ModelType, with performance: ModelPerformance) -> CoreModelPerformance {
+    static func coreModelPerformance(for model: MLModelType, with performance: ModelPerformance) -> CoreModelPerformance {
         let entry = performanceEntry(for: model)
 
         switch performance.mode {
