@@ -168,7 +168,7 @@ class ARRenderer: NSObject {
             let modelMatrix = arLaneNode.worldTransform()
             let material = arLaneNode.arMaterial
 
-            let points = lane.curve.getControlPoints()
+            let points = lane.curve.controlPoints()
 
             guard points.count == 4 else {
                 assertionFailure("ARLane should contains four points")
