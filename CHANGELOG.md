@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1
+
+### Vision
+- Removed dependency on `CoreBluetooth`
+
 ## 0.8.0
 
 ### Vision
