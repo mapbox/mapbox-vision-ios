@@ -30,7 +30,7 @@ class VideoSourceObserverProxy: MBVVideoSource, VideoSourceObserver {
                 observers.removeValue(forKey: id)
                 return
             }
-            observer.videoSurce?(self, didOutputVideoSample: videoSample)
+            observer.videoSource?(self, didOutputVideoSample: videoSample)
         }
     }
 
