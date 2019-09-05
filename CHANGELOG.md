@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.9.0 - Unreleased
+
+### Vision
+- Added property `delegate` to `VisionManager`
+- Deprecated method `start(delegate:)` in `VisionManager`
+
+### AR
+- Added method `set(arManager:)` to `VisionARViewController`
+- Changed AR Lane appearance
+- Deprecated property `laneVisualParams` in `VisionARViewController`
+- Deprecated method `present(sampleBuffer:)` in `VisionARViewController`
+- Deprecated method `present(camera:)` in `VisionARViewController`
+- Deprecated method `present(lane:)` in `VisionARViewController`
+- Moved AR rendering to native
+
 ## 0.8.1
 
 ### Vision
