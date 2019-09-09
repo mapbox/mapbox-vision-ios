@@ -9,7 +9,9 @@ import MapboxVisionNative
  */
 public final class VisionARManager {
     var native: VisionARManagerNative?
-    private var delegate: VisionARManagerDelegate?
+
+    /// Delegate for `VisionARManager`. Delegate is held as a weak reference.
+    public weak var delegate: VisionARManagerDelegate?
 
     /**
      Fabric method for creating a `VisionARManager` instance.
@@ -19,10 +21,24 @@ public final class VisionARManager {
 
      - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
      */
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate? = nil) -> VisionARManager {
+    @available(swift, deprecated: 0.9.0, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate) -> VisionARManager {
+        let arManager = create(visionManager: visionManager)
+        arManager.delegate = delegate
+        return arManager
+    }
+
+    /**
+     Fabric method for creating a `VisionARManager` instance.
+
+     - Parameter visionManager: Instance of `VisionManager`.
+
+     - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
+     */
+    public static func create(visionManager: VisionManagerProtocol) -> VisionARManager {
         let manager = VisionARManager()
-        manager.native = VisionARManagerNative.create(visionManager: visionManager.native, delegate: manager)
-        manager.delegate = delegate
+        manager.native = VisionARManagerNative.create(visionManager: visionManager.native)
+        manager.native?.delegate = manager
         return manager
     }
 
@@ -60,6 +76,14 @@ public final class VisionARManager {
 
 /// :nodoc:
 extension VisionARManager: VisionARDelegate {
+    public func onARMaskUpdated(_ image: Image) {
+        delegate?.visionARManager(self, didUpdateARMask: image)
+    }
+
+    public func onARLaneCutoffUpdated(_ cutoffDistance: Float) {
+        delegate?.visionARManager(self, didUpdateARLaneCutoff: cutoffDistance)
+    }
+
     public func onARCameraUpdated(_ camera: ARCamera) {
         delegate?.visionARManager(self, didUpdateARCamera: camera)
     }

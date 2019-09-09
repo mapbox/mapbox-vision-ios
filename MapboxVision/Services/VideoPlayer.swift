@@ -77,6 +77,7 @@ final class VideoPlayer: NSObject {
 
         observers.notify { observer in
             observer.videoSource(self, didOutput: VideoSample(buffer: sampleBuffer, format: .BGRA))
+            observer.videoSource(self, didOutputVideoSample: VideoSample(buffer: sampleBuffer, format: .BGRA))
         }
     }
 }

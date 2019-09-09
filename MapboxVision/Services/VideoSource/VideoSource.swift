@@ -24,13 +24,23 @@ public protocol VideoSource: AnyObject {
  Observer of a video source.
  */
 public protocol VideoSourceObserver: AnyObject {
+    @available(*, deprecated, renamed: "videoSource(_:didOutputVideoSample:)", message: "This will be removed in 0.10.0. Use method start() instead and set delegate as property.")
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample)
 
+    @available(*, deprecated, renamed: "videoSource(_:didOutputCameraParameters:)", message: "This will be removed in 0.10.0. Use method start() instead and set delegate as property.")
     func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters)
+
+    func videoSource(_ videoSource: VideoSource, didOutputVideoSample videoSample: VideoSample)
+
+    func videoSource(_ videoSource: VideoSource, didOutputCameraParameters cameraParameters: CameraParameters)
 }
 
 public extension VideoSourceObserver {
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {}
 
     func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {}
+
+    func videoSource(_ videoSource: VideoSource, didOutputVideoSample videoSample: VideoSample) {}
+
+    func videoSource(_ videoSource: VideoSource, didOutputCameraParameters cameraParameters: CameraParameters) {}
 }

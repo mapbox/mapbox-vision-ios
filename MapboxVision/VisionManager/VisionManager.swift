@@ -304,7 +304,7 @@ public final class VisionManager: BaseVisionManager {
 
 /// :nodoc:
 extension VisionManager: VideoSourceObserver {
-    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+    public func videoSource(_ videoSource: VideoSource, didOutputVideoSample videoSample: VideoSample) {
         guard let pixelBuffer = videoSample.buffer.pixelBuffer else {
             assertionFailure("Sample buffer containing pixel buffer is expected here")
             return
@@ -318,7 +318,7 @@ extension VisionManager: VideoSourceObserver {
         dependencies.native.sensors.setImage(pixelBuffer)
     }
 
-    public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
+    public func videoSource(_ videoSource: VideoSource, didOutputCameraParameters cameraParameters: CameraParameters) {
         dependencies.native.sensors.setCameraParameters(cameraParameters)
     }
 }

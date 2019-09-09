@@ -143,9 +143,11 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
         notify { observer in
             let sample = VideoSample(buffer: sampleBuffer, format: imageOutputFormat)
             observer.videoSource(self, didOutput: sample)
+            observer.videoSource(self, didOutputVideoSample: sample)
 
             if let cameraParameters = getCameraParameters(sampleBuffer: sampleBuffer) {
                 observer.videoSource(self, didOutput: cameraParameters)
+                observer.videoSource(self, didOutputCameraParameters: cameraParameters)
             }
         }
     }
