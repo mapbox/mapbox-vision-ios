@@ -20,12 +20,12 @@ public protocol VisionARManagerDelegate: AnyObject {
     /**
      Tells the delegate that AR mask was updated.
      */
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARMask: Image)
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARMaskImage: Image)
 
     /**
      Tells the delegate that AR lane cutoff was updated.
      */
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float)
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoffDistance: Float)
 }
 
 public extension VisionARManagerDelegate {
@@ -33,7 +33,7 @@ public extension VisionARManagerDelegate {
 
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {}
 
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARMask: Image) {}
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARMaskImage: Image) {}
 
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float) {}
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoffDistance: Float) {}
 }

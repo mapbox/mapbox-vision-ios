@@ -183,7 +183,7 @@ public final class VisionReplayManager: BaseVisionManager {
 }
 
 extension VisionReplayManager: VideoSourceObserver {
-    public func videoSource(_: VideoSource, didOutputVideoSample videoSample: VideoSample) {
+    public func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
         var timingInfo = CMSampleTimingInfo.invalid
         let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
 

@@ -24,7 +24,7 @@ class VideoSourceObserverProxy: MBVVideoSource, VideoSourceObserver {
         videoSource.add(observer: self)
     }
 
-    func videoSource(_ videoSource: VideoSource, didOutputVideoSample videoSample: VideoSample) {
+    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
         observers.forEach { id, observation in
             guard let observer = observation.observer else {
                 observers.removeValue(forKey: id)
@@ -34,7 +34,7 @@ class VideoSourceObserverProxy: MBVVideoSource, VideoSourceObserver {
         }
     }
 
-    func videoSource(_ videoSource: VideoSource, didOutputCameraParameters cameraParameters: CameraParameters) {
+    func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
         observers.forEach { id, observation in
             guard let observer = observation.observer else {
                 observers.removeValue(forKey: id)
