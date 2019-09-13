@@ -8,10 +8,10 @@ import MapboxVisionNative
  Depends on `VisionManager`.
  */
 public final class VisionARManager {
-    var native: VisionARManagerNative?
-
     /// Delegate for `VisionARManager`. Delegate is held as a weak reference.
     public weak var delegate: VisionARManagerDelegate?
+
+    var native: VisionARManagerNative?
 
     /**
      Fabric method for creating a `VisionARManager` instance.
@@ -21,8 +21,8 @@ public final class VisionARManager {
 
      - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
      */
-    @available(swift, deprecated: 0.9.0, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate) -> VisionARManager {
+    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate?) -> VisionARManager {
         let arManager = create(visionManager: visionManager)
         arManager.delegate = delegate
         return arManager
@@ -47,7 +47,7 @@ public final class VisionARManager {
 
      - Parameter laneLength: Length of AR lane in meters.
      */
-    func set(laneLength: Double) {
+    public func set(laneLength: Double) {
         native?.setLaneLength(laneLength)
     }
 
@@ -76,19 +76,19 @@ public final class VisionARManager {
 
 /// :nodoc:
 extension VisionARManager: VisionARDelegate {
-    public func onARMaskImageUpdated(_ image: Image) {
-        delegate?.visionARManager(self, didUpdateARMaskImage: image)
-    }
-
-    public func onARLaneCutoffDistanceUpdated(_ cutoffDistance: Float) {
-        delegate?.visionARManager(self, didUpdateARLaneCutoffDistance: cutoffDistance)
-    }
-
     public func onARCameraUpdated(_ camera: ARCamera) {
         delegate?.visionARManager(self, didUpdateARCamera: camera)
     }
 
     public func onARLaneUpdated(_ lane: ARLane?) {
         delegate?.visionARManager(self, didUpdateARLane: lane)
+    }
+
+    public func onARMaskImageUpdated(_ image: Image) {
+        delegate?.visionARManager(self, didUpdateARMaskImage: image)
+    }
+
+    public func onARLaneCutoffDistanceUpdated(_ cutoffDistance: Float) {
+        delegate?.visionARManager(self, didUpdateARLaneCutoffDistance: cutoffDistance)
     }
 }

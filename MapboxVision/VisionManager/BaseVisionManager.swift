@@ -45,6 +45,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         self.dependencies = dependencies
 
         dependencies.native.config = .basic
+        dependencies.native.delegate = self
         updateModelPerformanceConfig(modelPerformanceConfig)
         subscribeToNotifications()
     }
