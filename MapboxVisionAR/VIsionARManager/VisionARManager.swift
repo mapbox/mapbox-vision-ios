@@ -84,11 +84,11 @@ extension VisionARManager: VisionARDelegate {
         delegate?.visionARManager(self, didUpdateARLane: lane)
     }
 
-    public func onARMaskImageUpdated(_ image: Image) {
-        delegate?.visionARManager(self, didUpdateARMaskImage: image)
+    public func onARMaskUpdated(_ image: Image) {
+        delegate?.visionARManager(self, didUpdateARMask: image)
     }
 
-    public func onARLaneCutoffDistanceUpdated(_ cutoffDistance: Float) {
-        delegate?.visionARManager(self, didUpdateARLaneCutoffDistance: cutoffDistance)
+    public func onARLaneCutoffUpdated(_ cutoffDistance: Float) {
+        delegate?.visionARManager(self, didUpdateARLaneCutoff: cutoffDistance)
     }
 }
