@@ -7,8 +7,7 @@ public extension VisionARViewController {
      - Parameters:
      - arManager: instance of VisinARManager
      */
-    func set(arManager: VisionARManager) {
-        guard let native = arManager.native else { return }
-        self.set(arManager: native)
+    func set(arManager: VisionARManager?) {
+        self.set(arManager: arManager?.native)
     }
 }

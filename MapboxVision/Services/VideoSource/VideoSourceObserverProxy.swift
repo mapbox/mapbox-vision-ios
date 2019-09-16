@@ -2,16 +2,6 @@ import Foundation
 import MapboxVisionNative
 
 class VideoSourceObserverProxy: MBVVideoSource, VideoSourceObserver {
-    func add(observer: MBVVideoSourceObserver) {
-        let id = ObjectIdentifier(observer)
-        observers[id] = Observation(observer: observer)
-    }
-
-    func remove(observer: MBVVideoSourceObserver) {
-        let id = ObjectIdentifier(observer)
-        observers.removeValue(forKey: id)
-    }
-
     private let videoSource: VideoSource
     private var observers = [ObjectIdentifier: Observation]()
 
@@ -22,6 +12,16 @@ class VideoSourceObserverProxy: MBVVideoSource, VideoSourceObserver {
     init(withVideoSource videoSource: VideoSource) {
         self.videoSource = videoSource
         videoSource.add(observer: self)
+    }
+
+    func add(observer: MBVVideoSourceObserver) {
+        let id = ObjectIdentifier(observer)
+        observers[id] = Observation(observer: observer)
+    }
+
+    func remove(observer: MBVVideoSourceObserver) {
+        let id = ObjectIdentifier(observer)
+        observers.removeValue(forKey: id)
     }
 
     func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
