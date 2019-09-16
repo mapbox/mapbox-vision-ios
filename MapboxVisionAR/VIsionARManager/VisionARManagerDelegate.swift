@@ -18,12 +18,16 @@ public protocol VisionARManagerDelegate: AnyObject {
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?)
 
     /**
-     Tells the delegate that AR mask was updated.
+     Tells the delegate that AR mask was updated. AR mask defines areas where AR should not be rendered (e.g. hood, dashboard, device mount, etc.).
+     Each pixel contains a value representing confidence that AR pixel should not be rendered. Value range is [0,1], where:
+        0 - pixel should be rendered,
+        1 - pixel should NOT be rendered.
      */
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARMask: Image)
 
     /**
      Tells the delegate that AR lane cutoff was updated.
+     AR lane cutoff is a relative distance where AR lane should be cut off. Range [0..1] is appropriate. Values greatest than `1` have no effect.
      */
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float)
 }
