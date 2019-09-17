@@ -22,5 +22,5 @@ let listOfExamples: [NamedController] = [
         name: "AR navigation",
         description: "Demonstrates how to setup VisionAR and display default AR route.",
         controllerType: ARNavigationViewController.self
-    ),
+    )
 ]

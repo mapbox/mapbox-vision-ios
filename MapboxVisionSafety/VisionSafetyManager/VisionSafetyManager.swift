@@ -7,8 +7,8 @@ import MapboxVisionSafetyNative
  Depends on `VisionManager`.
  */
 public final class VisionSafetyManager {
-    private var native: VisionSafetyManagerNative?
-    private weak var delegate: VisionSafetyManagerDelegate?
+    /// Delegate for `VisionSafetyManager`. Delegate is held as a weak reference.
+    public weak var delegate: VisionSafetyManagerDelegate?
 
     /**
      Fabric method for creating a `VisionSafetyManager` instance.
@@ -18,10 +18,24 @@ public final class VisionSafetyManager {
 
      - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
      */
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionSafetyManagerDelegate? = nil) -> VisionSafetyManager {
-        let manager = VisionSafetyManager()
-        manager.native = VisionSafetyManagerNative.create(visionManager: visionManager.native, delegate: manager)
+    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionSafetyManagerDelegate?) -> VisionSafetyManager {
+        let manager = create(visionManager: visionManager)
         manager.delegate = delegate
+        return manager
+    }
+
+    /**
+     Fabric method for creating a `VisionSafetyManager` instance.
+
+     - Parameter visionManager: Instance of `VisionManager`.
+
+     - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
+     */
+    public static func create(visionManager: VisionManagerProtocol) -> VisionSafetyManager {
+        let manager = VisionSafetyManager()
+        manager.native = VisionSafetyManagerNative.create(visionManager: visionManager.native)
+        manager.native?.delegate = manager
         return manager
     }
 
@@ -56,6 +70,8 @@ public final class VisionSafetyManager {
         guard native != nil else { return }
         destroy()
     }
+
+    private var native: VisionSafetyManagerNative?
 }
 
 /// :nodoc:

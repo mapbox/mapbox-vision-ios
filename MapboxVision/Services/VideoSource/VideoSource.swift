@@ -3,19 +3,6 @@ import Foundation
 import MapboxVisionNative
 
 /**
- Structure that encapsulates image buffer and its format.
- */
-public struct VideoSample {
-    public let buffer: CMSampleBuffer
-    public let format: Image.Format
-
-    public init(buffer: CMSampleBuffer, format: Image.Format) {
-        self.buffer = buffer
-        self.format = format
-    }
-}
-
-/**
  Protocol which represents the source of video stream along with meta-information to its observers.
  */
 public protocol VideoSource: AnyObject {
