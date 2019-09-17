@@ -19,7 +19,7 @@ constant half4 segColors[14] = {
 };
 
 kernel void blend(texture2d<half, access::sample> sourceTexture [[texture(0)]],
-                  texture2d<uint, access::sample> maskTexture [[texture(1)]],
+                  texture2d<float, access::sample> maskTexture [[texture(1)]],
                   texture2d<half, access::write> outTexture [[texture(2)]],
                   ushort3 gid [[thread_position_in_grid]])
 {
@@ -40,7 +40,7 @@ kernel void blend(texture2d<half, access::sample> sourceTexture [[texture(0)]],
     
     constexpr sampler maskSampler(coord::normalized, address::clamp_to_edge, filter::nearest);
     
-    const uint m = maskTexture.sample(maskSampler, { mx, my }).r;
+    const uint m = uint(maskTexture.sample(maskSampler, { mx, my }).r * 255.0);
     
     const half4 value = (segColors[m] * 0.6) + (s * 0.4);
     outTexture.write(value, gid.xy, gid.z);

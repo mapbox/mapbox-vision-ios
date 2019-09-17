@@ -31,13 +31,15 @@ class OverSpeedingViewController: UIViewController {
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
         // create VisionSafetyManager and register as its delegate to receive safety related events
-        visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager, delegate: self)
+        visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager)
+        visionSafetyManager.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        visionManager.start(delegate: self)
+        visionManager.delegate = self
+        visionManager.start()
         videoSource.start()
     }
 
@@ -61,7 +63,7 @@ class OverSpeedingViewController: UIViewController {
         view.addSubview(alertView)
         NSLayoutConstraint.activate([
             alertView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertView.trailingAnchor, multiplier: 1),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertView.trailingAnchor, multiplier: 1)
         ])
     }
 
