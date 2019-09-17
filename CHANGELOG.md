@@ -5,6 +5,7 @@
 ### Vision
 - Added property `delegate` to `VisionManager` and `VisionReplayManager`
 - Added method `start()` to `VisionManager` and `VisionReplayManager`
+- Added new `SignType`s: RegulatoryKeepLeftPicture, RegulatoryKeepLeftText, AheadSpeedLimit, WarningSpeedLimit, RegulatoryNoUTurnRight, WarningTurnRightOnlyArrow
 - Deprecated method `start(delegate:)` in `VisionManager` and `VisionReplayManager`
 
 ### AR
