@@ -4,6 +4,8 @@ import MapboxVisionNative
 protocol VisionManagerBaseNativeProtocol: AnyObject {
     var config: CoreConfig { get set }
     var useMergedModel: Bool { get set }
+    var delegate: VisionDelegate? { get set }
+    var videoSource: MBVVideoSource? { get set }
 
     func pixel(toWorld screenCoordinate: Point2D) -> WorldCoordinate?
     func world(toPixel worldCoordinate: WorldCoordinate) -> Point2D?
@@ -17,7 +19,7 @@ protocol VisionManagerBaseNativeProtocol: AnyObject {
 protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {
     var sensors: SensorsInterface { get }
 
-    func start(_: VisionDelegate)
+    func start()
     func stop()
 
     func destroy()

@@ -8,7 +8,7 @@ import UIKit
 
 // Example of custom video source is a simple video file reader
 class FileVideoSource: ObservableVideoSource {
-    private let reader: AVAssetReader
+    private let reader: AVAssetReader?
     private let queue = DispatchQueue(label: "FileVideoSourceQueue")
     private lazy var timer: CADisplayLink = {
         let displayLink = CADisplayLink(target: self, selector: #selector(update))
@@ -18,7 +18,7 @@ class FileVideoSource: ObservableVideoSource {
 
     init(url: URL) {
         let asset = AVAsset(url: url)
-        reader = try! AVAssetReader(asset: asset)
+        reader = try? AVAssetReader(asset: asset)
 
         super.init()
 
@@ -26,15 +26,15 @@ class FileVideoSource: ObservableVideoSource {
         let output = AVAssetReaderTrackOutput(
             track: videoTrack,
             outputSettings: [
-                String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA),
+                String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)
             ]
         )
-        reader.add(output)
+        reader?.add(output)
     }
 
     func start() {
         queue.async { [unowned self] in
-            self.reader.startReading()
+            self.reader?.startReading()
             self.timer.add(to: .main, forMode: .default)
         }
     }
@@ -48,7 +48,7 @@ class FileVideoSource: ObservableVideoSource {
     @objc
     func update() {
         queue.async { [unowned self] in
-            if let buffer = self.reader.outputs.first?.copyNextSampleBuffer() {
+            if let buffer = self.reader?.outputs.first?.copyNextSampleBuffer() {
                 // notify all abservers about new sample buffer availability
                 self.notify { observer in
                     // construct `VideoSample` specifying the format of image contained in a sample buffer
@@ -63,7 +63,7 @@ class FileVideoSource: ObservableVideoSource {
 
     private func stopReading() {
         timer.invalidate()
-        reader.cancelReading()
+        reader?.cancelReading()
     }
 }
 
@@ -88,7 +88,8 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        visionManager.start(delegate: self)
+        visionManager.delegate = self
+        visionManager.start()
         fileVideoSource.start()
     }
 

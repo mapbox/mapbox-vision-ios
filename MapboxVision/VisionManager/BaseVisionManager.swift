@@ -33,7 +33,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         return dependencies.native as! VisionManagerBaseNative
     }
 
-    weak var delegate: VisionManagerDelegate?
+    weak var baseDelegate: VisionManagerDelegate?
 
     private let dependencies: BaseDependencies
     private var isStoppedForBackground = false
@@ -45,6 +45,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         self.dependencies = dependencies
 
         dependencies.native.config = .basic
+        dependencies.native.delegate = self
         updateModelPerformanceConfig(modelPerformanceConfig)
         subscribeToNotifications()
     }
@@ -106,42 +107,42 @@ public class BaseVisionManager: VisionManagerProtocol {
 
 extension BaseVisionManager: VisionDelegate {
     public func onAuthorizationStatusUpdated(_ status: AuthorizationStatus) {
-        delegate?.visionManager(self, didUpdateAuthorizationStatus: status)
+        baseDelegate?.visionManager(self, didUpdateAuthorizationStatus: status)
     }
 
     public func onFrameSegmentationUpdated(_ segmentation: FrameSegmentation) {
-        delegate?.visionManager(self, didUpdateFrameSegmentation: segmentation)
+        baseDelegate?.visionManager(self, didUpdateFrameSegmentation: segmentation)
     }
 
     public func onFrameDetectionsUpdated(_ detections: FrameDetections) {
-        delegate?.visionManager(self, didUpdateFrameDetections: detections)
+        baseDelegate?.visionManager(self, didUpdateFrameDetections: detections)
     }
 
     public func onFrameSignClassificationsUpdated(_ signClassifications: FrameSignClassifications) {
-        delegate?.visionManager(self, didUpdateFrameSignClassifications: signClassifications)
+        baseDelegate?.visionManager(self, didUpdateFrameSignClassifications: signClassifications)
     }
 
     public func onRoadDescriptionUpdated(_ road: RoadDescription) {
-        delegate?.visionManager(self, didUpdateRoadDescription: road)
+        baseDelegate?.visionManager(self, didUpdateRoadDescription: road)
     }
 
     public func onWorldDescriptionUpdated(_ world: WorldDescription) {
-        delegate?.visionManager(self, didUpdateWorldDescription: world)
+        baseDelegate?.visionManager(self, didUpdateWorldDescription: world)
     }
 
     public func onVehicleStateUpdated(_ vehicleState: VehicleState) {
-        delegate?.visionManager(self, didUpdateVehicleState: vehicleState)
+        baseDelegate?.visionManager(self, didUpdateVehicleState: vehicleState)
     }
 
     public func onCameraUpdated(_ camera: Camera) {
-        delegate?.visionManager(self, didUpdateCamera: camera)
+        baseDelegate?.visionManager(self, didUpdateCamera: camera)
     }
 
     public func onCountryUpdated(_ country: Country) {
-        delegate?.visionManager(self, didUpdateCountry: country)
+        baseDelegate?.visionManager(self, didUpdateCountry: country)
     }
 
     public func onUpdateCompleted() {
-        delegate?.visionManagerDidCompleteUpdate(self)
+        baseDelegate?.visionManagerDidCompleteUpdate(self)
     }
 }

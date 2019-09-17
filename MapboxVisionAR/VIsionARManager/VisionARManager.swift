@@ -8,8 +8,10 @@ import MapboxVisionNative
  Depends on `VisionManager`.
  */
 public final class VisionARManager {
-    private var native: VisionARManagerNative?
-    private var delegate: VisionARManagerDelegate?
+    /// Delegate for `VisionARManager`. Delegate is held as a weak reference.
+    public weak var delegate: VisionARManagerDelegate?
+
+    var native: VisionARManagerNative?
 
     /**
      Fabric method for creating a `VisionARManager` instance.
@@ -19,10 +21,24 @@ public final class VisionARManager {
 
      - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
      */
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate? = nil) -> VisionARManager {
+    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
+    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate?) -> VisionARManager {
+        let arManager = create(visionManager: visionManager)
+        arManager.delegate = delegate
+        return arManager
+    }
+
+    /**
+     Fabric method for creating a `VisionARManager` instance.
+
+     - Parameter visionManager: Instance of `VisionManager`.
+
+     - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
+     */
+    public static func create(visionManager: VisionManagerProtocol) -> VisionARManager {
         let manager = VisionARManager()
-        manager.native = VisionARManagerNative.create(visionManager: visionManager.native, delegate: manager)
-        manager.delegate = delegate
+        manager.native = VisionARManagerNative.create(visionManager: visionManager.native)
+        manager.native?.delegate = manager
         return manager
     }
 
@@ -31,7 +47,7 @@ public final class VisionARManager {
 
      - Parameter laneLength: Length of AR lane in meters.
      */
-    func set(laneLength: Double) {
+    public func set(laneLength: Double) {
         native?.setLaneLength(laneLength)
     }
 
@@ -66,5 +82,13 @@ extension VisionARManager: VisionARDelegate {
 
     public func onARLaneUpdated(_ lane: ARLane?) {
         delegate?.visionARManager(self, didUpdateARLane: lane)
+    }
+
+    public func onARMaskUpdated(_ image: Image) {
+        delegate?.visionARManager(self, didUpdateARMask: image)
+    }
+
+    public func onARLaneCutoffUpdated(_ cutoff: Float) {
+        delegate?.visionARManager(self, didUpdateARLaneCutoff: cutoff)
     }
 }

@@ -23,12 +23,13 @@ class ARNavigationViewController: UIViewController {
 
         // create a video source obtaining buffers from camera module
         videoSource = CameraVideoSource()
-        videoSource.add(observer: self)
 
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
         // create VisionARManager and register as its delegate to receive AR related events
-        visionARManager = VisionARManager.create(visionManager: visionManager, delegate: self)
+        visionARManager = VisionARManager.create(visionManager: visionManager)
+
+        visionARViewController.set(arManager: visionARManager)
 
         let origin = CLLocationCoordinate2D()
         let destination = CLLocationCoordinate2D()
@@ -66,31 +67,6 @@ class ARNavigationViewController: UIViewController {
         visionARManager.destroy()
         // free up VisionManager's resources, should be called after destroing its module
         visionManager.destroy()
-    }
-}
-
-extension ARNavigationViewController: VisionARManagerDelegate {
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera) {
-        DispatchQueue.main.async { [weak self] in
-            // pass the camera parameters for projection calculation
-            self?.visionARViewController.present(camera: camera)
-        }
-    }
-
-    func visionARManager(_ visionARManager: VisionARManager, didUpdateARLane lane: ARLane?) {
-        DispatchQueue.main.async { [weak self] in
-            // display AR lane representing navigation route
-            self?.visionARViewController.present(lane: lane)
-        }
-    }
-}
-
-extension ARNavigationViewController: VideoSourceObserver {
-    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
-        DispatchQueue.main.async { [weak self] in
-            // display received sample buffer by passing it to ar view controller
-            self?.visionARViewController.present(sampleBuffer: videoSample.buffer)
-        }
     }
 }
 

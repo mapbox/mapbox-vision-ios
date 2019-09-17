@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.9.0
+
+### Vision
+- Added property `delegate` to `VisionManager` and `VisionReplayManager`
+- Added method `start()` to `VisionManager` and `VisionReplayManager`
+- Added new `SignType`s: RegulatoryKeepLeftPicture, RegulatoryKeepLeftText, AheadSpeedLimit, WarningSpeedLimit, RegulatoryNoUTurnRight, WarningTurnRightOnlyArrow
+- Deprecated method `start(delegate:)` in `VisionManager` and `VisionReplayManager`
+
+### AR
+- Added method `set(arManager:)` to `VisionARViewController`
+- Added methods `visionARManager(_:didUpdateARMaskImage:)` and `visionARManager(visionARManager:didUpdateARLaneCutoffDistance:)` to `VisionARManagerDelegatet`
+- Added property `delegate`
+- Changed AR Lane appearance
+- Methods `present(sampleBuffer:)`, `present(camera:)`, `present(lane:)` were made unavailable. You need to call `set(arManager:)` to set up `VisionARViewController`
+- Deprecated property `laneVisualParams` in `VisionARViewController`
+- Deprecated method `create(visionManager:delegate:)`. You need to create vision AR manager with `create(visionManager:)` and set the delegate as property
+- Moved AR rendering to native
+
+### Safety
+- Added property `delegate` to `VisionSafetyManager`
+- Deprecated method `create(visionManager:delegate:)`. You need to create vision safety manager with `create(visionManager:)` and set the delegate as property
+
 ## 0.8.1
 
 ### Vision
