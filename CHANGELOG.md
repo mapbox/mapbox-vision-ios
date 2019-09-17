@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.0 - Unreleased
+## 0.9.0
 
 ### Vision
 - Added property `delegate` to `VisionManager` and `VisionReplayManager`
