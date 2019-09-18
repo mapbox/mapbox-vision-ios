@@ -17,21 +17,6 @@ public final class VisionARManager {
      Fabric method for creating a `VisionARManager` instance.
 
      - Parameter visionManager: Instance of `VisionManager`.
-     - Parameter delegate: Delegate for `VisionARManager`. Delegate is held as a strong reference until `destroy` is called.
-
-     - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
-     */
-    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionARManagerDelegate?) -> VisionARManager {
-        let arManager = create(visionManager: visionManager)
-        arManager.delegate = delegate
-        return arManager
-    }
-
-    /**
-     Fabric method for creating a `VisionARManager` instance.
-
-     - Parameter visionManager: Instance of `VisionManager`.
 
      - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
      */

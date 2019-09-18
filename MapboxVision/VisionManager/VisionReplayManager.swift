@@ -58,22 +58,6 @@ public final class VisionReplayManager: BaseVisionManager {
      Calling `start` on already started or destroyed instance is considered a mistake.
 
      - Important: Do NOT call this method more than once or after `destroy` is called.
-
-     - Parameter delegate: Delegate for `VisionReplayManager`.
-         Until MapboxVision 0.9.0 delegate was held as a strong reference until `stop` is called.
-         Since MapboxVision 0.9.0 delegate is held as a weak reference and is not reset on `stop`.
-     */
-    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method start() instead and set delegate as property.")
-    public func start(delegate: VisionManagerDelegate?) {
-        baseDelegate = delegate
-        start()
-    }
-
-    /**
-     Start delivering events from `VisionReplayManager`.
-     Calling `start` on already started or destroyed instance is considered a mistake.
-
-     - Important: Do NOT call this method more than once or after `destroy` is called.
      */
     public func start() {
         switch state {
