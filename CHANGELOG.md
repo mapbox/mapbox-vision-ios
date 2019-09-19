@@ -2,6 +2,9 @@
 
 ## 0.10.0 - Unreleased
 
+### Vision
+- Added new `ConstructionCone` class to `DetectionClass`
+
 
 ## 0.9.0
 
