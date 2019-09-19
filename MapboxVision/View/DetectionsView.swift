@@ -63,7 +63,7 @@ private extension DetectionClass {
         case .bicycle:
             return UIColor(red: 0, green: 165.0 / 255.0, blue: 1.0, alpha: 1.0)
         case .constructionCone:
-            return UIColor(red: 255.0 / 255.0 , green: 255.0 / 255.0, blue: 99.0 / 255.0, alpha: 1.0)
+            return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 99.0 / 255.0, alpha: 1.0)
         }
     }
 
@@ -80,7 +80,7 @@ private extension DetectionClass {
         case .bicycle:
             return "Bicycle"
         case .constructionCone:
-            return "Construction Cone"
+            return "Cone"
         }
     }
 }
