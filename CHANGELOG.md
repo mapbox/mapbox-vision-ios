@@ -4,7 +4,7 @@
 
 ### Vision
 - Added new `ConstructionCone` class to `DetectionClass`
-
+- Improved delivery of camera parameters in `CameraVideoSource`
 
 ## 0.9.0
 
