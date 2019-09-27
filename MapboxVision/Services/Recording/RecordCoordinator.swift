@@ -33,7 +33,14 @@ final class RecordCoordinator {
     }
 
     private var trimRequestCache = [Int: [VideoTrimRequest]]()
-    private(set) var isRecording: Bool = false
+    var isRecording: Bool {
+        var result = false
+        processingQueue.sync {
+            result = _isRecording
+        }
+        return result
+    }
+    private var _isRecording: Bool = false
     private var isReady: Bool = true
     weak var delegate: RecordCoordinatorDelegate?
 
@@ -62,7 +69,7 @@ final class RecordCoordinator {
     }
 
     func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
-        guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
+        guard !_isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
 
         processingQueue.async { [weak self] in
@@ -70,7 +77,7 @@ final class RecordCoordinator {
 
             self.currentVideoSettings = videoSettings
 
-            self.isRecording = true
+            self._isRecording = true
             self.currentReferenceTime = referenceTime
             self.currentVideoIsFull = self.savesSourceVideo
 
@@ -96,14 +103,14 @@ final class RecordCoordinator {
     }
 
     func stopRecording() {
-        guard isRecording, isReady else { return }
+        guard _isRecording, isReady else { return }
 
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
 
         processingQueue.async { [weak self] in
             guard let self = self else { return }
 
-            self.isRecording = false
+            self._isRecording = false
             self.isReady = false
             self.currentEndTime = DispatchTime.now()
             self.videoRecorder.stopRecording()
@@ -111,7 +118,7 @@ final class RecordCoordinator {
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
-        guard isRecording else { return }
+        guard _isRecording else { return }
         videoRecorder.handleFrame(sampleBuffer)
     }
 
