@@ -34,13 +34,11 @@ final class RecordCoordinator {
 
     private var trimRequestCache = [Int: [VideoTrimRequest]]()
     var isRecording: Bool {
-        var result = false
-        processingQueue.sync {
-            result = _isRecording
+        return processingQueue.sync {
+            isRecordingInternal
         }
-        return result
     }
-    private var _isRecording: Bool = false
+    private var isRecordingInternal: Bool = false
     private var isReady: Bool = true
     weak var delegate: RecordCoordinatorDelegate?
 
@@ -69,7 +67,7 @@ final class RecordCoordinator {
     }
 
     func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
-        guard !_isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
+        guard !isRecordingInternal else { throw RecordCoordinatorError.cantStartAlreadyRecording }
         guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
 
         processingQueue.async { [weak self] in
@@ -77,7 +75,7 @@ final class RecordCoordinator {
 
             self.currentVideoSettings = videoSettings
 
-            self._isRecording = true
+            self.isRecordingInternal = true
             self.currentReferenceTime = referenceTime
             self.currentVideoIsFull = self.savesSourceVideo
 
@@ -103,14 +101,14 @@ final class RecordCoordinator {
     }
 
     func stopRecording() {
-        guard _isRecording, isReady else { return }
+        guard isRecordingInternal, isReady else { return }
 
         stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
 
         processingQueue.async { [weak self] in
             guard let self = self else { return }
 
-            self._isRecording = false
+            self.isRecordingInternal = false
             self.isReady = false
             self.currentEndTime = DispatchTime.now()
             self.videoRecorder.stopRecording()
@@ -118,7 +116,7 @@ final class RecordCoordinator {
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
-        guard _isRecording else { return }
+        guard isRecordingInternal else { return }
         videoRecorder.handleFrame(sampleBuffer)
     }
 
