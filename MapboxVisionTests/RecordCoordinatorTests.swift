@@ -35,10 +35,8 @@ final class RecordCoordinatorTests: XCTestCase {
     }
 
     func testStart() {
-        do {
-            try coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings)
-        } catch {
-            XCTFail("Recording start has failed with error: \(error)")
+        coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings) {
+            XCTFail("Recording start has failed")
         }
 
         wait(for: [recordingStartedExpectation], timeout: 1)
@@ -58,7 +56,7 @@ final class RecordCoordinatorTests: XCTestCase {
     }
 
     func testStop() {
-        try? coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings)
+        coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings) {}
 
         wait(for: [recordingStartedExpectation], timeout: 1)
 
@@ -70,6 +68,69 @@ final class RecordCoordinatorTests: XCTestCase {
 
         let recordingPath = recordingStoppedExpectation.recordingPath.recordingPath
         XCTAssert(directoryExists(at: recordingPath), "Recording should be saved at \(recordingPath) after recording is stopped")
+    }
+
+    class TestClipRequest {
+        let start: Float
+        let end: Float
+
+        init(start: Float, end: Float) {
+            self.start = start
+            self.end = end
+        }
+    }
+
+    func testVideoClipping(withRequests requests: [TestClipRequest], _ message: String = "", line: UInt = #line) {
+        let expectation = XCTestExpectation(description: "Wait for a big enough amount of time for record processing queue to finish its job")
+        let videoSource = FakeVideoSource()
+        videoSource.add(observer: coordinator)
+        videoSource.start()
+        coordinator.startRecording(referenceTime: 0, videoSettings: videoSettings) {}
+        _ = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { _ in
+            print("Make \(requests.count) clip\(requests.count == 1 ? "" : "s")")
+            requests.forEach {
+                self.coordinator.makeClip(from: $0.start, to: $0.end)
+            }
+
+            _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                self.coordinator.stopRecording()
+
+                _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                    let path = "\(DocumentsLocation.currentRecording.path)"
+                    let directoryContent = (try? FileManager.default.contentsOfDirectory(at: URL(string: path)!, includingPropertiesForKeys: nil, options: []))
+
+                    if let directoryContent = directoryContent {
+                        for file in directoryContent {
+                            print("File \(file)")
+                            if file.hasDirectoryPath {
+                                let subDirectoryContent = (try? FileManager.default.contentsOfDirectory(at: file, includingPropertiesForKeys: nil, options: []))
+                                if let subDirectoryContent = subDirectoryContent {
+                                    let numberOfVideos = subDirectoryContent.filter {
+                                        $0.pathExtension == "mp4"
+                                    }
+                                    .count
+
+                                    XCTAssert(numberOfVideos == requests.count, message, line: line)
+                                }
+                            }
+                        }
+                    }
+                    expectation.fulfill()
+                }
+            }
+        }
+
+        XCTWaiter().wait(for: [expectation], timeout: 20.0)
+    }
+
+    func testVideoClipping() {
+        testVideoClipping(withRequests: [
+            TestClipRequest(start: 1.0, end: 2.0),
+            TestClipRequest(start: 1.5, end: 2.5),
+            TestClipRequest(start: 0.0, end: 1.0),
+            TestClipRequest(start: 3.0, end: 4.0),
+            TestClipRequest(start: 3.0, end: 8.0)
+        ], "Failed to clip videos from a chunk")
     }
 
     private func directoryExists(at path: String) -> Bool {
@@ -95,5 +156,11 @@ extension RecordCoordinatorTests: RecordCoordinatorDelegate {
 
     func recordingStopped(recordingPath: RecordingPath) {
         recordingStoppedExpectation.fulfill(with: recordingPath)
+    }
+}
+
+extension RecordCoordinator: VideoSourceObserver {
+    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
+        self.handleFrame(videoSample.buffer)
     }
 }
