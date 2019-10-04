@@ -94,7 +94,6 @@
 		5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9822C50D0000700DC6 /* MockNative.swift */; };
 		5A3C9D9B22C50D7C00700DC6 /* MockSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */; };
 		5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3E42C422B280180035A010 /* VisionManagerTests.swift */; };
-		5AF4958A2345F49F0038AAE4 /* FakeVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF495892345F49F0038AAE4 /* FakeVideoSource.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72A5C114A06457134C5EE5 /* RecordSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEC4FF135C1A496B5215 /* RecordSynchronizer.swift */; };
@@ -215,7 +214,6 @@
 		5A3C9D9822C50D0000700DC6 /* MockNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNative.swift; sourceTree = "<group>"; };
 		5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSensors.swift; sourceTree = "<group>"; };
 		5A3E42C422B280180035A010 /* VisionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerTests.swift; sourceTree = "<group>"; };
-		5AF495892345F49F0038AAE4 /* FakeVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeVideoSource.swift; sourceTree = "<group>"; };
 		9D72A2983A81E002804CA22C /* DocumentsLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentsLocation.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
@@ -548,7 +546,6 @@
 				5A3C9D9022C39F5300700DC6 /* MockDataProvider.swift */,
 				5A3C9D9822C50D0000700DC6 /* MockNative.swift */,
 				5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */,
-				5AF495892345F49F0038AAE4 /* FakeVideoSource.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -918,7 +915,6 @@
 			files = (
 				3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */,
 				2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */,
-				5AF4958A2345F49F0038AAE4 /* FakeVideoSource.swift in Sources */,
 				5A3C9D8D22C381EB00700DC6 /* MockSessionRecorder.swift in Sources */,
 				B51E557C215E313500650DDE /* RecordSynchronizerTests.swift in Sources */,
 				5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */,

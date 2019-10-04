@@ -147,7 +147,7 @@ final class RecordCoordinator {
             guard let self = self else { return }
             guard let recordingPath = self.currentRecordingPath else { return }
 
-            guard let uiimage = image.getUIImage() else {
+            guard let uiImage = image.getUIImage() else {
                 assertionFailure("ERROR: Unable to convert image to UIImage")
                 return
             }
@@ -155,7 +155,7 @@ final class RecordCoordinator {
                 .appendingPathComponent(path)
                 .appending(".\(RecordFileType.image.fileExtension)")
 
-            self.imageWriter.record(image: uiimage, to: imagePath)
+            self.imageWriter.record(image: uiImage, to: imagePath)
         }
     }
 
