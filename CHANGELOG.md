@@ -4,8 +4,12 @@
 
 ### Vision
 - Added new `ConstructionCone` class to `DetectionClass`
+- Added method `set(visionManager:)` to `VisionPresentationViewController`
 - Improved delivery of camera parameters in `CameraVideoSource`
 - Fixed the bug with unrecorded session
+- Move `VisionPresentationViewController` to `MapboxVisionNative` module
+- Removed methods `present(frame:)`, `present(segmentation:)` and `present(detections:)`. You need to call `set(visionManager:)` to set up `VisionPresentationViewController`
+- Renamed property `frameVisualizationMode` to `visualizationMode` in `VisionPresentationViewController`
 
 ## 0.9.0
 

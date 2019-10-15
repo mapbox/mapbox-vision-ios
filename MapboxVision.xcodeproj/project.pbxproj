@@ -26,12 +26,8 @@
 		2E245B1C215A57D2008F57D1 /* OperationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E245B1B215A57D2008F57D1 /* OperationMode.swift */; };
 		2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B828523058986001494E5 /* FileManager+Helpers.swift */; };
 		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */; };
 		2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23E20EFD651003431B3 /* VisionManager.swift */; };
 		2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */; };
-		2E4EE25120F05045003431B3 /* SegmentationDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */; };
-		2E4EE25220F05045003431B3 /* blend.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE24320EFD651003431B3 /* blend.metal */; };
-		2E4EE25320F05045003431B3 /* DetectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE24420EFD651003431B3 /* DetectionsView.swift */; };
 		2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE25420F05370003431B3 /* VideoSettings.swift */; };
 		2E4EE27320F05652003431B3 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23820EFD5BB003431B3 /* Platform.swift */; };
 		2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */; };
@@ -160,12 +156,8 @@
 		2E4EE23420EFD5BA003431B3 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		2E4EE23820EFD5BB003431B3 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreConfig.swift; sourceTree = "<group>"; };
-		2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamView.swift; sourceTree = "<group>"; };
 		2E4EE23E20EFD651003431B3 /* VisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManager.swift; sourceTree = "<group>"; };
 		2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionPresentationViewController.swift; sourceTree = "<group>"; };
-		2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentationDrawer.swift; sourceTree = "<group>"; };
-		2E4EE24320EFD651003431B3 /* blend.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = blend.metal; sourceTree = "<group>"; };
-		2E4EE24420EFD651003431B3 /* DetectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsView.swift; sourceTree = "<group>"; };
 		2E4EE25420F05370003431B3 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
 		2E4EE29220F05843003431B3 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		2E4EE29920F058B6003431B3 /* UserDefaults+DefaultValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+DefaultValue.swift"; sourceTree = "<group>"; };
@@ -442,10 +434,6 @@
 		2E4EE24520EFD651003431B3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE24320EFD651003431B3 /* blend.metal */,
-				2E4EE24420EFD651003431B3 /* DetectionsView.swift */,
-				2E4EE24220EFD651003431B3 /* SegmentationDrawer.swift */,
-				2E4EE23D20EFD651003431B3 /* VideoStreamView.swift */,
 				2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */,
 			);
 			path = View;
@@ -868,7 +856,6 @@
 				2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */,
 				2EDD8707219ED89E00760C6D /* Constants.swift in Sources */,
 				2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */,
-				2E4EE25320F05045003431B3 /* DetectionsView.swift in Sources */,
 				2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */,
 				2E4EE28320F05665003431B3 /* DeviceInfoProvider.swift in Sources */,
 				B5BD9F6F211C69FF001EE97F /* RecordingQuota.swift in Sources */,
@@ -880,7 +867,6 @@
 				2E4EE27D20F05661003431B3 /* VideoRecorder.swift in Sources */,
 				2E81BBF1222E9FA900C4B49C /* VisionManagerDelegate.swift in Sources */,
 				2E539DE9210F00190058D9B2 /* SessionManager.swift in Sources */,
-				2E4EE25120F05045003431B3 /* SegmentationDrawer.swift in Sources */,
 				2E7F14EC22896D0600BAF585 /* ManagedSynchronizer.swift in Sources */,
 				2E4EE2AA20F0590F003431B3 /* MotionManager.swift in Sources */,
 				2E7F14FB228E2D1400BAF585 /* BaseVisionManager.swift in Sources */,
@@ -889,14 +875,12 @@
 				2E4EE27C20F05661003431B3 /* FileRecorder.swift in Sources */,
 				2E7F1501228F0E0B00BAF585 /* VisionManagerProtocol.swift in Sources */,
 				B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */,
-				2E4EE24C20F05045003431B3 /* VideoStreamView.swift in Sources */,
 				2E4EE27F20F05661003431B3 /* RecordCoordinator.swift in Sources */,
 				2E22F1992108870B0093F043 /* VideoBuffer.swift in Sources */,
 				2EC332A3217E02BA00E041FE /* String.swift in Sources */,
 				2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */,
 				2E4EE27E20F05661003431B3 /* ImageRecorder.swift in Sources */,
 				2E7F14EE22898EF200BAF585 /* SessionRecorder.swift in Sources */,
-				2E4EE25220F05045003431B3 /* blend.metal in Sources */,
 				5A3C9D9322C3B1C300700DC6 /* VisionManagerNativeProtocol.swift in Sources */,
 				2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */,
 				2EBE10E92301816600CE87CE /* Country+SyncRegion.swift in Sources */,

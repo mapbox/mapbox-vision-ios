@@ -79,10 +79,12 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
 
         // create a custom video source and subscribe to receiving new video samples
         fileVideoSource = FileVideoSource(url: Bundle.main.url(forResource: "video", withExtension: "mp4")!)
-        fileVideoSource.add(observer: self)
 
         // create VisionManager with a custom video source
         visionManager = VisionManager.create(videoSource: fileVideoSource)
+
+        // configure view to display sample buffers from video source
+        visionViewController.set(visionManager: visionManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -109,14 +111,5 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
     deinit {
         // free up VisionManager's resources
         visionManager.destroy()
-    }
-}
-
-extension ExternalCameraViewController: VideoSourceObserver {
-    func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
-        DispatchQueue.main.async { [weak self] in
-            // display received sample buffer by passing it to presentation controller
-            self?.visionViewController.present(sampleBuffer: videoSample.buffer)
-        }
     }
 }
