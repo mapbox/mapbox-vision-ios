@@ -46,13 +46,11 @@ final class SessionRecorder {
     }
 
     private func record() {
-        do {
-            try dependencies.recorder.startRecording(referenceTime: dependencies.getSeconds(),
-                                                     directory: currentMode.path,
-                                                     videoSettings: dependencies.videoSettings)
-        } catch RecordCoordinatorError.cantStartNotReady {
-            hasPendingRecordingRequest = true
-        } catch {}
+        dependencies.recorder.startRecording(referenceTime: dependencies.getSeconds(),
+                                                 directory: currentMode.path,
+                                             videoSettings: dependencies.videoSettings) { [weak self] in
+            self?.hasPendingRecordingRequest = true
+        }
     }
 }
 

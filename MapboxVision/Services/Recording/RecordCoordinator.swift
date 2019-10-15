@@ -33,7 +33,12 @@ final class RecordCoordinator {
     }
 
     private var trimRequestCache = [Int: [VideoTrimRequest]]()
-    private(set) var isRecording: Bool = false
+    var isRecording: Bool {
+        return processingQueue.sync {
+            isRecordingInternal
+        }
+    }
+    private var isRecordingInternal: Bool = false
     private var isReady: Bool = true
     weak var delegate: RecordCoordinatorDelegate?
 
@@ -61,16 +66,16 @@ final class RecordCoordinator {
         videoRecorder.delegate = self
     }
 
-    func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings) throws {
-        guard !isRecording else { throw RecordCoordinatorError.cantStartAlreadyRecording }
-        guard isReady else { throw RecordCoordinatorError.cantStartNotReady }
-
+    func startRecording(referenceTime: Float, directory: String? = nil, videoSettings: VideoSettings, onFail: @escaping () -> Void) {
         processingQueue.async { [weak self] in
-            guard let self = self else { return }
+            guard let self = self, !self.isRecordingInternal, self.isReady else {
+                onFail()
+                return
+            }
 
             self.currentVideoSettings = videoSettings
 
-            self.isRecording = true
+            self.isRecordingInternal = true
             self.currentReferenceTime = referenceTime
             self.currentVideoIsFull = self.savesSourceVideo
 
@@ -96,14 +101,12 @@ final class RecordCoordinator {
     }
 
     func stopRecording() {
-        guard isRecording, isReady else { return }
-
-        stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
-
         processingQueue.async { [weak self] in
-            guard let self = self else { return }
+            guard let self = self, self.isRecordingInternal, self.isReady else { return }
 
-            self.isRecording = false
+            self.stopRecordingInBackgroundTask = UIApplication.shared.beginBackgroundTask()
+
+            self.isRecordingInternal = false
             self.isReady = false
             self.currentEndTime = DispatchTime.now()
             self.videoRecorder.stopRecording()
@@ -111,89 +114,117 @@ final class RecordCoordinator {
     }
 
     func handleFrame(_ sampleBuffer: CMSampleBuffer) {
-        guard isRecording else { return }
-        videoRecorder.handleFrame(sampleBuffer)
+        processingQueue.async { [weak self] in
+            guard let self = self, self.isRecordingInternal else { return }
+            self.videoRecorder.handleFrame(sampleBuffer)
+        }
     }
 
     func makeClip(from startTime: Float, to endTime: Float) {
-        guard
-            let referenceTime = currentReferenceTime,
-            let recordingPath = currentRecordingPath,
-            let videoSettings = currentVideoSettings
-        else { return }
+        processingQueue.async { [weak self] in
+            guard
+                let self = self,
+                let referenceTime = self.currentReferenceTime
+            else { return }
 
-        let relativeStart = startTime - referenceTime
-        let relativeEnd = endTime - referenceTime
-        let chunkLength = videoRecorder.chunkLength
+            let relativeStart = startTime - referenceTime
+            let relativeEnd = endTime - referenceTime
+            let chunkLength = self.videoRecorder.chunkLength
 
-        let startChunk = chunkLength == 0 ? 0 : Int(floor(relativeStart / chunkLength))
-        let endChunk = chunkLength == 0 ? 0 : Int(floor(relativeEnd / chunkLength))
+            let startChunk = chunkLength == 0 ? 0 : Int(floor(relativeStart / chunkLength))
+            let endChunk = chunkLength == 0 ? 0 : Int(floor(relativeEnd / chunkLength))
 
-        let clipStartTime = relativeStart - Float(startChunk) * chunkLength
-        let clipEndTime = relativeEnd - Float(endChunk) * chunkLength
-
-        if startChunk != endChunk {
-            // trim start clip
-            let startJointTime = Float(startChunk + 1) * chunkLength
-            let startSourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
-            let startName = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
-            let startLog = VideoLog(name: startName.lastPathComponent,
-                                    start: startTime,
-                                    end: referenceTime + startJointTime)
-            let trimRequest = VideoTrimRequest(sourcePath: startSourcePath,
-                                               destinationPath: startName,
-                                               clipStart: clipStartTime,
-                                               clipEnd: chunkLength,
-                                               log: startLog)
-            trimClip(chunk: startChunk, request: trimRequest)
-
-            // copy all in-between clips
-            for chunk in (startChunk + 1)..<endChunk {
-                let clipStart = Float(chunk) * chunkLength
-                let clipEnd = Float(chunk + 1) * chunkLength
-                copyClip(chunk: chunk, clipStart: clipStart, clipEnd: clipEnd)
+            if startChunk != endChunk {
+                self.clipFrom(startChunk: startChunk, endChunk: endChunk, from: startTime, to: endTime, relativeStart: relativeStart, relativeEnd: relativeEnd)
+            } else {
+                self.clipFrom(chunk: startChunk, from: startTime, to: endTime, relativeStart: relativeStart, relativeEnd: relativeEnd)
             }
-
-            // trim end clip
-            let endJointTime = Float(endChunk) * chunkLength
-            let endSourcePath = chunkPath(for: endChunk, fileExtension: videoSettings.fileExtension)
-            let endName = recordingPath.videoClipPath(start: endJointTime, end: relativeEnd)
-            let endLog = VideoLog(name: endName.lastPathComponent,
-                                  start: referenceTime + endJointTime,
-                                  end: endTime)
-            let endTrimRequest = VideoTrimRequest(sourcePath: endSourcePath,
-                                                  destinationPath: endName,
-                                                  clipStart: 0,
-                                                  clipEnd: clipEndTime,
-                                                  log: endLog)
-            trimClip(chunk: endChunk, request: endTrimRequest)
-        } else {
-            let sourcePath = chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
-            let path = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
-            let log = VideoLog(name: path.lastPathComponent,
-                               start: startTime,
-                               end: endTime)
-            let trimRequest = VideoTrimRequest(sourcePath: sourcePath,
-                                               destinationPath: path,
-                                               clipStart: clipStartTime,
-                                               clipEnd: clipEndTime,
-                                               log: log)
-            trimClip(chunk: startChunk, request: trimRequest)
         }
     }
 
     func saveImage(image: Image, path: String) {
-        guard let recordingPath = currentRecordingPath else { return }
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
+            guard let recordingPath = self.currentRecordingPath else { return }
 
-        guard let uiimage = image.getUIImage() else {
-            assertionFailure("ERROR: Unable to convert image to UIImage")
-            return
+            guard let uiImage = image.getUIImage() else {
+                assertionFailure("ERROR: Unable to convert image to UIImage")
+                return
+            }
+            let imagePath = recordingPath.imagesDirectoryPath
+                .appendingPathComponent(path)
+                .appending(".\(RecordFileType.image.fileExtension)")
+
+            self.imageWriter.record(image: uiImage, to: imagePath)
         }
-        let imagePath = recordingPath.imagesDirectoryPath
-            .appendingPathComponent(path)
-            .appending(".\(RecordFileType.image.fileExtension)")
+    }
 
-        imageWriter.record(image: uiimage, to: imagePath)
+    private func clipFrom(startChunk: Int, endChunk: Int, from startTime: Float, to endTime: Float, relativeStart: Float, relativeEnd: Float) {
+        guard
+            let referenceTime = self.currentReferenceTime,
+            let recordingPath = self.currentRecordingPath,
+            let videoSettings = self.currentVideoSettings
+        else { return }
+        let chunkLength = self.videoRecorder.chunkLength
+        let clipStartTime = relativeStart - Float(startChunk) * chunkLength
+        let clipEndTime = relativeEnd - Float(endChunk) * chunkLength
+
+        // trim start clip
+        let startJointTime = Float(startChunk + 1) * chunkLength
+        let startSourcePath = self.chunkPath(for: startChunk, fileExtension: videoSettings.fileExtension)
+        let startName = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
+        let startLog = VideoLog(name: startName.lastPathComponent,
+                                start: startTime,
+                                end: referenceTime + startJointTime)
+        let trimRequest = VideoTrimRequest(sourcePath: startSourcePath,
+                                           destinationPath: startName,
+                                           clipStart: clipStartTime,
+                                           clipEnd: chunkLength,
+                                           log: startLog)
+        self.trimClip(chunk: startChunk, request: trimRequest)
+
+        // copy all in-between clips
+        for chunk in (startChunk + 1)..<endChunk {
+            let clipStart = Float(chunk) * chunkLength
+            let clipEnd = Float(chunk + 1) * chunkLength
+            self.copyClip(chunk: chunk, clipStart: clipStart, clipEnd: clipEnd)
+        }
+
+        // trim end clip
+        let endJointTime = Float(endChunk) * chunkLength
+        let endSourcePath = self.chunkPath(for: endChunk, fileExtension: videoSettings.fileExtension)
+        let endName = recordingPath.videoClipPath(start: endJointTime, end: relativeEnd)
+        let endLog = VideoLog(name: endName.lastPathComponent,
+                              start: referenceTime + endJointTime,
+                              end: endTime)
+        let endTrimRequest = VideoTrimRequest(sourcePath: endSourcePath,
+                                              destinationPath: endName,
+                                              clipStart: 0,
+                                              clipEnd: clipEndTime,
+                                              log: endLog)
+        self.trimClip(chunk: endChunk, request: endTrimRequest)
+    }
+
+    private func clipFrom(chunk: Int, from startTime: Float, to endTime: Float, relativeStart: Float, relativeEnd: Float) {
+        guard
+            let recordingPath = self.currentRecordingPath,
+            let videoSettings = self.currentVideoSettings
+        else { return }
+        let chunkLength = self.videoRecorder.chunkLength
+        let clipStartTime = relativeStart - Float(chunk) * chunkLength
+        let clipEndTime = relativeEnd - Float(chunk) * chunkLength
+
+        let sourcePath = self.chunkPath(for: chunk, fileExtension: videoSettings.fileExtension)
+        let path = recordingPath.videoClipPath(start: relativeStart, end: relativeEnd)
+        let log = VideoLog(name: path.lastPathComponent,
+                           start: startTime,
+                           end: endTime)
+        let trimRequest = VideoTrimRequest(sourcePath: sourcePath,
+                                           destinationPath: path,
+                                           clipStart: clipStartTime,
+                                           clipEnd: clipEndTime,
+                                           log: log)
+        self.trimClip(chunk: chunk, request: trimRequest)
     }
 
     private func recordingStopped() {
@@ -288,34 +319,37 @@ final class RecordCoordinator {
 
 extension RecordCoordinator: VideoBufferDelegate {
     func chunkCut(number: Int, finished: Bool) {
-        if currentVideoIsFull, let startTime = currentStartTime {
-            let clipStart = Float(number) * videoRecorder.chunkLength
-            let clipEnd: Float
+        processingQueue.async { [weak self] in
+            guard let self = self else { return }
+            if self.currentVideoIsFull, let startTime = self.currentStartTime {
+                let clipStart = Float(number) * self.videoRecorder.chunkLength
+                let clipEnd: Float
 
-            if finished, let endTime = currentEndTime {
-                let sessionDuration = Float(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
-                clipEnd = sessionDuration - clipStart
-            } else {
-                clipEnd = Float(number + 1) * videoRecorder.chunkLength
+                if finished, let endTime = self.currentEndTime {
+                    let sessionDuration = Float(endTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000_000
+                    clipEnd = sessionDuration - clipStart
+                } else {
+                    clipEnd = Float(number + 1) * self.videoRecorder.chunkLength
+                }
+
+                self.copyClip(chunk: number, clipStart: clipStart, clipEnd: clipEnd)
             }
 
-            copyClip(chunk: number, clipStart: clipStart, clipEnd: clipEnd)
-        }
-
-        let group = DispatchGroup()
-        if let requests = trimRequestCache.removeValue(forKey: number) {
-            for request in requests {
-                group.enter()
-                trimClip(chunk: number, request: request) {
-                    group.leave()
+            let group = DispatchGroup()
+            if let requests = self.trimRequestCache.removeValue(forKey: number) {
+                for request in requests {
+                    group.enter()
+                    self.trimClip(chunk: number, request: request) {
+                        group.leave()
+                    }
                 }
             }
-        }
 
-        group.notify(queue: processingQueue) { [weak self] in
-            guard let self = self else { return }
-            if finished {
-                self.recordingStopped()
+            group.notify(queue: self.processingQueue) { [weak self] in
+                guard let self = self else { return }
+                if finished {
+                    self.recordingStopped()
+                }
             }
         }
     }
