@@ -17,14 +17,14 @@ open class CameraVideoSource: ObservableVideoSource {
      - Parameter preset: Preset for camera session.
      */
     public init(preset: AVCaptureSession.Preset = .iFrame960x540) {
-        self.cameraSession = AVCaptureSession()
-        self.camera = AVCaptureDevice.default(for: .video)
+        cameraSession = AVCaptureSession()
 
         super.init()
 
         isExternal = false
 
-        configureSession(preset: preset)
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
+        configureSession(captureDevice: captureDevice, preset: preset)
 
         set(orientation: UIApplication.shared.statusBarOrientation.deviceOrientation)
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged),
@@ -49,15 +49,14 @@ open class CameraVideoSource: ObservableVideoSource {
 
     // MARK: - Private
 
-    private let camera: AVCaptureDevice?
     private var dataOutput: AVCaptureVideoDataOutput?
 
-    private func configureSession(preset: AVCaptureSession.Preset) {
-        guard let captureDevice = camera
-        else { return }
+    private var captureDeviceInput: AVCaptureDeviceInput? {
+        return cameraSession.inputs.first { $0 is AVCaptureDeviceInput } as? AVCaptureDeviceInput
+    }
 
-        guard let deviceInput = try? AVCaptureDeviceInput(device: captureDevice)
-        else { return }
+    private func configureSession(captureDevice: AVCaptureDevice, preset: AVCaptureSession.Preset) {
+        guard let deviceInput = try? AVCaptureDeviceInput(device: captureDevice) else { return }
 
         cameraSession.beginConfiguration()
 
@@ -78,9 +77,7 @@ open class CameraVideoSource: ObservableVideoSource {
             cameraSession.addOutput(dataOutput)
         }
 
-        if let connection = dataOutput.connection(with: .video), connection.isCameraIntrinsicMatrixDeliverySupported {
-            connection.isCameraIntrinsicMatrixDeliveryEnabled = true
-        }
+        enableCameraIntrinsicMatrixDelivery()
 
         cameraSession.commitConfiguration()
 
@@ -103,20 +100,24 @@ open class CameraVideoSource: ObservableVideoSource {
             let matrix: matrix_float3x3 = attachment.withUnsafeBytes { $0.pointee }
             focalPixelX = matrix[0, 0]
             focalPixelY = matrix[1, 1]
-        } else if let fov = formatFieldOfView {
-            let pixel = CameraVideoSource.focalPixel(fov: fov, dimension: width)
-            focalPixelX = pixel
-            focalPixelY = pixel
         } else {
-            focalPixelX = -1
-            focalPixelY = -1
+            enableCameraIntrinsicMatrixDelivery()
+
+            if let fov = formatFieldOfView {
+                let pixel = CameraVideoSource.focalPixel(fov: fov, dimension: width)
+                focalPixelX = pixel
+                focalPixelY = pixel
+            } else {
+                focalPixelX = -1
+                focalPixelY = -1
+            }
         }
 
         return CameraParameters(width: width, height: height, focalXPixels: focalPixelX, focalYPixels: focalPixelY)
     }
 
     private var formatFieldOfView: Float? {
-        guard let fov = camera?.activeFormat.videoFieldOfView else { return nil }
+        guard let fov = captureDeviceInput?.device.activeFormat.videoFieldOfView else { return nil }
         return fov > 0 ? fov : nil
     }
 
@@ -127,6 +128,15 @@ open class CameraVideoSource: ObservableVideoSource {
 
     private func set(orientation: UIDeviceOrientation) {
         dataOutput?.connection(with: .video)?.set(deviceOrientation: orientation)
+    }
+
+    private func enableCameraIntrinsicMatrixDelivery() {
+        guard let connection = dataOutput?.connection(with: .video),
+            connection.isCameraIntrinsicMatrixDeliverySupported,
+            !connection.isCameraIntrinsicMatrixDeliveryEnabled
+        else { return }
+
+        connection.isCameraIntrinsicMatrixDeliveryEnabled = true
     }
 
     // MARK: - Observations

@@ -2,6 +2,12 @@
 @testable import MapboxVisionNative
 
 class MockNative: VisionManagerNativeProtocol {
+    var useMergedModel = true
+
+    weak var delegate: VisionDelegate?
+
+    var videoSource: MBVVideoSource?
+
     private(set) var isDestroyed: Bool = false
 
     func setSegmentationFixedFPS(_: Float) {}
@@ -18,7 +24,7 @@ class MockNative: VisionManagerNativeProtocol {
         return MockSensors()
     }
 
-    func start(_: VisionDelegate) {}
+    func start() {}
 
     func stop() {}
 
@@ -49,4 +55,8 @@ class MockNative: VisionManagerNativeProtocol {
     func world(toGeo worldCoordinates: WorldCoordinate) -> GeoCoordinate? {
         return nil
     }
+
+    func setFixedFPS(for modelType: MLModelType, FPS: Float) {}
+
+    func setDynamicFPS(for modelType: MLModelType, minFPS: Float, maxFPS: Float) {}
 }

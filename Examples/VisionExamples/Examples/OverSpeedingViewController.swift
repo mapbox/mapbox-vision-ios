@@ -26,13 +26,15 @@ class OverSpeedingViewController: UIViewController {
 
         // create a video source obtaining buffers from camera module
         videoSource = CameraVideoSource()
-        videoSource.add(observer: self)
 
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
         // create VisionSafetyManager and register as its delegate to receive safety related events
         visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager)
         visionSafetyManager.delegate = self
+
+        // configure view to display sample buffers from video source
+        visionViewController.set(visionManager: visionManager)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +85,8 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
         }
     }
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager,
+                             didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
         DispatchQueue.main.async { [weak self] in
             // save currenly applied road restrictions
             self?.restrictions = roadRestrictions
@@ -98,15 +101,6 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
             // decide whether speed limit is exceeded by comparing it with the current speed
             let isOverSpeeding = state.speed > restrictions.speedLimits.speedLimitRange.max
             self?.alertView.isHidden = !isOverSpeeding
-        }
-    }
-}
-
-extension OverSpeedingViewController: VideoSourceObserver {
-    public func videoSource(_ videoSource: VideoSource, didOutput videoSample: VideoSample) {
-        DispatchQueue.main.async { [weak self] in
-            // display received sample buffer by passing it to presentation controller
-            self?.visionViewController.present(sampleBuffer: videoSample.buffer)
         }
     }
 }

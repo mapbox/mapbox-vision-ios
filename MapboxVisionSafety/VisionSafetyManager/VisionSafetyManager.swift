@@ -14,21 +14,6 @@ public final class VisionSafetyManager {
      Fabric method for creating a `VisionSafetyManager` instance.
 
      - Parameter visionManager: Instance of `VisionManager`.
-     - Parameter delegate: Delegate for `VisionSafetyManager`. Delegate is held as a strong reference until `destroy` is called.
-
-     - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
-     */
-    @available(*, deprecated, message: "This will be removed in 0.10.0. Use method create(visionManager:) instead and set delegate as property.")
-    public static func create(visionManager: VisionManagerProtocol, delegate: VisionSafetyManagerDelegate?) -> VisionSafetyManager {
-        let manager = create(visionManager: visionManager)
-        manager.delegate = delegate
-        return manager
-    }
-
-    /**
-     Fabric method for creating a `VisionSafetyManager` instance.
-
-     - Parameter visionManager: Instance of `VisionManager`.
 
      - Returns: Instance of `VisionSafetyManager` configured with `VisionManager` instance and delegate.
      */
