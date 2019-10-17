@@ -1,15 +1,24 @@
 # Changelog
 
-## 0.10.0 - Unreleased
+## 0.10.0
 
 ### Vision
-- Added new `ConstructionCone` class to `DetectionClass`
+- Added detection of two adjacent lanes
 - Added method `set(visionManager:)` to `VisionPresentationViewController`
+- Added new `ConstructionCone` class to `DetectionClass`
+- Completely new segmentation model which has the following classes: Crosswalk, Hood, MarkupDashed, MarkupDouble, MarkupOther, MarkupSolid, Other, Road, RoadEdge, Sidewalk. Improved performance at night.
 - Improved delivery of camera parameters in `CameraVideoSource`
+- Improved performance of lanes detection
+- Fixed a crash on `VisionReplayManager` destroy
 - Fixed the bug with unrecorded session
-- Move `VisionPresentationViewController` to `MapboxVisionNative` module
-- Removed methods `present(frame:)`, `present(segmentation:)` and `present(detections:)`. You need to call `set(visionManager:)` to set up `VisionPresentationViewController`
+- Fixed a bug when hash table was mutated while being enumerated
+- Moved `VisionPresentationViewController` to `MapboxVisionNative` module
+- Made unavailable methods `present(frame:)`, `present(segmentation:)` and `present(detections:)`. You need to call `set(visionManager:)` to set up `VisionPresentationViewController`
 - Renamed property `frameVisualizationMode` to `visualizationMode` in `VisionPresentationViewController`
+- Updated detection models, added construction cone class, improved metrics
+
+## AR
+- Changed `VisionARViewController` to show camera frames as long as `VisionARManager` exists
 
 ## 0.9.0
 
