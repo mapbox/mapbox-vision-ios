@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 - Unreleased
+
+### Vision
+
+### AR
+
+### Safety
+
 ## 0.10.0
 
 ### Vision
@@ -17,7 +25,7 @@
 - Renamed property `frameVisualizationMode` to `visualizationMode` in `VisionPresentationViewController`
 - Updated detection models, added construction cone class, improved metrics
 
-## AR
+### AR
 - Changed `VisionARViewController` to show camera frames as long as `VisionARManager` exists
 
 ## 0.9.0
