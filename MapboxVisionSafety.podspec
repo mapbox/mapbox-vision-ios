@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionSafety"
-  s.version      = "0.10.0"
+  s.version      = "0.11.0"
   s.summary      = "Safety features on top of Vision"
 
   s.homepage     = 'https://www.mapbox.com/vision/'
