@@ -26,9 +26,9 @@ class ARNavigationViewController: UIViewController {
 
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
-        // create VisionARManager and register as its delegate to receive AR related events
+        // create VisionARManager
         visionARManager = VisionARManager.create(visionManager: visionManager)
-        /// configure ar view to display AR navigation
+        // configure AR view to display AR navigation
         visionARViewController.set(arManager: visionARManager)
 
         let origin = CLLocationCoordinate2D()
