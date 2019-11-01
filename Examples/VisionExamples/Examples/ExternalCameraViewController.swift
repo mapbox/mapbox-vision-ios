@@ -82,6 +82,7 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
 
         // create VisionManager with a custom video source
         visionManager = VisionManager.create(videoSource: fileVideoSource)
+        visionManager.delegate = self
 
         // configure view to display sample buffers from video source
         visionViewController.set(visionManager: visionManager)
@@ -90,7 +91,6 @@ class ExternalCameraViewController: UIViewController, VisionManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        visionManager.delegate = self
         visionManager.start()
         fileVideoSource.start()
     }

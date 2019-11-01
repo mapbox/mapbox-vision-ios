@@ -29,6 +29,7 @@ class OverSpeedingViewController: UIViewController {
 
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
+        visionManager.delegate = self
         // create VisionSafetyManager and register as its delegate to receive safety related events
         visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager)
         visionSafetyManager.delegate = self
@@ -40,7 +41,6 @@ class OverSpeedingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        visionManager.delegate = self
         visionManager.start()
         videoSource.start()
     }
