@@ -3,7 +3,7 @@ import Foundation
 extension Country {
     var syncRegion: SyncRegion? {
         switch self {
-        case .USA, .UK, .other:
+        case .USA, .UK, .germany, .other:
             return .other
         case .china:
             return .china
