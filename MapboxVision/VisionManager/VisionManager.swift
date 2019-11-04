@@ -107,8 +107,10 @@ public final class VisionManager: BaseVisionManager {
         guard case .started = state else {
             throw VisionManagerError.startRecordingBeforeStart
         }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .external(path: path))
+//        dependencies.native.startRecordint(to: path)
+
+//        dependencies.recorder.stop()
+//        dependencies.recorder.start(mode: .external(path: path))
     }
 
     /**
@@ -123,8 +125,10 @@ public final class VisionManager: BaseVisionManager {
             assertionFailure("VisionManager should be started and recording")
             return
         }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .internal)
+        // dependencies.native.stopRecording()
+
+//        dependencies.recorder.stop()
+//        dependencies.recorder.start(mode: .internal)
     }
 
     /**
@@ -188,7 +192,7 @@ public final class VisionManager: BaseVisionManager {
 
         state = .initialized(videoSource: videoSource)
 
-        dependencies.recorder.delegate = self
+//        dependencies.recorder.delegate = self
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
     }
 
@@ -196,9 +200,9 @@ public final class VisionManager: BaseVisionManager {
         destroy()
     }
 
-    private var isSyncAllowed: Bool {
-        return currentCountry.syncRegion != nil
-    }
+//    private var isSyncAllowed: Bool {
+//        return currentCountry.syncRegion != nil
+//    }
 
     private func startVideoStream() {
         guard case let .started(videoSource) = state else { return }
@@ -215,7 +219,7 @@ public final class VisionManager: BaseVisionManager {
         startVideoStream()
         dependencies.native.start()
 
-        dependencies.recorder.start(mode: .internal)
+//        dependencies.recorder.start(mode: .internal)
     }
 
     private func pause() {
@@ -223,46 +227,46 @@ public final class VisionManager: BaseVisionManager {
         stopVideoStream()
         dependencies.native.stop()
 
-        dependencies.recorder.stop()
+//        dependencies.recorder.stop()
     }
 
-    private func configureRecording(oldCountry: Country, newCountry: Country) {
-        guard
-            state.isStarted,
-            dependencies.recorder.isInternal,
-            let oldRegion = oldCountry.syncRegion,
-            oldRegion != newCountry.syncRegion
-        else { return }
+//    private func configureRecording(oldCountry: Country, newCountry: Country) {
+//        guard
+//            state.isStarted,
+//            dependencies.recorder.isInternal,
+//            let oldRegion = oldCountry.syncRegion,
+//            oldRegion != newCountry.syncRegion
+//        else { return }
+//
+//        if let path = currentRecordingPath {
+//            recordingToCountryCache[path] = oldCountry
+//        }
+//        dependencies.recorder.stop()
+//        dependencies.recorder.start(mode: .internal)
+//    }
 
-        if let path = currentRecordingPath {
-            recordingToCountryCache[path] = oldCountry
-        }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .internal)
-    }
+//    private func configureSync(oldCountry: Country, newCountry: Country) {
+//        if newCountry.syncRegion == nil {
+//            dependencies.synchronizer.stopSync()
+//            return
+//        }
+//
+//        guard
+//            let newRegion = newCountry.syncRegion,
+//            oldCountry.syncRegion != newRegion
+//        else { return }
+//
+//        let dataSource = SyncRecordDataSource(region: newRegion)
+//        dependencies.synchronizer.stopSync()
+//        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
+//        dependencies.synchronizer.sync()
+//    }
 
-    private func configureSync(oldCountry: Country, newCountry: Country) {
-        if newCountry.syncRegion == nil {
-            dependencies.synchronizer.stopSync()
-            return
-        }
-
-        guard
-            let newRegion = newCountry.syncRegion,
-            oldCountry.syncRegion != newRegion
-        else { return }
-
-        let dataSource = SyncRecordDataSource(region: newRegion)
-        dependencies.synchronizer.stopSync()
-        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
-        dependencies.synchronizer.sync()
-    }
-
-    private func trySync() {
-        if isSyncAllowed {
-            dependencies.synchronizer.sync()
-        }
-    }
+//    private func trySync() {
+//        if isSyncAllowed {
+//            dependencies.synchronizer.sync()
+//        }
+//    }
 
     override func prepareForBackground() {
         guard state.isStarted else { return }
@@ -276,15 +280,15 @@ public final class VisionManager: BaseVisionManager {
         resume()
     }
 
-    override public func onCountryUpdated(_ country: Country) {
-        let oldCountry = currentCountry
-        currentCountry = country
-
-        configureRecording(oldCountry: oldCountry, newCountry: country)
-        configureSync(oldCountry: oldCountry, newCountry: country)
-
-        super.onCountryUpdated(country)
-    }
+//    override public func onCountryUpdated(_ country: Country) {
+//        let oldCountry = currentCountry
+//        currentCountry = country
+//
+//        configureRecording(oldCountry: oldCountry, newCountry: country)
+//        configureSync(oldCountry: oldCountry, newCountry: country)
+//
+//        super.onCountryUpdated(country)
+//    }
 }
 
 /// :nodoc:
@@ -299,7 +303,7 @@ extension VisionManager: VideoSourceObserver {
 
         guard state.isStarted else { return }
 
-        dependencies.recorder.handleFrame(videoSample.buffer)
+        dependencies.recorder.handle(frame: videoSample.buffer)
         dependencies.native.sensors.setImage(pixelBuffer)
     }
 
@@ -308,29 +312,29 @@ extension VisionManager: VideoSourceObserver {
     }
 }
 
-extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {
-        currentRecordingPath = path.lastPathComponent
-    }
-
-    func recordingStopped(recordingPath: RecordingPath) {
-        currentRecordingPath = nil
-
-        let country = recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent)
-            ?? currentCountry
-
-        try? handle(recordingPath: recordingPath, country: country)
-        trySync()
-    }
-
-    private func handle(recordingPath: RecordingPath, country: Country) throws {
-        guard recordingPath.basePath != .custom else { return }
-
-        guard let syncRegion = country.syncRegion else {
-            try recordingPath.delete()
-            return
-        }
-
-        try recordingPath.move(to: .recordings(syncRegion))
-    }
-}
+//extension VisionManager: RecordCoordinatorDelegate {
+//    func recordingStarted(path: String) {
+//        currentRecordingPath = path.lastPathComponent
+//    }
+//
+//    func recordingStopped(recordingPath: RecordingPath) {
+//        currentRecordingPath = nil
+//
+//        let country = recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent)
+//            ?? currentCountry
+//
+//        try? handle(recordingPath: recordingPath, country: country)
+////        trySync()
+//    }
+//
+//    private func handle(recordingPath: RecordingPath, country: Country) throws {
+//        guard recordingPath.basePath != .custom else { return }
+//
+//        guard let syncRegion = country.syncRegion else {
+//            try recordingPath.delete()
+//            return
+//        }
+//
+//        try recordingPath.move(to: .recordings(syncRegion))
+//    }
+//}

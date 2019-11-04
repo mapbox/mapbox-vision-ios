@@ -18,6 +18,12 @@ private extension VideoSettings {
     }
 }
 
+protocol FrameRecordable {
+    func startRecording(filePath: String, settings: VideoSettings)
+    func stopRecording(completion: (() -> Void)?)
+    func handle(frame: CMSampleBuffer)
+}
+
 final class VideoRecorder {
     private var currentAssetWriterInput: AVAssetWriterInput?
     private var currentAssetWriter: AVAssetWriter?
@@ -122,6 +128,16 @@ final class VideoRecorder {
         }
         let currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         completion(.value(currentTime.millis(since: startTime)))
+    }
+}
+
+extension VideoRecorder: FrameRecordable {
+    func startRecording(filePath: String, settings: VideoSettings) {
+        startRecording(to: filePath, settings: settings)
+    }
+
+    func handle(frame: CMSampleBuffer) {
+        handleFrame(frame) { _ in }
     }
 }
 
