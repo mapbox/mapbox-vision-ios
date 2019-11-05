@@ -41,15 +41,17 @@ extension Platform: PlatformInterface {
     func makeVideoClips(inputFilePath: String, outputDirectoryPath: String, clips: [VideoClip], callback: @escaping SuccessCallback) {}
 
     func archiveFiles(filePaths: [String], archivePath: String, callback: @escaping SuccessCallback) {
-        do {
-            try dependencies.archiver?.archive(filePaths.map(URL.init(fileURLWithPath:)),
-                                               destination: URL(fileURLWithPath: archivePath))
-        } catch {
-            assertionFailure("ERROR: archiving failed with error: \(error.localizedDescription)")
-            callback(false)
-            return
-        }
+        DispatchQueue.global(qos: .utility).async {
+            do {
+                try self.dependencies.archiver?.archive(filePaths.map(URL.init(fileURLWithPath:)),
+                                                   destination: URL(fileURLWithPath: archivePath))
+            } catch {
+                assertionFailure("ERROR: archiving failed with error: \(error.localizedDescription)")
+                callback(false)
+                return
+            }
 
-        callback(true)
+            callback(true)
+        }
     }
 }
