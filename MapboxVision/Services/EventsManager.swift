@@ -38,7 +38,6 @@ final class EventsManager {
         )
         manager.sendTurnstileEvent()
         manager.isMetricsEnabled = true
-        manager.isDebugLoggingEnabled = true
     }
 
     func sendEvent(name: String, entries: [String: Any]) {
@@ -49,6 +48,10 @@ final class EventsManager {
 extension EventsManager: NetworkClient {
     func set(baseURL: URL?) {
         manager.baseURL = baseURL
+    }
+
+    func upload(file: String, metadata: TelemetryFileMetadata, completion: @escaping (Error?) -> Void) {
+        manager.postMetadata([metadata], filePaths: [file], completionHandler: completion)
     }
 
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {

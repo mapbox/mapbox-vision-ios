@@ -1,6 +1,8 @@
 import Foundation
 import MapboxVisionNative
 
+typealias TelemetryFileMetadata = [String: String]
+
 final class Platform: NSObject {
     struct Dependencies {
         let recorder: VideoRecorder?
@@ -16,6 +18,10 @@ final class Platform: NSObject {
 }
 
 extension Platform: PlatformInterface {
+    func setSyncUrl(_ url: String) {
+        dependencies.eventsManager.set(baseURL: URL(string: url))
+    }
+
     func sendTelemetry(name: String, entries: [TelemetryEntry]) {
         let entries = Dictionary(entries.map { ($0.key, $0.value) }) { first, _ in
             assertionFailure("Duplicated key in telemetry entries.")
@@ -25,9 +31,8 @@ extension Platform: PlatformInterface {
         dependencies.eventsManager.sendEvent(name: name, entries: entries)
     }
 
-    func sendTelemetryFile(path: String, callback: @escaping SuccessCallback) {
-        dependencies.eventsManager.upload(file: URL(fileURLWithPath: path),
-                                          toFolder: "") { error in callback(error == nil) }
+    func sendTelemetryFile(path: String, metadata: TelemetryFileMetadata, callback: @escaping SuccessCallback) {
+        dependencies.eventsManager.upload(file: path, metadata: metadata) { error in callback(error == nil) }
     }
 
     func startVideoRecording(filePath: String) {
