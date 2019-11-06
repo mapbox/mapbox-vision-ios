@@ -9,7 +9,7 @@ private enum DeviceModel {
 
     enum MajorNumber {
         static let minIphoneVersionWithHighPerformance = 10 // "10" corresponds to 8/8 Plus/X.
-        static let maxIphoneVersionWithHighPerformance = 11 // "11" corresponds to XR/XS/Xs Max.
+        static let maxIphoneVersionWithHighPerformance = 12 // "12" corresponds to 11/11 Pro/11 Pro Max.
     }
 }
 
