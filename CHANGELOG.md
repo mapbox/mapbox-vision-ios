@@ -8,6 +8,14 @@
 
 ### Safety
 
+## 0.10.1
+
+### Vision
+- Increased allowed performance of ML models on iPhone 11 family
+
+### AR
+- Fixed displaying AR in conditions of low GPS accuracy
+
 ## 0.10.0
 
 ### Vision
