@@ -107,10 +107,7 @@ public final class VisionManager: BaseVisionManager {
         guard case .started = state else {
             throw VisionManagerError.startRecordingBeforeStart
         }
-//        dependencies.native.startRecordint(to: path)
-
-//        dependencies.recorder.stop()
-//        dependencies.recorder.start(mode: .external(path: path))
+        dependencies.native.startRecording(to: path)
     }
 
     /**
@@ -125,10 +122,7 @@ public final class VisionManager: BaseVisionManager {
             assertionFailure("VisionManager should be started and recording")
             return
         }
-        // dependencies.native.stopRecording()
-
-//        dependencies.recorder.stop()
-//        dependencies.recorder.start(mode: .internal)
+        dependencies.native.stopRecording()
     }
 
     /**
