@@ -6,6 +6,7 @@ typealias TelemetryFileMetadata = [String: String]
 final class Platform: NSObject {
     struct Dependencies {
         let recorder: VideoRecorder?
+        let videoTrimmer: VideoTrimmer?
         let eventsManager: EventsManager
         let archiver: Archiver?
     }
@@ -43,7 +44,29 @@ extension Platform: PlatformInterface {
         dependencies.recorder?.stopRecording(completion: nil)
     }
 
-    func makeVideoClips(inputFilePath: String, outputDirectoryPath: String, clips: [VideoClip], callback: @escaping SuccessCallback) {}
+    func makeVideoClips(inputFilePath: String, clips: [VideoClip], callback: @escaping SuccessCallback) {
+        guard let videoTrimmer = dependencies.videoTrimmer else {
+            callback(false)
+            return
+        }
+
+        var success = true
+        let group = DispatchGroup()
+
+        for clip in clips {
+            group.enter()
+            videoTrimmer.trimVideo(source: inputFilePath, clip: clip) { error in
+                if error != nil {
+                    success = false
+                }
+                group.leave()
+            }
+        }
+
+        group.notify(queue: DispatchQueue.global(qos: .utility)) {
+            callback(success)
+        }
+    }
 
     func archiveFiles(filePaths: [String], archivePath: String, callback: @escaping SuccessCallback) {
         DispatchQueue.global(qos: .utility).async {

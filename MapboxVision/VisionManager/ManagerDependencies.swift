@@ -38,6 +38,7 @@ struct VisionDependencies {
 
         let platform = Platform(dependencies: Platform.Dependencies(
             recorder: recorder,
+            videoTrimmer: VideoTrimmer(),
             eventsManager: eventsManager,
             archiver: recordArchiver
         ))
@@ -81,6 +82,7 @@ struct ReplayDependencies {
 
         let platform = Platform(dependencies: Platform.Dependencies(
             recorder: nil,
+            videoTrimmer: nil,
             eventsManager: eventsManager,
             archiver: RecordArchiver()
         ))

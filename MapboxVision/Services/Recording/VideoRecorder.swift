@@ -38,7 +38,7 @@ final class VideoRecorder {
         currentAssetWriterInput = assetWriterInput
         assetWriterInput.expectsMediaDataInRealTime = true
 
-        writerQueue.async {
+        writerQueue.sync {
             let outputURL = URL(fileURLWithPath: path)
             let assetWriter: AVAssetWriter
             do {
@@ -56,7 +56,7 @@ final class VideoRecorder {
     }
 
     func stopRecording(completion: (() -> Void)?) {
-        writerQueue.async { [weak self] in
+        writerQueue.sync { [weak self] in
             let cleanup = {
                 self?.isRecording = false
                 self?.currentAssetWriter = nil
@@ -77,7 +77,14 @@ final class VideoRecorder {
             if let currentTime = self.currentTime {
                 writer.endSession(atSourceTime: currentTime)
             }
-            writer.finishWriting(completionHandler: cleanup)
+
+            let sem = DispatchSemaphore(value: 0)
+            writer.finishWriting {
+                sem.signal()
+            }
+            sem.wait()
+            
+            cleanup()
         }
     }
 
