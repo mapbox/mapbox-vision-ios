@@ -5,7 +5,6 @@ private let timeScale: CMTimeScale = 600
 private let fileType: AVFileType = .mp4
 
 enum VideoTrimmerError: LocalizedError {
-    case sourceNotExist
     case sourceNotExportable
 }
 
@@ -64,11 +63,7 @@ final class VideoTrimmer {
     }
 
     func trimVideo(source: String, clip: VideoClip, completion: @escaping TrimCompletion) {
-        guard let sourceURL = URL(string: source) else {
-            completion(VideoTrimmerError.sourceNotExist)
-            return
-        }
-
+        let sourceURL = URL(fileURLWithPath: source)
         let options = [
             AVURLAssetPreferPreciseDurationAndTimingKey: true,
         ]
@@ -108,7 +103,7 @@ final class VideoTrimmer {
             let exportSession = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough)
         else { return }
 
-        exportSession.outputURL = URL(string: clip.path)
+        exportSession.outputURL = URL(fileURLWithPath: clip.path)
         exportSession.outputFileType = fileType
         exportSession.shouldOptimizeForNetworkUse = true
 
