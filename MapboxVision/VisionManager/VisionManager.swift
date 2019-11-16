@@ -141,6 +141,20 @@ public final class VisionManager: BaseVisionManager {
         state = .uninitialized
     }
 
+    // MARK: - Internal
+
+    override func prepareForBackground() {
+        guard state.isStarted else { return }
+        isStoppedForBackground = true
+        pause()
+    }
+
+    override func prepareForForeground() {
+        guard isStoppedForBackground else { return }
+        isStoppedForBackground = false
+        resume()
+    }
+
     // MARK: - Private
 
     private enum State {
@@ -187,6 +201,8 @@ public final class VisionManager: BaseVisionManager {
         state = .initialized(videoSource: videoSource)
 
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
+
+        cleanupTelemetry()
     }
 
     deinit {
@@ -215,16 +231,13 @@ public final class VisionManager: BaseVisionManager {
         dependencies.native.stop()
     }
 
-    override func prepareForBackground() {
-        guard state.isStarted else { return }
-        isStoppedForBackground = true
-        pause()
-    }
-
-    override func prepareForForeground() {
-        guard isStoppedForBackground else { return }
-        isStoppedForBackground = false
-        resume()
+    // Removes old recordings and telemetry since new paths are used in core.
+    // Added in 0.11.0. Remove after reaching major adoption of 0.11.0 or later versions.
+    private func cleanupTelemetry() {
+        let locations: [DocumentsLocation] = [.cache, .currentRecording, .recordings(.china), .recordings(.other)]
+        locations.forEach { location in
+            try? FileManager.default.removeItem(atPath: location.path)
+        }
     }
 }
 
