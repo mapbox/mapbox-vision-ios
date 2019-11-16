@@ -29,15 +29,15 @@ final class EventsManager {
         manager.sendTurnstileEvent()
         manager.isMetricsEnabled = true
     }
-
-    func sendEvent(name: String, entries: [String: Any]) {
-        manager.enqueueEvent(withName: name, attributes: entries)
-    }
 }
 
 extension EventsManager: NetworkClient {
     func set(baseURL: URL?) {
         manager.baseURL = baseURL
+    }
+
+    func sendEvent(name: String, entries: [String: Any]) {
+        manager.enqueueEvent(withName: name, attributes: entries)
     }
 
     func upload(file: String, metadata: TelemetryFileMetadata, completion: @escaping (Error?) -> Void) {

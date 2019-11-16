@@ -20,7 +20,7 @@ private extension VideoSettings {
 
 protocol FrameRecordable {
     func startRecording(to path: String, settings: VideoSettings)
-    func stopRecording(completion: (() -> Void)?)
+    func stopRecording()
     func handle(frame: CMSampleBuffer)
 }
 
@@ -55,14 +55,14 @@ final class VideoRecorder {
         }
     }
 
-    func stopRecording(completion: (() -> Void)?) {
+    func stopRecording() {
         writerQueue.sync {
             let cleanup = {
                 self.isRecording = false
                 self.currentAssetWriter = nil
                 self.startTime = nil
-                completion?()
             }
+
             guard let writer = self.currentAssetWriter, writer.status == .writing else {
                 cleanup()
                 return

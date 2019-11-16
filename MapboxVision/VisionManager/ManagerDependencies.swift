@@ -15,14 +15,13 @@ struct VisionDependencies {
     static func `default`() -> VisionDependencies {
         let recorder = VideoRecorder()
 
-        let platform = Platform(dependencies: Platform.Dependencies(
-            recorder: recorder,
-            videoTrimmer: VideoTrimmer(),
-            eventsManager: EventsManager(),
-            archiver: RecordArchiver()
-        ))
+        let platform = Platform(
+            telemetry: Telemetry(networkClient: EventsManager()),
+            fileSystem: FileSystem(archiver: RecordArchiver()),
+            media: Media(recorder: recorder, videoTrimmer: VideoTrimmer())
+        )
 
-        let native = VisionManagerNative.create(withPlatform: platform)
+        let native = VisionManagerNative.create(with: platform)
 
         let dataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: native,
@@ -45,17 +44,7 @@ struct ReplayDependencies {
             throw CocoaError(.fileNoSuchFile)
         }
         let player = try VideoPlayer(path: videoPath)
-
-        let eventsManager = EventsManager()
-
-        let platform = Platform(dependencies: Platform.Dependencies(
-            recorder: nil,
-            videoTrimmer: nil,
-            eventsManager: eventsManager,
-            archiver: RecordArchiver()
-        ))
-
-        let native = VisionReplayManagerNative.create(withPlatform: platform, recordPath: recordPath)
+        let native = VisionReplayManagerNative.create(withRecordPath: recordPath)
 
         return ReplayDependencies(native: native, player: player)
     }

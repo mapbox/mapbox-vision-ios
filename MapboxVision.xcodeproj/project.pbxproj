@@ -28,7 +28,7 @@
 		2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23E20EFD651003431B3 /* VisionManager.swift */; };
 		2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */; };
 		2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE25420F05370003431B3 /* VideoSettings.swift */; };
-		2E4EE27320F05652003431B3 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23820EFD5BB003431B3 /* Platform.swift */; };
+		2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23820EFD5BB003431B3 /* FileSystem.swift */; };
 		2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */; };
 		2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */; };
 		2E4EE27820F05659003431B3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22120EFD5BA003431B3 /* Path.swift */; };
@@ -45,6 +45,8 @@
 		2E4EE2E520F0CC63003431B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4EE2E220F0CC63003431B3 /* Assets.xcassets */; };
 		2E50E4AE22FC7B2C00A2C03D /* SyncRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E50E4AD22FC7B2C00A2C03D /* SyncRegion.swift */; };
 		2E6033542142900C0050EDB3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6033532142900C0050EDB3 /* Images.swift */; };
+		2E68DBED23800C7600580BE4 /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E68DBEC23800C7600580BE4 /* Telemetry.swift */; };
+		2E68DBEF23800C9B00580BE4 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E68DBEE23800C9B00580BE4 /* Media.swift */; };
 		2E7F14FB228E2D1400BAF585 /* BaseVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */; };
 		2E7F14FD228E92D900BAF585 /* VisionReplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FC228E92D900BAF585 /* VisionReplayManager.swift */; };
 		2E7F14FF228E982D00BAF585 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7F14FE228E982D00BAF585 /* VideoPlayer.swift */; };
@@ -115,7 +117,7 @@
 		2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPath.swift; sourceTree = "<group>"; };
 		2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerDependencies.swift; sourceTree = "<group>"; };
 		2E4EE23420EFD5BA003431B3 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
-		2E4EE23820EFD5BB003431B3 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		2E4EE23820EFD5BB003431B3 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreConfig.swift; sourceTree = "<group>"; };
 		2E4EE23E20EFD651003431B3 /* VisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManager.swift; sourceTree = "<group>"; };
 		2E4EE23F20EFD651003431B3 /* VisionPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionPresentationViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,8 @@
 		2E4EE2E220F0CC63003431B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E50E4AD22FC7B2C00A2C03D /* SyncRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRegion.swift; sourceTree = "<group>"; };
 		2E6033532142900C0050EDB3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		2E68DBEC23800C7600580BE4 /* Telemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telemetry.swift; sourceTree = "<group>"; };
+		2E68DBEE23800C9B00580BE4 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		2E7F14FA228E2D1400BAF585 /* BaseVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVisionManager.swift; sourceTree = "<group>"; };
 		2E7F14FC228E92D900BAF585 /* VisionReplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionReplayManager.swift; sourceTree = "<group>"; };
 		2E7F14FE228E982D00BAF585 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
@@ -340,7 +344,9 @@
 			isa = PBXGroup;
 			children = (
 				2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */,
-				2E4EE23820EFD5BB003431B3 /* Platform.swift */,
+				2E4EE23820EFD5BB003431B3 /* FileSystem.swift */,
+				2E68DBEC23800C7600580BE4 /* Telemetry.swift */,
+				2E68DBEE23800C9B00580BE4 /* Media.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -721,7 +727,7 @@
 				2E7F14FF228E982D00BAF585 /* VideoPlayer.swift in Sources */,
 				2E50E4AE22FC7B2C00A2C03D /* SyncRegion.swift in Sources */,
 				2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */,
-				2E4EE27320F05652003431B3 /* Platform.swift in Sources */,
+				2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */,
 				2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */,
 				2E4EE27820F05659003431B3 /* Path.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
@@ -731,11 +737,13 @@
 				2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */,
 				2E4EE2AC20F0590F003431B3 /* LocationManager.swift in Sources */,
 				2E4EE2A220F058B9003431B3 /* AVCaptureConnection+Orientation.swift in Sources */,
+				2E68DBED23800C7600580BE4 /* Telemetry.swift in Sources */,
 				2E4EE24D20F05045003431B3 /* VisionManager.swift in Sources */,
 				2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */,
 				2E4EE28820F05665003431B3 /* DataProvider.swift in Sources */,
 				2E4EE2CC20F06A11003431B3 /* CGPoint+Convert.swift in Sources */,
 				2EDD8707219ED89E00760C6D /* Constants.swift in Sources */,
+				2E68DBEF23800C9B00580BE4 /* Media.swift in Sources */,
 				2E88A9BA213ED5DC008A27C8 /* ModelPerformance.swift in Sources */,
 				2E4EE24E20F05045003431B3 /* VisionPresentationViewController.swift in Sources */,
 				2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */,
