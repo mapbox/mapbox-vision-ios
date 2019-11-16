@@ -9,7 +9,7 @@ struct BaseDependencies {
 
 struct VisionDependencies {
     let native: VisionManagerNativeProtocol
-    let recorder: FrameRecordable
+    let recorder: FrameRecorder
     let dataProvider: DataProvider
 
     static func `default`() -> VisionDependencies {

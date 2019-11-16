@@ -18,7 +18,7 @@ private extension VideoSettings {
     }
 }
 
-protocol FrameRecordable {
+protocol FrameRecorder {
     func startRecording(to path: String, settings: VideoSettings)
     func stopRecording()
     func handle(frame: CMSampleBuffer)
@@ -137,7 +137,7 @@ final class VideoRecorder {
     }
 }
 
-extension VideoRecorder: FrameRecordable {
+extension VideoRecorder: FrameRecorder {
     func handle(frame: CMSampleBuffer) {
         handleFrame(frame) { _ in }
     }

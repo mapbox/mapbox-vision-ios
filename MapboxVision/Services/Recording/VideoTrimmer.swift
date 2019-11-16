@@ -1,9 +1,6 @@
 import AVFoundation
 import Foundation
 
-private let timeScale: CMTimeScale = 600
-private let fileType: AVFileType = .mp4
-
 enum VideoTrimmerError: LocalizedError {
     case notSuitableSource
     case incorrectConfiguration
@@ -11,6 +8,11 @@ enum VideoTrimmerError: LocalizedError {
 
 final class VideoTrimmer {
     typealias TrimCompletion = (Error?) -> Void
+
+    private enum Constants {
+        static let timeScale: CMTimeScale = 600
+        static let fileType: AVFileType = .mp4
+    }
 
     func trimVideo(source: String, clip: VideoClip, completion: @escaping TrimCompletion) {
         let sourceURL = URL(fileURLWithPath: source)
@@ -37,8 +39,8 @@ final class VideoTrimmer {
             return
         }
 
-        let startTime = CMTime(seconds: Double(clip.startTime), preferredTimescale: timeScale)
-        let endTime = CMTime(seconds: Double(clip.stopTime), preferredTimescale: timeScale)
+        let startTime = CMTime(seconds: Double(clip.startTime), preferredTimescale: Constants.timeScale)
+        let endTime = CMTime(seconds: Double(clip.stopTime), preferredTimescale: Constants.timeScale)
 
         let durationOfCurrentSlice = CMTimeSubtract(endTime, startTime)
         let timeRangeForCurrentSlice = CMTimeRangeMake(start: startTime, duration: durationOfCurrentSlice)
@@ -59,7 +61,7 @@ final class VideoTrimmer {
         }
 
         exportSession.outputURL = URL(fileURLWithPath: clip.path)
-        exportSession.outputFileType = fileType
+        exportSession.outputFileType = Constants.fileType
         exportSession.shouldOptimizeForNetworkUse = true
 
         exportSession.exportAsynchronously {

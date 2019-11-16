@@ -1,10 +1,10 @@
 import Foundation
 
 final class Media: NSObject {
-    private let recorder: FrameRecordable
+    private let recorder: FrameRecorder
     private let videoTrimmer: VideoTrimmer
 
-    init(recorder: FrameRecordable, videoTrimmer: VideoTrimmer) {
+    init(recorder: FrameRecorder, videoTrimmer: VideoTrimmer) {
         self.recorder = recorder
         self.videoTrimmer = videoTrimmer
     }

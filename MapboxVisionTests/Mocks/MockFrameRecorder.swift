@@ -1,7 +1,7 @@
 import Foundation
 @testable import MapboxVision
 
-class MockFrameRecorder: NSObject, FrameRecordable {
+class MockFrameRecorder: NSObject, FrameRecorder {
     enum Action: Equatable {
         case startRecording
         case stopRecording
