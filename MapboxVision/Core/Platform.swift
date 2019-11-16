@@ -5,7 +5,7 @@ typealias TelemetryFileMetadata = [String: String]
 
 final class Platform: NSObject {
     struct Dependencies {
-        let recorder: VideoRecorder?
+        let recorder: FrameRecordable?
         let videoTrimmer: VideoTrimmer?
         let eventsManager: EventsManager
         let archiver: Archiver?

@@ -127,9 +127,27 @@ final class UIDeviceIphoneXRStub: UIDevice {
     }
 }
 
-final class UIDeviceIphoneNextGenerationStub: UIDevice {
+final class UIDeviceIphone11Stub: UIDevice {
     override var modelID: String {
         return "iPhone12,1"
+    }
+}
+
+final class UIDeviceIphone11ProStub: UIDevice {
+    override var modelID: String {
+        return "iPhone12,3"
+    }
+}
+
+final class UIDeviceIphone11ProMaxStub: UIDevice {
+    override var modelID: String {
+        return "iPhone12,5"
+    }
+}
+
+final class UIDeviceIphoneNextGenerationStub: UIDevice {
+    override var modelID: String {
+        return "iPhone13,1"
     }
 }
 

@@ -19,7 +19,7 @@ private extension VideoSettings {
 }
 
 protocol FrameRecordable {
-    func startRecording(filePath: String, settings: VideoSettings)
+    func startRecording(to path: String, settings: VideoSettings)
     func stopRecording(completion: (() -> Void)?)
     func handle(frame: CMSampleBuffer)
 }
@@ -83,7 +83,7 @@ final class VideoRecorder {
                 sem.signal()
             }
             sem.wait()
-            
+
             cleanup()
         }
     }
@@ -139,10 +139,6 @@ final class VideoRecorder {
 }
 
 extension VideoRecorder: FrameRecordable {
-    func startRecording(filePath: String, settings: VideoSettings) {
-        startRecording(to: filePath, settings: settings)
-    }
-
     func handle(frame: CMSampleBuffer) {
         handleFrame(frame) { _ in }
     }

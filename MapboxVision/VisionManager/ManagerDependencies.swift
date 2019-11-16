@@ -9,50 +9,20 @@ struct BaseDependencies {
 
 struct VisionDependencies {
     let native: VisionManagerNativeProtocol
-//    let synchronizer: Synchronizable
-//    let recorder: SessionRecorderProtocol
     let recorder: FrameRecordable
     let dataProvider: DataProvider
-    let deviceInfo: DeviceInfoProvidable
 
     static func `default`() -> VisionDependencies {
-//        guard let reachability = Reachability() else {
-//            fatalError("Reachability failed to initialize")
-//        }
-
-        let eventsManager = EventsManager()
-        let deviceInfo = DeviceInfoProvider()
-
-        let recordArchiver = RecordArchiver()
-
         let recorder = VideoRecorder()
-//        let recordSyncDependencies = RecordSynchronizer.Dependencies(
-//            networkClient: eventsManager,
-//            deviceInfo: deviceInfo,
-//            archiver: recordArchiver,
-//            fileManager: FileManager.default
-//        )
-//        let recordSynchronizer = RecordSynchronizer(recordSyncDependencies)
-
-//        let recordCoordinator = RecordCoordinator()
 
         let platform = Platform(dependencies: Platform.Dependencies(
             recorder: recorder,
             videoTrimmer: VideoTrimmer(),
-            eventsManager: eventsManager,
-            archiver: recordArchiver
+            eventsManager: EventsManager(),
+            archiver: RecordArchiver()
         ))
 
         let native = VisionManagerNative.create(withPlatform: platform)
-
-//        let recorder = SessionRecorder(dependencies: SessionRecorder.Dependencies(
-//            recorder: recordCoordinator,
-//            sessionManager: SessionManager(),
-//            videoSettings: visionVideoSettings,
-//            getSeconds: native.getSeconds,
-//            startSavingSession: native.startSavingSession,
-//            stopSavingSession: native.stopSavingSession
-//        ))
 
         let dataProvider = RealtimeDataProvider(dependencies: RealtimeDataProvider.Dependencies(
             native: native,
@@ -61,10 +31,8 @@ struct VisionDependencies {
         ))
 
         return VisionDependencies(native: native,
-//                                  synchronizer: synchronizer,
                                   recorder: recorder,
-                                  dataProvider: dataProvider,
-                                  deviceInfo: deviceInfo)
+                                  dataProvider: dataProvider)
     }
 }
 

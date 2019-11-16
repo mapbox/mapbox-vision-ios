@@ -89,6 +89,18 @@ class DeviceCheckerTests: XCTestCase {
         // Given iPhone XR
         // When // Then
         XCTAssertTrue(UIDeviceIphoneXRStub().isHighPerformance)
+
+        // Given iPhone 11
+        // When // Then
+        XCTAssertTrue(UIDeviceIphone11Stub().isHighPerformance)
+
+        // Given iPhone 11 Pro
+        // When // Then
+        XCTAssertTrue(UIDeviceIphone11ProStub().isHighPerformance)
+
+        // Given iPhone 11 Pro Max
+        // When // Then
+        XCTAssertTrue(UIDeviceIphone11ProMaxStub().isHighPerformance)
     }
 
     func testIsHighPerformanceDeviceReturnsFalseOnIphoneNextGeneration() {
