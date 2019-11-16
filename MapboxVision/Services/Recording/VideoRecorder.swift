@@ -56,20 +56,19 @@ final class VideoRecorder {
     }
 
     func stopRecording(completion: (() -> Void)?) {
-        writerQueue.sync { [weak self] in
+        writerQueue.sync {
             let cleanup = {
-                self?.isRecording = false
-                self?.currentAssetWriter = nil
-                self?.startTime = nil
+                self.isRecording = false
+                self.currentAssetWriter = nil
+                self.startTime = nil
                 completion?()
             }
-            guard let writer = self?.currentAssetWriter, writer.status == .writing else {
+            guard let writer = self.currentAssetWriter, writer.status == .writing else {
                 cleanup()
                 return
             }
 
             guard
-                let self = self,
                 let assetWriterInput = self.currentAssetWriterInput
             else { return }
 

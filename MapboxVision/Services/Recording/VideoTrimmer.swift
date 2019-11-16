@@ -5,7 +5,8 @@ private let timeScale: CMTimeScale = 600
 private let fileType: AVFileType = .mp4
 
 enum VideoTrimmerError: LocalizedError {
-    case sourceNotExportable
+    case notSuitableSource
+    case incorrectConfiguration
 }
 
 final class VideoTrimmer {
@@ -18,8 +19,12 @@ final class VideoTrimmer {
         ]
 
         let asset = AVURLAsset(url: sourceURL, options: options)
-        guard asset.isExportable else {
-            completion(VideoTrimmerError.sourceNotExportable)
+        guard
+            asset.isExportable,
+            let videoAssetTrack = asset.tracks(withMediaType: .video).first
+        else {
+            assertionFailure("Source asset is not exportable or doesn't contain a video track. Asset: \(asset).")
+            completion(VideoTrimmerError.notSuitableSource)
             return
         }
 
@@ -28,11 +33,7 @@ final class VideoTrimmer {
             let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: CMPersistentTrackID())
         else {
             assertionFailure("Unable to add video track to composition \(composition).")
-            return
-        }
-
-        guard let videoAssetTrack: AVAssetTrack = asset.tracks(withMediaType: .video).first else {
-            assertionFailure("Unable to obtain video track from asset \(asset).")
+            completion(VideoTrimmerError.incorrectConfiguration)
             return
         }
 
@@ -46,11 +47,16 @@ final class VideoTrimmer {
             try videoTrack.insertTimeRange(timeRangeForCurrentSlice, of: videoAssetTrack, at: CMTime())
         } catch {
             completion(error)
+            return
         }
 
         guard
             let exportSession = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough)
-        else { return }
+        else {
+            assertionFailure("Unable to create an export session with composition \(composition).")
+            completion(VideoTrimmerError.incorrectConfiguration)
+            return
+        }
 
         exportSession.outputURL = URL(fileURLWithPath: clip.path)
         exportSession.outputFileType = fileType
