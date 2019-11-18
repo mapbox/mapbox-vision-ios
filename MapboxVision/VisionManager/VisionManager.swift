@@ -107,8 +107,7 @@ public final class VisionManager: BaseVisionManager {
         guard case .started = state else {
             throw VisionManagerError.startRecordingBeforeStart
         }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .external(path: path))
+        dependencies.native.startRecording(to: path)
     }
 
     /**
@@ -123,8 +122,7 @@ public final class VisionManager: BaseVisionManager {
             assertionFailure("VisionManager should be started and recording")
             return
         }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .internal)
+        dependencies.native.stopRecording()
     }
 
     /**
@@ -141,6 +139,20 @@ public final class VisionManager: BaseVisionManager {
 
         dependencies.native.destroy()
         state = .uninitialized
+    }
+
+    // MARK: - Internal
+
+    override func prepareForBackground() {
+        guard state.isStarted else { return }
+        isStoppedForBackground = true
+        pause()
+    }
+
+    override func prepareForForeground() {
+        guard isStoppedForBackground else { return }
+        isStoppedForBackground = false
+        resume()
     }
 
     // MARK: - Private
@@ -188,16 +200,13 @@ public final class VisionManager: BaseVisionManager {
 
         state = .initialized(videoSource: videoSource)
 
-        dependencies.recorder.delegate = self
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
+
+        cleanupTelemetry()
     }
 
     deinit {
         destroy()
-    }
-
-    private var isSyncAllowed: Bool {
-        return currentCountry.syncRegion != nil
     }
 
     private func startVideoStream() {
@@ -214,76 +223,21 @@ public final class VisionManager: BaseVisionManager {
         dependencies.dataProvider.start()
         startVideoStream()
         dependencies.native.start()
-
-        dependencies.recorder.start(mode: .internal)
     }
 
     private func pause() {
         dependencies.dataProvider.stop()
         stopVideoStream()
         dependencies.native.stop()
-
-        dependencies.recorder.stop()
     }
 
-    private func configureRecording(oldCountry: Country, newCountry: Country) {
-        guard
-            state.isStarted,
-            dependencies.recorder.isInternal,
-            let oldRegion = oldCountry.syncRegion,
-            oldRegion != newCountry.syncRegion
-        else { return }
-
-        if let path = currentRecordingPath {
-            recordingToCountryCache[path] = oldCountry
+    // Removes old recordings and telemetry since new paths are used in core.
+    // Added in 0.11.0. Remove after reaching major adoption of 0.11.0 or later versions.
+    private func cleanupTelemetry() {
+        let locations: [DocumentsLocation] = [.cache, .currentRecording, .recordings(.china), .recordings(.other)]
+        locations.forEach { location in
+            try? FileManager.default.removeItem(atPath: location.path)
         }
-        dependencies.recorder.stop()
-        dependencies.recorder.start(mode: .internal)
-    }
-
-    private func configureSync(oldCountry: Country, newCountry: Country) {
-        if newCountry.syncRegion == nil {
-            dependencies.synchronizer.stopSync()
-            return
-        }
-
-        guard
-            let newRegion = newCountry.syncRegion,
-            oldCountry.syncRegion != newRegion
-        else { return }
-
-        let dataSource = SyncRecordDataSource(region: newRegion)
-        dependencies.synchronizer.stopSync()
-        dependencies.synchronizer.set(dataSource: dataSource, baseURL: newRegion.baseURL)
-        dependencies.synchronizer.sync()
-    }
-
-    private func trySync() {
-        if isSyncAllowed {
-            dependencies.synchronizer.sync()
-        }
-    }
-
-    override func prepareForBackground() {
-        guard state.isStarted else { return }
-        isStoppedForBackground = true
-        pause()
-    }
-
-    override func prepareForForeground() {
-        guard isStoppedForBackground else { return }
-        isStoppedForBackground = false
-        resume()
-    }
-
-    override public func onCountryUpdated(_ country: Country) {
-        let oldCountry = currentCountry
-        currentCountry = country
-
-        configureRecording(oldCountry: oldCountry, newCountry: country)
-        configureSync(oldCountry: oldCountry, newCountry: country)
-
-        super.onCountryUpdated(country)
     }
 }
 
@@ -299,38 +253,11 @@ extension VisionManager: VideoSourceObserver {
 
         guard state.isStarted else { return }
 
-        dependencies.recorder.handleFrame(videoSample.buffer)
+        dependencies.recorder.handle(frame: videoSample.buffer)
         dependencies.native.sensors.setImage(pixelBuffer)
     }
 
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
         dependencies.native.sensors.setCameraParameters(cameraParameters)
-    }
-}
-
-extension VisionManager: RecordCoordinatorDelegate {
-    func recordingStarted(path: String) {
-        currentRecordingPath = path.lastPathComponent
-    }
-
-    func recordingStopped(recordingPath: RecordingPath) {
-        currentRecordingPath = nil
-
-        let country = recordingToCountryCache.removeValue(forKey: recordingPath.recordingPath.lastPathComponent)
-            ?? currentCountry
-
-        try? handle(recordingPath: recordingPath, country: country)
-        trySync()
-    }
-
-    private func handle(recordingPath: RecordingPath, country: Country) throws {
-        guard recordingPath.basePath != .custom else { return }
-
-        guard let syncRegion = country.syncRegion else {
-            try recordingPath.delete()
-            return
-        }
-
-        try recordingPath.move(to: .recordings(syncRegion))
     }
 }

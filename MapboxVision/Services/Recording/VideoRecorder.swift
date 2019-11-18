@@ -18,6 +18,12 @@ private extension VideoSettings {
     }
 }
 
+protocol FrameRecorder {
+    func startRecording(to path: String, settings: VideoSettings)
+    func stopRecording()
+    func handle(frame: CMSampleBuffer)
+}
+
 final class VideoRecorder {
     private var currentAssetWriterInput: AVAssetWriterInput?
     private var currentAssetWriter: AVAssetWriter?
@@ -32,7 +38,7 @@ final class VideoRecorder {
         currentAssetWriterInput = assetWriterInput
         assetWriterInput.expectsMediaDataInRealTime = true
 
-        writerQueue.async {
+        writerQueue.sync {
             let outputURL = URL(fileURLWithPath: path)
             let assetWriter: AVAssetWriter
             do {
@@ -49,21 +55,20 @@ final class VideoRecorder {
         }
     }
 
-    func stopRecording(completion: (() -> Void)?) {
-        writerQueue.async { [weak self] in
+    func stopRecording() {
+        writerQueue.sync {
             let cleanup = {
-                self?.isRecording = false
-                self?.currentAssetWriter = nil
-                self?.startTime = nil
-                completion?()
+                self.isRecording = false
+                self.currentAssetWriter = nil
+                self.startTime = nil
             }
-            guard let writer = self?.currentAssetWriter, writer.status == .writing else {
+
+            guard let writer = self.currentAssetWriter, writer.status == .writing else {
                 cleanup()
                 return
             }
 
             guard
-                let self = self,
                 let assetWriterInput = self.currentAssetWriterInput
             else { return }
 
@@ -71,7 +76,14 @@ final class VideoRecorder {
             if let currentTime = self.currentTime {
                 writer.endSession(atSourceTime: currentTime)
             }
-            writer.finishWriting(completionHandler: cleanup)
+
+            let sem = DispatchSemaphore(value: 0)
+            writer.finishWriting {
+                sem.signal()
+            }
+            sem.wait()
+
+            cleanup()
         }
     }
 
@@ -122,6 +134,12 @@ final class VideoRecorder {
         }
         let currentTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         completion(.value(currentTime.millis(since: startTime)))
+    }
+}
+
+extension VideoRecorder: FrameRecorder {
+    func handle(frame: CMSampleBuffer) {
+        handleFrame(frame) { _ in }
     }
 }
 

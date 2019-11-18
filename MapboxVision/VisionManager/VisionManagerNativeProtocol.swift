@@ -24,9 +24,8 @@ protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {
 
     func destroy()
 
-    func getSeconds() -> Float
-    func startSavingSession(_ path: String)
-    func stopSavingSession()
+    func startRecording(to path: String)
+    func stopRecording()
 }
 
 extension VisionManagerBaseNative: VisionManagerBaseNativeProtocol {}

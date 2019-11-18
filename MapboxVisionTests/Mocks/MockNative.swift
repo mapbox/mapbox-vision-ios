@@ -28,6 +28,10 @@ class MockNative: VisionManagerNativeProtocol {
 
     func stop() {}
 
+    func startRecording(to path: String) {}
+
+    func stopRecording() {}
+
     func destroy() {
         isDestroyed = true
     }

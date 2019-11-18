@@ -1,45 +1,46 @@
 import AVFoundation
 import Foundation
 
-private let timeScale: CMTimeScale = 600
-
 enum VideoTrimmerError: LocalizedError {
-    case sourceIsNotExportable
+    case notSuitableSource
+    case incorrectConfiguration
 }
 
 final class VideoTrimmer {
     typealias TrimCompletion = (Error?) -> Void
-    typealias TrimPoints = (startTime: CMTime, endTime: CMTime)
 
-    func trimVideo(sourceURL: URL, destinationURL: URL, from start: TimeInterval, to end: TimeInterval, settings: VideoSettings, completion: TrimCompletion?) {
-        print("log_t: trim source: \(sourceURL.path), dest: \(destinationURL.path) from \(start) to \(end)")
-        let startTime = CMTime(seconds: start, preferredTimescale: timeScale)
-        let endTime = CMTime(seconds: end, preferredTimescale: timeScale)
+    private enum Constants {
+        static let timeScale: CMTimeScale = 600
+        static let fileType: AVFileType = .mp4
+    }
 
+    func trimVideo(source: String, clip: VideoClip, completion: @escaping TrimCompletion) {
+        let sourceURL = URL(fileURLWithPath: source)
         let options = [
             AVURLAssetPreferPreciseDurationAndTimingKey: true,
         ]
 
         let asset = AVURLAsset(url: sourceURL, options: options)
-        guard asset.isExportable else {
-            completion?(VideoTrimmerError.sourceIsNotExportable)
+        guard
+            asset.isExportable,
+            let videoAssetTrack = asset.tracks(withMediaType: .video).first
+        else {
+            assertionFailure("Source asset is not exportable or doesn't contain a video track. Asset: \(asset).")
+            completion(VideoTrimmerError.notSuitableSource)
             return
         }
-
-        let preferredPreset = AVAssetExportPresetPassthrough
 
         let composition = AVMutableComposition()
         guard
             let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: CMPersistentTrackID())
         else {
             assertionFailure("Unable to add video track to composition \(composition).")
+            completion(VideoTrimmerError.incorrectConfiguration)
             return
         }
 
-        guard let videoAssetTrack: AVAssetTrack = asset.tracks(withMediaType: .video).first else {
-            assertionFailure("Unable to obtain video track from asset \(asset).")
-            return
-        }
+        let startTime = CMTime(seconds: Double(clip.startTime), preferredTimescale: Constants.timeScale)
+        let endTime = CMTime(seconds: Double(clip.stopTime), preferredTimescale: Constants.timeScale)
 
         let durationOfCurrentSlice = CMTimeSubtract(endTime, startTime)
         let timeRangeForCurrentSlice = CMTimeRangeMake(start: startTime, duration: durationOfCurrentSlice)
@@ -47,17 +48,24 @@ final class VideoTrimmer {
         do {
             try videoTrack.insertTimeRange(timeRangeForCurrentSlice, of: videoAssetTrack, at: CMTime())
         } catch {
-            completion?(error)
+            completion(error)
+            return
         }
 
-        guard let exportSession = AVAssetExportSession(asset: composition, presetName: preferredPreset) else { return }
+        guard
+            let exportSession = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetPassthrough)
+        else {
+            assertionFailure("Unable to create an export session with composition \(composition).")
+            completion(VideoTrimmerError.incorrectConfiguration)
+            return
+        }
 
-        exportSession.outputURL = destinationURL
-        exportSession.outputFileType = settings.fileType
+        exportSession.outputURL = URL(fileURLWithPath: clip.path)
+        exportSession.outputFileType = Constants.fileType
         exportSession.shouldOptimizeForNetworkUse = true
 
         exportSession.exportAsynchronously {
-            completion?(exportSession.error)
+            completion(exportSession.error)
         }
     }
 }
