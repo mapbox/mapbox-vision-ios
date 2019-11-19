@@ -3,6 +3,7 @@
 ## 0.11.0 - Unreleased
 
 ### Vision
+- Removed location update in background
 
 ### AR
 
