@@ -169,17 +169,19 @@ public final class VisionReplayManager: BaseVisionManager {
 
 extension VisionReplayManager: VideoSourceObserver {
     public func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
+        guard state.isStarted else { return }
+
         var timingInfo = CMSampleTimingInfo.invalid
         let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
+        let timeStamp = CMTimeGetSeconds(timingInfo.decodeTimeStamp) * Constants.millisecondsInSecond
 
         guard
             let pixelBuffer = videoSample.buffer.pixelBuffer,
-            status == 0
+            status == 0,
+            timeStamp > 0
         else { return }
 
-        let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * Constants.millisecondsInSecond)
-
-        dependencies.native.sensors.setFrame(pixelBuffer, timestamp: timeStamp)
+        dependencies.native.sensors.setFrame(pixelBuffer, timestamp: UInt(timeStamp))
     }
 }
 
