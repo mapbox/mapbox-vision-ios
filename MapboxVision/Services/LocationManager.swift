@@ -41,11 +41,12 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let handler = locationHandler else { return }
+        guard let handler = locationHandler, isStarted else { return }
         locations.forEach(handler)
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        guard isStarted else { return }
         headingHandler?(newHeading)
     }
 

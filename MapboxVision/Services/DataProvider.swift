@@ -18,13 +18,14 @@ final class RealtimeDataProvider: DataProvider {
 
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
-        dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
-        dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
     }
 
     func start() {
+        dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
+        dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
         dependencies.locationManager.start()
+
+        dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
         dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
@@ -32,6 +33,10 @@ final class RealtimeDataProvider: DataProvider {
 
     func stop() {
         dependencies.locationManager.stop()
+        dependencies.locationManager.locationHandler = nil
+        dependencies.locationManager.headingHandler = nil
+
         dependencies.motionManager.stop()
+        dependencies.motionManager.handler = nil
     }
 }
