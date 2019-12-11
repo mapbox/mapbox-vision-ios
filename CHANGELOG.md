@@ -4,6 +4,7 @@
 
 ### Vision
 - Removed location update in background
+- Fixed a crash on receiving location updates while stopping `VisionManager`
 
 ### AR
 
