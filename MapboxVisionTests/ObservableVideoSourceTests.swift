@@ -1,27 +1,130 @@
-//
-
+@testable import MapboxVision
 import XCTest
 
+private enum Constants {
+    static let numberOfConcurrentMethodCalls = 10000
+    static let expectedTestTimeout = 5.0
+}
+
 class ObservableVideoSourceTests: XCTestCase {
+    private var observableVideoSource: ObservableVideoSource!
+    private var callsCounter: Int!
+
+    private var testExpectation: XCTestExpectation!
+
+    private var concurrentQueue = DispatchQueue(label: "com.mapbox.MapboxVision.ObservableVideoSourceTests.concurrentQueue",
+                                                qos: .default,
+                                                attributes: .concurrent)
+    private var serialQueue = DispatchQueue(label: "com.mapbox.MapboxVision.ObservableVideoSourceTests.serialQueue",
+                                            qos: .default,
+                                            attributes: [])
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        self.observableVideoSource = ObservableVideoSource()
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    // MARK: - Tests
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    func testAddMethodDoesNotThrowWhenIsCalledSerially() {
+        // Given state from setUp()
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        // When
+        for _ in 1...Constants.numberOfConcurrentMethodCalls {
+            let observer = VideoSourceObserverMock()
+
+            // Then
+            XCTAssertNoThrow(observableVideoSource.add(observer: observer))
         }
     }
 
+    func testRemoveMethodDoesNotThrowWhenIsCalledSerially() {
+        // Given state from setUp()
+
+        // When
+        for _ in 1...Constants.numberOfConcurrentMethodCalls {
+            let observer = VideoSourceObserverMock()
+
+            // Then
+            XCTAssertNoThrow(observableVideoSource.add(observer: observer))
+        }
+    }
+
+    func testNotifyMethodDoesNotThrowWhenIsCalledSerially() {
+        // Given state from setUp()
+
+        // When
+        for _ in 1...Constants.numberOfConcurrentMethodCalls {
+            // Then
+            XCTAssertNoThrow(observableVideoSource.notify { _ in })
+        }
+    }
+
+    func testAddAndNotifyMethodsDoNotThrowWhenAreCalledInParallel() {
+        // Given
+        testExpectation = XCTestExpectation(description: "add(:) and notify() methods handle concurrent method calls properly.")
+        callsCounter = 1
+
+        // When
+        for idx in 1...Constants.numberOfConcurrentMethodCalls {
+            if idx.isMultiple(of: 2) {
+                concurrentQueue.async {
+                    let observer = VideoSourceObserverMock()
+                    XCTAssertNoThrow(self.observableVideoSource.add(observer: observer))
+                    self.incrementCallsCounter()
+                }
+            } else {
+                concurrentQueue.async {
+                    XCTAssertNoThrow(self.observableVideoSource.notify { _ in })
+                    self.incrementCallsCounter()
+                }
+            }
+        }
+
+        // Then
+        wait(for: [testExpectation], timeout: Constants.expectedTestTimeout)
+    }
+
+    func testRemoveAndNotifyMethodsWontCrashWhenAreCalledInParallel() {
+        // Given
+        testExpectation = XCTestExpectation(description: "remove(:) and notify() methods handle concurrent method calls properly.")
+        callsCounter = 1
+
+        for _ in 1...Constants.numberOfConcurrentMethodCalls {
+            let observer = VideoSourceObserverMock()
+            observableVideoSource.add(observer: observer)
+        }
+
+        // When
+        for idx in 1...Constants.numberOfConcurrentMethodCalls {
+            if idx.isMultiple(of: 2) {
+                concurrentQueue.async {
+                    let observer = VideoSourceObserverMock()
+                    XCTAssertNoThrow(self.observableVideoSource.remove(observer: observer))
+                    self.incrementCallsCounter()
+                }
+            } else {
+                concurrentQueue.async {
+                    XCTAssertNoThrow(self.observableVideoSource.notify { _ in })
+                    self.incrementCallsCounter()
+                }
+            }
+        }
+
+        // Then
+        wait(for: [testExpectation], timeout: Constants.expectedTestTimeout)
+    }
+
+    // MARK: - Helper functions
+
+    private func incrementCallsCounter() {
+        serialQueue.sync {
+            callsCounter += 1
+            if callsCounter == Constants.numberOfConcurrentMethodCalls {
+                testExpectation.fulfill()
+            }
+        }
+    }
 }
+
+private class VideoSourceObserverMock: VideoSourceObserver {}
