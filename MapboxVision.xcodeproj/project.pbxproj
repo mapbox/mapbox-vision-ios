@@ -445,9 +445,9 @@
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
+				3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */,
 				2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */,
 				5A3E42C422B280180035A010 /* VisionManagerTests.swift */,
-				3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */,
 			);
 			path = MapboxVisionTests;
 			sourceTree = "<group>";
