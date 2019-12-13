@@ -16,8 +16,7 @@ class ObservableVideoSourceTests: XCTestCase {
                                                 qos: .default,
                                                 attributes: .concurrent)
     private var serialQueue = DispatchQueue(label: "com.mapbox.MapboxVision.ObservableVideoSourceTests.serialQueue",
-                                            qos: .default,
-                                            attributes: [])
+                                            qos: .default)
 
     override func setUp() {
         super.setUp()
@@ -40,13 +39,17 @@ class ObservableVideoSourceTests: XCTestCase {
 
     func testRemoveMethodDoesNotThrowWhenIsCalledSerially() {
         // Given state from setUp()
+        for _ in 1...Constants.numberOfConcurrentMethodCalls {
+            let observer = VideoSourceObserverMock()
+            observableVideoSource.add(observer: observer)
+        }
 
         // When
         for _ in 1...Constants.numberOfConcurrentMethodCalls {
             let observer = VideoSourceObserverMock()
 
             // Then
-            XCTAssertNoThrow(observableVideoSource.add(observer: observer))
+            XCTAssertNoThrow(observableVideoSource.remove(observer: observer))
         }
     }
 
@@ -118,10 +121,10 @@ class ObservableVideoSourceTests: XCTestCase {
     // MARK: - Helper functions
 
     private func incrementCallsCounter() {
-        serialQueue.sync {
-            callsCounter += 1
-            if callsCounter == Constants.numberOfConcurrentMethodCalls {
-                testExpectation.fulfill()
+        serialQueue.async {
+            self.callsCounter += 1
+            if self.callsCounter == Constants.numberOfConcurrentMethodCalls {
+                self.testExpectation.fulfill()
             }
         }
     }

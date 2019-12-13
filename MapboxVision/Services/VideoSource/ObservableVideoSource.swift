@@ -4,6 +4,9 @@ import Foundation
  Helper class handling observers: storing, releasing, notifying.
  Observers are held weakly by the instance of the class.
  You may inherit your video source from this class to avoid handling observers yourself.
+
+ - Important
+ A deadlock can occur when add/remove methods are called inside the notify's closure.
  */
 open class ObservableVideoSource: NSObject, VideoSource {
     // MARK: - Open properties
@@ -34,6 +37,7 @@ open class ObservableVideoSource: NSObject, VideoSource {
     open func add(observer: VideoSourceObserver) {
         os_unfair_lock_lock(lock)
         let id = ObjectIdentifier(observer)
+        print("ID: is \(id)")
         observations[id] = Observation(observer: observer)
         os_unfair_lock_unlock(lock)
     }
