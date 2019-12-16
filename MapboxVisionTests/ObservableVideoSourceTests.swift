@@ -39,17 +39,18 @@ class ObservableVideoSourceTests: XCTestCase {
 
     func testRemoveMethodDoesNotThrowWhenIsCalledSerially() {
         // Given state from setUp()
-        for _ in 1...Constants.numberOfConcurrentMethodCalls {
-            let observer = VideoSourceObserverMock()
-            observableVideoSource.add(observer: observer)
+
+        let observers = [VideoSourceObserverMock].init(repeating: VideoSourceObserverMock(),
+                                                       count: Constants.numberOfConcurrentMethodCalls)
+
+        for idx in 0..<Constants.numberOfConcurrentMethodCalls {
+            observableVideoSource.add(observer: observers[idx])
         }
 
         // When
-        for _ in 1...Constants.numberOfConcurrentMethodCalls {
-            let observer = VideoSourceObserverMock()
-
+        for idx in 0..<Constants.numberOfConcurrentMethodCalls {
             // Then
-            XCTAssertNoThrow(observableVideoSource.remove(observer: observer))
+            XCTAssertNoThrow(observableVideoSource.remove(observer: observers[idx]))
         }
     }
 
@@ -93,17 +94,18 @@ class ObservableVideoSourceTests: XCTestCase {
         testExpectation = XCTestExpectation(description: "remove(:) and notify() methods handle concurrent method calls properly.")
         callsCounter = 1
 
-        for _ in 1...Constants.numberOfConcurrentMethodCalls {
-            let observer = VideoSourceObserverMock()
-            observableVideoSource.add(observer: observer)
+        let observers = [VideoSourceObserverMock].init(repeating: VideoSourceObserverMock(),
+                                                       count: Constants.numberOfConcurrentMethodCalls)
+
+        for idx in 0..<Constants.numberOfConcurrentMethodCalls {
+            observableVideoSource.add(observer: observers[idx])
         }
 
         // When
-        for idx in 1...Constants.numberOfConcurrentMethodCalls {
+        for idx in 0..<Constants.numberOfConcurrentMethodCalls {
             if idx.isMultiple(of: 2) {
                 concurrentQueue.async {
-                    let observer = VideoSourceObserverMock()
-                    XCTAssertNoThrow(self.observableVideoSource.remove(observer: observer))
+                    XCTAssertNoThrow(self.observableVideoSource.remove(observer: observers[idx]))
                     self.incrementCallsCounter()
                 }
             } else {
