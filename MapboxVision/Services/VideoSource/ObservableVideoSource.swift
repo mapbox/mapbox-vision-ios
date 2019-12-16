@@ -6,7 +6,7 @@ import Foundation
  You may inherit your video source from this class to avoid handling observers yourself.
 
  - Warning:
- The implementation uses a recursive lock, thus you must not call `add(observer:)` or `remove(observer:)` methods from `notify` closure.
+ The implementation uses a non-recursive lock, thus you must not call `add(observer:)` or `remove(observer:)` methods from `notify` closure.
  */
 open class ObservableVideoSource: NSObject, VideoSource {
     // MARK: - Open properties
@@ -23,11 +23,12 @@ open class ObservableVideoSource: NSObject, VideoSource {
     // MARK: - Lifecycle
 
     override public init() {
-        lock = UnsafeMutablePointer<os_unfair_lock>.allocate(capacity: 1)
+        lock = .allocate(capacity: 1)
         lock.initialize(to: os_unfair_lock())
     }
 
     deinit {
+        lock.deinitialize(count: 1)
         lock.deallocate()
     }
 
@@ -42,7 +43,7 @@ open class ObservableVideoSource: NSObject, VideoSource {
          - observer: Object registering as an observer.
 
      - Warning:
-     The implementation uses a recursive lock, thus you must not call this method from `notify(closure:)` method's closure.
+     The implementation uses a non-recursive lock, thus you must not call this method from `notify(closure:)` method's closure.
     */
     open func add(observer: VideoSourceObserver) {
         os_unfair_lock_lock(lock)
@@ -60,7 +61,7 @@ open class ObservableVideoSource: NSObject, VideoSource {
          - observer: Object registering as an observer.
 
      - Warning:
-     The implementation uses a recursive lock, thus you must not call this method inside `notify(closure:)`method's closure.
+     The implementation uses a non-recursive lock, thus you must not call this method inside `notify(closure:)`method's closure.
      */
     open func remove(observer: VideoSourceObserver) {
         os_unfair_lock_lock(lock)
@@ -80,7 +81,7 @@ open class ObservableVideoSource: NSObject, VideoSource {
          - closure: Closure that is called for each entry from the  list of observers. It has a reference to a current observer as a parameter.
 
      - Warning:
-     The implementation uses a recursive lock, thus you must not call `add(observer:)` or `remove(observer:)` methods from  closure.
+     The implementation uses a non-recursive lock, thus you must not call `add(observer:)` or `remove(observer:)` methods from  closure.
      */
     public func notify(_ closure: (VideoSourceObserver) -> Void) {
         os_unfair_lock_lock(lock)
