@@ -58,6 +58,7 @@
 		2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
 		3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */; };
+		3A2B80BA239E4AE800166F2E /* ObservableVideoSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */; };
 		3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
 		5A006F4A231546250097FADF /* VisionARViewController+ARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A006F49231546250097FADF /* VisionARViewController+ARManager.swift */; };
@@ -144,6 +145,7 @@
 		2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSource.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
 		3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCheckerTests.swift; sourceTree = "<group>"; };
+		3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSourceTests.swift; sourceTree = "<group>"; };
 		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
 		5A006F49231546250097FADF /* VisionARViewController+ARManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VisionARViewController+ARManager.swift"; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
 				3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
+				3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */,
 				2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */,
 				5A3E42C422B280180035A010 /* VisionManagerTests.swift */,
 			);
@@ -778,6 +781,7 @@
 				3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */,
 				3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */,
 				5A3C9D9122C39F5300700DC6 /* MockDataProvider.swift in Sources */,
+				3A2B80BA239E4AE800166F2E /* ObservableVideoSourceTests.swift in Sources */,
 				5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */,
 				2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */,
 				5A3C9D8722C37AF700700DC6 /* MockVideoSource.swift in Sources */,
