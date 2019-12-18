@@ -2,7 +2,6 @@ import Foundation
 
 /**
  Interface that user’s custom object should conform to in order to receive events from `VisionARManager`.
- Delegate methods are called one by one followed by `visionManagerDidCompleteUpdate` call on a delegate of `VisionManager`.
 
  - NOTE: All delegate methods are called on a background thread.
  */
@@ -30,6 +29,11 @@ public protocol VisionARManagerDelegate: AnyObject {
      AR lane cutoff is a relative distance where AR lane should be cut off. Range [0..1] is appropriate. Values greatest than `1` have no effect.
      */
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float)
+
+    /**
+     AR fences were updated
+     */
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARFences arFences: [ARFence])
 }
 
 public extension VisionARManagerDelegate {
@@ -40,4 +44,6 @@ public extension VisionARManagerDelegate {
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARMask: Image) {}
 
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float) {}
+
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateARFences arFences: [ARFence]) {}
 }
