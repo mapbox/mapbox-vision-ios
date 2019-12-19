@@ -34,6 +34,7 @@ final class EventsManager {
 extension EventsManager: NetworkClient {
     func set(baseURL: URL?) {
         manager.baseURL = baseURL
+        manager.sendTurnstileEvent()
     }
 
     func sendEvent(name: String, entries: [String: Any]) {
