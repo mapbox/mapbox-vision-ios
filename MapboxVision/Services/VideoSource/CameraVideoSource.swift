@@ -77,14 +77,13 @@ open class CameraVideoSource: ObservableVideoSource {
             cameraSession.addOutput(dataOutput)
         }
 
-        enableCameraIntrinsicMatrixDelivery()
-
         cameraSession.commitConfiguration()
 
         let queue = DispatchQueue(label: "com.mapbox.videoQueue")
         dataOutput.setSampleBufferDelegate(self, queue: queue)
 
         self.dataOutput = dataOutput
+        enableCameraIntrinsicMatrixDelivery()
     }
 
     private func getCameraParameters(sampleBuffer: CMSampleBuffer) -> CameraParameters? {
