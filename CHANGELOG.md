@@ -6,7 +6,6 @@
 - Removed location update in background
 - Fixed a crash on receiving location updates while stopping `VisionManager`
 - Fixed a crash due to race condition in `ObservableVideoSource`
-- Fixed freeze on init
 
 ### AR
 
