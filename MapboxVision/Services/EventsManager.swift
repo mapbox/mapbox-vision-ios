@@ -37,8 +37,7 @@ final class EventsManager {
             hostSDKVersion: version
         )
         manager.sendTurnstileEvent()
-        manager.isMetricsEnabled = true
-        manager.isDebugLoggingEnabled = true
+        UserDefaults.mme_configuration().mme_isCollectionEnabled = false
     }
 
     func sendEvent(name: String, entries: [String: Any]) {
@@ -48,7 +47,15 @@ final class EventsManager {
 
 extension EventsManager: NetworkClient {
     func set(baseURL: URL?) {
-        manager.baseURL = baseURL
+        let isChina: Bool
+        if let baseURLString = baseURL?.absoluteString, baseURLString == Constants.URL.chinaEventsEndpoint {
+            isChina = true
+        } else {
+            isChina = false
+        }
+
+        UserDefaults.mme_configuration().mme_isCNRegion = isChina
+        manager.sendTurnstileEvent()
     }
 
     func upload(file: URL, toFolder folderName: String, completion: @escaping (Error?) -> Void) {
