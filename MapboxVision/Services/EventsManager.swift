@@ -27,13 +27,20 @@ final class EventsManager {
             hostSDKVersion: version
         )
         manager.sendTurnstileEvent()
-        manager.isMetricsEnabled = true
+        UserDefaults.mme_configuration().mme_isCollectionEnabled = true
     }
 }
 
 extension EventsManager: NetworkClient {
     func set(baseURL: URL?) {
-        manager.baseURL = baseURL
+        let isChina: Bool
+        if let baseURLString = baseURL?.absoluteString, baseURLString == Constants.URL.chinaEventsEndpoint {
+            isChina = true
+        } else {
+            isChina = false
+        }
+
+        UserDefaults.mme_configuration().mme_isCNRegion = isChina
         manager.sendTurnstileEvent()
     }
 
