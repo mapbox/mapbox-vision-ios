@@ -1,4 +1,4 @@
 binary "https://www.mapbox.com/ios-sdk/MapboxAccounts.json" "2.3.0"
 binary "https://www.mapbox.com/ios-sdk/opencv.json" "2.4.13"
-github "mapbox/mapbox-events-ios" "v0.9.5"
+github "mapbox/mapbox-events-ios" "v0.10.2"
 github "weichsel/ZIPFoundation" "0.9.11"
