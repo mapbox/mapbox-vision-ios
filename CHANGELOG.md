@@ -1,15 +1,30 @@
 # Changelog
 
-## 0.11.0 - Unreleased
+## 0.11.0
 
 ### Vision
+- Added `Germany` country
+- Added new `VisionUtils.isVisionSupported` method that checks whether Vision SDK is supported and can be run on the current device
+- Added new `SignTypes`:
+  `InformationCarWashing`, `InformationBusStop`, `RegulatoryPedestriansCrossingUp`,
+  `RegulatoryPedestriansCrossingDown`, `InformationAutoService`, `InformationFood`,
+  `InformationTown`, `InformationTownEnd`, `RegulatoryControl`,
+  `RegulatoryDoubleUTurn`, `SpeedLimitZone`, `SpeedLimitEndZone`
+- Changed methods `createCVPixelBuffer` and `createCGImage` on the `Image` class to return retained values instead of `Unmanaged`
+- Updated EU classifier
+- Improved performance on iPhone 11 family
 - Removed location update in background
-- Fixed a crash on receiving location updates while stopping `VisionManager`
-- Fixed a crash due to race condition in `ObservableVideoSource`
+- Fixed a crash with `ReachabilityCallback`
+- Fixed a crash on receiving location updates while stopping VisionManager
+- Fixed a crash due to race condition in ObservableVideoSource
+- Fixed a crash happening on `VisionManager.destroy`
 
 ### AR
-
-### Safety
+- Added new `Fence` AR style. May be enabled via `VisionARViewController.isFenceVisible` property
+- Added `FenceVisualParams` class and `VisionARViewController.setFenceVisualParams` method for customization of `Fence` rendering
+- Added `VisionARViewController.setArQuality` method to set overall quality of AR objects
+- Added `VisionARViewController.isFenceVisible` and `VisionARViewController.isLaneVisible` to manage displayed AR features
+- Fixed issues with AR not shown on some devices
 
 ## 0.10.1
 
