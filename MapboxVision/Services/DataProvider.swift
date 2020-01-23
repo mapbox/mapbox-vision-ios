@@ -7,39 +7,6 @@ protocol DataProvider: AnyObject {
     func stop()
 }
 
-final class RecordedDataProvider: DataProvider {
-    struct Dependencies {
-        let recordingPath: RecordingPath
-        let startTime: UInt
-    }
-
-    let dependencies: Dependencies
-    let telemetryPlayer: TelemetryPlayer
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-        self.telemetryPlayer = TelemetryPlayer()
-        telemetryPlayer.read(fromFolder: dependencies.recordingPath.recordingPath)
-    }
-
-    private var startTime = DispatchTime.now().uptimeMilliseconds
-
-    func start() {
-        startTime = DispatchTime.now().uptimeMilliseconds
-        telemetryPlayer.scrollData(dependencies.startTime)
-    }
-
-    func update() {
-        let settings = dependencies.recordingPath.settings
-        let frameSize = CGSize(width: settings.width, height: settings.height)
-        let currentTimeMS = DispatchTime.now().uptimeMilliseconds - startTime + dependencies.startTime
-        telemetryPlayer.setCurrentTime(currentTimeMS)
-        telemetryPlayer.updateData(withFrameSize: frameSize, srcSize: frameSize)
-    }
-
-    func stop() {}
-}
-
 final class RealtimeDataProvider: DataProvider {
     struct Dependencies {
         let native: VisionManagerNative
@@ -51,13 +18,14 @@ final class RealtimeDataProvider: DataProvider {
 
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
-        dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
-        dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
     }
 
     func start() {
+        dependencies.locationManager.locationHandler = dependencies.native.sensors.setGPS
+        dependencies.locationManager.headingHandler = dependencies.native.sensors.setHeading
         dependencies.locationManager.start()
+
+        dependencies.motionManager.handler = dependencies.native.sensors.setDeviceMotion
         dependencies.motionManager.start(updateInterval: Constants.motionUpdateInterval)
     }
 
@@ -65,20 +33,10 @@ final class RealtimeDataProvider: DataProvider {
 
     func stop() {
         dependencies.locationManager.stop()
+        dependencies.locationManager.locationHandler = nil
+        dependencies.locationManager.headingHandler = nil
+
         dependencies.motionManager.stop()
-    }
-}
-
-final class EmptyDataProvider: DataProvider {
-    func start() {}
-
-    func update() {}
-
-    func stop() {}
-}
-
-private extension DispatchTime {
-    var uptimeMilliseconds: UInt {
-        return UInt(DispatchTime.now().uptimeNanoseconds / 1_000_000)
+        dependencies.motionManager.handler = nil
     }
 }

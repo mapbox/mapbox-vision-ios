@@ -18,7 +18,7 @@ public final class VisionARManager {
 
      - Parameter visionManager: Instance of `VisionManager`.
 
-     - Returns: Instance of `VisionARManager` configured with `VisionManager` instance and delegate.
+     - Returns: Instance of `VisionARManager` configured with `VisionManager` instance.
      */
     public static func create(visionManager: VisionManagerProtocol) -> VisionARManager {
         let manager = VisionARManager()
@@ -34,6 +34,15 @@ public final class VisionARManager {
      */
     public func set(laneLength: Double) {
         native?.setLaneLength(laneLength)
+    }
+
+    /**
+     Set AR fence visibility distance in meters.
+
+    - Parameter fenceVisibilityDistance: fence visibility distance in meters.
+    */
+    public func set(fenceVisibilityDistance distance: Float) {
+        native?.setFenceVisibilityDistance(distance)
     }
 
     /**
@@ -75,5 +84,9 @@ extension VisionARManager: VisionARDelegate {
 
     public func onARLaneCutoffUpdated(_ cutoff: Float) {
         delegate?.visionARManager(self, didUpdateARLaneCutoff: cutoff)
+    }
+
+    public func onARFencesUpdated(_ fences: [ARFence]) {
+        delegate?.visionARManager(self, didUpdateARFences: fences)
     }
 }
