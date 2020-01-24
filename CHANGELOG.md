@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 - Unreleased
+
+### Vision
+
+### AR
+
+### Safety
+
 ## 0.11.0
 
 ### Vision
