@@ -85,8 +85,10 @@ extension OverSpeedingViewController: VisionManagerDelegate, VisionSafetyManager
         }
     }
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager,
-                             didUpdateRoadRestrictions roadRestrictions: RoadRestrictions) {
+    func visionSafetyManager(
+        _ visionSafetyManager: VisionSafetyManager,
+        didUpdateRoadRestrictions roadRestrictions: RoadRestrictions
+    ) {
         DispatchQueue.main.async { [weak self] in
             // save currenly applied road restrictions
             self?.restrictions = roadRestrictions
