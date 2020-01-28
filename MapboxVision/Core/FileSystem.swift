@@ -13,7 +13,7 @@ extension FileSystem: FileSystemInterface {
         DispatchQueue.global(qos: .utility).async {
             do {
                 try self.archiver.archive(filePaths.map(URL.init(fileURLWithPath:)),
-                                                   destination: URL(fileURLWithPath: archivePath))
+                                          destination: URL(fileURLWithPath: archivePath))
             } catch {
                 assertionFailure("ERROR: archiving failed with error: \(error.localizedDescription)")
                 callback(false)
