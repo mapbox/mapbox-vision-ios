@@ -4,14 +4,18 @@ whitelist_rules:
  - attributes # Attributes should be on their own lines in functions and types, but on the same line as variables and imports.
  - block_based_kvo # Prefer the new block based KVO API with keypaths when using Swift 3.2 or later
  - class_delegate_protocol # Delegate protocols should be class-only so they can be weakly referenced.
- - closure_body_length # Closure bodies should not span too many lines.
  - closing_brace # Closing brace with closing parenthesis should not have any whitespaces in the middle.
+ - closure_body_length # Closure bodies should not span too many lines.
  - closure_end_indentation # Closure end should have the same indentation as the line that started it.
+ - closure_parameter_position # Closure parameters should be on the same line as opening brace.
  - closure_spacing # Closure expressions should have a single space inside each brace.
  - colon # Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.
  - comma # There should be no space before and one after any comma.
  - compiler_protocol_init # The initializers declared in compiler protocols such as ExpressibleByArrayLiteral shouldn't be called directly.
+ - contains_over_filter_count # Prefer `contains` over comparing `filter(where:).count` to 0.
+ - contains_over_filter_is_empty # Prefer `contains` over using `filter(where:).isEmpty`.
  - contains_over_first_not_nil # Prefer contains over first(where:) != nil and firstIndex(where:) != nil.
+ - contains_over_range_nil_comparison # Prefer `contains` over `range(of:) != nil` and `range(of:) == nil`. 
  - control_statement # if, for, guard, switch, while, and catch statements shouldn't unnecessarily wrap their conditionals or arguments in parentheses.
  - convenience_type # Types used for hosting only static members should be implemented as a caseless enum to avoid instantiation.
  - custom_rules # See details below.
@@ -21,22 +25,24 @@ whitelist_rules:
  - duplicate_enum_cases # Enum can't contain multiple cases with the same name.
  - duplicate_imports # Imports should be unique.
  - dynamic_inline # Avoid using 'dynamic' and '@inline(__always)' together.
+ - empty_collection_literal # Prefer checking `isEmpty` over comparing collection to an empty array or dictionary literal.
  - empty_count # Prefer checking isEmpty over comparing count to zero.
  - empty_enum_arguments # Arguments can be omitted when matching enums with associated types if they are not used.
  - empty_parameters # Prefer () -> over Void -> .
  - empty_parentheses_with_trailing_closure # When using trailing closures, empty parentheses should be avoided after the method call.
  - empty_string # Prefer checking isEmpty over comparing string to an empty string literal.
  - empty_xctest_method # Empty XCTest method should be avoided.
+ - expiring_todo # TODOs and FIXMEs should be resolved prior to their expiry date.
  - fatal_error_message # A fatalError call should have a message.
  - file_length # Files should not span too many lines.
  - first_where # Prefer using .first(where:) over .filter { }.first in collections.
+ - flatmap_over_map_reduce # Prefer `flatMap` over `map` followed by `reduce([], +)`.
  - for_where # where clauses are preferred over a single if inside a for.
  - function_body_length # Functions bodies should not span too many lines.
  - generic_type_name # Generic type name should only contain alphanumeric characters, start with an uppercase character and span between 1 and 20 characters in length.
  - identical_operands # Comparing two identical operands is likely a mistake.
  - identifier_name # Identifier names should only contain alphanumeric characters and start with a lowercase character or should only contain capital letters. In an exception to the above, variable names may start with a capital letter when they are declared static and immutable. Variable names should not be too long or too short.
  - implicit_getter # Computed read-only properties and subscripts should avoid using the get keyword.
- - implicit_return # Prefer implicit returns in closures.
  - inert_defer # If defer is at the end of its parent scope, it will be executed right where it is anyway.
  - is_disjoint # Prefer using Set.isDisjoint(with:) over Set.intersection(_:).isEmpty.
  - joined_default_parameter # Discouraged explicit usage of the default separator.
@@ -60,6 +66,7 @@ whitelist_rules:
  - multiline_parameters_brackets # Multiline parameters should have their surrounding brackets in a new line.
  - multiple_closures_with_trailing_closure # Trailing closure syntax should not be used when passing more than one closure argument.
  - nimble_operator # Prefer Nimble operator overloads over free matcher functions.
+ - no_space_in_method_call # Don't add a space between the method name and the parentheses.
  - notification_center_detachment # An object should only remove itself as an observer in deinit.
  - nslocalizedstring_key # Static strings should be used as key in NSLocalizedString in order to genstrings work.
  - nslocalizedstring_require_bundle # Calls to NSLocalizedString should specify the bundle which contains the strings file.
@@ -73,6 +80,7 @@ whitelist_rules:
  - private_unit_test # Unit tests marked private are silently skipped.
  - prohibited_super_call # Some methods should not call super
  - protocol_property_accessors_order # When declaring properties in protocols, the order of accessors should be get set.
+ - raw_value_for_camel_cased_codable_enum # Camel cased cases of Codable String enums should have raw value.
  - reduce_boolean # Prefer using .allSatisfy() or .contains() over reduce(true) or reduce(false)
  - reduce_into # Prefer reduce(into:_:) over reduce(_:_:) for copy-on-write types
  - redundant_discardable_let # Prefer _ = foo() over let _ = foo() when discarding a result from a function.
@@ -104,6 +112,7 @@ whitelist_rules:
  - unused_capture_list # Unused reference in a capture list should be removed.
  - unused_closure_parameter # Unused parameter in a closure should be replaced with _.
  - unused_control_flow_label # Unused control flow label should be removed.
+ - unused_declaration # Declarations should be referenced at least once within all files linted.
  - unused_enumerated # When the index or the item is not used, .enumerated() can be removed.
  - unused_optional_binding # Prefer != nil over let _ =
  - unused_setter_value # Setter value is not used.
@@ -114,10 +123,9 @@ whitelist_rules:
  - void_return # Prefer -> Void over -> ().
  - xct_specific_matcher # Prefer specific XCTest matchers over XCTAssertEqual and XCTAssertNotEqual
  - xctfail_message # An XCTFail call should include a description of the assertion.
- 
+
 # This is an entirely separate list of rules that are only run by the analyze command. All analyzer rules are opt-in, so this is the only configurable rule list (there is no disabled/whitelist equivalent).
 analyzer_rules:
- - unused_private_declaration # Private declarations should be referenced in that file.
  - unused_import # All imported modules should be required to make the file compile.
  - explicit_self # Instance variables and functions should be explicitly accessed with 'self.'.
 
@@ -167,6 +175,7 @@ type_body_length:
 # - function_default_parameter_at_end # Prefer to locate parameters with defaults toward the end of the parameter list.
 # - function_parameter_count # Number of function parameters should be low.
 # - implicitly_unwrapped_optional # Implicitly unwrapped optionals should be avoided when possible.
+# - implicit_return # Prefer implicit returns in closures.
 # - line_length
 # - missing_docs # Declarations should be documented.
 # - multiline_arguments # Arguments should be either on the same line, or one per line.
