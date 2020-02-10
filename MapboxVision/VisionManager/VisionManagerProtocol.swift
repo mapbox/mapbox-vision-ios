@@ -6,8 +6,17 @@ import Foundation
 public protocol VisionManagerProtocol: AnyObject {
     /**
      Performance configuration for machine learning models.
-     Default value is merged with dynamic performance mode and high rate.
+     Default value is dynamic performance mode and high rate.
      */
+    var modelPerformance: ModelPerformance { get set }
+
+    /**
+     Performance configuration for machine learning models.
+     Default value is merged with dynamic performance mode and high rate.
+
+     Deprecated: Use modelPerformance directly instead. Variable will be removed in version 0.13.0
+     */
+    @available(*, deprecated, message: "Use modelPerformance directly instead. Variable will be removed in version 0.13.0")
     var modelPerformanceConfig: ModelPerformanceConfig { get set }
 
     /**

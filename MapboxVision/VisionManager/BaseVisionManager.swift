@@ -3,11 +3,24 @@ import Foundation
 public class BaseVisionManager: VisionManagerProtocol {
     // MARK: Performance control
 
+    public var modelPerformance = ModelPerformance(mode: .dynamic, rate: .high) {
+        didSet {
+            guard oldValue != modelPerformance else { return }
+            updateModelPerformance(modelPerformance)
+        }
+    }
+
+    @available(*, deprecated, message: "Use ModelPerformance structure instead. Enum will be removed in version 0.13.0")
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
             didSet {
                 guard oldValue != modelPerformanceConfig else { return }
-                updateModelPerformanceConfig(modelPerformanceConfig)
+                switch modelPerformanceConfig {
+                case .merged(let performance):
+                    modelPerformance = performance
+                case .separate(let segmentationPerformance, let detectionPerformance):
+                    modelPerformance = max(segmentationPerformance, detectionPerformance)
+                }
             }
         }
 
@@ -46,7 +59,7 @@ public class BaseVisionManager: VisionManagerProtocol {
 
         dependencies.native.config = .basic
         dependencies.native.delegate = self
-        updateModelPerformanceConfig(modelPerformanceConfig)
+        updateModelPerformance(modelPerformance)
         subscribeToNotifications()
     }
 
@@ -62,24 +75,12 @@ public class BaseVisionManager: VisionManagerProtocol {
 
     // MARK: Model performance configuration
 
-    private func updateModelPerformanceConfig(_ config: ModelPerformanceConfig) {
-        switch config {
-        case let .merged(performance):
-            dependencies.native.useMergedModel = true
-            update(performance: performance, for: .mergedSegDetect)
-        case let .separate(segmentationPerformance, detectionPerformance):
-            dependencies.native.useMergedModel = false
-            update(performance: segmentationPerformance, for: .segmentation)
-            update(performance: detectionPerformance, for: .detection)
-        }
-    }
-
-    private func update(performance: ModelPerformance, for modelType: MLModelType) {
-        switch ModelPerformanceResolver.coreModelPerformance(for: modelType, with: performance) {
+    private func updateModelPerformance(_ modelPerformance: ModelPerformance) {
+        switch ModelPerformanceResolver.coreModelPerformance(with: modelPerformance) {
         case .fixed(let fps):
-            dependencies.native.setFixedFPS(for: modelType, FPS: fps)
+            dependencies.native.setFixedFPS(fps)
         case .dynamic(let minFps, let maxFps):
-            dependencies.native.setDynamicFPS(for: modelType, minFPS: minFps, maxFPS: maxFps)
+            dependencies.native.setDynamicFPS(minFPS: minFps, maxFPS: maxFps)
         }
     }
 

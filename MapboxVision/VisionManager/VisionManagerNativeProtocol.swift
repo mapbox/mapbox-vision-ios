@@ -3,7 +3,6 @@ import MapboxVisionNative
 
 protocol VisionManagerBaseNativeProtocol: AnyObject {
     var config: CoreConfig { get set }
-    var useMergedModel: Bool { get set }
     var delegate: VisionDelegate? { get set }
     var videoSource: MBVVideoSource? { get set }
 
@@ -12,8 +11,8 @@ protocol VisionManagerBaseNativeProtocol: AnyObject {
     func geo(toWorld geoCoordinate: GeoCoordinate) -> WorldCoordinate?
     func world(toGeo worldCoordinates: WorldCoordinate) -> GeoCoordinate?
 
-    func setFixedFPS(for modelType: MLModelType, FPS: Float)
-    func setDynamicFPS(for modelType: MLModelType, minFPS: Float, maxFPS: Float)
+    func setFixedFPS(_ fps: Float)
+    func setDynamicFPS(minFPS: Float, maxFPS: Float)
 }
 
 protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {
