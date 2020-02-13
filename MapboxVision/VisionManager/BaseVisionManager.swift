@@ -10,7 +10,7 @@ public class BaseVisionManager: VisionManagerProtocol {
         }
     }
 
-    @available(*, deprecated, message: "Use ModelPerformance structure instead. Enum will be removed in version 0.13.0")
+    @available(*, deprecated, message: "Use modelPerformance directly instead. Property will be removed in version 0.13.0")
     public var modelPerformanceConfig: ModelPerformanceConfig =
         .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
             didSet {

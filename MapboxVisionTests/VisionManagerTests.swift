@@ -64,11 +64,11 @@ class VisionManagerTests: XCTestCase {
 
     func testPerformanceConfigMergedTranslatesToSamePerformance() {
         // Given
-        // object of VisionManager
+        // object of VisionManager and desired performance
+        let performance = ModelPerformance(mode: .dynamic, rate: .high)
 
         // When
         // model performance config is set
-        let performance = ModelPerformance(mode: .dynamic, rate: .high)
         visionManager.modelPerformanceConfig = .merged(performance: performance)
 
         // Then
@@ -77,12 +77,12 @@ class VisionManagerTests: XCTestCase {
 
     func testPerformanceConfigSeparateDynamicModeTranslatesToHigherRate() {
         // Given
-        // object of VisionManager
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
+        let performance2 = ModelPerformance(mode: .dynamic, rate: .high)
 
         // When
         // model performance config is set
-        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
-        let performance2 = ModelPerformance(mode: .dynamic, rate: .high)
         visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
                                                          detectionPerformance: performance2)
 
@@ -92,12 +92,12 @@ class VisionManagerTests: XCTestCase {
 
     func testPerformanceConfigSeparateFixedModeTranslatesToHigherRate() {
         // Given
-        // object of VisionManager
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .fixed, rate: .low)
+        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
 
         // When
         // model performance config is set
-        let performance1 = ModelPerformance(mode: .fixed, rate: .low)
-        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
         visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
                                                          detectionPerformance: performance2)
 
@@ -107,12 +107,12 @@ class VisionManagerTests: XCTestCase {
 
     func testPerformanceConfigSeparateDynamicAndFixedModesTranslatesToFixedMode() {
         // Given
-        // object of VisionManager
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
+        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
 
         // When
         // model performance config is set
-        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
-        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
         visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
                                                          detectionPerformance: performance2)
 

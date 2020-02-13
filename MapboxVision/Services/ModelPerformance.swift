@@ -8,6 +8,8 @@ public enum ModelPerformanceMode: Comparable {
     /// :nodoc:
     public static func < (lhs: ModelPerformanceMode, rhs: ModelPerformanceMode) -> Bool {
         if lhs == rhs { return false }
+        // We condider `dynamic` to be less important than `fixed` when encountering both.
+        // That's because `dynamic` mode may cause a `low` performance rate, while `fixed` one tries to keed a set value.
         return lhs == .dynamic
     }
 
@@ -25,10 +27,10 @@ public enum ModelPerformanceMode: Comparable {
 /**
  Enumeration which determines performance rate of the specific model. These are high-level settings that translates into adjustment of FPS for ML model inference.
  */
-public enum ModelPerformanceRate: Comparable {
+public enum ModelPerformanceRate: Comparable, CaseIterable {
     /// :nodoc:
     public static func < (lhs: ModelPerformanceRate, rhs: ModelPerformanceRate) -> Bool {
-        let rates: [ModelPerformanceRate] = [.off, .low, .medium, .high]
+        let rates = ModelPerformanceRate.allCases
         guard let lhsIndex = rates.firstIndex(of: lhs), let rhsIndex = rates.firstIndex(of: rhs) else {
             fatalError("Rates array is not complete")
         }
