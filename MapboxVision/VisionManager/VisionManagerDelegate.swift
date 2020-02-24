@@ -16,33 +16,28 @@ public protocol VisionManagerDelegate: AnyObject {
 
     /**
      Tells the delegate that segmentation mask was updated.
-     Requires at least low performance for segmentation.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameSegmentation frameSegmentation: FrameSegmentation)
 
     /**
      Tells the delegate that detections were updated.
-     Requires at least low performance for detection.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameDetections frameDetections: FrameDetections)
 
     /**
      Tells the delegate that classified signs were updated.
-     Requires at least low performance for detection.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateFrameSignClassifications frameSignClassifications: FrameSignClassifications)
 
     /**
      Tells the delegate that road description was updated.
      Road description parameters reach maximum accuracy when `Camera` is calibrated.
-     Requires at least low performance for segmentation.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateRoadDescription roadDescription: RoadDescription)
 
     /**
      Tells the delegate that world description was updated.
      World description parameters reach maximum accuracy when `Camera` is calibrated.
-     Requires at least low performance for detection.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateWorldDescription worldDescription: WorldDescription)
 

@@ -61,4 +61,62 @@ class VisionManagerTests: XCTestCase {
             "VisionManager should be successfully deallocated after calling destroy and releasing the object"
         )
     }
+
+    func testPerformanceConfigMergedTranslatesToSamePerformance() {
+        // Given
+        // object of VisionManager and desired performance
+        let performance = ModelPerformance(mode: .dynamic, rate: .high)
+
+        // When
+        // model performance config is set
+        visionManager.modelPerformanceConfig = .merged(performance: performance)
+
+        // Then
+        XCTAssertEqual(visionManager.modelPerformance, performance)
+    }
+
+    func testPerformanceConfigSeparateDynamicModeTranslatesToHigherRate() {
+        // Given
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
+        let performance2 = ModelPerformance(mode: .dynamic, rate: .high)
+
+        // When
+        // model performance config is set
+        visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
+                                                         detectionPerformance: performance2)
+
+        // Then
+        XCTAssertEqual(visionManager.modelPerformance, performance2)
+    }
+
+    func testPerformanceConfigSeparateFixedModeTranslatesToHigherRate() {
+        // Given
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .fixed, rate: .low)
+        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
+
+        // When
+        // model performance config is set
+        visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
+                                                         detectionPerformance: performance2)
+
+        // Then
+        XCTAssertEqual(visionManager.modelPerformance, performance2)
+    }
+
+    func testPerformanceConfigSeparateDynamicAndFixedModesTranslatesToFixedMode() {
+        // Given
+        // object of VisionManager and desired performance
+        let performance1 = ModelPerformance(mode: .dynamic, rate: .low)
+        let performance2 = ModelPerformance(mode: .fixed, rate: .high)
+
+        // When
+        // model performance config is set
+        visionManager.modelPerformanceConfig = .separate(segmentationPerformance: performance1,
+                                                         detectionPerformance: performance2)
+
+        // Then
+        XCTAssertEqual(visionManager.modelPerformance, performance2)
+    }
 }

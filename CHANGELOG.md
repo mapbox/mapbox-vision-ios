@@ -3,6 +3,7 @@
 ## 0.12.0 - Unreleased
 
 ### Vision
+- Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
 
 ### AR
 
