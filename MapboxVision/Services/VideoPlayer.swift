@@ -18,12 +18,13 @@ final class VideoPlayer: NSObject {
 
     private var isPlaying = false
     private let player: AVPlayer
+    private let playerItem: AVPlayerItem
     private let videoOutput: AVPlayerItemVideoOutput
     private var displayLink: CADisplayLink!
 
     private let observers = ObservableVideoSource()
+    private let nativeObservers: MBVVideoSource
     private var notificationToken: NSObjectProtocol!
-
     private let queue = DispatchQueue(label: "com.mapbox.VideoPlayer")
 
     init(path: String) throws {
@@ -40,6 +41,8 @@ final class VideoPlayer: NSObject {
 
         let attributes = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
         videoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
+        self.playerItem = playerItem
+        nativeObservers = VideoSourceObserverProxy(withVideoSource: observers)
 
         super.init()
 
@@ -95,14 +98,12 @@ extension VideoPlayer: VideoPlayable {
 
         player.pause()
         displayLink?.isPaused = true
-
-        player.currentItem?.seek(to: .zero, completionHandler: nil)
     }
 }
 
 extension VideoPlayer: VideoSource {
     var isExternal: Bool {
-        return false
+        false
     }
 
     func add(observer: VideoSourceObserver) {
@@ -138,5 +139,30 @@ private extension CMSampleBuffer {
                                                  sampleTiming: &info,
                                                  sampleBufferOut: &sampleBuffer)
         return sampleBuffer
+    }
+}
+
+extension VideoPlayer: VideoPlayerProtocol {
+    func addListener(_ listener: MBVVideoSourceObserver) {
+        nativeObservers.add(observer: listener)
+    }
+
+    func removeListener(_ listener: MBVVideoSourceObserver) {
+        nativeObservers.remove(observer: listener)
+    }
+
+    var progress: Float {
+        get {
+            let cmTime = player.currentTime()
+            return Float(Double(cmTime.value) / Double(cmTime.timescale))
+        }
+        set(progress) {
+            player.seek(to: CMTime.init(value: Int64(progress), timescale: 1))
+        }
+    }
+
+    var duration: Float {
+        guard let cmTime = player.currentItem?.duration else { return 0.0 }
+        return Float(cmTime.value) / Float(cmTime.timescale)
     }
 }

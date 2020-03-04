@@ -21,7 +21,7 @@ public final class VisionReplayManager: BaseVisionManager {
     /// Delegate for `VisionManager`. Delegate is held as a weak reference.
     public weak var delegate: VisionManagerDelegate? {
         get {
-            return baseDelegate
+            baseDelegate
         }
         set {
             baseDelegate = newValue
@@ -43,14 +43,27 @@ public final class VisionReplayManager: BaseVisionManager {
      - Returns: Instance of `VisionReplayManager` configured to use data from specified session.
      */
     public static func create(recordPath: String) throws -> VisionReplayManager {
-        return VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
+        VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
     }
 
     /**
      Video source that provides frames from recorded video.
      */
     public var videoSource: VideoSource {
-        return dependencies.player
+        dependencies.player
+    }
+
+    public var duration: Float {
+        dependencies.native.duration
+    }
+
+    public var progress: Float {
+        get {
+            dependencies.native.progress
+        }
+        set {
+            dependencies.native.progress = newValue
+        }
     }
 
     /**
@@ -113,7 +126,6 @@ public final class VisionReplayManager: BaseVisionManager {
 
         super.init(dependencies: BaseDependencies(native: dependencies.native))
 
-        dependencies.player.add(observer: self)
         dependencies.player.delegate = self
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
 
@@ -164,22 +176,6 @@ public final class VisionReplayManager: BaseVisionManager {
     private func pause() {
         dependencies.native.stop()
         dependencies.player.stop()
-    }
-}
-
-extension VisionReplayManager: VideoSourceObserver {
-    public func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
-        var timingInfo = CMSampleTimingInfo.invalid
-        let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
-
-        guard
-            let pixelBuffer = videoSample.buffer.pixelBuffer,
-            status == 0
-        else { return }
-
-        let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * Constants.millisecondsInSecond)
-
-        dependencies.native.sensors.setFrame(pixelBuffer, timestamp: timeStamp)
     }
 }
 
