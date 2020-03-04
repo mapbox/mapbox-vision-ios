@@ -18,7 +18,6 @@ final class VideoPlayer: NSObject {
 
     private var isPlaying = false
     private let player: AVPlayer
-    private let playerItem: AVPlayerItem
     private let videoOutput: AVPlayerItemVideoOutput
     private var displayLink: CADisplayLink!
 
@@ -41,7 +40,6 @@ final class VideoPlayer: NSObject {
 
         let attributes = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
         videoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
-        self.playerItem = playerItem
         nativeObservers = VideoSourceObserverProxy(withVideoSource: observers)
 
         super.init()
@@ -153,16 +151,15 @@ extension VideoPlayer: VideoPlayerProtocol {
 
     var progress: Float {
         get {
-            let cmTime = player.currentTime()
-            return Float(Double(cmTime.value) / Double(cmTime.timescale))
+            Float(CMTimeGetSeconds(player.currentTime()))
         }
         set(progress) {
-            player.seek(to: CMTime.init(value: Int64(progress), timescale: 1))
+            player.seek(to: CMTimeMakeWithSeconds(Double(progress), preferredTimescale: Constants.preferredTimescale))
         }
     }
 
     var duration: Float {
         guard let cmTime = player.currentItem?.duration else { return 0.0 }
-        return Float(cmTime.value) / Float(cmTime.timescale)
+        return Float(CMTimeGetSeconds(cmTime))
     }
 }
