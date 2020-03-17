@@ -25,59 +25,29 @@ The key features are:
 - Sign detection;
 - Safety alerts;
 - Object detection;
-- Lane detection.
+- Lane detection;
+- Support for external cameras.
+
+Find more at [Overview page](https://docs.mapbox.com/ios/vision/overview/).
 
 # Getting Started
 
-## Requirements
+To set up the Vision SDK you will need to download the SDK, install the frameworks relevant to your project, and complete a few configuration steps.
 
-The Vision SDK for iOS is written in Swift 4.2 and can be used with:
-  - iOS 11.2 and higher;
-  - iPhone 6s or newer.
-  
-You can find all requirements at [Documentation page](https://docs.mapbox.com/ios/vision/overview/#requirements).
-
-## Installation process
-
-To set up the Vision SDK you will need to download the SDK, install the frameworks relevant to your project, and complete a few configuration steps. You can find all details at [Documentation page](https://docs.mapbox.com/ios/vision/overview/#getting-started).
+You can find all details at [Getting Started page](https://docs.mapbox.com/ios/vision/overview/getting-started/).
 
 # Documentation
 
-The lastest version of documentation is available at [Vision's page](https://docs.mapbox.com/ios/vision).
+Find the latest version of the documentation, API reference or get familiar with Vision SDK through a series of tutorials at [Vision SDK page](https://docs.mapbox.com/ios/vision).
 
 # Contributing
 
-We use [secret-shield](https://github.com/mapbox/secret-shield) tool which runs as a pre-commit hook. In order to enable it you should install it with:
-```sh
-npm install -g @mapbox/secret-shield
-```
-
-Then you have to add a pre-commit git hook. The simplest option is to copy the following script into a `mapbox-vision-ios/.git/hooks/pre-commit`:
-```sh
-#!/bin/sh
-secret-shield --pre-commit -C verydeep --enable "Mapbox Public Key" --disable "High-entropy base64 string" "Short high-entropy string" "Long high-entropy string"
-```
-
-Don't forget to make it executable:
-```sh
-chmod +x .git/hooks/pre-commit
-```
-
-As an option you can Integrate hook via git hooks manager (like [Husky](https://github.com/typicode/husky) or [Komondor](https://github.com/shibapm/Komondor)).
-More information about installation is available [here](https://github.com/mapbox/secret-shield#install).
-
-## Code of conduct
-
-Everyone is invited to participate in Mapbox's open source projects and public discussions: we want to create a welcoming and friendly environment. Harassment of participants or other unethical and unprofessional behavior will not be tolerated in our spaces.
-
-The [Contributor Covenant](https://www.contributor-covenant.org) applies to all projects under the Mapbox organization whether they explicitly include the Contributor Covenant's [CODE_OF_CONDUCT.md](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html) or not.
+For details, please read [CONTRIBUTING](Docs/CONTRIBUTING.md) file.
 
 # Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on repository](https://github.com/mapbox/mapbox-vision-ios/tags).
-
-Changes in repository is in sync with changes in Vision Core library (which is under-the-hood of Vision SDK).
+For details, please see [Versioning](Docs/CONTRIBUTING.md#versioning) section in [CONTRIBUTING](Docs/CONTRIBUTING.md) file.
 
 # License
 
-For details, read [LICENSE file](LICENSE.md).
+For details, please read [LICENSE file](Docs/LICENSE.md) file.
