@@ -2,12 +2,15 @@ Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionAR"
   s.version      = "0.12.0"
+
   s.summary      = "Easy to use AR Navigation"
+  s.description  = <<-DESC
+                   Easy to use AR Navigation
+                   DESC
 
-  s.homepage     = 'https://www.mapbox.com/vision/'
-
-  s.license      = { :type => "CUSTOM", :file => "LICENSE.md" }
-
+  s.homepage          = 'https://www.mapbox.com/vision/'
+  s.documentation_url = 'https://docs.mapbox.com/ios/vision/'
+  s.license           = { :type => "CUSTOM", :file => "Docs/LICENSE.md" }
   s.author            = { 'Mapbox' => 'mobile@mapbox.com' }
   s.social_media_url  = 'https://twitter.com/mapbox'
   s.documentation_url = 'https://www.mapbox.com/vision/'
