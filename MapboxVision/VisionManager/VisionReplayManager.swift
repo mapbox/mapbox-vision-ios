@@ -70,10 +70,11 @@ public final class VisionReplayManager: BaseVisionManager {
 
     /**
      Start delivering events from `VisionReplayManager`.
-     Also starts playing the video. If the playing was stopped, then it will resume from progress at the momment of stopping.
-     Calling `start` on destroyed instance is considered a mistake.
+     When started `VisionReplayManager` reads recorded telemetry and video from a session folder supplied to `create(recordPath:)` method.
+     If `VisionReplayManager` was stopped, then `start` will resume reading the session from the moment it was stopped.
+     Calling `start` on already started or destroyed instance is considered a mistake.
 
-     - Important: Do NOT call this method after `destroy` is called.
+     - Important: Do NOT call this method more than once or after `destroy` is called.
      */
     public func start() {
         switch state {
@@ -81,7 +82,7 @@ public final class VisionReplayManager: BaseVisionManager {
             assertionFailure("VisionManager should be initialized before starting")
             return
         case .started:
-            resume()
+            assertionFailure("VisionManager is already started")
             return
         case .initialized, .stopped:
             state = .started
@@ -92,12 +93,12 @@ public final class VisionReplayManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionReplayManager`.
-     Also pauses playing the video.
+     `VisionReplayManager` stops reading telemetry and video of the session.
 
-     - Important: Do NOT call this method before `start` or after `destroy` is called.
+     - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
     public func stop() {
-        guard state == .started || state == .stopped else {
+        guard state == .started else {
             assertionFailure("VisionManager is not started")
             return
         }
