@@ -103,6 +103,7 @@
 		2EDFFD71224BA58F003BB718 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B517708A2242751700A693E6 /* Assets.xcassets */,
 				B51770A72243849400A693E6 /* video.mp4 */,
 			);
 			path = Resources;
@@ -135,7 +136,6 @@
 				2E4E90BA224D098F00838DAE /* Constants.swift */,
 				B51770832242751500A693E6 /* AppDelegate.swift */,
 				B51770872242751500A693E6 /* Main.storyboard */,
-				B517708A2242751700A693E6 /* Assets.xcassets */,
 				B517708C2242751700A693E6 /* LaunchScreen.storyboard */,
 				B517708F2242751700A693E6 /* Info.plist */,
 			);
