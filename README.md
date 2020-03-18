@@ -50,4 +50,4 @@ For details, please see [Versioning](Docs/CONTRIBUTING.md#versioning) section in
 
 # License
 
-For details, please read [LICENSE file](Docs/LICENSE.md) file.
+For details, please read [LICENSE](Docs/LICENSE.md) file.
