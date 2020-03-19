@@ -10,7 +10,7 @@ build/
 DerivedData/
 
 ## Documentation
-docs/public_documentation
+jazzy_output/
 
 ## Various settings
 *.pbxuser
