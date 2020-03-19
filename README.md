@@ -25,8 +25,7 @@ The key features are:
 - Sign detection;
 - Safety alerts;
 - Object detection;
-- Lane detection;
-- Support for external cameras.
+- Lane detection.
 
 Find more at [Overview page](https://docs.mapbox.com/ios/vision/overview/).
 
@@ -34,11 +33,11 @@ Find more at [Overview page](https://docs.mapbox.com/ios/vision/overview/).
 
 To set up the Vision SDK you will need to download the SDK, install the frameworks relevant to your project, and complete a few configuration steps.
 
-You can find all details at [Getting Started page](https://docs.mapbox.com/ios/vision/overview/getting-started/).
+You can find all the details at the [Getting Started page](https://docs.mapbox.com/ios/vision/overview/#getting-started/).
 
 # Documentation
 
-Find the latest version of the documentation, API reference or get familiar with Vision SDK through a series of tutorials at [Vision SDK page](https://docs.mapbox.com/ios/vision).
+Find the latest version of the documentation, API reference or get familiar with Vision SDK through a series of tutorials at [Vision SDK docs page](https://docs.mapbox.com/ios/vision).
 
 # Contributing
 

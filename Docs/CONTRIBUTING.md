@@ -54,5 +54,3 @@ We recommend to read [blog post from Github](https://github.blog/2015-01-21-how-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on repository](https://github.com/mapbox/mapbox-vision-ios/tags).
-
-Changes in repository is in sync with changes in `Vision Core` library (which is under-the-hood of Vision SDK).
