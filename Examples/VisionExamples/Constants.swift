@@ -30,5 +30,5 @@ let listOfExamples: [NamedController] = [
             and using coordinate transformation functions.
         """,
         controllerType: POIViewController.self
-    )
+    ),
 ]

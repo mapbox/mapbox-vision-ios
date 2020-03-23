@@ -2,9 +2,9 @@ import MapboxVision
 import UIKit
 
 /**
-* "POI drawing" example demonstrates how to draw a point of interest on the screen knowing its geogaphical coordinates
-* and using coordinate transformation functions.
-*/
+ * "POI drawing" example demonstrates how to draw a point of interest on the screen knowing its geogaphical coordinates
+ * and using coordinate transformation functions.
+ */
 
 // POI coordinates for a provided session. Use your own for real-time or other recorded sessions
 private let carWashCoordinate = GeoCoordinate(lon: 27.689583, lat: 53.945542)
@@ -35,20 +35,20 @@ class POIViewController: UIViewController {
         addPOIViews()
 
         /** Use this section for real-time events
-        // create a video source obtaining buffers from camera module
-        cameraVideoSource = CameraVideoSource()
-        // create VisionManager with video source
-        visionManager = VisionManager.create(videoSource: cameraVideoSource!)
-        */
+         // create a video source obtaining buffers from camera module
+         cameraVideoSource = CameraVideoSource()
+         // create VisionManager with video source
+         visionManager = VisionManager.create(videoSource: cameraVideoSource!)
+         */
 
-        ///** Use this section for recorded sessions
+        /// ** Use this section for recorded sessions
         // Path representing Documents directory where files uploaded via Finder appear
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documentsPath.appending("/default")
 
         // create VisionReplayManager with a path to recorded session
         visionManager = try? VisionReplayManager.create(recordPath: path)
-        //*/
+        // */
 
         visionManager.delegate = self
 
@@ -121,13 +121,13 @@ class POIViewController: UIViewController {
             let screenCoordinateLeftTop = visionManager.worldToPixel(worldCoordinate: worldCoordinateLeftTop),
             let screenCoordinateRightBottom = visionManager.worldToPixel(worldCoordinate: worldCoordinateRightBottom)
         else {
-           hideView()
-           return
+            hideView()
+            return
         }
 
         guard let frameSize = camera?.frameSize.cgSize else {
-           hideView()
-           return
+            hideView()
+            return
         }
 
         let viewSize = view.bounds.size
@@ -146,7 +146,6 @@ class POIViewController: UIViewController {
 }
 
 extension POIViewController: VisionManagerDelegate {
-
     func visionManager(_: VisionManagerProtocol, didUpdateCamera camera: Camera) {
         // dispatch to the main queue in order to sync access to `Camera` instance
         DispatchQueue.main.async {
