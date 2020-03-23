@@ -9,6 +9,9 @@
 
 ### Safety
 
+### Documentation
+- Added AR customization example
+
 ## 0.11.0
 
 ### Vision
