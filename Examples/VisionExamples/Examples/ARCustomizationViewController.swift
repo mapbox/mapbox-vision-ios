@@ -31,9 +31,9 @@ class ARCustomizationViewController: ARNavigationViewController {
             var laneVisualParams = LaneVisualParams()
             // Set the color
             laneVisualParams.color = UIColor.red
-            /// Also you can adjust lane width in meters
+            // Also you can adjust lane width in meters
             laneVisualParams.width = 0.5
-            /// And chevron length in meters
+            // And chevron length in meters
             laneVisualParams.arrowLength = 1
             // After `laneVisualParams` is configured you need to set it to the view controller
             visionARViewController.set(laneVisualParams: laneVisualParams)
@@ -68,9 +68,9 @@ class ARCustomizationViewController: ARNavigationViewController {
         },
         // Let's set a few more different values to see the difference
         { visionARManager, visionARViewController in
-            visionARManager.set(laneLength: 150)
+            visionARManager.set(fenceVisibilityDistance: 150)
         }, { visionARManager, visionARViewController in
-            visionARManager.set(laneLength: 250)
+            visionARManager.set(fenceVisibilityDistance: 250)
         },
        // To customize fence appearence you need to use FenceVisualParams structure.
        // Its constructor inits all the fields with the values which is used
