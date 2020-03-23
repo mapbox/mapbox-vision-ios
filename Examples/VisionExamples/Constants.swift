@@ -22,5 +22,13 @@ let listOfExamples: [NamedController] = [
         name: "AR navigation",
         description: "Demonstrates how to setup VisionAR and display default AR route.",
         controllerType: ARNavigationViewController.self
+    ),
+    (
+        name: "POI drawing",
+        description: """
+            Demonstrates how to draw a point of interest on the screen knowing its geogaphical coordinates
+            and using coordinate transformation functions.
+        """,
+        controllerType: POIViewController.self
     )
 ]
