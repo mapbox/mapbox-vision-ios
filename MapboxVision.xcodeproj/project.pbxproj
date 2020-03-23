@@ -21,7 +21,6 @@
 		2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */; };
 		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
-		2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */; };
 		2E283BD7237FABB700920228 /* MockFrameRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E283BD6237FABB700920228 /* MockFrameRecorder.swift */; };
 		2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B828523058986001494E5 /* FileManager+Helpers.swift */; };
 		2E4EE21720EFD378003431B3 /* MapboxVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E4EE21520EFD378003431B3 /* MapboxVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,8 +56,10 @@
 		2EDD8707219ED89E00760C6D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDD8706219ED89E00760C6D /* Constants.swift */; };
 		2EDFFD73224BBD3E003BB718 /* ObservableVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */; };
 		2EFF563F210B4A5B00B8D512 /* VideoTrimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */; };
-		3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */; };
-		3A2B80BA239E4AE800166F2E /* ObservableVideoSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */; };
+		3A08C0912422185C00EB6537 /* DeviceCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08C08D2422185C00EB6537 /* DeviceCheckerTests.swift */; };
+		3A08C0922422185C00EB6537 /* ObservableVideoSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08C08E2422185C00EB6537 /* ObservableVideoSourceTests.swift */; };
+		3A08C0932422185C00EB6537 /* VisionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08C08F2422185C00EB6537 /* VisionManagerTests.swift */; };
+		3A08C0942422185C00EB6537 /* RecordingPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A08C0902422185C00EB6537 /* RecordingPathTests.swift */; };
 		3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */; };
 		5A006F4A231546250097FADF /* VisionARViewController+ARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A006F49231546250097FADF /* VisionARViewController+ARManager.swift */; };
@@ -68,7 +69,6 @@
 		5A3C9D9322C3B1C300700DC6 /* VisionManagerNativeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9222C3B1C300700DC6 /* VisionManagerNativeProtocol.swift */; };
 		5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9822C50D0000700DC6 /* MockNative.swift */; };
 		5A3C9D9B22C50D7C00700DC6 /* MockSensors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */; };
-		5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3E42C422B280180035A010 /* VisionManagerTests.swift */; };
 		9D72A196BCA3C43852E39A10 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A773F7BCE045156649B6 /* DateFormatter.swift */; };
 		9D72A4A4A30F19F3EA8A7316 /* VideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A9D70E54F426D0E8990E /* VideoSource.swift */; };
 		9D72AB0D4BB86199CF051DC2 /* CVPixelBuffer+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */; };
@@ -106,7 +106,6 @@
 		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = Carthage/Build/iOS/MapboxVisionARNative.framework; sourceTree = "<group>"; };
 		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = Carthage/Build/iOS/MapboxVisionSafetyNative.framework; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
-		2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPathTests.swift; sourceTree = "<group>"; };
 		2E283BD6237FABB700920228 /* MockFrameRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFrameRecorder.swift; sourceTree = "<group>"; };
 		2E2B828523058986001494E5 /* FileManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helpers.swift"; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +143,10 @@
 		2EDD8706219ED89E00760C6D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EDFFD72224BBD3E003BB718 /* ObservableVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSource.swift; sourceTree = "<group>"; };
 		2EFF563E210B4A5B00B8D512 /* VideoTrimmer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTrimmer.swift; sourceTree = "<group>"; };
-		3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCheckerTests.swift; sourceTree = "<group>"; };
-		3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableVideoSourceTests.swift; sourceTree = "<group>"; };
+		3A08C08D2422185C00EB6537 /* DeviceCheckerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCheckerTests.swift; sourceTree = "<group>"; };
+		3A08C08E2422185C00EB6537 /* ObservableVideoSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableVideoSourceTests.swift; sourceTree = "<group>"; };
+		3A08C08F2422185C00EB6537 /* VisionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionManagerTests.swift; sourceTree = "<group>"; };
+		3A08C0902422185C00EB6537 /* RecordingPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingPathTests.swift; sourceTree = "<group>"; };
 		3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionARNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AAB2EFA22858F28000D052E /* UIDeviceStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceStubs.swift; sourceTree = "<group>"; };
 		5A006F49231546250097FADF /* VisionARViewController+ARManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VisionARViewController+ARManager.swift"; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		5A3C9D9222C3B1C300700DC6 /* VisionManagerNativeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerNativeProtocol.swift; sourceTree = "<group>"; };
 		5A3C9D9822C50D0000700DC6 /* MockNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNative.swift; sourceTree = "<group>"; };
 		5A3C9D9A22C50D7C00700DC6 /* MockSensors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSensors.swift; sourceTree = "<group>"; };
-		5A3E42C422B280180035A010 /* VisionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionManagerTests.swift; sourceTree = "<group>"; };
 		9D72A2983A81E002804CA22C /* DocumentsLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentsLocation.swift; sourceTree = "<group>"; };
 		9D72A5D7CECFACCEE667A42B /* CVPixelBuffer+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helper.swift"; sourceTree = "<group>"; };
 		9D72A648B7F1E55B41E25240 /* CameraVideoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVideoSource.swift; sourceTree = "<group>"; };
@@ -406,6 +406,17 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		3A08C08C2422185C00EB6537 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3A08C08D2422185C00EB6537 /* DeviceCheckerTests.swift */,
+				3A08C08E2422185C00EB6537 /* ObservableVideoSourceTests.swift */,
+				3A08C0902422185C00EB6537 /* RecordingPathTests.swift */,
+				3A08C08F2422185C00EB6537 /* VisionManagerTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		5A006F5B231928AE0097FADF /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,13 +452,10 @@
 		B51E557A215E313500650DDE /* MapboxVisionTests */ = {
 			isa = PBXGroup;
 			children = (
+				3A08C08C2422185C00EB6537 /* Tests */,
 				2EBE10E52301672C00CE87CE /* Helpers */,
 				B50CFBAB2163C8D700C9C5A5 /* Mocks */,
-				3A11FEDE2282BCD300B68E5B /* DeviceCheckerTests.swift */,
 				B51E557D215E313500650DDE /* Info.plist */,
-				3A2B80B9239E4AE800166F2E /* ObservableVideoSourceTests.swift */,
-				2E1FC07A22D4BE1A009BEBFB /* RecordingPathTests.swift */,
-				5A3E42C422B280180035A010 /* VisionManagerTests.swift */,
 			);
 			path = MapboxVisionTests;
 			sourceTree = "<group>";
@@ -775,13 +783,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A08C0942422185C00EB6537 /* RecordingPathTests.swift in Sources */,
 				3AAB2EFB22858F28000D052E /* UIDeviceStubs.swift in Sources */,
-				2E1FC07B22D4BE1A009BEBFB /* RecordingPathTests.swift in Sources */,
-				5A3E42C922B28EAA0035A010 /* VisionManagerTests.swift in Sources */,
-				3A11FEDF2282BCD300B68E5B /* DeviceCheckerTests.swift in Sources */,
+				3A08C0922422185C00EB6537 /* ObservableVideoSourceTests.swift in Sources */,
 				3A7676AE22D647FE00ABC483 /* DeviceChecker.swift in Sources */,
+				3A08C0912422185C00EB6537 /* DeviceCheckerTests.swift in Sources */,
+				3A08C0932422185C00EB6537 /* VisionManagerTests.swift in Sources */,
 				5A3C9D9122C39F5300700DC6 /* MockDataProvider.swift in Sources */,
-				3A2B80BA239E4AE800166F2E /* ObservableVideoSourceTests.swift in Sources */,
 				5A3C9D9922C50D0000700DC6 /* MockNative.swift in Sources */,
 				2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */,
 				5A3C9D8722C37AF700700DC6 /* MockVideoSource.swift in Sources */,

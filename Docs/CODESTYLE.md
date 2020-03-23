@@ -1,15 +1,9 @@
 # Coding style guide
 
-
-## Objective-C
-We follow the [Google Objective-C Style Guide](https://google.github.io/styleguide/objcguide.html).
-Make sure your code is also follows [Cocoa Coding Guidelines](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html).
-
-We use automation tools to enforce formatting (see `Enforcing formatting and linting` section below).
-
 ## Swift
 
-We follow the [Google Swift Style Guide](https://google.github.io/swift/)
+We follow the [Google Swift Style Guide](https://google.github.io/swift/).
+
 Please note that [Apple's Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) are considered as a part of the style guide.
 
 There're following items that can differ a bit from Style Guide above:
@@ -24,7 +18,8 @@ There're following items that can differ a bit from Style Guide above:
 - All work that we can't finish right away must be marked appropriately (`// TODO: description` or `// FIXME: description`)
 - We write our code without warnings!
 
-We use automation tools to enforce formatting (see `Enforcing formatting and linting` section below).
+We use automation tools to enforce formatting (see [corresponding section](https://github.com/mapbox/mapbox-vision-ios/blob/master/CODESTYLE.md#enforcing-formatting-and-linting) below).
+
 If you have any issues with linting/formatting, please let iOS mobile team know.
 
 # Enforcing formatting and linting
@@ -34,19 +29,21 @@ If you have any issues with linting/formatting, please let iOS mobile team know.
 - [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) to enforce Swift style and conventions.
 
 Rules for `SwiftFormat` are configured in `.swiftformat` file.
+
 You can find an updated list of rules and more information about regarding all available rules in [Rules.md](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md).
 
 - [Swift Lint](https://github.com/realm/SwiftLint) to enforce Swift style and perfrorm some lint checks.
 
 All rules for `SwiftLint` are configured in `.swiftlint.yml` file. Additionally `SwiftLint` has some custom rules. 
-You can find an updated list of rules and more information about regarding all available rules in [Rules.md](https://github.com/realm/SwiftLint/blob/master/Rules.md).
-You can also check [Source/SwiftLintFramework/Rules directory](https://github.com/realm/SwiftLint/blob/master/Source/SwiftLintFramework/Rules) to see their implementation.
 
-- [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) to handle formatting for Obj-C/Obj-C++ code (`.h`/`.m`/`.mm` file extensions).
+You can find an updated list of rules and more information about regarding all available rules in [Rules.md](https://github.com/realm/SwiftLint/blob/master/Rules.md).
+
+You can also check [Source/SwiftLintFramework/Rules directory](https://github.com/realm/SwiftLint/blob/master/Source/SwiftLintFramework/Rules) to see their implementation.
 
 ## Installation and usage
 
 Please note we're using `Swift 4.2` as a minimal version, thus make sure you install appropriate toolchain or switch to it in case you have more than one. Otherwise you might face some false positivis triggers or build errors.
+
 Please do NOT add new rules into config files without explicit approve from mobile team!
 
 ### Install Swiftlint
