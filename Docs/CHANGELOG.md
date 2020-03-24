@@ -3,6 +3,9 @@
 ## 0.12.0 - Unreleased
 
 ### Vision
+- Added property `progress` to the `VisionReplayManager`
+- Added read-only property `duration` to the `VisionReplayManager`
+- Changed `VisionReplayManager`'s `start`/`stop` methods functionalities to the `pause`/`resume`
 - Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
 
 ### AR
