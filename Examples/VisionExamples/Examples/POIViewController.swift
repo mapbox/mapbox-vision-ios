@@ -7,19 +7,19 @@ import UIKit
  */
 
 // POI coordinates for a provided session. Use your own for real-time or other recorded sessions
-private let carWashCoordinate = GeoCoordinate(lon: 27.689583, lat: 53.945542)
-private let gasStationCoordinate = GeoCoordinate(lon: 27.689583, lat: 53.945542)
+private let carWashCoordinate = GeoCoordinate(lon: 27.675944566726685, lat: 53.94105180084251)
+private let gasStationCoordinate = GeoCoordinate(lon: 27.674764394760132, lat: 53.9405971055192)
 
-private let distanceVisibilityThreshold = 150.0
+private let distanceVisibilityThreshold = 300.0
 private let distanceAboveGround = 10.0
-private let poiDimension = 5.0
+private let poiDimension = 10.0
 
 class POIViewController: UIViewController {
     // used only in real-time session
     private var cameraVideoSource: CameraVideoSource?
     // change type to VisionManager for real-time session
     private var visionManager: VisionReplayManager!
-
+    
     private let visionViewController = VisionPresentationViewController()
     private var carWashView: UIView!
     private var gasStationView: UIView!
@@ -77,11 +77,11 @@ class POIViewController: UIViewController {
     }
 
     private func addPOIViews() {
-        gasStationView = UIImageView(image: UIImage(named: "alert"))
+        gasStationView = UIImageView(image: UIImage(named: "ic_gas_station"))
         gasStationView.isHidden = true
         view.addSubview(gasStationView)
 
-        carWashView = UIImageView(image: UIImage(named: "alert"))
+        carWashView = UIImageView(image: UIImage(named: "ic_car_wash"))
         carWashView.isHidden = true
         view.addSubview(carWashView)
     }
