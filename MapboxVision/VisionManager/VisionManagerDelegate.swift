@@ -3,6 +3,7 @@ import MapboxVisionNative
 
 /**
  Interface that user’s custom object should conform to in order to receive events from `VisionManager`.
+ Some methods will not be called until `Camera.isCalibrated` value becomes `true` due to highly imprecise results.
  Delegate methods are called one by one followed by `visionManagerDidCompleteUpdate` call, which denotes the end of the iteration.
 
  - NOTE: All delegate methods are called on a background thread.
@@ -31,13 +32,13 @@ public protocol VisionManagerDelegate: AnyObject {
 
     /**
      Tells the delegate that road description was updated.
-     Road description parameters reach maximum accuracy when `Camera` is calibrated.
+     Road description parameters reach maximum accuracy when `Camera` is calibrated and may not be produced until then.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateRoadDescription roadDescription: RoadDescription)
 
     /**
      Tells the delegate that world description was updated.
-     World description parameters reach maximum accuracy when `Camera` is calibrated.
+     World description parameters reach maximum accuracy when `Camera` is calibrated and may not be produced until then.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateWorldDescription worldDescription: WorldDescription)
 
@@ -53,6 +54,7 @@ public protocol VisionManagerDelegate: AnyObject {
 
     /**
      Tells the delegate that camera state was updated.
+     Use this method to obtain current values of calibration progress, frame size, and other camera parameters from `Camera` instance.
      */
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCamera camera: Camera)
 
