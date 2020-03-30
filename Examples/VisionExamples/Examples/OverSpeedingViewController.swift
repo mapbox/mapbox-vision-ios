@@ -65,7 +65,7 @@ class OverSpeedingViewController: UIViewController {
         view.addSubview(alertView)
         NSLayoutConstraint.activate([
             alertView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertView.trailingAnchor, multiplier: 1),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertView.trailingAnchor, multiplier: 1)
         ])
     }
 

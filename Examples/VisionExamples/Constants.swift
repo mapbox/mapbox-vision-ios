@@ -29,6 +29,6 @@ let listOfExamples: [NamedController] = [
             Demonstrates how to draw a point of interest on the screen knowing its geogaphical coordinates
             and using coordinate transformation functions.
         """,
-        controllerType: POIViewController.self
-    ),
+        controllerType: POIDrawingViewController.self
+    )
 ]
