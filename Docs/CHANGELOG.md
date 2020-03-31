@@ -13,7 +13,7 @@
 ### Safety
 
 ### Documentation
-- Added Getting Started example to use in public documentation to show basics configuration steps
+- Added Getting Started code snippet showing basic SDK configuration steps
 
 ## 0.11.0
 

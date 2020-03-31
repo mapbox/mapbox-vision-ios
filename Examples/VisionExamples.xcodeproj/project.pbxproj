@@ -17,7 +17,7 @@
 		2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */; };
 		2E4E90BB224D098F00838DAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BA224D098F00838DAE /* Constants.swift */; };
 		2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */; };
-		3A21B815243344AE00AA786C /* GettingStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21B814243344AE00AA786C /* GettingStartedViewController.swift */; };
+		3A21B81724335A4A00AA786C /* GettingStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21B814243344AE00AA786C /* GettingStartedViewController.swift */; };
 		5A3E42CF22B3F4E70035A010 /* MapboxDirections.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3E42CE22B3F4E70035A010 /* MapboxDirections.framework */; };
 		9D72A3BAFC38783F3E9B80D8 /* OverSpeedingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */; };
 		B51770842242751500A693E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770832242751500A693E6 /* AppDelegate.swift */; };
@@ -95,7 +95,6 @@
 		2EDFFD70224BA50E003BB718 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				3A21B816243348C700AA786C /* Basics */,
 				B51770852242751500A693E6 /* ExternalCameraViewController.swift */,
 				9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */,
 				2E2042492252475E00C688FD /* ARNavigationViewController.swift */,
@@ -112,12 +111,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		3A21B816243348C700AA786C /* Basics */ = {
+		3A21B816243348C700AA786C /* Code Snippets */ = {
 			isa = PBXGroup;
 			children = (
 				3A21B814243344AE00AA786C /* GettingStartedViewController.swift */,
 			);
-			path = Basics;
+			path = "Code Snippets";
 			sourceTree = "<group>";
 		};
 		B51770772242751500A693E6 = {
@@ -141,6 +140,7 @@
 		B51770822242751500A693E6 /* VisionExamples */ = {
 			isa = PBXGroup;
 			children = (
+				3A21B816243348C700AA786C /* Code Snippets */,
 				2EDFFD70224BA50E003BB718 /* Examples */,
 				2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */,
 				2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */,
@@ -305,8 +305,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A21B815243344AE00AA786C /* GettingStartedViewController.swift in Sources */,
 				2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */,
+				3A21B81724335A4A00AA786C /* GettingStartedViewController.swift in Sources */,
 				B51770862242751500A693E6 /* ExternalCameraViewController.swift in Sources */,
 				B51770842242751500A693E6 /* AppDelegate.swift in Sources */,
 				2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */,

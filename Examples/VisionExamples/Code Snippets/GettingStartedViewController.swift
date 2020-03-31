@@ -1,25 +1,18 @@
 /**
- This file is used in a public documentation to show basic configuration steps.
+ This file shows basic Vision SDK configuration steps.
  */
 
-// Need to include Vision functionality
 import MapboxVision
-// Need to include Vision AR functionality
 import MapboxVisionAR
-// Need to include Vision Safety functionality
 import MapboxVisionSafety
 
 class GettingStartedViewController: UIViewController {
-    
-    // MARK: - Private properties
     
     private var videoSource: CameraVideoSource!
     
     private var visionManager: VisionManager!
     private var visionARManager: VisionARManager!
     private var visionSafetyManager: VisionSafetyManager!
-    
-    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,59 +22,55 @@ class GettingStartedViewController: UIViewController {
         
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
-        // setting up the `VisionSafetyManagerDelegate`
+        // set up the `VisionSafetyManagerDelegate`
         visionManager.delegate = self
         
-        // create VisionARManager if you want to use AR's features
+        // create VisionARManager to use AR features
         visionARManager = VisionARManager.create(visionManager: visionManager)
-        // setting up the `VisionSafetyManagerDelegate`
+        // set up the `VisionSafetyManagerDelegate`
         visionARManager.delegate = self
         
-        // create VisionSafetyManager if you want to use Safety's features
+        // create VisionSafetyManager to use Safety features
         visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager)
-        // setting up the `VisionSafetyManagerDelegate`
+        // set up the `VisionSafetyManagerDelegate`
         visionSafetyManager.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Start delivering events
+        // start delivering events
         videoSource.start()
         visionManager.start()
-        visionARManager.start()
-        visionSafetyManager.start()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        // Stop delivering events
+        // stop delivering events
         videoSource.stop()
         visionManager.stop()
-        visionARManager.stop()
-        visionSafetyManager.stop()
     }
     
     deinit {
-        // AR and/or Safety managers should be destroyed first
+        // AR and Safety managers should be destroyed before the Vision manager
         visionARManager.destroy()
         visionSafetyManager.destroy()
 
-        // Finally destroy the instance of `VisionManager`
+        // finally destroy the instance of `VisionManager`
         visionManager.destroy()
     }
 }
 
 extension GettingStartedViewController: VisionManagerDelegate {
-    // Put implementation of delegate methods
+    // implement required methods of the delegate
 }
 
 extension GettingStartedViewController: VisionARManagerDelegate {
-    // Put implementation of delegate methods
+    // implement required methods of the delegate
 }
 
 extension GettingStartedViewController: VisionSafetyManagerDelegate {
-    // Put implementation of delegate methods
+    // implement required methods of the delegate
 }
 
