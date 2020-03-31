@@ -12,6 +12,9 @@
 
 ### Safety
 
+### Documentation
+- Added Getting Started example to use in public documentation to show basics configuration steps
+
 ## 0.11.0
 
 ### Vision
