@@ -12,6 +12,9 @@
 
 ### Safety
 
+### Documentation
+- Added Getting Started code snippet showing basic SDK configuration steps
+
 ## 0.11.0
 
 ### Vision
