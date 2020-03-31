@@ -22,12 +22,12 @@ class GettingStartedViewController: UIViewController {
         
         // create VisionManager with video source
         visionManager = VisionManager.create(videoSource: videoSource)
-        // set up the `VisionSafetyManagerDelegate`
+        // set up the `VisionManagerDelegate`
         visionManager.delegate = self
         
         // create VisionARManager to use AR features
         visionARManager = VisionARManager.create(visionManager: visionManager)
-        // set up the `VisionSafetyManagerDelegate`
+        // set up the `VisionARManagerDelegate`
         visionARManager.delegate = self
         
         // create VisionSafetyManager to use Safety features
