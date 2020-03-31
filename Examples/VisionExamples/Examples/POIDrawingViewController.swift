@@ -2,7 +2,7 @@ import MapboxVision
 import UIKit
 
 /**
- * "POI drawing" example demonstrates how to draw a point of interest on the screen knowing its geogaphical coordinates
+ * "POI drawing" example demonstrates how to draw a point of interest on the screen knowing its geographical coordinates
  * and using coordinate transformation functions.
  */
 
@@ -55,19 +55,19 @@ class POIDrawingViewController: UIViewController {
         visionManager.stop()
     }
 
+    deinit {
+        // free up VisionManager's resources
+        visionManager.destroy()
+    }
+
     private func addVisionView() {
         addChild(visionViewController)
         view.addSubview(visionViewController.view)
         visionViewController.didMove(toParent: self)
     }
 
-    deinit {
-        // free up VisionManager's resources
-        visionManager.destroy()
-    }
-
     private func updatePOI(geoCoordinate: GeoCoordinate, poiView: UIView) {
-        // hide the view if one of conditions isn't met
+        // closure that's used to hide the view if one of conditions isn't met
         let hideView = {
             poiView.removeFromSuperview()
         }
@@ -84,7 +84,7 @@ class POIDrawingViewController: UIViewController {
             return
         }
 
-        // by default height of the translated geo coordinate is 0.
+        // by default the translated geo coordinate is placed at 0 height in the world space.
         // If you'd like to lift it above the ground alter its `z` coordinate
         let worldCoordinateLeftTop =
             WorldCoordinate(x: poiWorldCoordinate.x,
@@ -108,6 +108,7 @@ class POIDrawingViewController: UIViewController {
             return
         }
 
+        // translate points from the camera frame space to the view space
         let frameSize = camera.frameSize.cgSize
         let viewSize = view.bounds.size
 
@@ -117,6 +118,7 @@ class POIDrawingViewController: UIViewController {
         let rightBottom = screenCoordinateRightBottom.cgPoint
             .convertForAspectRatioFill(from: frameSize, to: viewSize)
 
+        // construct and apply POI view frame rectangle
         let poiFrame = CGRect(x: leftTop.x,
                               y: leftTop.y,
                               width: rightBottom.x - leftTop.x,
