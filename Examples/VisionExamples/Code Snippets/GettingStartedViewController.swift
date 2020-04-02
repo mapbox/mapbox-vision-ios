@@ -12,6 +12,8 @@ class GettingStartedViewController: UIViewController {
     private var visionARManager: VisionARManager!
     private var visionSafetyManager: VisionSafetyManager!
 
+    private let visionViewController = VisionPresentationViewController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +34,12 @@ class GettingStartedViewController: UIViewController {
         visionSafetyManager = VisionSafetyManager.create(visionManager: visionManager)
         // set up the `VisionSafetyManagerDelegate`
         visionSafetyManager.delegate = self
+
+        // configure view to display sample buffers from video source
+        visionViewController.set(visionManager: visionManager)
+        addChild(visionViewController)
+        view.addSubview(visionViewController.view)
+        visionViewController.didMove(toParent: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -71,3 +79,5 @@ extension GettingStartedViewController: VisionARManagerDelegate {
 extension GettingStartedViewController: VisionSafetyManagerDelegate {
     // implement required methods of the delegate
 }
+
+// This comment is here to assure the correct rendering of code snippets in a public documentation
