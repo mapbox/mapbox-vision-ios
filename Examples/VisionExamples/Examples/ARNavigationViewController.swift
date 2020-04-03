@@ -71,7 +71,7 @@ class ARNavigationViewController: UIViewController {
     }
 }
 
-extension MapboxVisionARNative.Route {
+private extension MapboxVisionARNative.Route {
     /**
      Create `MapboxVisionARNative.Route` instance from `MapboxDirections.Route`.
      */

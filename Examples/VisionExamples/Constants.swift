@@ -24,6 +24,11 @@ let listOfExamples: [NamedController] = [
         controllerType: ARNavigationViewController.self
     ),
     (
+        name: "AR customization",
+        description: "Demonstrates how to customize vision AR visuals - AR lane and AR fence.",
+        controllerType: ARCustomizationViewController.self
+    ),
+    (
         name: "POI drawing",
         description: """
             Demonstrates how to draw a point of interest on the screen knowing its geographical coordinates
