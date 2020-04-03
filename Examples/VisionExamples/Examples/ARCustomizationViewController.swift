@@ -17,11 +17,11 @@ class ARCustomizationViewController: ARNavigationViewController {
         // Set lane length in meters
         visionARManager.set(laneLength: 40)
 
-        // Create an instance of LaneVisualParams
+        // Create an instance of `LaneVisualParams`
         let laneVisualParams = LaneVisualParams()
         // Set lane color
         laneVisualParams.color = UIColor.red
-        // Set lane width
+        // Set lane width in meters
         laneVisualParams.width = 1
         // Set the length of chevrons in meters
         laneVisualParams.arrowLength = 2.5
@@ -36,13 +36,13 @@ class ARCustomizationViewController: ARNavigationViewController {
 
         // Create an instance of `FenceVisualParams`
         let fenceVisualParams = FenceVisualParams()
-        // Set the color of the fence
+        // Set fence color
         fenceVisualParams.color = UIColor.yellow
-        // Set the height of the fence in meters
+        // Set fence height in meters
         fenceVisualParams.height = 2
-        // Set the vertical offset of the fence above the road surface in meters
+        // Set fence vertical offset above the road surface in meters
         fenceVisualParams.verticalOffset = 1
-        // Set the horizontal offset of the fence from the camera in meters
+        // Set fence horizontal offset from the camera in meters
         fenceVisualParams.horizontalOffset = 3
         // Set the number of arrows in the fence
         fenceVisualParams.sectionsCount = 3
@@ -56,7 +56,7 @@ class ARCustomizationViewController: ARNavigationViewController {
         visionARViewController.set(laneVisualParams: LaneVisualParams())
         // Set the new fence visual params without changes
         visionARViewController.set(fenceVisualParams: FenceVisualParams())
-        // Make fence invisible
+        // Disable fence rendering
         visionARViewController.isFenceVisible = false
     }
 }

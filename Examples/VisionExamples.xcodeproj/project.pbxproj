@@ -17,8 +17,9 @@
 		2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90B8224D094D00838DAE /* ExampleTableViewController.swift */; };
 		2E4E90BB224D098F00838DAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BA224D098F00838DAE /* Constants.swift */; };
 		2E4E90BD224D116700838DAE /* ExampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */; };
-		3A21B81724335A4A00AA786C /* GettingStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21B814243344AE00AA786C /* GettingStartedViewController.swift */; };
 		2EA38EB3242252F700AAFAA6 /* POIDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA38EB2242252F700AAFAA6 /* POIDrawingViewController.swift */; };
+		2EC15498243755E600232C29 /* ARCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC15497243755E600232C29 /* ARCustomizationViewController.swift */; };
+		3A21B81724335A4A00AA786C /* GettingStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21B814243344AE00AA786C /* GettingStartedViewController.swift */; };
 		5A3E42CF22B3F4E70035A010 /* MapboxDirections.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3E42CE22B3F4E70035A010 /* MapboxDirections.framework */; };
 		9D72A3BAFC38783F3E9B80D8 /* OverSpeedingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */; };
 		B51770842242751500A693E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51770832242751500A693E6 /* AppDelegate.swift */; };
@@ -56,8 +57,9 @@
 		2E4E90BC224D116700838DAE /* ExampleContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleContainerViewController.swift; sourceTree = "<group>"; };
 		2E4E90BF224E1CCC00838DAE /* MapboxVisionSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4E90C1224E1CCC00838DAE /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionSafetyNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A21B814243344AE00AA786C /* GettingStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingStartedViewController.swift; sourceTree = "<group>"; };
 		2EA38EB2242252F700AAFAA6 /* POIDrawingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIDrawingViewController.swift; sourceTree = "<group>"; };
+		2EC15497243755E600232C29 /* ARCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARCustomizationViewController.swift; sourceTree = "<group>"; };
+		3A21B814243344AE00AA786C /* GettingStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingStartedViewController.swift; sourceTree = "<group>"; };
 		5A3E42CE22B3F4E70035A010 /* MapboxDirections.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxDirections.framework; path = Carthage/Build/iOS/MapboxDirections.framework; sourceTree = "<group>"; };
 		9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverSpeedingViewController.swift; sourceTree = "<group>"; };
 		B51770802242751500A693E6 /* VisionExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				B51770852242751500A693E6 /* ExternalCameraViewController.swift */,
 				9D72AEABF265D32DD9CF360E /* OverSpeedingViewController.swift */,
 				2E2042492252475E00C688FD /* ARNavigationViewController.swift */,
+				2EC15497243755E600232C29 /* ARCustomizationViewController.swift */,
 				2EA38EB2242252F700AAFAA6 /* POIDrawingViewController.swift */,
 			);
 			path = Examples;
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC15498243755E600232C29 /* ARCustomizationViewController.swift in Sources */,
 				2E4E90B9224D094D00838DAE /* ExampleTableViewController.swift in Sources */,
 				3A21B81724335A4A00AA786C /* GettingStartedViewController.swift in Sources */,
 				2EA38EB3242252F700AAFAA6 /* POIDrawingViewController.swift in Sources */,
