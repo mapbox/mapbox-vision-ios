@@ -127,19 +127,19 @@ class SafetyAlertsViewController: UIViewController {
             // at this stage, bbox has the coordinates in the camera frame space
             // you should convert it to the view space saving the aspect ratio
 
-            // first, we calculate left-top and right-bottom coordinates of bounding box
+            // first, construct left-top and right-bottom coordinates of a bounding box
             var leftTop = CGPoint(x: bboxInCameraFrameSpace.origin.x,
                                   y: bboxInCameraFrameSpace.origin.y)
             var rightBottom = CGPoint(x: bboxInCameraFrameSpace.maxX,
                                       y: bboxInCameraFrameSpace.maxY)
 
-            // then we do a convertion from the camera frame space into the view frame space
+            // then convert the points from the camera frame space into the view frame space
             leftTop = leftTop.convertForAspectRatioFill(from: cameraFrameSize,
-                                                        to: UIScreen.main.bounds.size)
+                                                        to: view.bounds.size)
             rightBottom = rightBottom.convertForAspectRatioFill(from: cameraFrameSize,
-                                                                to: UIScreen.main.bounds.size)
+                                                                to: view.bounds.size)
 
-            // finally, get a bounding box in the view frame space
+            // finally, construct a bounding box in the view frame space
             let bboxInViewSpace = CGRect(x: leftTop.x,
                                          y: leftTop.y,
                                          width: rightBottom.x - leftTop.x,
