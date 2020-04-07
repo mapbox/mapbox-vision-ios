@@ -113,18 +113,40 @@ class SafetyAlertsViewController: UIViewController {
             }
         }
 
+        // iterate the collection of `CollisionObject`s and draw each of them
         for carCollision in carCollisions {
-            // calculate absolute coordinates
             let relativeBBox = carCollision.lastDetection.boundingBox
-            let frameSize = carCollision.lastFrame.image.size.cgSize
+            let cameraFrameSize = carCollision.lastFrame.image.size.cgSize
 
-            let bbox = CGRect(x: relativeBBox.origin.x * frameSize.width,
-                              y: relativeBBox.origin.y * frameSize.height,
-                              width: relativeBBox.size.width * frameSize.width,
-                              height: relativeBBox.size.height * frameSize.height)
+            // calculate absolute coordinates
+            let bboxInCameraFrameSpace = CGRect(x: relativeBBox.origin.x * cameraFrameSize.width,
+                                                y: relativeBBox.origin.y * cameraFrameSize.height,
+                                                width: relativeBBox.size.width * cameraFrameSize.width,
+                                                height: relativeBBox.size.height * cameraFrameSize.height)
+
+            // at this stage, bbox has the coordinates in the camera frame space
+            // you should convert it to the view space saving the aspect ratio
+
+            // first, we calculate left-top and right-bottom coordinates of bounding box
+            var leftTop = CGPoint(x: bboxInCameraFrameSpace.origin.x,
+                                  y: bboxInCameraFrameSpace.origin.y)
+            var rightBottom = CGPoint(x: bboxInCameraFrameSpace.maxX,
+                                      y: bboxInCameraFrameSpace.maxY)
+
+            // then we do a convertion from the camera frame space into the view frame space
+            leftTop = leftTop.convertForAspectRatioFill(from: cameraFrameSize,
+                                                        to: UIScreen.main.bounds.size)
+            rightBottom = rightBottom.convertForAspectRatioFill(from: cameraFrameSize,
+                                                                to: UIScreen.main.bounds.size)
+
+            // finally, get a bounding box in the view frame space
+            let bboxInViewSpace = CGRect(x: leftTop.x,
+                                         y: leftTop.y,
+                                         width: rightBottom.x - leftTop.x,
+                                         height: rightBottom.y - leftTop.y)
 
             // draw a collision detection alert
-            let view = CollisionDetectionView(frame: bbox)
+            let view = CollisionDetectionView(frame: bboxInViewSpace)
             self.view.addSubview(view)
         }
     }
