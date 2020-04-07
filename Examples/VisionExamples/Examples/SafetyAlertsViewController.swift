@@ -7,7 +7,7 @@ import UIKit
  * to alert a user about exceeding allowed speed limit and potential collisions with other cars.
  */
 
-// Custom UIView to draw a red bounding boxes
+// Custom UIView to draw a red bounding box
 class CollisionDetectionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,6 +77,9 @@ class SafetyAlertsViewController: UIViewController {
     }
 
     deinit {
+        // free up VisionSafetyManager's resources
+        visionSafetyManager.destroy()
+
         // free up VisionManager's resources
         visionManager.destroy()
     }
@@ -93,28 +96,25 @@ class SafetyAlertsViewController: UIViewController {
         alertOverspeedingView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(alertOverspeedingView)
         NSLayoutConstraint.activate([
-            alertOverspeedingView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 1),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: alertOverspeedingView.trailingAnchor, multiplier: 1)
+            alertOverspeedingView.topAnchor
+                .constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1),
+            view.safeAreaLayoutGuide.trailingAnchor
+                .constraint(equalToSystemSpacingAfter: alertOverspeedingView.trailingAnchor, multiplier: 1)
         ])
-    }
-
-    // MARK: - Drawing custom collision detection views
-
-    private func clearCollisionStateDrawings() {
-        for subview in view.subviews {
-            if subview.isKind(of: CollisionDetectionView.self) {
-                subview.removeFromSuperview()
-            }
-        }
     }
 
     // MARK: - Handle VisionSafety events
 
     private func updateCollisionDrawing() {
-        clearCollisionStateDrawings()
+        // remove `CollisionDetectionView` objects from the view
+        for subview in view.subviews {
+            if subview.isKind(of: CollisionDetectionView.self) {
+                subview.removeFromSuperview()
+            }
+        }
 
         for carCollision in carCollisions {
-            // Calculate absolute coordinates
+            // calculate absolute coordinates
             let relativeBBox = carCollision.lastDetection.boundingBox
             let frameSize = carCollision.lastFrame.image.size.cgSize
 
@@ -123,7 +123,7 @@ class SafetyAlertsViewController: UIViewController {
                               width: relativeBBox.size.width * frameSize.width,
                               height: relativeBBox.size.height * frameSize.height)
 
-            // Draw a collision detection alert
+            // draw a collision detection alert
             let view = CollisionDetectionView(frame: bbox)
             self.view.addSubview(view)
         }
@@ -131,11 +131,11 @@ class SafetyAlertsViewController: UIViewController {
 
     private func updateOverspeedingDrawing() {
         // when update is completed all the data has the most current state
-        guard let vehicle = self.vehicleState, let limits = self.speedLimits else { return }
+        guard let vehicle = vehicleState, let limits = speedLimits else { return }
 
         // decide whether speed limit is exceeded by comparing it with the current speed
         let isOverSpeeding = vehicle.speed > limits.speedLimitRange.max
-        self.alertOverspeedingView.isHidden = !isOverSpeeding
+        alertOverspeedingView.isHidden = !isOverSpeeding
     }
 }
 
@@ -171,6 +171,7 @@ extension SafetyAlertsViewController: VisionSafetyManagerDelegate {
 
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager,
                              didUpdateCollisions collisions: [CollisionObject]) {
+        // we will draw collisions with cars only, so we need to filter `CollisionObject`s
         let carCollisions = collisions.filter { $0.object.detectionClass == .car }
 
         // dispatch to the main queue in order to sync access to `[CollisionObject]` array
