@@ -3,9 +3,13 @@ import MapboxVision
 import UIKit
 
 /**
- * "External camera" example demonstrates how to create a custom source of video stream and pass it to `VisionManager`.
+ * "External camera" example demonstrates how to create a custom source of a video stream
+ * and pass it to `VisionManager`.
  * **Important:** To enable most of the features of Vision SDK like world description, AR and Safety, the object
- * implementing `VideoSource` protocol should also provide `CameraParameters`.
+ * implementing the `VideoSource` protocol should also provide `CameraParameters`.
+ * Reading a file is an example of implementing `VideoSource` protocol. Do not feed recorded videos in production
+ * as the video will not match other realtime data (GPS, motion sensors) causing incorrect values
+ * for most of the features.
  */
 
 // Example of custom video source is a simple video file reader
