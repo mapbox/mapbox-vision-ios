@@ -14,9 +14,9 @@ let listOfExamples: [NamedController] = [
         controllerType: ExternalCameraViewController.self
     ),
     (
-        name: "Over speeding detection",
+        name: "Speeding alerts and collisions drawing",
         description: "Demonstrates how to combine VisionSafety events with position.",
-        controllerType: OverSpeedingViewController.self
+        controllerType: SafetyAlertsViewController.self
     ),
     (
         name: "AR navigation",
