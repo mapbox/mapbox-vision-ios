@@ -3,7 +3,13 @@ import MapboxVision
 import UIKit
 
 /**
- * "External camera" example demonstrates how to create a custom source of video stream and pass it to `VisionManager`.
+ * "External camera" example demonstrates how to create a custom source of a video stream
+ * and pass it to `VisionManager`.
+ * **Important:** To enable most of the features of Vision SDK like world description, AR and Safety, the object
+ * implementing the `VideoSource` protocol should also provide `CameraParameters`.
+ * Reading a file is an example of implementing `VideoSource` protocol. Do not feed recorded videos in production
+ * as the video will not match other realtime data (GPS, motion sensors) causing incorrect values
+ * for most of the features.
  */
 
 // Example of custom video source is a simple video file reader
@@ -54,6 +60,11 @@ class FileVideoSource: ObservableVideoSource {
                     // construct `VideoSample` specifying the format of image contained in a sample buffer
                     let videoSample = VideoSample(buffer: buffer, format: .BGRA)
                     observer.videoSource(self, didOutput: videoSample)
+
+                    // Obtain camera parameters and set them each time they change
+                    // let cameraParameters = CameraParameters(width: width, height: height,
+                    //                                         focalXPixels: focalPixelX, focalYPixels: focalPixelY)
+                    // observer.videoSource(self, didOutput: cameraParameters)
                 }
             } else {
                 self.stopReading()
