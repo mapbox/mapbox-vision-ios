@@ -15,7 +15,8 @@ source ${dir}/../utils/errors.sh
 #IOS_PLATFORM_TYPE="iphoneos"
 #IOS_BUILD_DIR="build"
 
-buildConfig="${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}"
+# We have only release builds on AWS
+buildConfig="Release-${IOS_PLATFORM_TYPE}"
 s3BasePath="${AWS_S3_BUILD_ARTIFACTS_BASE_PATH}"
 
 # "Directories" on AWS S3 to store uploaded build products
@@ -144,11 +145,12 @@ function pullNativeBuildProducts() {
 
     local -r buildArtifactsToPull=("MapboxVisionNative" "MapboxVisionARNative" "MapboxVisionSafetyNative")
 
-    for framework in "${buildArtifactsToPull[@]}"; do
-        pullFramework "${framework}"
+    for buildArtifact in "${buildArtifactsToPull[@]}"; do
+        pullFramework "${buildArtifact}"
 
         # copy pulled frameworks into Carthage/Build/iOS dir to allow building
-        cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/${framework}.framework" "Carthage/Build/iOS"
+        echo "Copying ${buildArtifact} into Carthage/Build/iOS dir"
+        cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/${buildArtifact}.framework" "Carthage/Build/iOS"
     done
     
     echo
