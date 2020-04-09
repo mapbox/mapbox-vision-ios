@@ -45,9 +45,6 @@ jobs:
       before_script:
         - scripts/ci/init-dependencies-to-build.sh
         - scripts/ci/remote-build-artifacts.sh --pull-native-deps
-        - cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/MapboxVisionNative.framework" "Carthage/Build/iOS"
-        - cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/MapboxVisionARNative.framework" "Carthage/Build/iOS"
-        - cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/MapboxVisionSafetyNative.framework" "Carthage/Build/iOS"
       script:
         - scripts/ci/build.sh --build MapboxVision
         - scripts/ci/build.sh --build MapboxVisionAR

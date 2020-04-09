@@ -146,6 +146,9 @@ function pullNativeBuildProducts() {
 
     for framework in "${buildArtifactsToPull[@]}"; do
         pullFramework "${framework}"
+
+        # copy pulled frameworks into Carthage/Build/iOS dir to allow building
+        cp -a "Carthage/Build/iOS/${IOS_BUILD_TYPE}-${IOS_PLATFORM_TYPE}/${framework}.framework" "Carthage/Build/iOS"
     done
     
     echo
