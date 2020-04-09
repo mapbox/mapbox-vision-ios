@@ -55,6 +55,11 @@ jobs:
         - IOS_BUILD_TYPE='Debug'
         - IOS_PLATFORM_TYPE='iphonesimulator'
         - DST='platform=iOS Simulator,OS=13.2.2,name=iPhone 11'
+      script:
+        - scripts/ci/build.sh --build MapboxVision
+        - scripts/ci/build.sh --build MapboxVisionAR
+        - scripts/ci/build.sh --build MapboxVisionSafety
+        - scripts/ci/build.sh --test MapboxVisionTests
 
     - <<: *iOS
       name: iOS / Release / Device / Xcode 11.2

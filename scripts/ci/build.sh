@@ -50,6 +50,12 @@ if [[ $# -eq 2 ]]; then
                 shift
                 shift
                 ;;
+            -t|--test)
+                schemeToTest="$2"
+                testProject "${schemeToTest}"
+                shift
+                shift
+                ;;
             *) # unknown option
                 echoerr "Can't parse arguments. Unknown argument ${argument}"
                 exit "$ERROR_CANT_PARSE_ARGUMENTS"
