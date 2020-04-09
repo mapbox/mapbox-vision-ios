@@ -170,7 +170,6 @@ if [[ $# -gt 0 ]]; then
             -p|--pull-native-deps)
                 pullNativeBuildProducts
                 shift
-                shift
                 ;;
             *)  # unknown option
                 echoerr "Can't parse arguments. Unknown argument ${argument}"
