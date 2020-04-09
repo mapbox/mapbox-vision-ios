@@ -8,7 +8,7 @@ AWSTemplateFormatVersion: '2010-09-09',
       Properties: {
         Policies: [
           {
-            PolicyName: 'List-objects-in-S3-bucket',
+            PolicyName: 'AWS-S3-access',
             PolicyDocument: {
               Statement: [
                 {
