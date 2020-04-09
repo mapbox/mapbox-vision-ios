@@ -28,12 +28,7 @@ AWSTemplateFormatVersion: '2010-09-09',
                   Resource: [
                       'arn:aws:s3:::mapbox',
                       'arn:aws:s3:::mapbox/*'
-                  ],
-                  Condition: {
-                    StringLike: {
-                      's3:prefix': '/vision/travis/ios-builds*'
-                    }
-                  }
+                  ]
                 }
               ]
             }
@@ -53,4 +48,3 @@ AWSTemplateFormatVersion: '2010-09-09',
     SecretAccessKey: { Value: cf.getAtt('AccessKey', 'SecretAccessKey') }
   }
 };
-
