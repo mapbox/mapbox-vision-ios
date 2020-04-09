@@ -20,9 +20,6 @@ env:
     - PROJECT_NAME="mapbox-vision-ios"
 
 jobs:
-  global:
-    env:
-      - IOS_BUILD_DIR='build'
   include:
     - &iOS
       stage: compile-and-test

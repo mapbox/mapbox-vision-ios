@@ -3,7 +3,6 @@
 # Uncomment to debug
 #DST='platform=iOS Simulator,OS=13.2,name=iPhone 11'
 #IOS_BUILD_TYPE='Debug'
-#IOS_BUILD_DIR='build'
 
 set -eo pipefail
 
@@ -22,19 +21,18 @@ function buildProject() {
       -scheme "${SCHEME_TO_BUILD}" \
       -destination "${DST}" \
       -configuration "${IOS_BUILD_TYPE}" \
-      build \
-      CONFIGURATION_BUILD_DIR="${IOS_BUILD_DIR}/" | xcpretty
+      build | xcpretty
 }
 
 function testProject() {
     local -r SCHEME_TO_TEST="${1}"
 
-    xcodebuild test \
+    xcodebuild \
+      test \
       -project "MapboxVision.xcodeproj" \
       -scheme "${SCHEME_TO_TEST}" \
       -destination "${DST}" \
-      -configuration "${IOS_BUILD_TYPE}" \
-      CONFIGURATION_BUILD_DIR="${IOS_BUILD_DIR}/" | xcpretty
+      -configuration "${IOS_BUILD_TYPE}" | xcpretty
 }
 
 ###################
