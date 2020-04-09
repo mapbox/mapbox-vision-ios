@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-brew cleanuph
+brew cleanup
