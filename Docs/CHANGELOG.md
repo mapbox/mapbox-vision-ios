@@ -9,6 +9,7 @@
 - Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
 
 ### AR
+- Added `visionARManager(_:, didUpdateRoute:)` method to the `VisionARManagerDelegate`
 
 ### Safety
 
