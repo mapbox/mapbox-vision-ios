@@ -131,7 +131,6 @@ public final class VisionReplayManager: BaseVisionManager {
 
         super.init(dependencies: BaseDependencies(native: dependencies.native))
 
-        dependencies.player.delegate = self
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
 
         state = .initialized
@@ -179,13 +178,5 @@ public final class VisionReplayManager: BaseVisionManager {
 
     private func pause() {
         dependencies.native.stop()
-    }
-}
-
-extension VisionReplayManager: VideoPlayerDelegate {
-    func playbackDidStart() {}
-
-    func playbackDidFinish() {
-        stop()
     }
 }
