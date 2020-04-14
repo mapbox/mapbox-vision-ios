@@ -89,4 +89,8 @@ extension VisionARManager: VisionARDelegate {
     public func onARFencesUpdated(_ fences: [ARFence]) {
         delegate?.visionARManager(self, didUpdateARFences: fences)
     }
+
+    public func onRouteUpdated(_ route: Route) {
+        delegate?.visionARManager(self, didUpdateRoute: route)
+    }
 }
