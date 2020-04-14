@@ -3,19 +3,11 @@ import CoreMedia
 import Foundation
 
 protocol VideoPlayable: VideoSource {
-    var delegate: VideoPlayerDelegate? { get set }
-
     func start()
     func stop()
 }
 
-protocol VideoPlayerDelegate: AnyObject {
-    func playbackDidFinish()
-}
-
 final class VideoPlayer: NSObject {
-    weak var delegate: VideoPlayerDelegate?
-
     private var isPlaying = false
     private let player: AVPlayer
     private let videoOutput: AVPlayerItemVideoOutput
@@ -57,7 +49,6 @@ final class VideoPlayer: NSObject {
             queue: .main
         ) { [weak self] _ in
             self?.stop()
-            self?.delegate?.playbackDidFinish()
         }
     }
 
