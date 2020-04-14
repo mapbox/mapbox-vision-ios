@@ -50,7 +50,7 @@ jobs:
         - scripts/ci/prepare-for-cache.sh
 
     - <<: *iOS
-      name: iOS / Debug / Simulator / Xcode 11.2
+      name: iOS / Debug (Tests) / Simulator / Xcode 11.2
       env:
         - IOS_BUILD_TYPE='Debug'
         - IOS_PLATFORM_TYPE='iphonesimulator'
