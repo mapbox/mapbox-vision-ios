@@ -6,6 +6,10 @@
 - Added property `progress` to the `VisionReplayManager`
 - Added read-only property `duration` to the `VisionReplayManager`
 - Changed `VisionReplayManager`'s `start`/`stop` methods functionalities to the `pause`/`resume`
+- Changed `VisionReplayManager`'s behaviour:
+  - method `start` continues session replay from the current progress
+  - method `stop` stops session replay without changing the progress
+  - end of the session does not trigger `stop` method
 - Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
 
 ### AR
