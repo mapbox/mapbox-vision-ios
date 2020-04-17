@@ -1,16 +1,22 @@
 # Changelog
 
-## 0.12.0 - Unreleased
+## 0.12.0
 
 ### Vision
+- Added detection of Japanese traffic signs
 - Added property `progress` to the `VisionReplayManager`
 - Added read-only property `duration` to the `VisionReplayManager`
+- Added replay support of recorded routes
 - Changed `VisionReplayManager`'s `start`/`stop` methods functionalities to the `pause`/`resume`
 - Changed `VisionReplayManager`'s behaviour:
   - method `start` continues session replay from the current progress
   - method `stop` stops session replay without changing the progress
   - end of the session does not trigger `stop` method
 - Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
+- Fixed the bug with the inability to set AR visual params
+- Improved camera calibration algorithm
+- Improved lanes detection algorithm
+- Utilized new ML models that reduce resource consumption
 
 ### AR
 - Added `visionARManager(_:, didUpdateRoute:)` method to the `VisionARManagerDelegate`
