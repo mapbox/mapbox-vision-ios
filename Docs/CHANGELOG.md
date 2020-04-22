@@ -24,10 +24,9 @@
 - Added `visionARManager(_:, didUpdateRoute:)` method to the `VisionARManagerDelegate` to support route replay from the recorded session
 - Fixed the bug with the inability to set AR visual params
 
-### Safety
-
 ### Documentation
 - Added Getting Started code snippet showing basic SDK configuration steps
+- Added POI drawing, AR customization, and Safety alerts examples for according tutorials posted at https://docs.mapbox.com/ios/vision/help/#tutorials
 
 ## 0.11.0
 
