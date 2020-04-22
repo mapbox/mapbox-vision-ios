@@ -3,27 +3,19 @@ import CoreMedia
 import Foundation
 
 protocol VideoPlayable: VideoSource {
-    var delegate: VideoPlayerDelegate? { get set }
-
     func start()
     func stop()
 }
 
-protocol VideoPlayerDelegate: AnyObject {
-    func playbackDidFinish()
-}
-
 final class VideoPlayer: NSObject {
-    weak var delegate: VideoPlayerDelegate?
-
     private var isPlaying = false
     private let player: AVPlayer
     private let videoOutput: AVPlayerItemVideoOutput
     private var displayLink: CADisplayLink!
 
     private let observers = ObservableVideoSource()
+    private let nativeObservers: MBVVideoSource
     private var notificationToken: NSObjectProtocol!
-
     private let queue = DispatchQueue(label: "com.mapbox.VideoPlayer")
 
     init(path: String) throws {
@@ -40,6 +32,7 @@ final class VideoPlayer: NSObject {
 
         let attributes = [String(kCVPixelBufferPixelFormatTypeKey): Int(kCVPixelFormatType_32BGRA)]
         videoOutput = AVPlayerItemVideoOutput(pixelBufferAttributes: attributes)
+        nativeObservers = VideoSourceObserverProxy(withVideoSource: observers)
 
         super.init()
 
@@ -56,7 +49,6 @@ final class VideoPlayer: NSObject {
             queue: .main
         ) { [weak self] _ in
             self?.stop()
-            self?.delegate?.playbackDidFinish()
         }
     }
 
@@ -95,14 +87,12 @@ extension VideoPlayer: VideoPlayable {
 
         player.pause()
         displayLink?.isPaused = true
-
-        player.currentItem?.seek(to: .zero, completionHandler: nil)
     }
 }
 
 extension VideoPlayer: VideoSource {
     var isExternal: Bool {
-        return false
+        false
     }
 
     func add(observer: VideoSourceObserver) {
@@ -138,5 +128,29 @@ private extension CMSampleBuffer {
                                                  sampleTiming: &info,
                                                  sampleBufferOut: &sampleBuffer)
         return sampleBuffer
+    }
+}
+
+extension VideoPlayer: VideoPlayerProtocol {
+    func addListener(_ listener: MBVVideoSourceObserver) {
+        nativeObservers.add(observer: listener)
+    }
+
+    func removeListener(_ listener: MBVVideoSourceObserver) {
+        nativeObservers.remove(observer: listener)
+    }
+
+    var progress: Float {
+        get {
+            Float(CMTimeGetSeconds(player.currentTime()))
+        }
+        set(progress) {
+            player.seek(to: CMTimeMakeWithSeconds(Double(progress), preferredTimescale: Constants.preferredTimescale))
+        }
+    }
+
+    var duration: Float {
+        guard let cmTime = player.currentItem?.duration else { return 0.0 }
+        return Float(CMTimeGetSeconds(cmTime))
     }
 }

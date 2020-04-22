@@ -1,13 +1,16 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVision"
-  s.version      = "0.11.0"
-  s.summary      = "ML empowered vision framework"
+  s.version      = "0.12.0"
 
-  s.homepage     = 'https://www.mapbox.com/vision/'
+  s.summary      = "ML empowered Vision framework"
+  s.description  = <<-DESC
+                   ML empowered Vision framework
+                   DESC
 
-  s.license      = { :type => "CUSTOM", :file => "LICENSE.md" }
-
+  s.homepage          = 'https://www.mapbox.com/vision/'
+  s.documentation_url = 'https://docs.mapbox.com/ios/vision/'
+  s.license           = { :type => "CUSTOM", :file => "Docs/LICENSE.md" }
   s.author            = { 'Mapbox' => 'mobile@mapbox.com' }
   s.social_media_url  = 'https://twitter.com/mapbox'
   s.documentation_url = 'https://www.mapbox.com/vision/'

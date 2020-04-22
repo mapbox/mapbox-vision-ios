@@ -44,7 +44,7 @@ struct ReplayDependencies {
             throw CocoaError(.fileNoSuchFile)
         }
         let player = try VideoPlayer(path: videoPath)
-        let native = VisionReplayManagerNative.create(withRecordPath: recordPath)
+        let native = VisionReplayManagerNative.create(withRecordPath: recordPath, videoPlayer: player)
 
         return ReplayDependencies(native: native, player: player)
     }

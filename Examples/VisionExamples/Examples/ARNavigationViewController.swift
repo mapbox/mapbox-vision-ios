@@ -89,7 +89,7 @@ private extension MapboxVisionARNative.Route {
 
                 guard let coords = step.coordinates else { return }
                 let routePoints = coords.map {
-                    RoutePoint(position: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
+                    RoutePoint(coordinate: GeoCoordinate(lon: $0.longitude, lat: $0.latitude))
                 }
                 points.append(contentsOf: routePoints)
             }

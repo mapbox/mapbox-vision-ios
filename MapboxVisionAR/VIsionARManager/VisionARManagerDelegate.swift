@@ -31,9 +31,14 @@ public protocol VisionARManagerDelegate: AnyObject {
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float)
 
     /**
-     AR fences were updated
+     Tells the delegate that AR fences were updated.
      */
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARFences arFences: [ARFence])
+
+    /**
+     Tells the delegate that route was updated.
+     */
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateRoute route: Route)
 }
 
 public extension VisionARManagerDelegate {
@@ -46,4 +51,6 @@ public extension VisionARManagerDelegate {
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARLaneCutoff: Float) {}
 
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARFences arFences: [ARFence]) {}
+
+    func visionARManager(_ visionARManager: VisionARManager, didUpdateRoute route: Route) {}
 }

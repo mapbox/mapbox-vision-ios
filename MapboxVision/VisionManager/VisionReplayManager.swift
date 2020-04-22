@@ -21,7 +21,7 @@ public final class VisionReplayManager: BaseVisionManager {
     /// Delegate for `VisionManager`. Delegate is held as a weak reference.
     public weak var delegate: VisionManagerDelegate? {
         get {
-            return baseDelegate
+            baseDelegate
         }
         set {
             baseDelegate = newValue
@@ -43,18 +43,35 @@ public final class VisionReplayManager: BaseVisionManager {
      - Returns: Instance of `VisionReplayManager` configured to use data from specified session.
      */
     public static func create(recordPath: String) throws -> VisionReplayManager {
-        return VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
+        VisionReplayManager(dependencies: try ReplayDependencies.default(recordPath: recordPath))
     }
 
     /**
      Video source that provides frames from recorded video.
      */
     public var videoSource: VideoSource {
-        return dependencies.player
+        dependencies.player
+    }
+
+    /// Duration of the session in seconds
+    public var duration: Float {
+        dependencies.native.duration
+    }
+
+    /// Current progress of the session in seconds
+    public var progress: Float {
+        get {
+            dependencies.native.progress
+        }
+        set {
+            dependencies.native.progress = newValue
+        }
     }
 
     /**
      Start delivering events from `VisionReplayManager`.
+     When started `VisionReplayManager` reads recorded telemetry and video from a session folder supplied to `create(recordPath:)` method.
+     If `VisionReplayManager` was stopped, then `start` will resume reading the session from the moment it was stopped.
      Calling `start` on already started or destroyed instance is considered a mistake.
 
      - Important: Do NOT call this method more than once or after `destroy` is called.
@@ -76,6 +93,7 @@ public final class VisionReplayManager: BaseVisionManager {
 
     /**
      Stop delivering events from `VisionReplayManager`.
+     `VisionReplayManager` stops reading telemetry and video of the session.
 
      - Important: Do NOT call this method more than once or before `start` or after `destroy` is called.
      */
@@ -113,8 +131,6 @@ public final class VisionReplayManager: BaseVisionManager {
 
         super.init(dependencies: BaseDependencies(native: dependencies.native))
 
-        dependencies.player.add(observer: self)
-        dependencies.player.delegate = self
         dependencies.native.videoSource = VideoSourceObserverProxy(withVideoSource: videoSource)
 
         state = .initialized
@@ -158,35 +174,9 @@ public final class VisionReplayManager: BaseVisionManager {
 
     private func resume() {
         dependencies.native.start()
-        dependencies.player.start()
     }
 
     private func pause() {
         dependencies.native.stop()
-        dependencies.player.stop()
-    }
-}
-
-extension VisionReplayManager: VideoSourceObserver {
-    public func videoSource(_: VideoSource, didOutput videoSample: VideoSample) {
-        var timingInfo = CMSampleTimingInfo.invalid
-        let status = CMSampleBufferGetSampleTimingInfo(videoSample.buffer, at: 0, timingInfoOut: &timingInfo)
-
-        guard
-            let pixelBuffer = videoSample.buffer.pixelBuffer,
-            status == 0
-        else { return }
-
-        let timeStamp = UInt(CMTimeGetSeconds(timingInfo.decodeTimeStamp) * Constants.millisecondsInSecond)
-
-        dependencies.native.sensors.setFrame(pixelBuffer, timestamp: timeStamp)
-    }
-}
-
-extension VisionReplayManager: VideoPlayerDelegate {
-    func playbackDidStart() {}
-
-    func playbackDidFinish() {
-        stop()
     }
 }

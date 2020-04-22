@@ -1,8 +1,8 @@
 MapboxVision, MapboxVisionAR, MapboxVisionSafety
 
-Copyright © 2019 Mapbox, Inc., all rights reserved.
+Copyright © 2020 Mapbox, Inc., all rights reserved.
 
-Download, installation, and use governed by the Mapbox Terms of Service: www.mapbox.com/tos
+Download, installation, and use governed by the [Mapbox Terms of Service](https://www.mapbox.com/legal/tos).
 
 ---
 
