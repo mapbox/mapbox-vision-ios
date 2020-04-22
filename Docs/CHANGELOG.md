@@ -1,24 +1,32 @@
 # Changelog
 
-## 0.12.0 - Unreleased
+## 0.12.0
 
 ### Vision
+- Added `Japan` country and support for the detection of Japanese traffic signs
 - Added property `progress` to the `VisionReplayManager`
 - Added read-only property `duration` to the `VisionReplayManager`
-- Changed `VisionReplayManager`'s `start`/`stop` methods functionalities to the `pause`/`resume`
+- Added new `SignType`s:
+  - `InformationRestrictedParking`
+  - `RegulatorySchoolZone`
+  - `RegulatoryBicyclesAndPedestriansCrossing`
+  - `RegulatoryNoBusesAndHeavyVechicles`
 - Changed `VisionReplayManager`'s behaviour:
   - method `start` continues session replay from the current progress
   - method `stop` stops session replay without changing the progress
   - end of the session does not trigger `stop` method
 - Deprecated separate detection and segmentation models configuration (use `modelPerformance` instead of `modelPerformanceConfig` on `VisionManager`)
+- Improved camera calibration algorithm
+- Improved lanes detection algorithm
+- Utilized new ML models that reduce resource consumption
 
 ### AR
-- Added `visionARManager(_:, didUpdateRoute:)` method to the `VisionARManagerDelegate`
-
-### Safety
+- Added `visionARManager(_:, didUpdateRoute:)` method to the `VisionARManagerDelegate` to support route replay from the recorded session
+- Fixed the bug with the inability to set AR visual params
 
 ### Documentation
 - Added Getting Started code snippet showing basic SDK configuration steps
+- Added POI drawing, AR customization, and Safety alerts examples for according tutorials posted at https://docs.mapbox.com/ios/vision/help/#tutorials
 
 ## 0.11.0
 
