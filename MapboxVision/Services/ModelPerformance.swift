@@ -59,39 +59,6 @@ public enum ModelPerformanceRate: Comparable, CaseIterable {
 }
 
 /**
- Enumeration representing configuration for ML models
- */
-@available(*, deprecated, message: "Use ModelPerformance structure instead. Enum will be removed in version 0.13.0")
-public enum ModelPerformanceConfig: Equatable {
-    /// :nodoc:
-    public static func == (lhs: ModelPerformanceConfig, rhs: ModelPerformanceConfig) -> Bool {
-        switch (lhs, rhs) {
-        case let (.merged(rhsPerformance), .merged(lhsPerformance)):
-            return rhsPerformance == lhsPerformance
-        case let (.separate(lhsSegmentationPerformance, lhsDetectionPerformance),
-                  .separate(rhsSegmentationPerformance, rhsDetectionPerformance)):
-            return
-                lhsSegmentationPerformance == rhsSegmentationPerformance &&
-                lhsDetectionPerformance == rhsDetectionPerformance
-        default:
-            return false
-        }
-    }
-
-    /**
-     Segmentation and detection are produced by one merged model.
-     Works more efficiently in a workflow requiring comparable performance for detection and segmentation.
-     */
-    case merged(performance: ModelPerformance)
-
-    /**
-     Segmentation and detection are produced by separate models.
-     May perform better when segmentation and detection are required to produce output with different frequencies.
-     */
-    case separate(segmentationPerformance: ModelPerformance, detectionPerformance: ModelPerformance)
-}
-
-/**
  Structure representing performance setting for tasks related to specific ML model. It’s defined as a combination of mode and rate.
  */
 public struct ModelPerformance: Comparable {
