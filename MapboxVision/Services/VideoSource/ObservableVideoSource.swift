@@ -35,16 +35,16 @@ open class ObservableVideoSource: NSObject, VideoSource {
     // MARK: - Open functions
 
     /**
-     Adds an entry to the list of observers.
+      Adds an entry to the list of observers.
 
-     The method is a thread-safe.
+      The method is a thread-safe.
 
-     - Parameters:
-         - observer: Object registering as an observer.
+      - Parameters:
+          - observer: Object registering as an observer.
 
-     - Warning:
-     The implementation uses a non-recursive lock, thus you must not call this method from `notify(closure:)` method's closure.
-    */
+      - Warning:
+      The implementation uses a non-recursive lock, thus you must not call this method from `notify(closure:)` method's closure.
+     */
     open func add(observer: VideoSourceObserver) {
         os_unfair_lock_lock(lock)
         let id = ObjectIdentifier(observer)

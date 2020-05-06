@@ -1,11 +1,8 @@
-// This file shows basic Vision SDK configuration steps.
-
 import MapboxVision
 import MapboxVisionAR
 import MapboxVisionSafety
 
 class GettingStartedViewController: UIViewController {
-
     private var videoSource: CameraVideoSource!
 
     private var visionManager: VisionManager!

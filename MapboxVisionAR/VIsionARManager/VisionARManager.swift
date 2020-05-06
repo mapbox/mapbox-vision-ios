@@ -37,10 +37,10 @@ public final class VisionARManager {
     }
 
     /**
-     Set AR fence visibility distance in meters.
+      Set AR fence visibility distance in meters.
 
-    - Parameter fenceVisibilityDistance: fence visibility distance in meters.
-    */
+     - Parameter fenceVisibilityDistance: fence visibility distance in meters.
+     */
     public func set(fenceVisibilityDistance distance: Float) {
         native?.setFenceVisibilityDistance(distance)
     }

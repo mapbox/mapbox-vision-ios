@@ -99,10 +99,10 @@ class POIDrawingViewController: UIViewController {
         guard
             // convert the POI to the screen coordinates
             let screenCoordinateLeftTop =
-                visionManager.worldToPixel(worldCoordinate: worldCoordinateLeftTop),
+            visionManager.worldToPixel(worldCoordinate: worldCoordinateLeftTop),
 
             let screenCoordinateRightBottom =
-                visionManager.worldToPixel(worldCoordinate: worldCoordinateRightBottom)
+            visionManager.worldToPixel(worldCoordinate: worldCoordinateRightBottom)
         else {
             hideView()
             return
@@ -151,4 +151,5 @@ extension POIDrawingViewController: VisionManagerDelegate {
         }
     }
 }
+
 //

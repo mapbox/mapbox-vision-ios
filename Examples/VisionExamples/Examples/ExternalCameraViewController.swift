@@ -32,7 +32,7 @@ class FileVideoSource: ObservableVideoSource {
         let output = AVAssetReaderTrackOutput(
             track: videoTrack,
             outputSettings: [
-                String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)
+                String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA),
             ]
         )
         reader?.add(output)

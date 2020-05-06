@@ -20,6 +20,7 @@ final class MockVideoSource: ObservableVideoSource {
         }
         return timer
     }()
+
     private var framesAlreadyWritten: Int64 = 0
 
     override init() {
@@ -64,7 +65,7 @@ final class MockVideoSource: ObservableVideoSource {
 
     private func makePixelBuffer() -> CVPixelBuffer? {
         let attrs = [
-            kCVPixelBufferMetalCompatibilityKey: kCFBooleanTrue
+            kCVPixelBufferMetalCompatibilityKey: kCFBooleanTrue,
         ] as CFDictionary
         var pixelBufferUnwrapped: CVPixelBuffer?
         let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(Constants.frameWidth), Int(Constants.frameWidth), kCVPixelFormatType_32BGRA, attrs, &pixelBufferUnwrapped)
@@ -85,7 +86,7 @@ final class MockVideoSource: ObservableVideoSource {
             space: rgbColorSpace,
             bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue
         ) else {
-                return nil
+            return nil
         }
 
         UIGraphicsPushContext(context)

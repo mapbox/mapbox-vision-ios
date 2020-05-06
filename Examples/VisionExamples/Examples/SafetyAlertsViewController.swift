@@ -99,7 +99,7 @@ class SafetyAlertsViewController: UIViewController {
             alertOverspeedingView.topAnchor
                 .constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1),
             view.safeAreaLayoutGuide.trailingAnchor
-                .constraint(equalToSystemSpacingAfter: alertOverspeedingView.trailingAnchor, multiplier: 1)
+                .constraint(equalToSystemSpacingAfter: alertOverspeedingView.trailingAnchor, multiplier: 1),
         ])
     }
 
