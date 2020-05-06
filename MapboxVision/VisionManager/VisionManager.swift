@@ -24,7 +24,7 @@ public final class VisionManager: BaseVisionManager {
     /// Delegate for `VisionManager`. Delegate is held as a weak reference.
     public weak var delegate: VisionManagerDelegate? {
         get {
-            return baseDelegate
+            baseDelegate
         }
         set {
             baseDelegate = newValue

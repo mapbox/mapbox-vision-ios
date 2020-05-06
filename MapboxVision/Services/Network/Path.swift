@@ -9,19 +9,19 @@ struct Path {
     }
 
     var basePath: String {
-        return "/" + components.dropLast().joined(separator: "/")
+        "/" + components.dropLast().joined(separator: "/")
     }
 
     var rendered: String {
-        return "/" + components.joined(separator: "/")
+        "/" + components.joined(separator: "/")
     }
 
     func appending(_ component: String) -> Path {
-        return Path(components + [component])
+        Path(components + [component])
     }
 
     func prepending(base: String) -> Path {
-        return Path([base] + components)
+        Path([base] + components)
     }
 
     var subpaths: [String] {
@@ -37,6 +37,6 @@ struct Path {
 
 extension Path: CustomStringConvertible {
     var description: String {
-        return rendered
+        rendered
     }
 }

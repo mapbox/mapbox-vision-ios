@@ -9,7 +9,7 @@ enum VideoRecorderError: LocalizedError {
 
 private extension VideoSettings {
     var outputSettings: [String: Any] {
-        return [
+        [
             AVVideoWidthKey: width,
             AVVideoHeightKey: height,
             AVVideoCodecKey: codec,

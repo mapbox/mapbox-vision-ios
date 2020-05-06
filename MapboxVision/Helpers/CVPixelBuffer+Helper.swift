@@ -4,16 +4,16 @@ import Foundation
 
 extension CMSampleBuffer {
     var pixelBuffer: CVPixelBuffer? {
-        return CMSampleBufferGetImageBuffer(self)
+        CMSampleBufferGetImageBuffer(self)
     }
 }
 
 extension CVPixelBuffer {
     var width: Int {
-        return CVPixelBufferGetWidth(self)
+        CVPixelBufferGetWidth(self)
     }
 
     var height: Int {
-        return CVPixelBufferGetHeight(self)
+        CVPixelBufferGetHeight(self)
     }
 }

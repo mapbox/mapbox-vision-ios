@@ -13,7 +13,7 @@ struct RecordingPath {
     }
 
     static func generateDirectoryName() -> String {
-        return DateFormatter.createRecordingFormatter().string(from: Date())
+        DateFormatter.createRecordingFormatter().string(from: Date())
     }
 
     static func clear(basePath: DocumentsLocation) {
@@ -53,19 +53,19 @@ struct RecordingPath {
     }
 
     var videoPath: String {
-        return recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
+        recordingPath.appendingPathComponent("video.\(settings.fileExtension)")
     }
 
     func videoClipPath(start: Float, end: Float) -> String {
-        return recordingPath.appendingPathComponent("\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(settings.fileExtension)")
+        recordingPath.appendingPathComponent("\(String(format: "%.2f", start))-\(String(format: "%.2f", end)).\(settings.fileExtension)")
     }
 
     var videosLogPath: String {
-        return recordingPath.appendingPathComponent("videos.json")
+        recordingPath.appendingPathComponent("videos.json")
     }
 
     var imagesDirectoryPath: String {
-        return recordingPath.appendingPathComponent("images", isDirectory: true)
+        recordingPath.appendingPathComponent("images", isDirectory: true)
     }
 
     @discardableResult

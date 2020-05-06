@@ -2,7 +2,7 @@ import Foundation
 
 extension String {
     var nsString: NSString {
-        return self as NSString
+        self as NSString
     }
 
     func appendingPathComponent(_ str: String, isDirectory: Bool = false) -> String {
@@ -14,14 +14,14 @@ extension String {
     }
 
     var lastPathComponent: String {
-        return nsString.lastPathComponent
+        nsString.lastPathComponent
     }
 
     var deletingLastPathComponent: String {
-        return nsString.deletingLastPathComponent
+        nsString.deletingLastPathComponent
     }
 
     var deletingPathExtension: String {
-        return nsString.deletingPathExtension
+        nsString.deletingPathExtension
     }
 }

@@ -52,7 +52,7 @@ open class CameraVideoSource: ObservableVideoSource {
     private var dataOutput: AVCaptureVideoDataOutput?
 
     private var captureDeviceInput: AVCaptureDeviceInput? {
-        return cameraSession.inputs.first { $0 is AVCaptureDeviceInput } as? AVCaptureDeviceInput
+        cameraSession.inputs.first { $0 is AVCaptureDeviceInput } as? AVCaptureDeviceInput
     }
 
     private func configureSession(captureDevice: AVCaptureDevice, preset: AVCaptureSession.Preset) {
