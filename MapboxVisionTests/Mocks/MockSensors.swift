@@ -2,7 +2,7 @@ import CoreLocation
 @testable import MapboxVisionNative
 
 class MockSensors: NSObject, SensorsInterface {
-    func setImage(_ image: CVPixelBuffer) {}
+    func setVideoSample(_ videoSample: VideoSample) {}
 
     func setCameraParameters(_ cameraParameters: CameraParameters) {}
 
