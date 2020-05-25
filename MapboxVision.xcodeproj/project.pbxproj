@@ -24,6 +24,8 @@
 		2E163645247C009E00E960F2 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		2E163649247C009E00E960F2 /* MapboxVisionSafety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */; };
 		2E16364D247C009E00E960F2 /* MapboxVisionFleetNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E163644247C009E00E960F2 /* MapboxVisionFleetNative.framework */; };
+		2E163656247C0C6D00E960F2 /* VisionFleetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */; };
+		2E163658247C117400E960F2 /* VisionFleetManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E283BD7237FABB700920228 /* MockFrameRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E283BD6237FABB700920228 /* MockFrameRecorder.swift */; };
 		2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B828523058986001494E5 /* FileManager+Helpers.swift */; };
@@ -113,6 +115,8 @@
 		2E16363D247C006A00E960F2 /* MapboxVisionFleet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVisionFleet.h; sourceTree = "<group>"; };
 		2E16363E247C006A00E960F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E163644247C009E00E960F2 /* MapboxVisionFleetNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionFleetNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFleetManager.swift; sourceTree = "<group>"; };
+		2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFleetManagerDelegate.swift; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E283BD6237FABB700920228 /* MockFrameRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFrameRecorder.swift; sourceTree = "<group>"; };
 		2E2B828523058986001494E5 /* FileManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helpers.swift"; sourceTree = "<group>"; };
@@ -285,10 +289,20 @@
 		2E16363C247C006A00E960F2 /* MapboxVisionFleet */ = {
 			isa = PBXGroup;
 			children = (
+				2E163654247C0C5600E960F2 /* VisionFleetManager */,
 				2E16363D247C006A00E960F2 /* MapboxVisionFleet.h */,
 				2E16363E247C006A00E960F2 /* Info.plist */,
 			);
 			path = MapboxVisionFleet;
+			sourceTree = "<group>";
+		};
+		2E163654247C0C5600E960F2 /* VisionFleetManager */ = {
+			isa = PBXGroup;
+			children = (
+				2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */,
+				2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */,
+			);
+			path = VisionFleetManager;
 			sourceTree = "<group>";
 		};
 		2E4EE20820EFD378003431B3 = {
@@ -822,6 +836,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E163658247C117400E960F2 /* VisionFleetManagerDelegate.swift in Sources */,
+				2E163656247C0C6D00E960F2 /* VisionFleetManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1048,6 +1064,7 @@
 		2E163641247C006A00E960F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1063,6 +1080,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1070,6 +1089,7 @@
 		2E163642247C006A00E960F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1085,6 +1105,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1092,6 +1113,7 @@
 		2E163643247C006A00E960F2 /* AdhocRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1107,6 +1129,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdhocRelease;
