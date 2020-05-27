@@ -3,6 +3,7 @@
 ## 0.13.0 - Unreleased
 
 ### Vision
+- Fixed applying non-BGRA image formats
 
 ### AR
 

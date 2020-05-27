@@ -254,7 +254,7 @@ extension VisionManager: VideoSourceObserver {
         guard state.isStarted else { return }
 
         dependencies.recorder.handle(frame: videoSample.buffer)
-        dependencies.native.sensors.setImage(pixelBuffer)
+        dependencies.native.sensors.setVideoSample(videoSample)
     }
 
     public func videoSource(_ videoSource: VideoSource, didOutput cameraParameters: CameraParameters) {
