@@ -3,9 +3,12 @@
 ## 0.13.0 - Unreleased
 
 ### Vision
+- Added `VisionManager.set(cameraHeight:)`
 - Fixed applying non-BGRA image formats
 
 ### AR
+- Added `aspectRatio`, `roll`, `pitch`, `yaw`, `height` properties to `Camera`
+- Deprecated `ARCamera` class and `VisionManagerDelegate.visionManager(_:didUpdateARCamera:)` method in favor of utilization of `Camera` class
 
 ### Safety
 
