@@ -9,6 +9,7 @@ public protocol VisionARManagerDelegate: AnyObject {
     /**
      Tells the delegate that AR camera was updated.
      */
+    @available(*, deprecated, message: "This method will be removed in version 0.14.0. Please use VisionManagerDelegate.visionManager(_:didUpdateCamera:) method instead")
     func visionARManager(_ visionARManager: VisionARManager, didUpdateARCamera camera: ARCamera)
 
     /**
