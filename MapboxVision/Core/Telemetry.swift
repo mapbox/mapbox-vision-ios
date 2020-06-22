@@ -1,30 +1,24 @@
 import Foundation
+import MapboxMobileEvents
 
-typealias TelemetryFileMetadata = [String: String]
+final class Telemetry: NSObject, TelemetryInterface {
+    private let manager = MMEEventsManager()
 
-final class Telemetry: NSObject {
-    private let networkClient: NetworkClient
-
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
-    }
-}
-
-extension Telemetry: TelemetryInterface {
-    func setSyncUrl(_ url: String) {
-        networkClient.set(baseURL: URL(string: url))
+    func setSyncUrl(_: String, isChina: Bool) {
+        UserDefaults.mme_configuration().mme_isCNRegion = isChina
+        manager.sendTurnstileEvent()
     }
 
     func sendTelemetry(name: String, entries: [TelemetryEntry]) {
-        let entries = Dictionary(entries.map { ($0.key, $0.value) }) { first, _ in
+        let attributes = Dictionary(entries.map { ($0.key, $0.value) }) { first, _ in
             assertionFailure("Duplicated key in telemetry entries.")
             return first
         }
 
-        networkClient.sendEvent(name: name, entries: entries)
+        manager.enqueueEvent(withName: name, attributes: attributes)
     }
 
-    func sendTelemetryFile(path: String, metadata: TelemetryFileMetadata, callback: @escaping SuccessCallback) {
-        networkClient.upload(file: path, metadata: metadata) { error in callback(error == nil) }
+    func sendTelemetryFile(path: String, metadata: [String: String], callback: @escaping SuccessCallback) {
+        manager.postMetadata([metadata], filePaths: [path]) { error in callback(error == nil) }
     }
 }
