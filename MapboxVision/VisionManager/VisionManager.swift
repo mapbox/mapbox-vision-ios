@@ -126,6 +126,15 @@ public final class VisionManager: BaseVisionManager {
     }
 
     /**
+     Set the camera height above the road surface.
+
+     - Parameter cameraHeight: Camera height in meters.
+     */
+    public func set(cameraHeight: Float) {
+        dependencies.native.set(cameraHeight: cameraHeight)
+    }
+
+    /**
      Clean up the state and resources of `VisionManger`.
 
      - Important: Do NOT call this method more than once.
