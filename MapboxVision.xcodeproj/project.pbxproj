@@ -35,8 +35,6 @@
 		2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE25420F05370003431B3 /* VideoSettings.swift */; };
 		2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23820EFD5BB003431B3 /* FileSystem.swift */; };
 		2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */; };
-		2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */; };
-		2E4EE27820F05659003431B3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22120EFD5BA003431B3 /* Path.swift */; };
 		2E4EE27D20F05661003431B3 /* VideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22820EFD5BA003431B3 /* VideoRecorder.swift */; };
 		2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */; };
 		2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */; };
@@ -82,7 +80,6 @@
 		9D72ACF3C976A03345D44F97 /* DocumentsLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A2983A81E002804CA22C /* DocumentsLocation.swift */; };
 		B51E557E215E313500650DDE /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; };
-		B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B75BA21144B9A001D65AC /* EventsManager.swift */; };
 		B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; };
 		B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AEB46921186CCF00AF198E /* RecordArchiver.swift */; };
 /* End PBXBuildFile section */
@@ -123,8 +120,6 @@
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4EE21520EFD378003431B3 /* MapboxVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVision.h; sourceTree = "<group>"; };
 		2E4EE21620EFD378003431B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		2E4EE22120EFD5BA003431B3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		2E4EE22820EFD5BA003431B3 /* VideoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.swift; sourceTree = "<group>"; };
 		2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPath.swift; sourceTree = "<group>"; };
 		2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerDependencies.swift; sourceTree = "<group>"; };
@@ -176,7 +171,6 @@
 		B51E5579215E313500650DDE /* MapboxVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51E557D215E313500650DDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxMobileEvents.framework; path = Carthage/Build/iOS/MapboxMobileEvents.framework; sourceTree = SOURCE_ROOT; };
-		B53B75BA21144B9A001D65AC /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
 		B583DF822240F55D00D73673 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/iOS/ZIPFoundation.framework; sourceTree = "<group>"; };
 		B5AEB46921186CCF00AF198E /* RecordArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordArchiver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -345,15 +339,6 @@
 			path = MapboxVision;
 			sourceTree = "<group>";
 		};
-		2E4EE22320EFD5BA003431B3 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */,
-				2E4EE22120EFD5BA003431B3 /* Path.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		2E4EE22E20EFD5BA003431B3 /* Recording */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,12 +354,10 @@
 		2E4EE23520EFD5BA003431B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE22320EFD5BA003431B3 /* Network */,
 				2E4EE22E20EFD5BA003431B3 /* Recording */,
 				9D72AC788D4F1F83614B3374 /* VideoSource */,
 				2EDD8706219ED89E00760C6D /* Constants.swift */,
 				2E4EE23420EFD5BA003431B3 /* DataProvider.swift */,
-				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E4EE2A720F0590D003431B3 /* LocationManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
@@ -850,12 +833,9 @@
 				2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */,
 				2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */,
 				2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */,
-				2E4EE27820F05659003431B3 /* Path.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
-				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
 				5A006F58231570FC0097FADF /* VideoSourceObserverProxy.swift in Sources */,
 				2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */,
-				2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */,
 				2E4EE2AC20F0590F003431B3 /* LocationManager.swift in Sources */,
 				2E4EE2A220F058B9003431B3 /* AVCaptureConnection+Orientation.swift in Sources */,
 				2E68DBED23800C7600580BE4 /* Telemetry.swift in Sources */,

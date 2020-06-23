@@ -16,7 +16,7 @@ struct VisionDependencies {
         let recorder = VideoRecorder()
 
         let platform = Platform(
-            telemetry: Telemetry(networkClient: EventsManager()),
+            telemetry: Telemetry(),
             fileSystem: FileSystem(archiver: RecordArchiver()),
             media: Media(recorder: recorder, videoTrimmer: VideoTrimmer())
         )
