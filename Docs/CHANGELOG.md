@@ -4,7 +4,6 @@
 
 ### Vision
 - Added `VisionManager.set(cameraHeight:)`
-- Updated `MapboxMobileEvents` dependency to the version compatible with `0.10.2` version
 - Fixed applying non-BGRA image formats
 
 ### AR
