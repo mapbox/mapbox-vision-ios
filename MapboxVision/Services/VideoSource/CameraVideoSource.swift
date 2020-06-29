@@ -68,8 +68,7 @@ open class CameraVideoSource: ObservableVideoSource {
 
         let dataOutput = AVCaptureVideoDataOutput()
         dataOutput.videoSettings = [
-            String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: imageOutputFormat.pixelFormatType),
-            String(kCVPixelBufferMetalCompatibilityKey): true
+            String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: imageOutputFormat.pixelFormatType)
         ]
         dataOutput.alwaysDiscardsLateVideoFrames = true
 
@@ -157,12 +156,6 @@ extension CameraVideoSource: AVCaptureVideoDataOutputSampleBufferDelegate {
                 observer.videoSource(self, didOutput: cameraParameters)
             }
         }
-    }
-
-    public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        var mode: CMAttachmentMode = 0
-        guard let reason = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_DroppedFrameReason, attachmentModeOut: &mode) else { return }
-        print("Sample buffer was dropped. Reason: \(reason)")
     }
 }
 
