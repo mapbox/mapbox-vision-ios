@@ -1,30 +1,50 @@
 import Foundation
+import MapboxMobileEvents
 
-typealias TelemetryFileMetadata = [String: String]
+final class Telemetry: NSObject, TelemetryInterface {
+    private let manager = MMEEventsManager()
 
-final class Telemetry: NSObject {
-    private let networkClient: NetworkClient
+    private lazy var accessToken: String = {
+        guard
+            let dict = Bundle.main.infoDictionary,
+            let token = dict["MGLMapboxAccessToken"] as? String
+        else {
+            assertionFailure("accessToken must be set in the Info.plist as MGLMapboxAccessToken.")
+            return ""
+        }
+        return token
+    }()
 
-    init(networkClient: NetworkClient) {
-        self.networkClient = networkClient
+    override init() {
+        super.init()
+
+        let bundle = Bundle(for: type(of: self))
+        let name = bundle.infoDictionary!["CFBundleName"] as! String
+        let version = bundle.infoDictionary!["CFBundleShortVersionString"] as! String
+
+        manager.initialize(
+            withAccessToken: accessToken,
+            userAgentBase: name,
+            hostSDKVersion: version
+        )
+        manager.sendTurnstileEvent()
     }
-}
 
-extension Telemetry: TelemetryInterface {
-    func setSyncUrl(_ url: String) {
-        networkClient.set(baseURL: URL(string: url))
+    func setSyncUrl(_ url: String, isChina: Bool) {
+        manager.baseURL = URL(string: url)
+        manager.sendTurnstileEvent()
     }
 
     func sendTelemetry(name: String, entries: [TelemetryEntry]) {
-        let entries = Dictionary(entries.map { ($0.key, $0.value) }) { first, _ in
+        let attributes = Dictionary(entries.map { ($0.key, $0.value) }) { first, _ in
             assertionFailure("Duplicated key in telemetry entries.")
             return first
         }
 
-        networkClient.sendEvent(name: name, entries: entries)
+        manager.enqueueEvent(withName: name, attributes: attributes)
     }
 
-    func sendTelemetryFile(path: String, metadata: TelemetryFileMetadata, callback: @escaping SuccessCallback) {
-        networkClient.upload(file: path, metadata: metadata) { error in callback(error == nil) }
+    func sendTelemetryFile(path: String, metadata: [String: String], callback: @escaping SuccessCallback) {
+        manager.postMetadata([metadata], filePaths: [path]) { error in callback(error == nil) }
     }
 }

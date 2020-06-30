@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionSafety"
-  s.version      = "0.12.0"
+  s.version      = "0.13.0"
 
   s.summary      = "Safety features on top of Vision"
   s.description  = <<-DESC

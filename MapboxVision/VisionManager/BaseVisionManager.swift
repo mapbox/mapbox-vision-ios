@@ -10,20 +10,6 @@ public class BaseVisionManager: VisionManagerProtocol {
         }
     }
 
-    @available(*, deprecated, message: "Use modelPerformance directly instead. Property will be removed in version 0.13.0")
-    public var modelPerformanceConfig: ModelPerformanceConfig =
-        .merged(performance: ModelPerformance(mode: .dynamic, rate: .high)) {
-            didSet {
-                guard oldValue != modelPerformanceConfig else { return }
-                switch modelPerformanceConfig {
-                case .merged(let performance):
-                    modelPerformance = performance
-                case .separate(let segmentationPerformance, let detectionPerformance):
-                    modelPerformance = max(segmentationPerformance, detectionPerformance)
-                }
-            }
-        }
-
     // MARK: Utility
 
     public func pixelToWorld(screenCoordinate: Point2D) -> WorldCoordinate? {

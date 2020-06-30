@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionAR"
-  s.version      = "0.12.0"
+  s.version      = "0.13.0"
 
   s.summary      = "Easy to use AR Navigation"
   s.description  = <<-DESC

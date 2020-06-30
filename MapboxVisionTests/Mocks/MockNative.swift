@@ -45,4 +45,6 @@ class MockNative: VisionManagerNativeProtocol {
     func setFixedFPS(_ fps: Float) {}
 
     func setDynamicFPS(minFPS: Float, maxFPS: Float) {}
+
+    func set(cameraHeight: Float) {}
 }

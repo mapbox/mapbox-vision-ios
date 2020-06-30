@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,12 @@
 		2E071A9E2257CCBF00345FA8 /* MapboxVisionNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */; };
 		2E071AA02257CCDB00345FA8 /* MapboxVisionARNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */; };
 		2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */; };
+		2E16363F247C006A00E960F2 /* MapboxVisionFleet.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E16363D247C006A00E960F2 /* MapboxVisionFleet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E163645247C009E00E960F2 /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
+		2E163649247C009E00E960F2 /* MapboxVisionSafety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */; };
+		2E16364D247C009E00E960F2 /* MapboxVisionFleetNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E163644247C009E00E960F2 /* MapboxVisionFleetNative.framework */; };
+		2E163656247C0C6D00E960F2 /* VisionFleetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */; };
+		2E163658247C117400E960F2 /* VisionFleetManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */; };
 		2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E19772A211DDD5900311B95 /* DeviceChecker.swift */; };
 		2E283BD7237FABB700920228 /* MockFrameRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E283BD6237FABB700920228 /* MockFrameRecorder.swift */; };
 		2E2B828623058986001494E5 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2B828523058986001494E5 /* FileManager+Helpers.swift */; };
@@ -29,8 +35,6 @@
 		2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE25420F05370003431B3 /* VideoSettings.swift */; };
 		2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23820EFD5BB003431B3 /* FileSystem.swift */; };
 		2E4EE27420F05652003431B3 /* CoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23920EFD5BB003431B3 /* CoreConfig.swift */; };
-		2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */; };
-		2E4EE27820F05659003431B3 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22120EFD5BA003431B3 /* Path.swift */; };
 		2E4EE27D20F05661003431B3 /* VideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22820EFD5BA003431B3 /* VideoRecorder.swift */; };
 		2E4EE28020F05661003431B3 /* RecordingPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */; };
 		2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */; };
@@ -76,7 +80,6 @@
 		9D72ACF3C976A03345D44F97 /* DocumentsLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72A2983A81E002804CA22C /* DocumentsLocation.swift */; };
 		B51E557E215E313500650DDE /* MapboxVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4EE21220EFD378003431B3 /* MapboxVision.framework */; };
 		B53B75B921144AE9001D65AC /* MapboxMobileEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */; };
-		B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B75BA21144B9A001D65AC /* EventsManager.swift */; };
 		B583DF832240F55D00D73673 /* ZIPFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B583DF822240F55D00D73673 /* ZIPFoundation.framework */; };
 		B5AEB46A21186CCF00AF198E /* RecordArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AEB46921186CCF00AF198E /* RecordArchiver.swift */; };
 /* End PBXBuildFile section */
@@ -105,14 +108,18 @@
 		2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionNative.framework; path = Carthage/Build/iOS/MapboxVisionNative.framework; sourceTree = "<group>"; };
 		2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionARNative.framework; path = Carthage/Build/iOS/MapboxVisionARNative.framework; sourceTree = "<group>"; };
 		2E071AA12257CCEA00345FA8 /* MapboxVisionSafetyNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MapboxVisionSafetyNative.framework; path = Carthage/Build/iOS/MapboxVisionSafetyNative.framework; sourceTree = "<group>"; };
+		2E16363B247C006A00E960F2 /* MapboxVisionFleet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVisionFleet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E16363D247C006A00E960F2 /* MapboxVisionFleet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVisionFleet.h; sourceTree = "<group>"; };
+		2E16363E247C006A00E960F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E163644247C009E00E960F2 /* MapboxVisionFleetNative.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxVisionFleetNative.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFleetManager.swift; sourceTree = "<group>"; };
+		2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionFleetManagerDelegate.swift; sourceTree = "<group>"; };
 		2E19772A211DDD5900311B95 /* DeviceChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceChecker.swift; sourceTree = "<group>"; };
 		2E283BD6237FABB700920228 /* MockFrameRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFrameRecorder.swift; sourceTree = "<group>"; };
 		2E2B828523058986001494E5 /* FileManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helpers.swift"; sourceTree = "<group>"; };
 		2E4EE21220EFD378003431B3 /* MapboxVision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapboxVision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4EE21520EFD378003431B3 /* MapboxVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapboxVision.h; sourceTree = "<group>"; };
 		2E4EE21620EFD378003431B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		2E4EE22120EFD5BA003431B3 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		2E4EE22820EFD5BA003431B3 /* VideoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.swift; sourceTree = "<group>"; };
 		2E4EE22B20EFD5BA003431B3 /* RecordingPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPath.swift; sourceTree = "<group>"; };
 		2E4EE23020EFD5BA003431B3 /* ManagerDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerDependencies.swift; sourceTree = "<group>"; };
@@ -164,7 +171,6 @@
 		B51E5579215E313500650DDE /* MapboxVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapboxVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51E557D215E313500650DDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B53B75B821144AE9001D65AC /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapboxMobileEvents.framework; path = Carthage/Build/iOS/MapboxMobileEvents.framework; sourceTree = SOURCE_ROOT; };
-		B53B75BA21144B9A001D65AC /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
 		B583DF822240F55D00D73673 /* ZIPFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZIPFoundation.framework; path = Carthage/Build/iOS/ZIPFoundation.framework; sourceTree = "<group>"; };
 		B5AEB46921186CCF00AF198E /* RecordArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordArchiver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,6 +193,16 @@
 				2E071A9E2257CCBF00345FA8 /* MapboxVisionNative.framework in Frameworks */,
 				2E071AA22257CCEA00345FA8 /* MapboxVisionSafetyNative.framework in Frameworks */,
 				2E071A9A2257CC7800345FA8 /* MapboxVision.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E163638247C006A00E960F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E163645247C009E00E960F2 /* MapboxVision.framework in Frameworks */,
+				2E163649247C009E00E960F2 /* MapboxVisionSafety.framework in Frameworks */,
+				2E16364D247C009E00E960F2 /* MapboxVisionFleetNative.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,12 +280,32 @@
 			path = VisionSafetyManager;
 			sourceTree = "<group>";
 		};
+		2E16363C247C006A00E960F2 /* MapboxVisionFleet */ = {
+			isa = PBXGroup;
+			children = (
+				2E163654247C0C5600E960F2 /* VisionFleetManager */,
+				2E16363D247C006A00E960F2 /* MapboxVisionFleet.h */,
+				2E16363E247C006A00E960F2 /* Info.plist */,
+			);
+			path = MapboxVisionFleet;
+			sourceTree = "<group>";
+		};
+		2E163654247C0C5600E960F2 /* VisionFleetManager */ = {
+			isa = PBXGroup;
+			children = (
+				2E163655247C0C6D00E960F2 /* VisionFleetManager.swift */,
+				2E163657247C117400E960F2 /* VisionFleetManagerDelegate.swift */,
+			);
+			path = VisionFleetManager;
+			sourceTree = "<group>";
+		};
 		2E4EE20820EFD378003431B3 = {
 			isa = PBXGroup;
 			children = (
 				2E4EE21420EFD378003431B3 /* MapboxVision */,
 				B51E557A215E313500650DDE /* MapboxVisionTests */,
 				2E071A322257887E00345FA8 /* MapboxVisionAR */,
+				2E16363C247C006A00E960F2 /* MapboxVisionFleet */,
 				2E071A7E2257AE0A00345FA8 /* MapboxVisionSafety */,
 				2E4EE2E020F0CC63003431B3 /* Resources */,
 				2E4EE21320EFD378003431B3 /* Products */,
@@ -284,6 +320,7 @@
 				B51E5579215E313500650DDE /* MapboxVisionTests.xctest */,
 				2E07199C2257871300345FA8 /* MapboxVisionAR.framework */,
 				2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */,
+				2E16363B247C006A00E960F2 /* MapboxVisionFleet.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -302,15 +339,6 @@
 			path = MapboxVision;
 			sourceTree = "<group>";
 		};
-		2E4EE22320EFD5BA003431B3 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				2E4EE22020EFD5BA003431B3 /* NetworkClient.swift */,
-				2E4EE22120EFD5BA003431B3 /* Path.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		2E4EE22E20EFD5BA003431B3 /* Recording */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,12 +354,10 @@
 		2E4EE23520EFD5BA003431B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2E4EE22320EFD5BA003431B3 /* Network */,
 				2E4EE22E20EFD5BA003431B3 /* Recording */,
 				9D72AC788D4F1F83614B3374 /* VideoSource */,
 				2EDD8706219ED89E00760C6D /* Constants.swift */,
 				2E4EE23420EFD5BA003431B3 /* DataProvider.swift */,
-				B53B75BA21144B9A001D65AC /* EventsManager.swift */,
 				2E4EE2A720F0590D003431B3 /* LocationManager.swift */,
 				2E88A9B9213ED5DC008A27C8 /* ModelPerformance.swift */,
 				2E4EE2A520F0590B003431B3 /* MotionManager.swift */,
@@ -379,6 +405,7 @@
 		2E4EE28D20F05730003431B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E163644247C009E00E960F2 /* MapboxVisionFleetNative.framework */,
 				3A7E992C22A0299A005EB875 /* MapboxVisionARNative.framework */,
 				2E071A9B2257CCB700345FA8 /* MapboxVisionNative.framework */,
 				2E071A9F2257CCDB00345FA8 /* MapboxVisionARNative.framework */,
@@ -479,6 +506,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E163636247C006A00E960F2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E16363F247C006A00E960F2 /* MapboxVisionFleet.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2E4EE20F20EFD378003431B3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -517,7 +552,7 @@
 				2E0719D82257871B00345FA8 /* Frameworks */,
 				2E0719DC2257871B00345FA8 /* Headers */,
 				2E0719DE2257871B00345FA8 /* Resources */,
-				3A0EFA8D227C80AA00787E2A /* Swiftlint */,
+				3A0EFA8D227C80AA00787E2A /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -526,6 +561,25 @@
 			name = MapboxVisionSafety;
 			productName = MapboxVision;
 			productReference = 2E0719E42257871B00345FA8 /* MapboxVisionSafety.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2E16363A247C006A00E960F2 /* MapboxVisionFleet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E163640247C006A00E960F2 /* Build configuration list for PBXNativeTarget "MapboxVisionFleet" */;
+			buildPhases = (
+				2E163636247C006A00E960F2 /* Headers */,
+				2E163637247C006A00E960F2 /* Sources */,
+				2E163638247C006A00E960F2 /* Frameworks */,
+				2E163639247C006A00E960F2 /* Resources */,
+				2E163650247C01BF00E960F2 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapboxVisionFleet;
+			productName = MapboxVisionFleet;
+			productReference = 2E16363B247C006A00E960F2 /* MapboxVisionFleet.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		2E4EE21120EFD378003431B3 /* MapboxVision */ = {
@@ -576,6 +630,10 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Mapbox;
 				TargetAttributes = {
+					2E16363A247C006A00E960F2 = {
+						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1140;
+					};
 					2E4EE21120EFD378003431B3 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -585,7 +643,7 @@
 				};
 			};
 			buildConfigurationList = 2E4EE20C20EFD378003431B3 /* Build configuration list for PBXProject "MapboxVision" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -599,6 +657,7 @@
 				2E4EE21120EFD378003431B3 /* MapboxVision */,
 				B51E5578215E313500650DDE /* MapboxVisionTests */,
 				2E0719562257871300345FA8 /* MapboxVisionAR */,
+				2E16363A247C006A00E960F2 /* MapboxVisionFleet */,
 				2E07199E2257871B00345FA8 /* MapboxVisionSafety */,
 			);
 		};
@@ -613,6 +672,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2E0719DE2257871B00345FA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E163639247C006A00E960F2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -637,6 +703,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2E163650247C01BF00E960F2 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionFleet/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		3A0EFA8B227C80AA00787E2A /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -673,7 +757,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint --config \"${SRCROOT}/.swiftlint.yml\" --path \"${SRCROOT}/MapboxVisionAR/\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		3A0EFA8D227C80AA00787E2A /* Swiftlint */ = {
+		3A0EFA8D227C80AA00787E2A /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -682,7 +766,7 @@
 			);
 			inputPaths = (
 			);
-			name = Swiftlint;
+			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -731,6 +815,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E163637247C006A00E960F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E163658247C117400E960F2 /* VisionFleetManagerDelegate.swift in Sources */,
+				2E163656247C0C6D00E960F2 /* VisionFleetManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2E4EE20D20EFD378003431B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,12 +833,9 @@
 				2E4EE2BA20F05ACB003431B3 /* Result.swift in Sources */,
 				2E4EE27320F05652003431B3 /* FileSystem.swift in Sources */,
 				2E19772B211DDD5900311B95 /* DeviceChecker.swift in Sources */,
-				2E4EE27820F05659003431B3 /* Path.swift in Sources */,
 				2E4EE25520F05371003431B3 /* VideoSettings.swift in Sources */,
-				B53B75BB21144B9A001D65AC /* EventsManager.swift in Sources */,
 				5A006F58231570FC0097FADF /* VideoSourceObserverProxy.swift in Sources */,
 				2E4EE28420F05665003431B3 /* ManagerDependencies.swift in Sources */,
-				2E4EE27720F05659003431B3 /* NetworkClient.swift in Sources */,
 				2E4EE2AC20F0590F003431B3 /* LocationManager.swift in Sources */,
 				2E4EE2A220F058B9003431B3 /* AVCaptureConnection+Orientation.swift in Sources */,
 				2E68DBED23800C7600580BE4 /* Telemetry.swift in Sources */,
@@ -812,17 +902,13 @@
 		2E0719992257871300345FA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MapboxVisionAR/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -832,7 +918,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -840,17 +925,14 @@
 		2E07199A2257871300345FA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = MapboxVisionAR/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -860,7 +942,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -868,17 +949,14 @@
 		2E07199B2257871300345FA8 /* AdhocRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = MapboxVisionAR/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -888,7 +966,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdhocRelease;
@@ -896,17 +973,13 @@
 		2E0719E12257871B00345FA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MapboxVisionSafety/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -916,7 +989,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -924,17 +996,14 @@
 		2E0719E22257871B00345FA8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = MapboxVisionSafety/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -944,7 +1013,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -952,17 +1020,14 @@
 		2E0719E32257871B00345FA8 /* AdhocRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = MapboxVisionSafety/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,7 +1037,79 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = AdhocRelease;
+		};
+		2E163641247C006A00E960F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapboxVisionFleet/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E163642247C006A00E960F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapboxVisionFleet/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2E163643247C006A00E960F2 /* AdhocRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MapboxVisionFleet/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mapbox.MapboxVisionFleet;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdhocRelease;
@@ -1009,10 +1146,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = GJZR2MEM28;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1021,6 +1157,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1030,9 +1167,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1062,7 +1199,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdhocRelease;
@@ -1099,10 +1235,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = GJZR2MEM28;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1127,9 +1262,9 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1167,10 +1302,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = GJZR2MEM28;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1179,6 +1313,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1188,9 +1323,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1202,7 +1337,6 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1220,7 +1354,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1248,7 +1381,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1336,6 +1468,16 @@
 				2E0719E12257871B00345FA8 /* Debug */,
 				2E0719E22257871B00345FA8 /* Release */,
 				2E0719E32257871B00345FA8 /* AdhocRelease */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E163640247C006A00E960F2 /* Build configuration list for PBXNativeTarget "MapboxVisionFleet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E163641247C006A00E960F2 /* Debug */,
+				2E163642247C006A00E960F2 /* Release */,
+				2E163643247C006A00E960F2 /* AdhocRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
