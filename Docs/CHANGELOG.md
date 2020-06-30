@@ -1,16 +1,21 @@
 # Changelog
 
-## 0.13.0 - Unreleased
+## 0.13.0
 
 ### Vision
-- Added `VisionManager.set(cameraHeight:)`
-- Fixed applying non-BGRA image formats
+- Add `VisionManager.set(cameraHeight:)`
+- Add `aspectRatio`, `roll`, `pitch`, `yaw`, `height` properties to `Camera`
+- Updgrade `MapboxAccounts` dependency to version compatible with 2.2
+- Improve lane detection
+- Stop sending some inaccurate events until the camera is calibrated
+- Introduce automatic camera recalibration
+- Expand Japan region to include Okinawa
+- Fix bug with speed estimation when a vehicle is stopped
+- Fix bug that prevented new China users authorization
+- Fix bug that prevented applying non-BGRA image formats
 
 ### AR
-- Added `aspectRatio`, `roll`, `pitch`, `yaw`, `height` properties to `Camera`
-- Deprecated `ARCamera` class and `VisionManagerDelegate.visionManager(_:didUpdateARCamera:)` method in favor of utilization of `Camera` class
-
-### Safety
+- Deprecate `ARCamera` class and `VisionManagerDelegate.visionManager(_:didUpdateARCamera:)` method in favor of utilization of `Camera` class
 
 ## 0.12.0
 
