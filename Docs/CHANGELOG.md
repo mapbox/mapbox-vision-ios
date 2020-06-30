@@ -12,7 +12,7 @@
 - Expand Japan region to include Okinawa
 - Fix bug with speed estimation when a vehicle is stopped
 - Fix bug that prevented new China users authorization
-- Fix applying non-BGRA image formats
+- Fix bug that prevented applying non-BGRA image formats
 
 ### AR
 - Deprecate `ARCamera` class and `VisionManagerDelegate.visionManager(_:didUpdateARCamera:)` method in favor of utilization of `Camera` class
