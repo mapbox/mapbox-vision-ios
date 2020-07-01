@@ -5,7 +5,7 @@
 ### Vision
 - Add `VisionManager.set(cameraHeight:)`
 - Add `aspectRatio`, `roll`, `pitch`, `yaw`, `height` properties to `Camera`
-- Updgrade `MapboxAccounts` dependency to version compatible with 2.2
+- Upgrade `MapboxAccounts` dependency to version compatible with 2.2
 - Improve lane detection
 - Stop sending some inaccurate events until the camera is calibrated
 - Introduce automatic camera recalibration
