@@ -8,12 +8,17 @@
 
 ### Safety
 
+## 0.13.1
+
+### Vision
+- Fix crash on devices running iOS 14 beta
+
 ## 0.13.0
 
 ### Vision
 - Add `VisionManager.set(cameraHeight:)`
 - Add `aspectRatio`, `roll`, `pitch`, `yaw`, `height` properties to `Camera`
-- Updgrade `MapboxAccounts` dependency to version compatible with 2.2
+- Upgrade `MapboxAccounts` dependency to version compatible with 2.2
 - Improve lane detection
 - Stop sending some inaccurate events until the camera is calibrated
 - Introduce automatic camera recalibration
