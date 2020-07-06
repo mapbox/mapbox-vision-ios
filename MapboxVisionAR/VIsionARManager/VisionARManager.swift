@@ -70,10 +70,6 @@ public final class VisionARManager {
 
 /// :nodoc:
 extension VisionARManager: VisionARDelegate {
-    public func onARCameraUpdated(_ camera: ARCamera) {
-        delegate?.visionARManager(self, didUpdateARCamera: camera)
-    }
-
     public func onARLaneUpdated(_ lane: ARLane?) {
         delegate?.visionARManager(self, didUpdateARLane: lane)
     }
