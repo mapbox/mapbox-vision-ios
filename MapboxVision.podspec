@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVision"
-  s.version      = "0.13.0"
+  s.version      = "0.14.0"
 
   s.summary      = "ML empowered Vision framework"
   s.description  = <<-DESC
