@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.1
+
+### Vision
+- Fix crash on devices running iOS 14 beta
+
 ## 0.13.0
 
 ### Vision
