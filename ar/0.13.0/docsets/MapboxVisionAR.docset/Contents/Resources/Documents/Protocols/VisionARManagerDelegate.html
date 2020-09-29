@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>VisionARManagerDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+    <meta class="swiftype" name="type" data-type="enum" content="MapboxVisionAR Reference" />
+    <meta class="swiftype" name="title" data-type="string" content="VisionARManagerDelegate" />
+    <style type="text/css">
+      .nav-group-name[data-name="VisionARManagerDelegate"] > .small-heading,
+      .nav-group-task[data-name="VisionARManagerDelegate"] {
+        background-color: #f5f8fc;
+        font-family: "Open Sans Bold";
+        border-left: 3px solid #3a68d8;
+        padding-left: 5px
+      }
+    </style>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/VisionARManagerDelegate" class="dashAnchor"></a>
+
+    <a title="VisionARManagerDelegate Protocol Reference"></a>
+
+    <header class="header-container">
+      <div class="limiter">
+        <div class="header">
+        <p class="header-col header-col--primary">
+          <a class="header-link" href="../index.html">
+            <img style="height: 25px;"  class="header-icon" src="../img/mapbox.svg" alt="MapboxVisionAR Docs"/>
+            <span class='header-tag'>MapboxVisionAR for iOS Docs Reference (0.13.0)</span>
+          </a>
+          
+        </p>
+    
+    
+      </div>
+      </div>
+    </header>
+
+    <div class="breadcrumbs">
+      <div class="limiter">
+        <a class="breadcrumb" href="../index.html">MapboxVisionAR Reference</a>
+        <img class="carat" src="../img/carat.png" />
+        VisionARManagerDelegate Protocol Reference
+      </div>
+    </div>
+
+    <div class="content-wrapper limiter">
+      <nav class="navigation">
+          <div class="header-col--secondary">
+            <form role="search" action="../search.json">
+              <input type="text" placeholder="Search documentation" data-typeahead>
+            </form>
+          </div>
+        <ul class="nav-groups">
+          <li class="nav-group-name" data-name="Classes">
+            <a class="small-heading" href="../Classes.html">Classes<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="ARCamera" data-url="Classes/ARCamera.html">
+                <a title="ARCamera" class="nav-group-task-link" href="../Classes/ARCamera.html">ARCamera</a>
+              </li>
+              <li class="nav-group-task" data-name="ARFence" data-url="Classes/ARFence.html">
+                <a title="ARFence" class="nav-group-task-link" href="../Classes/ARFence.html">ARFence</a>
+              </li>
+              <li class="nav-group-task" data-name="ARLane" data-url="Classes/ARLane.html">
+                <a title="ARLane" class="nav-group-task-link" href="../Classes/ARLane.html">ARLane</a>
+              </li>
+              <li class="nav-group-task" data-name="FenceVisualParams" data-url="Classes/FenceVisualParams.html">
+                <a title="FenceVisualParams" class="nav-group-task-link" href="../Classes/FenceVisualParams.html">FenceVisualParams</a>
+              </li>
+              <li class="nav-group-task" data-name="LaneVisualParams" data-url="Classes/LaneVisualParams.html">
+                <a title="LaneVisualParams" class="nav-group-task-link" href="../Classes/LaneVisualParams.html">LaneVisualParams</a>
+              </li>
+              <li class="nav-group-task" data-name="Route" data-url="Classes/Route.html">
+                <a title="Route" class="nav-group-task-link" href="../Classes/Route.html">Route</a>
+              </li>
+              <li class="nav-group-task" data-name="RoutePoint" data-url="Classes/RoutePoint.html">
+                <a title="RoutePoint" class="nav-group-task-link" href="../Classes/RoutePoint.html">RoutePoint</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionARManager" data-url="Classes/VisionARManager.html">
+                <a title="VisionARManager" class="nav-group-task-link" href="../Classes/VisionARManager.html">VisionARManager</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionARViewController" data-url="Classes/VisionARViewController.html">
+                <a title="VisionARViewController" class="nav-group-task-link" href="../Classes/VisionARViewController.html">VisionARViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Enumerations">
+            <a class="small-heading" href="../Enumerations.html">Enumerations<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="ManeuverType" data-url="Enums/ManeuverType.html">
+                <a title="ManeuverType" class="nav-group-task-link" href="../Enums/ManeuverType.html">ManeuverType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Extensions">
+            <a class="small-heading" href="../Extensions.html">Extensions<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="VisionARViewController" data-url="Extensions/VisionARViewController.html">
+                <a title="VisionARViewController" class="nav-group-task-link" href="../Extensions/VisionARViewController.html">VisionARViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Protocols">
+            <a class="small-heading" href="../Protocols.html">Protocols<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="VisionARManagerDelegate" data-url="Protocols/VisionARManagerDelegate.html">
+                <a title="VisionARManagerDelegate" class="nav-group-task-link" href="../Protocols/VisionARManagerDelegate.html">VisionARManagerDelegate</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <a href="#/VisionARManagerDelegate"><h1 id="VisionARManagerDelegate">VisionARManagerDelegate<span class="anchor-icon" /></h1></a>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">VisionARManagerDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Interface that user’s custom object should conform to in order to receive events from <code><a href="../Classes/VisionARManager.html">VisionARManager</a></code>.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    All delegate methods are called on a background thread.
+
+</div>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateARCamera:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"><span class="token-name">visionARManager(_:didUpdateARCamera:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that AR camera was updated.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"This method will be removed in version 0.14.0. Please use VisionManagerDelegate.visionManager(_:didUpdateCamera:﹚ method instead"</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="n">didUpdateARCamera</span> <span class="nv">camera</span><span class="p">:</span> <span class="kt"><a href="../Classes/ARCamera.html">ARCamera</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateARLane:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"><span class="token-name">visionARManager(_:didUpdateARLane:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that AR lane was updated.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="n">didUpdateARLane</span> <span class="nv">lane</span><span class="p">:</span> <span class="kt"><a href="../Classes/ARLane.html">ARLane</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateARMask:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"><span class="token-name">visionARManager(_:didUpdateARMask:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that AR mask was updated. AR mask defines areas where AR should not be rendered (e.g. hood, dashboard, device mount, etc.).
+Each pixel contains a value representing confidence that AR pixel should not be rendered. Value range is [0,1], where:
+   0 - pixel should be rendered,
+   1 - pixel should NOT be rendered.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="nv">didUpdateARMask</span><span class="p">:</span> <span class="kt">Image</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0_21didUpdateARLaneCutoffyAA0bD0C_SftF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateARLaneCutoff:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0_21didUpdateARLaneCutoffyAA0bD0C_SftF"><span class="token-name">visionARManager(_:didUpdateARLaneCutoff:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that AR lane cutoff was updated.
+AR lane cutoff is a relative distance where AR lane should be cut off. Range [0..1] is appropriate. Values greatest than <code>1</code> have no effect.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="nv">didUpdateARLaneCutoff</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateARFences:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"><span class="token-name">visionARManager(_:didUpdateARFences:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that AR fences were updated.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="n">didUpdateARFences</span> <span class="nv">arFences</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/ARFence.html">ARFence</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/visionARManager(_:didUpdateRoute:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MapboxVisionAR0B17ARManagerDelegateP06visionD0yXeXeF"><span class="token-name">visionARManager(_:didUpdateRoute:)</span><span class="token-icon" /></a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        <p>Tells the delegate that route was updated.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visionARManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">visionARManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/VisionARManager.html">VisionARManager</a></span><span class="p">,</span> <span class="n">didUpdateRoute</span> <span class="nv">route</span><span class="p">:</span> <span class="kt"><a href="../Classes/Route.html">Route</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer limiter">
+      <p>© 2020 <a class="link" href="https://vision.mapbox.com" target="_blank" rel="external">Mapbox</a>. Download, installation, and use governed by the <a class="link" href="https://www.mapbox.com/tos/" target="_blank" rel="external">Mapbox Terms of Service</a></p> Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.
+    </section>
+  </body>
+</div>
+</html>

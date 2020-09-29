@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BaseVisionManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+    <meta class="swiftype" name="type" data-type="enum" content="MapboxVision Reference" />
+    <meta class="swiftype" name="title" data-type="string" content="BaseVisionManager" />
+    <style type="text/css">
+      .nav-group-name[data-name="BaseVisionManager"] > .small-heading,
+      .nav-group-task[data-name="BaseVisionManager"] {
+        background-color: #f5f8fc;
+        font-family: "Open Sans Bold";
+        border-left: 3px solid #3a68d8;
+        padding-left: 5px
+      }
+    </style>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/BaseVisionManager" class="dashAnchor"></a>
+
+    <a title="BaseVisionManager Class Reference"></a>
+
+    <header class="header-container">
+      <div class="limiter">
+        <div class="header">
+        <p class="header-col header-col--primary">
+          <a class="header-link" href="../index.html">
+            <img style="height: 25px;"  class="header-icon" src="../img/mapbox.svg" alt="MapboxVision Docs"/>
+            <span class='header-tag'>MapboxVision for iOS Docs Reference (0.13.1)</span>
+          </a>
+          
+        </p>
+    
+    
+      </div>
+      </div>
+    </header>
+
+    <div class="breadcrumbs">
+      <div class="limiter">
+        <a class="breadcrumb" href="../index.html">MapboxVision Reference</a>
+        <img class="carat" src="../img/carat.png" />
+        BaseVisionManager Class Reference
+      </div>
+    </div>
+
+    <div class="content-wrapper limiter">
+      <nav class="navigation">
+          <div class="header-col--secondary">
+            <form role="search" action="../search.json">
+              <input type="text" placeholder="Search documentation" data-typeahead>
+            </form>
+          </div>
+        <ul class="nav-groups">
+          <li class="nav-group-name" data-name="Classes">
+            <a class="small-heading" href="../Classes.html">Classes<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="BaseVisionManager" data-url="Classes/BaseVisionManager.html">
+                <a title="BaseVisionManager" class="nav-group-task-link" href="../Classes/BaseVisionManager.html">BaseVisionManager</a>
+              </li>
+              <li class="nav-group-task" data-name="BezierCubic3D" data-url="Classes/BezierCubic3D.html">
+                <a title="BezierCubic3D" class="nav-group-task-link" href="../Classes/BezierCubic3D.html">BezierCubic3D</a>
+              </li>
+              <li class="nav-group-task" data-name="Camera" data-url="Classes/Camera.html">
+                <a title="Camera" class="nav-group-task-link" href="../Classes/Camera.html">Camera</a>
+              </li>
+              <li class="nav-group-task" data-name="CameraParameters" data-url="Classes/CameraParameters.html">
+                <a title="CameraParameters" class="nav-group-task-link" href="../Classes/CameraParameters.html">CameraParameters</a>
+              </li>
+              <li class="nav-group-task" data-name="CameraVideoSource" data-url="Classes/CameraVideoSource.html">
+                <a title="CameraVideoSource" class="nav-group-task-link" href="../Classes/CameraVideoSource.html">CameraVideoSource</a>
+              </li>
+              <li class="nav-group-task" data-name="Detection" data-url="Classes/Detection.html">
+                <a title="Detection" class="nav-group-task-link" href="../Classes/Detection.html">Detection</a>
+              </li>
+              <li class="nav-group-task" data-name="Frame" data-url="Classes/Frame.html">
+                <a title="Frame" class="nav-group-task-link" href="../Classes/Frame.html">Frame</a>
+              </li>
+              <li class="nav-group-task" data-name="FrameDetections" data-url="Classes/FrameDetections.html">
+                <a title="FrameDetections" class="nav-group-task-link" href="../Classes/FrameDetections.html">FrameDetections</a>
+              </li>
+              <li class="nav-group-task" data-name="FrameSegmentation" data-url="Classes/FrameSegmentation.html">
+                <a title="FrameSegmentation" class="nav-group-task-link" href="../Classes/FrameSegmentation.html">FrameSegmentation</a>
+              </li>
+              <li class="nav-group-task" data-name="FrameSignClassifications" data-url="Classes/FrameSignClassifications.html">
+                <a title="FrameSignClassifications" class="nav-group-task-link" href="../Classes/FrameSignClassifications.html">FrameSignClassifications</a>
+              </li>
+              <li class="nav-group-task" data-name="GeoCoordinate" data-url="Classes/GeoCoordinate.html">
+                <a title="GeoCoordinate" class="nav-group-task-link" href="../Classes/GeoCoordinate.html">GeoCoordinate</a>
+              </li>
+              <li class="nav-group-task" data-name="GeoPosition" data-url="Classes/GeoPosition.html">
+                <a title="GeoPosition" class="nav-group-task-link" href="../Classes/GeoPosition.html">GeoPosition</a>
+              </li>
+              <li class="nav-group-task" data-name="Image" data-url="Classes/Image.html">
+                <a title="Image" class="nav-group-task-link" href="../Classes/Image.html">Image</a>
+              </li>
+              <li class="nav-group-task" data-name="ImageSize" data-url="Classes/ImageSize.html">
+                <a title="ImageSize" class="nav-group-task-link" href="../Classes/ImageSize.html">ImageSize</a>
+              </li>
+              <li class="nav-group-task" data-name="Lane" data-url="Classes/Lane.html">
+                <a title="Lane" class="nav-group-task-link" href="../Classes/Lane.html">Lane</a>
+              </li>
+              <li class="nav-group-task" data-name="LaneEdge" data-url="Classes/LaneEdge.html">
+                <a title="LaneEdge" class="nav-group-task-link" href="../Classes/LaneEdge.html">LaneEdge</a>
+              </li>
+              <li class="nav-group-task" data-name="ObservableVideoSource" data-url="Classes/ObservableVideoSource.html">
+                <a title="ObservableVideoSource" class="nav-group-task-link" href="../Classes/ObservableVideoSource.html">ObservableVideoSource</a>
+              </li>
+              <li class="nav-group-task" data-name="Point2D" data-url="Classes/Point2D.html">
+                <a title="Point2D" class="nav-group-task-link" href="../Classes/Point2D.html">Point2D</a>
+              </li>
+              <li class="nav-group-task" data-name="RoadDescription" data-url="Classes/RoadDescription.html">
+                <a title="RoadDescription" class="nav-group-task-link" href="../Classes/RoadDescription.html">RoadDescription</a>
+              </li>
+              <li class="nav-group-task" data-name="Sign" data-url="Classes/Sign.html">
+                <a title="Sign" class="nav-group-task-link" href="../Classes/Sign.html">Sign</a>
+              </li>
+              <li class="nav-group-task" data-name="SignClassification" data-url="Classes/SignClassification.html">
+                <a title="SignClassification" class="nav-group-task-link" href="../Classes/SignClassification.html">SignClassification</a>
+              </li>
+              <li class="nav-group-task" data-name="VehicleState" data-url="Classes/VehicleState.html">
+                <a title="VehicleState" class="nav-group-task-link" href="../Classes/VehicleState.html">VehicleState</a>
+              </li>
+              <li class="nav-group-task" data-name="VideoSample" data-url="Classes/VideoSample.html">
+                <a title="VideoSample" class="nav-group-task-link" href="../Classes/VideoSample.html">VideoSample</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionManager" data-url="Classes/VisionManager.html">
+                <a title="VisionManager" class="nav-group-task-link" href="../Classes/VisionManager.html">VisionManager</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionPresentationViewController" data-url="Classes/VisionPresentationViewController.html">
+                <a title="VisionPresentationViewController" class="nav-group-task-link" href="../Classes/VisionPresentationViewController.html">VisionPresentationViewController</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionReplayManager" data-url="Classes/VisionReplayManager.html">
+                <a title="VisionReplayManager" class="nav-group-task-link" href="../Classes/VisionReplayManager.html">VisionReplayManager</a>
+              </li>
+              <li class="nav-group-task" data-name="WorldCoordinate" data-url="Classes/WorldCoordinate.html">
+                <a title="WorldCoordinate" class="nav-group-task-link" href="../Classes/WorldCoordinate.html">WorldCoordinate</a>
+              </li>
+              <li class="nav-group-task" data-name="WorldDescription" data-url="Classes/WorldDescription.html">
+                <a title="WorldDescription" class="nav-group-task-link" href="../Classes/WorldDescription.html">WorldDescription</a>
+              </li>
+              <li class="nav-group-task" data-name="WorldObject" data-url="Classes/WorldObject.html">
+                <a title="WorldObject" class="nav-group-task-link" href="../Classes/WorldObject.html">WorldObject</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Enumerations">
+            <a class="small-heading" href="../Enumerations.html">Enumerations<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="AuthorizationStatus" data-url="Enums/AuthorizationStatus.html">
+                <a title="AuthorizationStatus" class="nav-group-task-link" href="../Enums/AuthorizationStatus.html">AuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task" data-name="CardinalDirection" data-url="Enums/CardinalDirection.html">
+                <a title="CardinalDirection" class="nav-group-task-link" href="../Enums/CardinalDirection.html">CardinalDirection</a>
+              </li>
+              <li class="nav-group-task" data-name="Country" data-url="Enums/Country.html">
+                <a title="Country" class="nav-group-task-link" href="../Enums/Country.html">Country</a>
+              </li>
+              <li class="nav-group-task" data-name="DetectionClass" data-url="Enums/DetectionClass.html">
+                <a title="DetectionClass" class="nav-group-task-link" href="../Enums/DetectionClass.html">DetectionClass</a>
+              </li>
+              <li class="nav-group-task" data-name="Format" data-url="Enums/Format.html">
+                <a title="Format" class="nav-group-task-link" href="../Enums/Format.html">Format</a>
+              </li>
+              <li class="nav-group-task" data-name="LaneDirection" data-url="Enums/LaneDirection.html">
+                <a title="LaneDirection" class="nav-group-task-link" href="../Enums/LaneDirection.html">LaneDirection</a>
+              </li>
+              <li class="nav-group-task" data-name="LaneEdgeType" data-url="Enums/LaneEdgeType.html">
+                <a title="LaneEdgeType" class="nav-group-task-link" href="../Enums/LaneEdgeType.html">LaneEdgeType</a>
+              </li>
+              <li class="nav-group-task" data-name="ModelPerformanceMode" data-url="Enums/ModelPerformanceMode.html">
+                <a title="ModelPerformanceMode" class="nav-group-task-link" href="../Enums/ModelPerformanceMode.html">ModelPerformanceMode</a>
+              </li>
+              <li class="nav-group-task" data-name="ModelPerformanceRate" data-url="Enums/ModelPerformanceRate.html">
+                <a title="ModelPerformanceRate" class="nav-group-task-link" href="../Enums/ModelPerformanceRate.html">ModelPerformanceRate</a>
+              </li>
+              <li class="nav-group-task" data-name="SignType" data-url="Enums/SignType.html">
+                <a title="SignType" class="nav-group-task-link" href="../Enums/SignType.html">SignType</a>
+              </li>
+              <li class="nav-group-task" data-name="VisualizationMode" data-url="Enums/VisualizationMode.html">
+                <a title="VisualizationMode" class="nav-group-task-link" href="../Enums/VisualizationMode.html">VisualizationMode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Extensions">
+            <a class="small-heading" href="../Extensions.html">Extensions<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="CGPoint" data-url="Extensions/CGPoint.html">
+                <a title="CGPoint" class="nav-group-task-link" href="../Extensions/CGPoint.html">CGPoint</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Protocols">
+            <a class="small-heading" href="../Protocols.html">Protocols<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="VideoSource" data-url="Protocols/VideoSource.html">
+                <a title="VideoSource" class="nav-group-task-link" href="../Protocols/VideoSource.html">VideoSource</a>
+              </li>
+              <li class="nav-group-task" data-name="VideoSourceObserver" data-url="Protocols/VideoSourceObserver.html">
+                <a title="VideoSourceObserver" class="nav-group-task-link" href="../Protocols/VideoSourceObserver.html">VideoSourceObserver</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionManagerDelegate" data-url="Protocols/VisionManagerDelegate.html">
+                <a title="VisionManagerDelegate" class="nav-group-task-link" href="../Protocols/VisionManagerDelegate.html">VisionManagerDelegate</a>
+              </li>
+              <li class="nav-group-task" data-name="VisionManagerProtocol" data-url="Protocols/VisionManagerProtocol.html">
+                <a title="VisionManagerProtocol" class="nav-group-task-link" href="../Protocols/VisionManagerProtocol.html">VisionManagerProtocol</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name" data-name="Structures">
+            <a class="small-heading" href="../Structures.html">Structures<span class="anchor-icon" /></a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task" data-name="ModelPerformance" data-url="Structs/ModelPerformance.html">
+                <a title="ModelPerformance" class="nav-group-task-link" href="../Structs/ModelPerformance.html">ModelPerformance</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <a href="#/BaseVisionManager"><h1 id="BaseVisionManager">BaseVisionManager<span class="anchor-icon" /></h1></a>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">BaseVisionManager</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/VisionManagerProtocol.html">VisionManagerProtocol</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">BaseVisionManager</span><span class="p">:</span> <span class="kt">VisionDelegate</span></code></pre>
+
+                </div>
+              </div>
+            
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Performance%20control"></a>
+                <a name="//apple_ref/swift/Section/Performance control" class="dashAnchor"></a>
+                <a href="#/Performance%20control">
+                  <h3 id="Performance%20control" class="section-name">Performance control<span class="anchor-icon" /></h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP16modelPerformanceAA05ModelF0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/modelPerformance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP16modelPerformanceAA05ModelF0Vvp"><span class="token-name">modelPerformance</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">modelPerformance</span><span class="p">:</span> <span class="kt"><a href="../Structs/ModelPerformance.html">ModelPerformance</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Utility"></a>
+                <a name="//apple_ref/swift/Section/Utility" class="dashAnchor"></a>
+                <a href="#/Utility">
+                  <h3 id="Utility" class="section-name">Utility<span class="anchor-icon" /></h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP12pixelToWorld16screenCoordinateSo08MBVWorldI0CSgSo10MBVPoint2DC_tF"></a>
+                    <a name="//apple_ref/swift/Method/pixelToWorld(screenCoordinate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP12pixelToWorld16screenCoordinateSo08MBVWorldI0CSgSo10MBVPoint2DC_tF"><span class="token-name">pixelToWorld(screenCoordinate:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pixelToWorld</span><span class="p">(</span><span class="nv">screenCoordinate</span><span class="p">:</span> <span class="kt"><a href="../Classes/Point2D.html">Point2D</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/WorldCoordinate.html">WorldCoordinate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP12worldToPixel0E10CoordinateSo10MBVPoint2DCSgSo08MBVWorldH0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/worldToPixel(worldCoordinate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP12worldToPixel0E10CoordinateSo10MBVPoint2DCSgSo08MBVWorldH0C_tF"><span class="token-name">worldToPixel(worldCoordinate:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">worldToPixel</span><span class="p">(</span><span class="nv">worldCoordinate</span><span class="p">:</span> <span class="kt"><a href="../Classes/WorldCoordinate.html">WorldCoordinate</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Point2D.html">Point2D</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP10geoToWorld0E10CoordinateSo08MBVWorldH0CSgSo06MBVGeoH0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/geoToWorld(geoCoordinate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP10geoToWorld0E10CoordinateSo08MBVWorldH0CSgSo06MBVGeoH0C_tF"><span class="token-name">geoToWorld(geoCoordinate:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">geoToWorld</span><span class="p">(</span><span class="nv">geoCoordinate</span><span class="p">:</span> <span class="kt"><a href="../Classes/GeoCoordinate.html">GeoCoordinate</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/WorldCoordinate.html">WorldCoordinate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP10worldToGeo0E11CoordinatesSo16MBVGeoCoordinateCSgSo08MBVWorldJ0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/worldToGeo(worldCoordinates:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP10worldToGeo0E11CoordinatesSo16MBVGeoCoordinateCSgSo08MBVWorldJ0C_tF"><span class="token-name">worldToGeo(worldCoordinates:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">worldToGeo</span><span class="p">(</span><span class="nv">worldCoordinates</span><span class="p">:</span> <span class="kt"><a href="../Classes/WorldCoordinate.html">WorldCoordinate</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/GeoCoordinate.html">GeoCoordinate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision0B15ManagerProtocolP6nativeSo09MBVVisionC10BaseNativeCvp"></a>
+                    <a name="//apple_ref/swift/Property/native" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision0B15ManagerProtocolP6nativeSo09MBVVisionC10BaseNativeCvp"><span class="token-name">native</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">native</span><span class="p">:</span> <span class="kt">VisionManagerBaseNative</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC28onAuthorizationStatusUpdatedyySo016MBVAuthorizationG0VF"></a>
+                    <a name="//apple_ref/swift/Method/onAuthorizationStatusUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC28onAuthorizationStatusUpdatedyySo016MBVAuthorizationG0VF"><span class="token-name">onAuthorizationStatusUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onAuthorizationStatusUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/AuthorizationStatus.html">AuthorizationStatus</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC26onFrameSegmentationUpdatedyySo08MBVFrameG0CF"></a>
+                    <a name="//apple_ref/swift/Method/onFrameSegmentationUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC26onFrameSegmentationUpdatedyySo08MBVFrameG0CF"><span class="token-name">onFrameSegmentationUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onFrameSegmentationUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">segmentation</span><span class="p">:</span> <span class="kt"><a href="../Classes/FrameSegmentation.html">FrameSegmentation</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC24onFrameDetectionsUpdatedyySo08MBVFrameG0CF"></a>
+                    <a name="//apple_ref/swift/Method/onFrameDetectionsUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC24onFrameDetectionsUpdatedyySo08MBVFrameG0CF"><span class="token-name">onFrameDetectionsUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onFrameDetectionsUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">detections</span><span class="p">:</span> <span class="kt"><a href="../Classes/FrameDetections.html">FrameDetections</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC33onFrameSignClassificationsUpdatedyySo08MBVFramegH0CF"></a>
+                    <a name="//apple_ref/swift/Method/onFrameSignClassificationsUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC33onFrameSignClassificationsUpdatedyySo08MBVFramegH0CF"><span class="token-name">onFrameSignClassificationsUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onFrameSignClassificationsUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">signClassifications</span><span class="p">:</span> <span class="kt"><a href="../Classes/FrameSignClassifications.html">FrameSignClassifications</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC24onRoadDescriptionUpdatedyySo07MBVRoadG0CF"></a>
+                    <a name="//apple_ref/swift/Method/onRoadDescriptionUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC24onRoadDescriptionUpdatedyySo07MBVRoadG0CF"><span class="token-name">onRoadDescriptionUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onRoadDescriptionUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">road</span><span class="p">:</span> <span class="kt"><a href="../Classes/RoadDescription.html">RoadDescription</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC25onWorldDescriptionUpdatedyySo08MBVWorldG0CF"></a>
+                    <a name="//apple_ref/swift/Method/onWorldDescriptionUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC25onWorldDescriptionUpdatedyySo08MBVWorldG0CF"><span class="token-name">onWorldDescriptionUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onWorldDescriptionUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">world</span><span class="p">:</span> <span class="kt"><a href="../Classes/WorldDescription.html">WorldDescription</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC21onVehicleStateUpdatedyySo010MBVVehicleG0CF"></a>
+                    <a name="//apple_ref/swift/Method/onVehicleStateUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC21onVehicleStateUpdatedyySo010MBVVehicleG0CF"><span class="token-name">onVehicleStateUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onVehicleStateUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">vehicleState</span><span class="p">:</span> <span class="kt"><a href="../Classes/VehicleState.html">VehicleState</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC15onCameraUpdatedyySo9MBVCameraCF"></a>
+                    <a name="//apple_ref/swift/Method/onCameraUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC15onCameraUpdatedyySo9MBVCameraCF"><span class="token-name">onCameraUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onCameraUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">camera</span><span class="p">:</span> <span class="kt"><a href="../Classes/Camera.html">Camera</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC16onCountryUpdatedyySo10MBVCountryVF"></a>
+                    <a name="//apple_ref/swift/Method/onCountryUpdated(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC16onCountryUpdatedyySo10MBVCountryVF"><span class="token-name">onCountryUpdated(_:)</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onCountryUpdated</span><span class="p">(</span><span class="n">_</span> <span class="nv">country</span><span class="p">:</span> <span class="kt"><a href="../Enums/Country.html">Country</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12MapboxVision04BaseB7ManagerC17onUpdateCompletedyyF"></a>
+                    <a name="//apple_ref/swift/Method/onUpdateCompleted()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12MapboxVision04BaseB7ManagerC17onUpdateCompletedyyF"><span class="token-name">onUpdateCompleted()</span><span class="token-icon" /></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <section class="section">
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language keyline-blue">
+                          <p  style="background: rgba(65, 131, 196, 0.15);" class="aside-title text-blue">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onUpdateCompleted</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer limiter">
+      <p>© 2020 <a class="link" href="https://vision.mapbox.com" target="_blank" rel="external">Mapbox</a>. Download, installation, and use governed by the <a class="link" href="https://www.mapbox.com/tos/" target="_blank" rel="external">Mapbox Terms of Service</a></p> Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.
+    </section>
+  </body>
+</div>
+</html>
