@@ -31,7 +31,7 @@ final class Telemetry: NSObject, TelemetryInterface {
     }
 
     func setSyncUrl(_: String, isChina: Bool) {
-        UserDefaults.mme_configuration().mme_isCNRegion = true //isChina
+        UserDefaults.mme_configuration().mme_isCNRegion = isChina
         manager.sendTurnstileEvent()
     }
 
