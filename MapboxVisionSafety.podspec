@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVisionSafety"
-  s.version      = "0.13.1"
+  s.version      = "0.13.2"
 
   s.summary      = "Safety features on top of Vision"
   s.description  = <<-DESC
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
 
   s.swift_version = '4.2'
 
-  s.dependency "MapboxVisionNativeAll/Safety", "#{s.version}"
+  s.dependency "MapboxVisionNativeAll/Safety", "0.13.1"
   s.dependency "MapboxVision", "#{s.version}"
 
 end
