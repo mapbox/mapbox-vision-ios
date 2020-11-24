@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MapboxVision"
-  s.version      = "0.13.1"
+  s.version      = "0.13.2"
 
   s.summary      = "ML empowered Vision framework"
   s.description  = <<-DESC
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.swift_version = '4.2'
 
-  s.dependency "MapboxVisionNativeAll/Vision", "#{s.version}"
+  s.dependency "MapboxVisionNativeAll/Vision", "0.13.1"
   s.dependency "MapboxMobileEvents", "~> 0.10.5"
   s.dependency "ZIPFoundation", "~> 0.9.11"
 
