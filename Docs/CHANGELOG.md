@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.2
+
+### Vision
+- Updated `MapboxMobileEvents` dependency to the version compatible with `0.10.5` version
+
 ## 0.13.1
 
 ### Vision
