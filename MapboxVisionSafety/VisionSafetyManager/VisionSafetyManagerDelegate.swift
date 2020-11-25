@@ -21,6 +21,10 @@ public protocol VisionSafetyManagerDelegate: AnyObject {
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject])
 
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateImpactDetection: ImpactDetection)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: Detection?, object: WorldObject?)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateTailgatingCar tailgatingCar: Detection?, object: WorldObject?)
 }
 
 public extension VisionSafetyManagerDelegate {
@@ -29,4 +33,8 @@ public extension VisionSafetyManagerDelegate {
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject]) {}
 
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateImpactDetection: ImpactDetection) {}
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: Detection?, object: WorldObject?) {}
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateTailgatingCar tailgatingCar: Detection?, object: WorldObject?) {}
 }
