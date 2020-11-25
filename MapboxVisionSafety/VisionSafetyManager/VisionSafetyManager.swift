@@ -68,4 +68,8 @@ extension VisionSafetyManager: VisionSafetyDelegate {
     public func onCollisionsUpdated(_ collisions: [CollisionObject]) {
         delegate?.visionSafetyManager(self, didUpdateCollisions: collisions)
     }
+
+    public func onImpactDetected(_ impactDetection: ImpactDetection) {
+        delegate?.visionSafetyManager(self, didUpdateImpactDetection: impactDetection)
+    }
 }
