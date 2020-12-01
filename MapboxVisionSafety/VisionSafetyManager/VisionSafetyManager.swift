@@ -73,11 +73,7 @@ extension VisionSafetyManager: VisionSafetyDelegate {
         delegate?.visionSafetyManager(self, didUpdateImpactDetection: impactDetection)
     }
 
-    public func onForwardCarUpdated(_ detection: Detection?, worldObject: WorldObject?) {
-        delegate?.visionSafetyManager(self, didUpdateForwardCar: detection, object: worldObject)
-    }
-
-    public func onTailgatingUpdated(_ detection: Detection?, worldObject: WorldObject?) {
-        delegate?.visionSafetyManager(self, didUpdateTailgatingCar: detection, object: worldObject)
+    public func onForwardCarUpdated(_ forwardCar: CollisionObject?) {
+        delegate?.visionSafetyManager(self, didUpdateForwardCar: forwardCar)
     }
 }

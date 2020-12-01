@@ -20,11 +20,17 @@ public protocol VisionSafetyManagerDelegate: AnyObject {
      */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateCollisions: [CollisionObject])
 
+    /**
+     Tells the delegate that impact is detected
+     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateImpactDetection: ImpactDetection)
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: Detection?, object: WorldObject?)
-
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateTailgatingCar tailgatingCar: Detection?, object: WorldObject?)
+    /**
+     Tells the delegate that the current forward car is updated
+     Use the `CollisionObject.timeToImpact` property to evaluate if you're tailgating the forward car.
+     `Camera` needs to be calibrated for the event to be triggered.
+     */
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: CollisionObject?)
 }
 
 public extension VisionSafetyManagerDelegate {
@@ -34,7 +40,5 @@ public extension VisionSafetyManagerDelegate {
 
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateImpactDetection: ImpactDetection) {}
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: Detection?, object: WorldObject?) {}
-
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateTailgatingCar tailgatingCar: Detection?, object: WorldObject?) {}
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: CollisionObject?) {}
 }
