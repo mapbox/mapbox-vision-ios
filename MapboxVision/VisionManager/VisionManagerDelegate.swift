@@ -59,6 +59,11 @@ public protocol VisionManagerDelegate: AnyObject {
     func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCamera camera: Camera)
 
     /**
+     Tells the delegate if the camera view is obstructed which prevents the generation of valid events.
+     */
+    func visionManager(_ visionManager: VisionManagerProtocol, didUpdateCameraCovered cameraCovered: Bool)
+
+    /**
      This method is called after the whole update iteration is completed. This means that all the data that came from delegate methods is in sync.
      This method is an appropriate place to work with different values emitted from `VisionManager`.
 
@@ -85,6 +90,8 @@ public extension VisionManagerDelegate {
     func visionManager(_: VisionManagerProtocol, didUpdateCamera _: Camera) {}
 
     func visionManager(_: VisionManagerProtocol, didUpdateCountry _: Country) {}
+
+    func visionManager(_: VisionManagerProtocol, didUpdateCameraCovered _: Bool) {}
 
     func visionManagerDidCompleteUpdate(_: VisionManagerProtocol) {}
 }
