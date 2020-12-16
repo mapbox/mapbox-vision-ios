@@ -134,6 +134,22 @@ public final class VisionManager: BaseVisionManager {
         dependencies.native.set(cameraHeight: cameraHeight)
     }
 
+
+    /**
+     Sets flag to control telemetry sending.
+
+     SDK sends anonymous telemetry to servers. This telemetry goes through additional
+     anonymization and is used to improve the quality of the Vision SDK service.
+
+     This flag allows disabling telemetry sending only for accounts
+     that were allowed to do that.
+
+     - Parameter telemetrySendingEnabled: Flag to enable/disable telemetry recording.
+     */
+    public func set(telemetrySendingEnabled: Bool) {
+        dependencies.native.set(telemetrySendingEnabled: telemetrySendingEnabled)
+    }
+
     /**
      Clean up the state and resources of `VisionManger`.
 
