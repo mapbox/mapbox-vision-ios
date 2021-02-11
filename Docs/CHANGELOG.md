@@ -1,12 +1,19 @@
 # Changelog
 
-## 0.14.0 - Unreleased
+## 0.14.0
 
 ### Vision
+- Added `VisionManager.set(telemetrySendingEnabled: Bool)` for configuring telemetry sending
+- Added `VisionManagerDelegate.visionManager(_:didUpdateCameraCovered:)` for notifications about obstructed camera view
+- Removed `OpenCV` dynamic dependency
 
 ### AR
+- Removed deprecated `VisionARManagerDelegate.visionARManager(_:didUpdateARCamera:)` method
 
 ### Safety
+- Added `VisionSafetyManager.setImpactAccelerationThreshold(accelerationThreshold:)` for configuring impact detection threshold
+- Added `VisionSafetyManagerDelegate.visionSafetyManager(_:didDetectImpact:)` for notifications about impact detection
+- Added `VisionSafetyManagerDelegate.visionSafetyManager(_:didUpdateForwardCar:)` for notifications about forward car state updates
 
 ## 0.13.2
 
@@ -16,7 +23,7 @@
 ## 0.13.1
 
 ### Vision
-- Fix crash on devices running iOS 14 beta
+- Fixed crash on devices running iOS 14 beta
 
 ## 0.13.0
 
