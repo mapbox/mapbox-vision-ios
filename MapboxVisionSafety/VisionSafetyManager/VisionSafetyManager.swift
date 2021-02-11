@@ -45,10 +45,21 @@ public final class VisionSafetyManager {
     }
 
     /**
-     Set minimal speed when collision system activates. Expressed in meters per second.
+     Set minimal speed when collision system activates.
+
+     - Parameter minSpeed: Minimal speed expressed in meters per second.
      */
     public func setCollisionWithVehicleMinSpeed(minSpeed: Float) {
         native?.setCollisionMinSpeed(minSpeed)
+    }
+
+    /**
+     Set acceleration threshold for impact detector.
+
+     - Parameter accelerationThreshold: Threshold expressed in G's
+     */
+    public func setImpactAccelerationThreshold(accelerationThreshold: Float) {
+        native?.setImpactAccelerationThreshold(accelerationThreshold)
     }
 
     deinit {
@@ -67,5 +78,13 @@ extension VisionSafetyManager: VisionSafetyDelegate {
 
     public func onCollisionsUpdated(_ collisions: [CollisionObject]) {
         delegate?.visionSafetyManager(self, didUpdateCollisions: collisions)
+    }
+
+    public func onImpactDetected(_ impactDetection: ImpactDetection) {
+        delegate?.visionSafetyManager(self, didDetectImpact: impactDetection)
+    }
+
+    public func onForwardCarUpdated(_ forwardCar: CollisionObject?) {
+        delegate?.visionSafetyManager(self, didUpdateForwardCar: forwardCar)
     }
 }

@@ -125,6 +125,10 @@ extension BaseVisionManager: VisionDelegate {
         baseDelegate?.visionManager(self, didUpdateCamera: camera)
     }
 
+    public func onCameraCoverageUpdated(_ isCovered: Bool) {
+        baseDelegate?.visionManager(self, didUpdateCameraCovered: isCovered)
+    }
+
     public func onCountryUpdated(_ country: Country) {
         baseDelegate?.visionManager(self, didUpdateCountry: country)
     }

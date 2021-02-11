@@ -27,6 +27,7 @@ protocol VisionManagerNativeProtocol: VisionManagerBaseNativeProtocol {
     func stopRecording()
 
     func set(cameraHeight: Float)
+    func set(telemetrySendingEnabled: Bool)
 }
 
 extension VisionManagerBaseNative: VisionManagerBaseNativeProtocol {}
