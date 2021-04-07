@@ -31,6 +31,16 @@ public protocol VisionSafetyManagerDelegate: AnyObject {
      `Camera` needs to be calibrated for the event to be triggered.
      */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: CollisionObject?)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardAcceleration: HardAccelerationDetection)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardBraking: HardBrakingDetection)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardCornering: HardCorneringDetection)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectLaneChanging: LaneChangingDetection)
+
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectStopSignRunning: StopSignRunningDetection)
 }
 
 public extension VisionSafetyManagerDelegate {
