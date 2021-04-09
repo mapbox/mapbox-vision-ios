@@ -58,7 +58,7 @@ public extension VisionSafetyManagerDelegate {
 
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardCornering: HardCorneringDetection) {}
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectLaneChanging: LaneChangingDetection) {}
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectLaneChange: LaneChangeDetection) {}
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectStopSignRunning: StopSignRunningDetection) {}
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectRunStopSign: RunStopSignDetection) {}
 }

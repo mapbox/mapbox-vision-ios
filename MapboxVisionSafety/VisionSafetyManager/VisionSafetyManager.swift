@@ -101,10 +101,10 @@ extension VisionSafetyManager: VisionSafetyDelegate {
     }
 
     public func onLaneChangeDetected(_ laneChangeDetection: LaneChangeDetection) {
-        delegate?.visionSafetyManager(self, didDetectLaneChanging: laneChangeDetection)
+        delegate?.visionSafetyManager(self, didDetectLaneChange: laneChangeDetection)
     }
 
     public func onRunStopSignDetected(_ runStopSignDetection: RunStopSignDetection) {
-        delegate?.visionSafetyManager(self, didDetectStopSignRunning: runStopSignDetection)
+        delegate?.visionSafetyManager(self, didDetectRunStopSign: runStopSignDetection)
     }
 }
