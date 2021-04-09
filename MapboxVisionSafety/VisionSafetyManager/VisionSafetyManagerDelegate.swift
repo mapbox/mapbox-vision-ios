@@ -32,15 +32,30 @@ public protocol VisionSafetyManagerDelegate: AnyObject {
      */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didUpdateForwardCar forwardCar: CollisionObject?)
 
+    /**
+     Tells the delegate that hard acceleration is detected
+     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardAcceleration: HardAccelerationDetection)
 
+    /**
+     Tells the delegate that hard braking is detected
+     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardBraking: HardBrakingDetection)
 
+    /**
+     Tells the delegate that turn at high speed which causes big lateral acceleration is detected
+     */
     func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectHardCornering: HardCorneringDetection)
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectLaneChanging: LaneChangingDetection)
+    /**
+     Tells the delegate that driver maneuver when vehicle moves from one lane to another is detected
+     */
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectLaneChange: LaneChangeDetection)
 
-    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectStopSignRunning: StopSignRunningDetection)
+    /**
+     Tells the delegate that running a stop sign without complete stopping is detected
+     */
+    func visionSafetyManager(_ visionSafetyManager: VisionSafetyManager, didDetectRunStopSign: RunStopSignDetection)
 }
 
 public extension VisionSafetyManagerDelegate {
