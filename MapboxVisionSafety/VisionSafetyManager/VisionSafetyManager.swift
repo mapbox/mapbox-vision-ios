@@ -87,4 +87,24 @@ extension VisionSafetyManager: VisionSafetyDelegate {
     public func onForwardCarUpdated(_ forwardCar: CollisionObject?) {
         delegate?.visionSafetyManager(self, didUpdateForwardCar: forwardCar)
     }
+
+    public func onHardAccelerationDetected(_ hardAccelerationDetection: HardAccelerationDetection) {
+        delegate?.visionSafetyManager(self, didDetectHardAcceleration: hardAccelerationDetection)
+    }
+
+    public func onHardBrakingDetected(_ hardBrakingDetection: HardBrakingDetection) {
+        delegate?.visionSafetyManager(self, didDetectHardBraking: hardBrakingDetection)
+    }
+
+    public func onHardCorneringDetected(_ hardCorneringDetection: HardCorneringDetection) {
+        delegate?.visionSafetyManager(self, didDetectHardCornering: hardCorneringDetection)
+    }
+
+    public func onLaneChangeDetected(_ laneChangeDetection: LaneChangeDetection) {
+        delegate?.visionSafetyManager(self, didDetectLaneChange: laneChangeDetection)
+    }
+
+    public func onRunStopSignDetected(_ runStopSignDetection: RunStopSignDetection) {
+        delegate?.visionSafetyManager(self, didDetectRunStopSign: runStopSignDetection)
+    }
 }
