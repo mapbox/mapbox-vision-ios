@@ -1,0 +1,71 @@
+git:
+  depth: 3
+  submodules: false
+
+notifications:
+  email: false
+
+branches:
+  only:
+    - master
+    - dev
+    - /^release\/.*$/
+
+stages:
+  - compile-and-test
+
+env:
+  global:
+    - JOBS=4
+    - PROJECT_NAME="mapbox-vision-ios"
+
+jobs:
+  include:
+    - &iOS
+      stage: compile-and-test
+      if: type = pull_request
+      os: osx
+      osx_image: xcode11.2
+      language: swift
+      name: iOS / Release / Simulator / Xcode 11.2
+      cache:
+        directories:
+          - SDK/Platforms/iOS/Carthage
+          - $HOME/Library/Caches/Homebrew
+      env:
+        - IOS_BUILD_TYPE='Release'
+        - IOS_PLATFORM_TYPE='iphonesimulator'
+        - DST='platform=iOS Simulator,OS=13.2.2,name=iPhone 11'
+      install:
+        - scripts/ci/install-dependencies-to-build.sh
+        - scripts/ci/install-dependencies-to-pull-from-s3.sh
+      before_script:
+        - scripts/ci/init-dependencies-to-build.sh
+        - scripts/ci/remote-build-artifacts.sh --pull-native-deps
+      script:
+        - scripts/ci/build.sh --build MapboxVision
+        - scripts/ci/build.sh --build MapboxVisionAR
+        - scripts/ci/build.sh --build MapboxVisionSafety
+      before_cache:
+        - scripts/ci/prepare-for-cache.sh
+
+    - <<: *iOS
+      name: iOS / Debug / Simulator / Xcode 11.2
+      env:
+        - IOS_BUILD_TYPE='Debug'
+        - IOS_PLATFORM_TYPE='iphonesimulator'
+        - DST='platform=iOS Simulator,OS=13.2.2,name=iPhone 11'
+
+    - <<: *iOS
+      name: iOS / Release / Device / Xcode 11.2
+      env:
+        - IOS_BUILD_TYPE='Release'
+        - IOS_PLATFORM_TYPE='iphoneos'
+        - DST='generic/platform=iOS'
+
+    - <<: *iOS
+      name: iOS / Debug / Device / Xcode 11.2
+      env:
+        - IOS_BUILD_TYPE='Debug'
+        - IOS_PLATFORM_TYPE='iphoneos'
+        - DST='generic/platform=iOS'
