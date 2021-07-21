@@ -62,6 +62,7 @@ public class BaseVisionManager: VisionManagerProtocol {
     // MARK: Model performance configuration
 
     private func updateModelPerformance(_ modelPerformance: ModelPerformance) {
+        dependencies.native.config.mlTasksEnabled = modelPerformance.rate != .off
         switch ModelPerformanceResolver.coreModelPerformance(with: modelPerformance) {
         case .fixed(let fps):
             dependencies.native.setFixedFPS(fps)
