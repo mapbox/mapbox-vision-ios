@@ -4,6 +4,11 @@
 
 # Mapbox Vision SDK
 
+⚠️ Archived Repository
+This repository is no longer maintained and has been archived as of August 5, 2025.
+It remains available for reference but is not receiving updates, bug fixes, or security patches.
+If you were using this project, consider forking it or exploring maintained alternatives.
+
 # Table of contents
 
 - [Overview](#overview)
